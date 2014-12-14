@@ -6,6 +6,7 @@ angular.module('notes').run(['Menus',
 		// Set top bar menu items
 		Menus.addMenuItem('topbar', 'Notes', 'notes', 'dropdown', '/notes(/create)?');
 		Menus.addSubMenuItem('topbar', 'notes', 'List Notes', 'notes');
-		Menus.addSubMenuItem('topbar', 'notes', 'New Note', 'notes/create');
+        Menus.addSubMenuItem('topbar', 'notes', 'New Note', 'notes/create');
+        Menus.addSubMenuItem('topbar', 'notes', 'NoteData', 'datanote/data');
 	}
 ]);

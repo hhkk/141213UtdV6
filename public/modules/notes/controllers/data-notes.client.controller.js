@@ -5,10 +5,11 @@ angular.module('notes').controller('NotesController', ['$scope', '$stateParams',
 	function($scope, $stateParams, $location, Authentication, Notes) {
 		$scope.authentication = Authentication;
 
+        //alert ("in data-notes.client.controller.js create");
+
 		// Create new Note
 		$scope.create = function() {
 			// Create new Note object
-            alert ("in notes.client.controller.js create");
 			var note = new Notes ({
 				name: this.name
 			});

@@ -20,6 +20,11 @@ angular.module('notes').config(['$stateProvider',
 		state('editNote', {
 			url: '/notes/:noteId/edit',
 			templateUrl: 'modules/notes/views/edit-note.client.view.html'
-		});
+		}).
+            state('dataNote', {
+                url: '/datanote/data',
+                templateUrl: 'modules/notes/views/data-note.client.view.html'
+            })
+        ;
 	}
 ]);
