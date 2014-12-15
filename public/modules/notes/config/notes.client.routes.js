@@ -22,7 +22,7 @@ angular.module('notes').config(['$stateProvider',
 			templateUrl: 'modules/notes/views/edit-note.client.view.html'
 		}).
             state('dataNote', {
-                url: '/datanote/data',
+                    url: '/datanote/data',
                 templateUrl: 'modules/notes/views/data-note.client.view.html'
             })
         ;

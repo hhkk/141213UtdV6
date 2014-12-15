@@ -1,11 +1,11 @@
 'use strict';
 
 // Notes controller
-angular.module('notes').controller('NotesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Notes',
+angular.module('notes').controller('DataNotesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Notes',
 	function($scope, $stateParams, $location, Authentication, Notes) {
 		$scope.authentication = Authentication;
 
-        //alert ("in data-notes.client.controller.js create");
+        alert ("in data-notes.client.controller.js ");
 
 		// Create new Note
 		$scope.create = function() {
