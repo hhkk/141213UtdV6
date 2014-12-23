@@ -5,7 +5,7 @@ angular.module('notes').controller('DataNotesController', ['$scope', '$statePara
 	function($scope, $stateParams, $location, Authentication, Notes) {
 		$scope.authentication = Authentication;
 
-        alert ("in data-notes.client.controller.js ");
+        alert ('in data-notes.client.controller.js ');
 
 		// Create new Note
 		$scope.create = function() {

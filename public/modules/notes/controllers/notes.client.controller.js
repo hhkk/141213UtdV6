@@ -8,7 +8,7 @@ angular.module('notes').controller('NotesController', ['$scope', '$stateParams',
 		// Create new Note
 		$scope.create = function() {
 			// Create new Note object
-            alert ("in notes.client.controller.js create");
+            alert ('in notes.client.controller.js create');
 			var note = new Notes ({
 				name: this.name
 			});
