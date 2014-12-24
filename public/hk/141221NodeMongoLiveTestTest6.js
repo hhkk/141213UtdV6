@@ -13,21 +13,51 @@ var Db = require('mongodb').Db,
 
 var db = new Db('livetesttest', new Server('localhost', 27017));
 // Establish connection to db
+
+
+var getProperties = function (desc, obj)
+{
+    var j = 0 ;
+    for(var propertyName in obj) {
+        j++;
+        console.log (' hi momz');
+        //if (obj.hasOwnProperty(propertyName))
+        console.log (j+ '. props [' + desc + '] :'+propertyName);
+        // propertyName is what you want
+        // you can get the value like this: myObject[propertyName]
+    }
+
+}
+
+
+
+
 db.open(function(err, db) {
 
     // Fetch a collection to insert document into
     db.collection("favsckckck", function(err, collection) {
 
+        //getProperties('collection', collection);
         //regular expresison reg exp http://mongodb.github.io/node-mongodb-native/markdown-docs/queries.html#regular-expressions-in-queries
-        collection.find({filelineraw:/bkon/}).toArray(function(err, favsckckck) {
+        // works collection.find({filelineraw:/alladvantage/}).toArray(function(err, favsckckck) {
+        collection.find(
+            //{filelineraw:/alladvantage/}
+            {
+                $and:[
+                    {filelineraw:/Karen/}
+                    ,
+                    {filelineraw:/lladvantag/}
+                ]
+            }
+        ).toArray(function(err, favsckckck) {
             console.log ("got hk");
 
             for (i = 0, len = favsckckck.length; i < len; i++) {
                 console.log ("favsckckck:"+favsckckck[i].filelineraw);
-
+                //getProperties('frfr', favsckckck[i]);
             }
 
-            assert.equal(45, favsckckck.length);
+            //assert.equal(45, favsckckck.length);
             assert.equal(null, err);
         });
 
