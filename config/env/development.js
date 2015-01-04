@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/ustodo-dev',
+		db: 'mongodb://localhost/ustodo-dev',
 	app: {
 		title: 'UsToDo - Development Environment'
 	},

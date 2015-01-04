@@ -15,7 +15,8 @@ var Db = require('mongodb').Db,
 var getProperties = function (desc, obj)
 {
     var j = 0 ;
-    for(var propertyName in obj) {
+    for(var propertyName in obj)
+    {
         j++;
         console.log (' hi momz');
         //if (obj.hasOwnProperty(propertyName))
