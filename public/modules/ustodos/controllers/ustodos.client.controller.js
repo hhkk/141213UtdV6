@@ -6,11 +6,14 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 	function($scope, $stateParams, $location, Authentication, Ustodos) {
 		$scope.authentication = Authentication;
 
-		$scope.hbkkBindSearch = 'hi mom';
+		var tt1 = Ustodos.query ({name: 'dd'});
+		$scope.ustodos = tt1;
+
+		$scope.hbkkBindSearch = 'gg';
 
 		// Create new Ustodo
 		$scope.create = function() {
-			console.log ('in ustodos.client.controller CREATE');
+			console.log ('1 in ustodos.client.controller CREATE');
 			// Create new Ustodo object
 			//getProperties('props this:', this);
 			//getProperties('props Ustodos:', Ustodos);
@@ -32,7 +35,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 
 		// Remove existing Ustodo
 		$scope.remove = function(ustodo) {
-			console.log ('in ustodos.client.controller REMOVE');
+			console.log ('2 in ustodos.client.controller REMOVE');
 			if ( ustodo ) {
 				ustodo.$remove();
 
@@ -50,7 +53,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 
 		// Update existing Ustodo
 		$scope.update = function() {
-			console.log ('in ustodos.client.controller UPDATE');
+			console.log ('3 in ustodos.client.controller UPDATE');
 			var ustodo = $scope.ustodo;
 
 			ustodo.$update(function() {
@@ -62,7 +65,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 
 		// Find a list of Ustodos
 		$scope.find = function() {
-			console.log ('in ustodos.client.controller FIND');
+			console.log ('4 in ustodos.client.controller FIND');
 			//getProperties('props Ustodos:', Ustodos);
 
 			//$scope.ustodos = Ustodos.query(); //original
@@ -81,7 +84,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 
 		// Find existing Ustodo
 		$scope.findOne = function() {
-			console.log ('in ustodos.client.controller FINDONE');
+			console.log ('5 in ustodos.client.controller FINDONE');
 			$scope.ustodo = Ustodos.get({
 				// ORIGINAL A/B SPLIT HBKK
 				ustodoId: $stateParams.ustodoId    // original
@@ -97,7 +100,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 
 		// Search for new Ustodo (findlist)
 		$scope.search = function() {
-			console.log ('in ustodos.client.controller SEARCH');
+			console.log ('6 in ustodos.client.controller SEARCH');
 			// find matching
 			console.log ('in search function1 this.hbkkBindSearch:' + this.hbkkBindSearch);
 			//var patternhk = /$scope.hbkkBindSearch/;
@@ -112,7 +115,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 
 			//$scope.ustodos = Ustodos.query ({name: /141229/});
 			setTimeout(function(){console.log ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
-			setTimeout(function(){alert ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
+			//setTimeout(function(){alert ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
 			//$scope.$apply();
 
 			//getProperties('props this:', this);
@@ -138,8 +141,8 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 
 		// Search for one hbkk existing Ustodo by string
 		$scope.searchOne = function() {
-			console.log ('in ustodos.client.controller SEARCHONE');
-			console.log ('hbkk getting ustodo searchOne :' + $stateParams.ustodoId);
+			console.log ('7 in ustodos.client.controller SEARCHONE');
+			console.log ('7 hbkk getting ustodo searchOne :' + $stateParams.ustodoId);
 			$scope.ustodo = Ustodos.get({
 				// ORIGINAL A/B SPLIT HBKK
 				ustodoSearchString: $stateParams.ustodoId
