@@ -1,0 +1,45 @@
+<!-- http://u2d.co:3000/hk/150107TestAngularUpdate/testview.html-->
+
+<!--public/lib/bootstrap/dist/css/bootstrap.css-->
+
+<script src="/lib/angular/angular.js">
+</script>
+
+<script src="./test.js">
+</script>
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/lib/bootstrap/dist/css/bootstrap.css">
+</head>
+
+<div ng-app>
+    <h2>Todo</h2>
+    <div ng-controller="TodoCtrl">
+        <span>{{remaining()}} of {{todos.length}} remaining</span>
+        [ <a href="" ng-click="archive()">archive</a> ]
+        <ul class="unstyled">
+            <li ng-repeat="todo in todos">
+                <input type="checkbox" ng-model="todo.done">xx
+                <span class="done-{{todo.done}}">{{todo.text}}</span>
+            </li>
+            22222
+        </ul>
+        <ul class="unstyled">
+            <li ng-repeat="todo in todos">
+                <input type="checkbox" ng-model="todo.done">xx
+                <span class="done-{{todo.done}}">{{todo.text}}</span>
+            </li>
+        </ul>
+        <form ng-submit="addTodo()">
+            <input type="text" ng-model="todoText"  size="30"
+                   placeholder="add new todo here">
+            <input class="btn-primary" type="submit" value="add">
+        </form>
+        <form ng-submit="addTodo2()">
+            <input type="text" ng-model="todoText"  size="30"
+                   placeholder="add new todo here">
+            <input class="btn-primary" type="submit" value="add2">
+        </form>
+    </div>
+</div>

@@ -99,10 +99,9 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 		$scope.search = function() {
 			console.log ('in ustodos.client.controller SEARCH');
 			// find matching
-			    console.log ('in search function1');
-			    console.log ('in search function2');
+			console.log ('in search function1 this.hbkkBindSearch:' + this.hbkkBindSearch);
 			//var patternhk = /$scope.hbkkBindSearch/;
-			var tt = Ustodos.query ({name: /a/});
+			var tt = Ustodos.query ({name: this.hbkkBindSearch});
 			$scope.ustodos = tt;
 			//	// ORIGINAL A/B SPLIT HBKK
 			//	//ustodoSearchString: $stateParams.ustodoId
@@ -112,8 +111,9 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 			//	//name: 'as'
 
 			//$scope.ustodos = Ustodos.query ({name: /141229/});
-			//	setTimeout(function(){console.log ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length)}, 2000);
-
+			setTimeout(function(){console.log ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
+			setTimeout(function(){alert ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
+			//$scope.$apply();
 
 			//getProperties('props this:', this);
 			//var ustodo = new Ustodos ({

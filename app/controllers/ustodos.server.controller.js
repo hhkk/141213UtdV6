@@ -95,7 +95,7 @@ exports.list = function(req, res) {
 	}
 	console.log ('in ustodos.server.controller.js: list, query: ' + query);
 	console.log ('in ustodos.server.controller.js: list, query.name: ' + query.name);
-	var re = new RegExp(query.name)
+	var re = new RegExp(query.name);
 	query.name = re;
 	Ustodo.find(query).sort('-created').populate('user', 'displayName').exec(function(err, ustodos) {
 		if (err) {
@@ -135,20 +135,4 @@ exports.hasAuthorization = function(req, res, next) {
 	next();
 };
 
-
-/**   * Ustodo middleware  */
-exports.ustodoBySearch = function(req, res, next, hk) {
-	//var s = Ustodo.findById(id);
-	console.log ('in ustodos.server.controller.js: ustodoBySearch');
-
-	// ORIGINAL A/B SPLIT HBKK
-	// A
-	Ustodo.findById(hk).populate('user', 'displayName').exec(function(err, ustodo) {
-		// B
-		// Ustodo.findOne({name:/ia/}).populate('user', 'displayName').exec(function(err, ustodo) {
-		if (err) return next(err);
-		if (! ustodo) return next(new Error('Failed to load Ustodo '));
-		req.ustodo = ustodo ;
-		next();
-	}); };
 
