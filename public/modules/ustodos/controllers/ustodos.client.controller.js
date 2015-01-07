@@ -4,12 +4,13 @@
 // Ustodos controller
 angular.module('ustodos').controller('UstodosController', ['$scope', '$stateParams', '$location', 'Authentication', 'Ustodos',
 	function($scope, $stateParams, $location, Authentication, Ustodos) {
+		console.log ('0 in ustodos.client.controller init');
 		$scope.authentication = Authentication;
 
-		var tt1 = Ustodos.query ({name: 'dd'});
+		$scope.hbkkBindSearch = 'gg';
+		var tt1 = Ustodos.query ({name: $scope.hbkkBindSearch});
 		$scope.ustodos = tt1;
 
-		$scope.hbkkBindSearch = 'gg';
 
 		// Create new Ustodo
 		$scope.create = function() {

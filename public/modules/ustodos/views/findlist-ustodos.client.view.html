@@ -26,8 +26,7 @@
                 </div>
             </fieldset>
         </form>
-    </div>
-    <div ng-controller="UstodosController" >
+
         <a ng-repeat="ustodo in ustodos" >
             <h4 class="list-group-item-heading" data-ng-bind="ustodo.name"></h4>
         </a>
@@ -37,10 +36,5 @@
 _____
 <!--original A/B split hbkk-->
 <!--<section data-ng-controller="UstodosController" data-ng-init="find({name: /ia\/})">-->
-    <div ng-controller="UstodosController" ng-init="find()">
-        <a data-ng-repeat="ustodo in ustodos" >
-            <h4 class="list-group-item-heading" data-ng-bind="ustodo.name"></h4>
-        </a>
-    </div>
 </div>
 
