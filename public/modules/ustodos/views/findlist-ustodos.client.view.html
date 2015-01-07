@@ -1,3 +1,4 @@
+<div ng-app>
 <section data-ng-controller="UstodosController">
     <div class="page-header">
         <h1>New Ustodo</h1>
@@ -5,6 +6,12 @@
     <div class="col-md-12">
         <form class="form-horizontal" data-ng-submit="search()" novalidate>
             <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="name">Name</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="hbkkBindSearch" hk = "hbkkBindSearch" id="name" class="form-control" placeholder="Name" required>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label" for="name">Name</label>
                     <div class="controls">
@@ -20,8 +27,8 @@
             </fieldset>
         </form>
     </div>
-    <div ng-controller="UstodosController" data-ng-init="find()">
-        <a data-ng-repeat="ustodo in ustodos" >
+    <div ng-controller="UstodosController" >
+        <a ng-repeat="ustodo in ustodos" >
             <h4 class="list-group-item-heading" data-ng-bind="ustodo.name"></h4>
         </a>
     </div>
@@ -30,9 +37,10 @@
 _____
 <!--original A/B split hbkk-->
 <!--<section data-ng-controller="UstodosController" data-ng-init="find({name: /ia\/})">-->
-    <div ng-controller="UstodosController" data-ng-init="find()">
+    <div ng-controller="UstodosController" ng-init="find()">
         <a data-ng-repeat="ustodo in ustodos" >
             <h4 class="list-group-item-heading" data-ng-bind="ustodo.name"></h4>
         </a>
     </div>
 </div>
+
