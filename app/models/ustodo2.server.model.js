@@ -7,20 +7,16 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 /**
- * Ustodo Schema
+ * Ustodo2 Schema
  */
-var UstodoSchema = new Schema({
+var Ustodo2Schema = new Schema({
 	name: {
 		type: String,
 		default: '',
-		required: 'Please fill Ustodo name',
+		required: 'Please fill Ustodo2 name',
 		trim: true
 	},
 	created: {
-		type: Date,
-		default: Date.now
-	},
-	modified: {
 		type: Date,
 		default: Date.now
 	},
@@ -30,4 +26,4 @@ var UstodoSchema = new Schema({
 	}
 });
 
-mongoose.model('Ustodo', UstodoSchema);
+mongoose.model('Ustodo2', Ustodo2Schema);
