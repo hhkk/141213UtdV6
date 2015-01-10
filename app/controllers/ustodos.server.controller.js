@@ -83,6 +83,8 @@ exports.delete = function(req, res) {
  */
 exports.list = function(req, res) {
 	console.log ('in ustodos.server.controller.js: list ');
+	console.log ('user monoid req._passport.session.user: ' + req._passport.session.user);
+
 	var query = req.query;
 	if (!query)
 	{
