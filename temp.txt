@@ -1,0 +1,36 @@
+ Volume in drive C is Acer
+ Volume Serial Number is 362A-2207
+
+ Directory of C:\utd\141213UtdV6
+
+01/10/2015  04:03 PM    <DIR>          .
+01/10/2015  04:03 PM    <DIR>          ..
+12/13/2014  12:56 AM                31 .bowerrc
+12/13/2014  12:56 AM               346 .csslintrc
+12/13/2014  12:56 AM               891 .editorconfig
+12/13/2014  12:56 AM               113 .gitignore
+12/19/2014  05:08 AM    <DIR>          .idea
+12/13/2014  12:56 AM             1,757 .jshintrc
+12/13/2014  12:56 AM                10 .slugignore
+12/13/2014  12:56 AM                84 .travis.yml
+12/13/2014  10:07 AM               430 141213UtdV6.iml
+12/13/2014  02:58 AM    <DIR>          app
+12/13/2014  02:58 AM               307 bower.json
+12/13/2014  02:58 AM    <DIR>          config
+12/13/2014  12:56 AM               669 Dockerfile
+12/13/2014  12:56 AM               147 fig.yml
+12/13/2014  12:56 AM               414 generate-ssl-certs.sh
+12/13/2014  12:56 AM             3,681 gruntfile.js
+12/13/2014  12:56 AM             1,375 karma.conf.js
+12/13/2014  12:56 AM             1,053 LICENSE.md
+12/18/2014  06:24 PM    <DIR>          node_modules
+12/13/2014  02:58 AM             1,750 package.json
+12/13/2014  12:56 AM                48 Procfile
+12/21/2014  05:07 PM    <DIR>          public
+12/13/2014  12:56 AM             8,904 README.md
+12/13/2014  12:56 AM               815 server.js
+12/15/2014  07:18 AM               461 temp.bat
+12/18/2014  06:24 PM                49 temp.js
+01/10/2015  04:03 PM                 0 temp.txt
+              22 File(s)         23,335 bytes
+               7 Dir(s)  10,017,755,136 bytes free
