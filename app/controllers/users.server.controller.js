@@ -14,3 +14,21 @@ module.exports = _.extend(
 	require('./users/users.password.server.controller'),
 	require('./users/users.profile.server.controller')
 );
+
+
+function hbkk()
+{
+	var re = new RegExp(query.name);
+	query.name = re;
+	Ustodo.find(query).sort('-created').populate('user', 'displayName').exec(function(err, ustodos) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(ustodos);
+		}
+	});
+
+}
+
