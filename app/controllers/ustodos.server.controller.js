@@ -1,9 +1,13 @@
 'use strict';
 
 
-var UtilClass = require('../../public/lib/ustodo/UtilClass');
+//var UtilClass = require('.././UtilClass');
+//console.log ('__dirname:' + __dirname);
+var UtilClass = require('../../public/modules/ustodo/UtilClass');
+//C:\utd\141213UtdV6\public\modules\ustodo\UtilClass.js
 //C:\utd\141213UtdV6\public\lib\ustodo\UtilClass.js
 //C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
+
 
 
 /**
