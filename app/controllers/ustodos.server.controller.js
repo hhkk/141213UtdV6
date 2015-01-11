@@ -2,8 +2,10 @@
 
 
 //var UtilClass = require('.././UtilClass');
-//console.log ('__dirname:' + __dirname);
+// console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
+// C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
 var UtilClass = require('../../public/modules/ustodo/UtilClass');
+//var UtilNodeVsBrowser = require('../../public/modules/ustodo/UtilNodeVsBrowser');
 //C:\utd\141213UtdV6\public\modules\ustodo\UtilClass.js
 //C:\utd\141213UtdV6\public\lib\ustodo\UtilClass.js
 //C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
