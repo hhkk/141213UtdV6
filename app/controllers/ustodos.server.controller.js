@@ -92,7 +92,7 @@ exports.list = function(req, res) {
 	console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
 	console.log ('in ustodos.server.controller.js: list ');
 	console.log ('user monoid req._passport.session.user: ' + req._passport.session.user);
-
+	//54b143dde898903429ce32b1
 	var query = req.query;
 	if (!query)
 	{
@@ -102,7 +102,7 @@ exports.list = function(req, res) {
 	else
 	{
 		console.log ('in ustodos.server.controller.js: list, query != null');
-	}
+		}
 	console.log ('in ustodos.server.controller.js: list, query: ' + query);
 	console.log ('in ustodos.server.controller.js: list, query.name: ' + query.name);
 	var re = new RegExp(query.name);

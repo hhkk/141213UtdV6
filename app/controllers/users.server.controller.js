@@ -16,19 +16,47 @@ module.exports = _.extend(
 );
 
 
-function hbkk()
-{
-	var re = new RegExp(query.name);
-	query.name = re;
-	Ustodo.find(query).sort('-created').populate('user', 'displayName').exec(function(err, ustodos) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(ustodos);
-		}
+// hbkk content below here
+// content added from C:\utd\141213UtdV6\app\controllers\notes.server.controller.js
+
+/**
+ * Module dependencies.
+ */
+var mongoose = require('mongoose'),
+	errorHandler = require('./errors.server.controller'),
+	Note = mongoose.model('Note'),
+	_ = require('lodash');
+
+
+/**
+ * Note middleware
+ */
+exports.userByID = function(req, res, next, id) {
+	User.findById(id).populate('user', 'displayName').exec(function(err, note) {
+		if (err) return next(err);
+		if (! note) return next(new Error('Failed to load Note ' + id));
+		req.user = user;
+		next();
 	});
+};
 
-}
-
+//
+//
+//
+//
+//function hbkk()
+//{
+//	var re = new RegExp(query.name);
+//	query.name = re;
+//	Ustodo.find(query).sort('-created').populate('user', 'displayName').exec(function(err, ustodos) {
+//		if (err) {
+//			return res.status(400).send({
+//				message: errorHandler.getErrorMessage(err)
+//			});
+//		} else {
+//			res.jsonp(ustodos);
+//		}
+//	});
+//
+//}
+//
