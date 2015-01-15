@@ -31,6 +31,10 @@ var Db = require('mongodb').Db,
     assert = require('assert');
 
 var db = new Db('test', new Server('localhost', 27017), {safe:false});
+
+var UtilClass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass.js');
+ var UtilClass3_isString = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass3_isString.js');
+
 // Establish connection to db
 db.open(function(err, db) {
 
@@ -52,11 +56,16 @@ db.open(function(err, db) {
             //console.log('x:' + x);
             var utilclass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass.js');
 
-            coll.insert({"hk":b}, {w: 1}, function (err, result) {
-                if (err !== null)
-                    utilclass.getClass("erra", err);
-                assert.equal(null, err);
-            });
+            console.log ("UtilClass3_isString.isString (astr)" + UtilClass3_isString.isString (astr));
+coll.insert(astr, {w: 1}, function (err, result) {
+    if (err !== null)
+        utilclass.getClass("erra", err);
+    assert.equal(null, err);
+});
+
+
+
+
             //coll.insert(b, {w: 1}, function (err, result) {
             //    if (err !== null) {
             //        utilclass.getClass("errb", err);
@@ -77,10 +86,23 @@ db.open(function(err, db) {
             //});
 
             // Fetch all results
-            //coll.find().toArray(function (err, items) {
-            //    assert.equal(null, err);
-            //    assert.equal(1, items.length);
-            //});
+            coll.find().toArray(function (err, items) {
+                assert.equal(null, err);
+                var o = items[items.length-1];
+
+                var UtilClass3_isString = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass3_isString.js');
+                console.log ("o:" + o);
+                console.log ("o.toString():" + o.toString());
+                console.log ("typeof o:" + typeof o);
+                console.log ("Array.isArray(o):" + Array.isArray(o));
+                console.log ("o[0]:" + o[0]);
+                console.log ("UtilClass3_isString.isString (o)" + UtilClass3_isString.isString (o));
+                console.log ("UtilClass3_isString.isString (o[0])" + UtilClass3_isString.isString (o[0]));
+                UtilClass.getClass("o:", o);
+
+
+                //assert.equal(1, items.length);
+            });
 
             // Remove all the document
             //var UtilKeyRead = require ('C:/utd/141213UtdV6/public/modules/ustodo/UtilKeyRead.js');

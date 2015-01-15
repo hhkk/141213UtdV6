@@ -26,6 +26,8 @@ function getClassSub (desc, obj)
 
             s = s + "\r\n a.1 typeof obj [" + typeof obj + "], ";
 
+            s = s + "\r\n a.2 Array.isArray(obj) [" + Array.isArray(obj)+ "], ";
+
             s = s + "\r\n b getClassSub obj.prototype string [" + Object.prototype.toString.call(obj) + "]";
 
             s = s + "\r\n c obj.prototype parsed [" + Object.prototype.toString.call(obj).match(/^\[object\s(.*)\]$/)[1] + "] ";
