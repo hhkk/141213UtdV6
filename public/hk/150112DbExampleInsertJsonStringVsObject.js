@@ -24,14 +24,11 @@
 //========================================================================================
 //
 //    Process finished with exit code 0
-
-
 var Db = require('mongodb').Db,
     Server = require('mongodb').Server,
     Grid = require('mongodb').Grid,
     Code = require('mongodb').Code,
     assert = require('assert');
-
 
 var db = new Db('test', new Server('localhost', 27017), {safe:false});
 // Establish connection to db
@@ -40,63 +37,89 @@ db.open(function(err, db) {
     // Fetch a collection to insert document into
     db.collection("150112DbExampleInsertJsonStringVsObject", function(err, coll) {
 
+        // callback hell http://stackoverflow.com/questions/20961919/node-js-async-how-to-avoid-callback-hell-with-async
         try {
+
+
             // Insert a bunch of documents
-            var a = '{"a":{"lover": "girl", "lover2": "girl2"}}';
-            a = '{"henry", "kon"}';
-            //var x = JSON.parse(a);
+            var astr = '[{"f":"g"},{"h":"i"},{"a":{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}}]';
+            //a = '{"henry", "kon"}';
+            //a = '{"beth":"kon"}';
+            var a = JSON.parse(astr); // object
+            var b = JSON.stringify(a); // string
+            var c = {"this is b, a real object":b};
+            var d = JSON.parse(b);
             //console.log('x:' + x);
+            var utilclass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass.js');
 
-            coll.insert(a, {w: 1}, function (err, result) {
-
+            coll.insert({"hk":b}, {w: 1}, function (err, result) {
+                if (err !== null)
+                    utilclass.getClass("erra", err);
                 assert.equal(null, err);
+            });
+            //coll.insert(b, {w: 1}, function (err, result) {
+            //    if (err !== null) {
+            //        utilclass.getClass("errb", err);
+            //        x150113readline.getInput("errb hit a key to continue");
+            //    }
+            //    assert.equal(null, err);
+            //});
+            //coll.insert(c, {w: 1}, function (err, result) {
+            //    if (err !== null)
+            //        utilclass.getClass("errc", err);
+            //    assert.equal(null, err);
+            //});
+            //coll.insert(d, {w: 1}, function (err, result) {
+            //    //var response = x150113readline.getInput("do you want to remove all y/n");
+            //    if (err !== null)
+            //        utilclass.getClass("errd", err);
+            //    assert.equal(null, err);
+            //});
 
-                // Fetch all results
-                            //coll.find().toArray(function (err, items) {
-                            //    assert.equal(null, err);
-                            //    assert.equal(1, items.length);
-                            //});
+            // Fetch all results
+            //coll.find().toArray(function (err, items) {
+            //    assert.equal(null, err);
+            //    assert.equal(1, items.length);
+            //});
 
+            // Remove all the document
+            //var UtilKeyRead = require ('C:/utd/141213UtdV6/public/modules/ustodo/UtilKeyRead.js');
+            //response = UtilKeyRead.getInput("enter y or n for remove or not");
+            //if (response.toString() === "y") {
+            //    console.log ("you typed y");
+            //}else {
+            //    console.log ("you typed not y");
+            //}
 
+            //if (false) {
+            //        // assert 0
+            //console.log ("removing all records");
+            //coll.remove();
+            //console.log ("aserting none left");
+            //coll.find().toArray(function (err, items) {
+            //    assert.equal(null, err);
+            //    assert.equal(0, items.length);
+            //    db.close();
+            //});
+            //
+            //    }
+            //    else {
+            //        console.log ("you did not remove records");
+            //        coll.find().toArray(function (err, items) {
+            //            assert.equal(null, err);
+            //            //assert.equal(0, items.length);
+            //            console.log ("items.length:"+items.length);
+            //            db.close();
+            //        });
+            //    }
+            //
+            //});
 
-                    // Remove all the document
-                var x150113readline = require ('c:/utd/141213UtdV6/public/hk/150113readline.js');
-
-                var response = x150113readline.getInput("do you want to remove all y/n");
-                console.log("response:" + response);
-                console.log("Array.isArray(response):" + Array.isArray(response));
-                //var utilgetclass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass.js');
-                //var t = utilgetclass.getClass(response)   ;
-                //console.log("t:" + t);
-
-                console.log ("got response:"+response[0]);
-
-                if (response === 'y') {
-                        // assert 0
-                        console.log ("removing all records");
-                        coll.remove();
-                        console.log ("aserting none left");
-                        coll.find().toArray(function (err, items) {
-                            assert.equal(null, err);
-                            assert.equal(0, items.length);
-                            db.close();
-                        });
-
-                    }
-                    else {
-                        console.log ("you did not remove records");
-                        coll.find().toArray(function (err, items) {
-                            assert.equal(null, err);
-                            //assert.equal(0, items.length);
-                            console.log ("items.length:"+items.length);
-                            db.close();
-                        });
-                    }
-
-                });
-
-        } catch (err) {
+        }
+        catch (err)
+        {
             console.log ("err:" + err);
         }
-    })
+        console.log ("done")
+    });
 });

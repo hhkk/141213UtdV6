@@ -11,7 +11,12 @@
 // var UtilClass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass.js');
 
 
-function getClassSub (desc, obj)
+exports.isString = function (s)
+{
+    return typeof s == 'string' || s instanceof String;
+}
+
+exports.getClass2 = function(s) {
 {
 
     try {
