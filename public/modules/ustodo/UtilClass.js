@@ -11,17 +11,18 @@
 // var UtilClass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass.js');
 
 
+var icallcnt_getClassSub = 0;
 function getClassSub (desc, obj)
 {
-
     try {
-        var s = 'exports.getClassSub:' + desc + ' [' + desc + ']\r\n\r\n';
+        var s = '\r\n' + ++icallcnt_getClassSub + '. +++++++++++++++++++++++++++++++++++++++++++++++++++';
+        var s = s + '\r\n exports.getClassSub:' + desc + ' [' + desc + ']\r\n\r\n';
         if (obj === null)
-            s = s + " getClassSub a says desc [" + desc + "] obj passed in is null. ";
+            s = s + "\r\n  getClassSub a says desc [" + desc + "] obj passed in is null. ";
         if (obj === undefined)
-            s = s + " getClassSub a says desc [" + desc + "] obj passed in is undefined. ";
+            s = s + "\r\n  getClassSub a says desc [" + desc + "] obj passed in is undefined. ";
         else {
-            s = s + " getClassSub a says desc [" + desc + "]. ";
+            s = s + "\r\n  getClassSub a says desc [" + desc + "]. ";
             s = s + "\r\n a.0b obj.toString [" + obj.toString() + "], ";
 
             s = s + "\r\n a.1 typeof obj [" + typeof obj + "], ";
@@ -43,14 +44,20 @@ function getClassSub (desc, obj)
                 i++;
                 var hasOwnPropIndicator = obj.hasOwnProperty(key);
                 var obj_key = "obj_key is really null";
-                console.log ('typeof obj[key]:'+ typeof obj[key]);
+                s = s + '\r\nPROPHK get type of prop key keyname [' + key + '] : typeof obj[key]:'+ typeof obj[key];
                 if (obj[key] !== null && obj[key] !== undefined && typeof obj[key] != "object")
                     obj_key = obj[key].toString();
                 if (typeof obj[key] == "object")
                     obj_key = "typeof obj[key] == 'object'";
                 if (obj[key] === undefined)
                     obj_key = "obj_key is undefined";
-                console.log (i + '. props desc [' + desc + '] name ['+key + '] value [' + obj_key + '] hasOwnPropIndicator [' + hasOwnPropIndicator + ']');
+
+                // careful this will print out a function property as a string!!  this is a big one!!!!
+                if ((typeof obj[key]).toString() !== 'function') {
+                    s = s + '\r\n' + i + '. props desc [' + desc + '] name ['+key + '] value [' + obj_key + '] hasOwnPropIndicator [' + hasOwnPropIndicator + ']';
+                } else {
+                    s = s + '\r\n' + i + '. not appending function definition!';
+                }
                 //if (obj.hasOwnProperty(key) && typeof obj[key] !== 'function') {
                 //if (obj.hasOwnProperty(key) ) {
                 if (typeof obj[key] !== 'function')
@@ -60,9 +67,9 @@ function getClassSub (desc, obj)
                 properties.push(key);
                 if (key == 'srcElement') // object Window
                 {
-                    alert (i + ". found prop srcElement[" + getClassSub("recCall", obj.srcElement) + "]"); // shows ageLetter etc
+                    s = s + '\r\n' + i + ". found prop srcElement[" + getClassSub("recCall", obj.srcElement) + "]"; // shows ageLetter etc
                     if (obj['srcElement'] == null) {
-                        alert (i + ". but its value is null!!!!!!!!!!!!!!!!!!!!");
+                        s = s + '\r\n' + i + ". but its value is null!!!!!!!!!!!!!!!!!!!!";
                     }
                 }
                 //alert ("found prop[" + key + "]"); shows ageLetter etc
@@ -73,11 +80,10 @@ function getClassSub (desc, obj)
         }
 
 
-        var cons = ", this.constructor:" + this.constructor
-
+        //var cons = ", this.constructor:" + this.constructor
         //oalert ("in getclass: $(this).prototype.toString()))" + ($(this).prototype.toString()));
-        if (typeof obj === "undefined")
-            s = s + " UsToDo says this class desc [" + desc + "] is undefined. " + cons;
+        //if (typeof obj === "undefined")
+            //s = s + " UsToDo says this class desc [" + desc + "] is undefined. " + cons;
     } catch (e) {
 
         console.log ("error in getClass:e:" + e.message)
@@ -91,24 +97,30 @@ function getClassSub (desc, obj)
 
 
 
-exports.getClass = function (desc, obj)
-{
+exports.UtilClass = function (desc, obj)    {
 
-    var s = 'exports.getClass:' + desc + ' [' + desc + ']\r\n\r\n';
+    var s = '<================== BEGIN exports.UtilClass:'
+        + 'exports.getClass:' + desc + ' [' + desc + ']\r\n\r\n';
+    //return s;
 
     //s = s + "obj.constructor [" + obj.constructor + "], ";
 
     if (obj)
     {
-        s = s + "\r\n\r\ngetclass1 obj:" + getClassSub (desc, obj)
-        s = s + "\r\n\r\ngetclass2 parent:" + getClassSub ("obj.parent:", obj.parent )
+        s = s + "\r\n\r\na.(obj) getclass1 obj:" + getClassSub ('['+desc+'].itself:', obj)
+
+        s = s + "\r\n\r\nb.(obj.parent) getclass2 parent:" + getClassSub ('['+desc+'].parent:', obj.parent )
+        //return s;
     }
     else
     {
         s = s + "\r\n\r\nskip getclass1 and getclass2 as obj is NOT";
     }
 
-    s = s + "\r\n\r\ngetclassmain3 this:" + getClassSub (desc, this )
+    //careful - this includes this long method output!!
+     s = s + "\r\n\r\nc.(this) getclassmain3 this:" + getClassSub ('['+this+'].itself:', this )
+    s = s + '\r\n\r\nEND exports.UtilClass ==================>';
+
 
     //s = s + "this.constructor [" + this.constructor + "], ";
     //s = s + "this.parent.constructor [" + this.parent.constructor + "], ";
