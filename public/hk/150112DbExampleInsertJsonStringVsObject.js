@@ -35,65 +35,67 @@ var Db = require('mongodb').Db,
 
 var db = new Db('test', new Server('localhost', 27017), {safe:false});
 
-
 // Establish connection to db
 db.open(function(err, db) {
-
     // Fetch a collection to insert document into
     db.collection("150112DbExampleInsertJsonStringVsObject", function (err, coll)
-        {
+    {
+        // callback hell http://stackoverflow.com/questions/20961919/node-js-async-how-to-avoid-callback-hell-with-async
+        try {
+            // INSERT
+            //var astr = '{"xx":[{"f":"g"},{"h":"i"},{"a":{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}}]}';
+            //var astr = '{"xx":[{"f":"g"},{"h":"i"},{"a":{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}}]}';
+            //var astr = '{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}';
+            var konstr = "kon"; // <=========================
+            var astr = '{"henry": "kon"}'; // <=========================
+            var b = JSON.stringify(astr); // string
+            var a = {'beth':b};
+            //var a = JSON.parse(astr); // object
+            //console.log ("b:" + b);
+            var c = {"this is b, a real object": b};
+            var d = JSON.parse(b);
+            //console.log('x:' + x);
+            //console.log ("UtilClass3_isString.isString (astr)" + UtilClass3_isString.isString (astr));
+            coll.insert(a
+            //coll.insert(a         // <=========================
+                , {w: 1}, function (err, result) {
+                if (err !== null)
+                    console.log('erra:' + UtilClass.getClass('erra', err));
+                assert.equal(null, err);
+            });
 
-            // callback hell http://stackoverflow.com/questions/20961919/node-js-async-how-to-avoid-callback-hell-with-async
-            try {
+            // READ
+            //var qs = '{lovxxer:/^'+s2+'/}';
+            // ori from var qs= { Zip: new RegExp('^' + zipCode) };  // http://stackoverflow.com/questions/11073863/mongodb-regular-expression-search-starts-with-using-javascript-driver-and-node
+            // works var qs= { lover: new RegExp('^' + s2) };
+            //var queryRegExp = {xx: new RegExp(queryRegExpStrInput)};  // <=========================
+            var queryRegExp = {beth: new RegExp('henry')};  // <=========================
 
+            coll.find(queryRegExp).toArray(function (err, items) {
+                console.log("items.length:" + items.length);
+                assert.equal(null, err);
+                var o = items[items.length - 1];
+                //var UtilClass3_isString = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass3_isString.js');
+                console.log("o:" + o);
+                //console.log ("o.toString():" + o.toString());
+                //console.log ("typeof o:" + typeof o);
+                //console.log ("Array.isArray(o):" + Array.isArray(o));
+                //console.log ("o[0]:" + o[0]);
+                //console.log ("UtilClass3_isString.isString (o)" + UtilClass3_isString.isString (o));
+                //console.log ("UtilClass3_isString.isString (o[0])" + UtilClass3_isString.isString (o[0]));
+                //UtilClass.getClass("o:", o);
+                //assert.equal(1, items.length);
+            });
 
-                // INSERT
-                //var astr = '{"xx":[{"f":"g"},{"h":"i"},{"a":{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}}]}';
-                //var astr = '{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}';
-                var astr = '{"henry", "kon"}'; // <=========================
-                //a = '{"beth":"kon"}';
-                var a = JSON.parse(astr); // object
-                var b = JSON.stringify(a); // string
-                //console.log ("b:" + b);
-                var c = {"this is b, a real object": b};
-                var d = JSON.parse(b);
-                //console.log('x:' + x);
-                //console.log ("UtilClass3_isString.isString (astr)" + UtilClass3_isString.isString (astr));
-                coll.insert({lmnop: astr}, {w: 1}, function (err, result) {  // <=========================
-                    if (err !== null)
-                        console.log('erra:' + UtilClass.getClass('erra', err));
-                    assert.equal(null, err);
-                });
+            coll.remove();
 
-                // READ
-                var s2 = 'rxx';
-                //var qs = '{lovxxer:/^'+s2+'/}';
-                // ori from var qs= { Zip: new RegExp('^' + zipCode) };  // http://stackoverflow.com/questions/11073863/mongodb-regular-expression-search-starts-with-using-javascript-driver-and-node
-                // works var qs= { lover: new RegExp('^' + s2) };
-                var qs = {lmnop: new RegExp(s2)};  // <=========================
-
-                coll.find(qs).toArray(function (err, items) {
-                    console.log("items.length:" + items.length);
-                    assert.equal(null, err);
-                    var o = items[items.length - 1];
-                    //var UtilClass3_isString = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass3_isString.js');
-                    console.log("o:" + o);
-                    //console.log ("o.toString():" + o.toString());
-                    //console.log ("typeof o:" + typeof o);
-                    //console.log ("Array.isArray(o):" + Array.isArray(o));
-                    //console.log ("o[0]:" + o[0]);
-                    //console.log ("UtilClass3_isString.isString (o)" + UtilClass3_isString.isString (o));
-                    //console.log ("UtilClass3_isString.isString (o[0])" + UtilClass3_isString.isString (o[0]));
-                    //UtilClass.getClass("o:", o);
-                    //assert.equal(1, items.length);
-                });
-            }
-            catch (err) {
-                //console.log(UtilClass.UtilClass('err', err));
-                console.log("err:" + err);
-            }
-            console.log ("done")
-        });
+        }
+        catch (err) {
+            //console.log(UtilClass.UtilClass('err', err));
+            console.log("err:" + err);
+        }
+        console.log ("done")
+    });
 });
 
 
