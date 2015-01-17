@@ -42,21 +42,28 @@ db.open(function(err, db) {
     {
         // callback hell http://stackoverflow.com/questions/20961919/node-js-async-how-to-avoid-callback-hell-with-async
         try {
-            // INSERT
-            //var astr = '{"xx":[{"f":"g"},{"h":"i"},{"a":{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}}]}';
+
+          // 1 INSERT
             //var astr = '{"xx":[{"f":"g"},{"h":"i"},{"a":{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}}]}';
             //var astr = '{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}';
             var konstr = "kon"; // <=========================
-            var astr = '{"henry": "kon"}'; // <=========================
-            var b = JSON.stringify(astr); // string
-            var a = {'beth':b};
-            //var a = JSON.parse(astr); // object
-            //console.log ("b:" + b);
-            var c = {"this is b, a real object": b};
+            //var astr = '[{"henry": "kon"},{"john": "grele"}]'; // <=========================
+            var aFromObjTestToStringify  = {};
+            aFromObjTestToStringify["1111"] = "222222";
+            aFromObjTestToStringify["3333"] = "444444";
+            var aFromObjTestToStringify_stringified = JSON.stringify(aFromObjTestToStringify); // string
+            console.log ("aFromObjTestToStringify_stringified:" + aFromObjTestToStringify_stringified );
+
+            var astr = '{"david": {"inthisarrayishenryandjoe":[{"henry": "kon"}, {"joe":"bognar"}]}}'; // <=========================
+            var astrParsedToObj = JSON.parse(astr); // object
+            var b = JSON.stringify(astrParsedToObj); // string
+            var b = JSON.stringify(astrParsedToObj); // string
+            var c = {'astrParsedToObj':astrParsedToObj};
             var d = JSON.parse(b);
-            //console.log('x:' + x);
-            //console.log ("UtilClass3_isString.isString (astr)" + UtilClass3_isString.isString (astr));
-            coll.insert(a
+            // 1 works coll.insert({"asd":[{"aobj":aobj}, {"astr":astr}]}
+            // coll.insert({"asd":[{"aobj":aobj}, {"astr":astr}]}
+           //  coll.insert({"aa":[{"aobj":aobj}, {"astr":astr}]}
+            coll.insert({astr:astr, astrParsedToObj:astrParsedToObj}
             //coll.insert(a         // <=========================
                 , {w: 1}, function (err, result) {
                 if (err !== null)
@@ -64,13 +71,14 @@ db.open(function(err, db) {
                 assert.equal(null, err);
             });
 
-            // READ
+          // 2 READ
             //var qs = '{lovxxer:/^'+s2+'/}';
             // ori from var qs= { Zip: new RegExp('^' + zipCode) };  // http://stackoverflow.com/questions/11073863/mongodb-regular-expression-search-starts-with-using-javascript-driver-and-node
             // works var qs= { lover: new RegExp('^' + s2) };
             //var queryRegExp = {xx: new RegExp(queryRegExpStrInput)};  // <=========================
-            var queryRegExp = {beth: new RegExp('henry')};  // <=========================
-
+            // works var queryRegExp = {astr: new RegExp('on')};  // <=========================
+            //var queryRegExp = {astr: new RegExp('inthisarrayishenryandjoe')};  // <=========================
+            var queryRegExp = {astr: new RegExp('": {" ')};  // <=========================
             coll.find(queryRegExp).toArray(function (err, items) {
                 console.log("items.length:" + items.length);
                 assert.equal(null, err);
@@ -87,6 +95,7 @@ db.open(function(err, db) {
                 //assert.equal(1, items.length);
             });
 
+          // 3 REMOVE
             coll.remove();
 
         }
