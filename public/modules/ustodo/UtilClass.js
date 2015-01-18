@@ -8,7 +8,7 @@
  * Time: 3:55 PM
  * To change this template use File | Settings | File Templates.
  */
-// var UtilClass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass.js');
+// var UtilClass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilGetClass.js');
 
 
 var icallcnt_getClassSub = 0;
@@ -16,7 +16,7 @@ function getClassSub (desc, obj)
 {
     try {
         var s = '\r\n' + ++icallcnt_getClassSub + '. +++++++++++++++++++++++++++++++++++++++++++++++++++';
-        var s = s + '\r\n exports.getClassSub:' + desc + ' [' + desc + ']\r\n\r\n';
+        s = s + '\r\n exports.getClassSub:' + desc + ' [' + desc + ']\r\n\r\n';
         if (obj === null)
             s = s + "\r\n  getClassSub a says desc [" + desc + "] obj passed in is null. ";
         if (obj === undefined)
@@ -86,8 +86,8 @@ function getClassSub (desc, obj)
             //s = s + " UsToDo says this class desc [" + desc + "] is undefined. " + cons;
     } catch (e) {
 
-        console.log ("error in getClass:e:" + e.message)
-        console.log ("error in getClass:estack:" + e.stack)
+        console.log ("error in getClass:e:" + e.message);
+        console.log ("error in getClass:estack:" + e.stack);
     }
 
     return s;
@@ -97,7 +97,7 @@ function getClassSub (desc, obj)
 
 
 
-exports.UtilClass = function (desc, obj)    {
+var utilGetClass = function (desc, obj)    {
 
     var s = '<================== BEGIN exports.UtilClass:'
         + 'exports.getClass:' + desc + ' [' + desc + ']\r\n\r\n';
@@ -109,7 +109,7 @@ exports.UtilClass = function (desc, obj)    {
     {
         s = s + "\r\n\r\na.(obj) getclass1 obj:" + getClassSub ('['+desc+'].itself:', obj)
 
-        s = s + "\r\n\r\nb.(obj.parent) getclass2 parent:" + getClassSub ('['+desc+'].parent:', obj.parent )
+        s = s + "\r\n\r\nb.(obj.parent) getclass2 parent:" + getClassSub ('['+desc+'].parent:', obj.parent );
         //return s;
     }
     else
@@ -118,7 +118,7 @@ exports.UtilClass = function (desc, obj)    {
     }
 
     //careful - this includes this long method output!!
-     s = s + "\r\n\r\nc.(this) getclassmain3 this:" + getClassSub ('['+this+'].itself:', this )
+     s = s + "\r\n\r\nc.(this) getclassmain3 this:" + getClassSub ('['+this+'].itself:', this );
     s = s + '\r\n\r\nEND exports.UtilClass ==================>';
 
 
@@ -143,6 +143,9 @@ exports.UtilClass = function (desc, obj)    {
     //oalert ("this.constructor:" + this.constructor);
     return s;
 
-} // function getClass(desc, obj)
+}; // function getClass(desc, obj)
 
 
+if (typeof exports != 'undefined') {
+    exports.utilGetClass = utilGetClass;
+}

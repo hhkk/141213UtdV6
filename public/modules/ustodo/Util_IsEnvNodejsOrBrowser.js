@@ -27,8 +27,7 @@
 
 //C:\141118UsToDoV3\public\lib\ustodo\UtilClass.js
 
-function isEnvNodeOrBrowser ()
-{
+var isEnvNodeOrBrowser = function (){
     if (typeof window === 'undefined') {
         return true;
         //exports.foo = {};
@@ -47,11 +46,9 @@ function isEnvNodeOrBrowser ()
 // var UtilNodeVsBrowser  = require('../../public/modules/ustodo/UtilClass');
 
 
+if (typeof exports != 'undefined') {
+    exports.isEnvNodeOrBrowser = isEnvNodeOrBrowser;
+}
 
-exports.isEnvNodeOrBrowser = function ()
-{
-    return isEnvNodeOrBrowser ();
-
-} // function getClass(desc, obj)
 
 

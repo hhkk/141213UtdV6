@@ -8,19 +8,22 @@
  * Time: 3:55 PM
  * To change this template use File | Settings | File Templates.
  */
-        // var UtilClass3_isString = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass3_isString.js');
+// var UtilClass3_isString = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass3_isString.js');
 
-exports.isString = function(s) {
+var isString = function(s) {
 
     try {
-            return typeof s == 'string' || s instanceof String;
+        return typeof s == 'string' || s instanceof String;
     } catch (e) {
-        console.log ("error in UtilClass3:e:" + e.message)
-        console.log ("error in getClass:estack:" + e.stack)
+        console.log ("error in UtilClass3:e:" + e.message);
+        console.log ("error in getClass:estack:" + e.stack);
     }
 
     return s;
 
-}  // functi
+};  // function
 // on getClassSub (desc, obj)
 
+if (typeof exports != 'undefined') {
+    exports.isString = isString;
+}

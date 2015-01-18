@@ -90,10 +90,21 @@ exports.delete = function(req, res) {
 exports.list = function(req, res) {
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk req:', req))
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
-	console.log ('in ustodos.server.controller.js: list ');
+	var query = req.query;
+	console.log ('in ustodos.server.controller.js: list command [' + query + ']');
 	console.log ('user monoid req._passport.session.user: ' + req._passport.session.user);
 	//54b143dde898903429ce32b1
-	var query = req.query;
+
+
+
+	try {
+		var d = JSON.parse(query);
+		console.log ("q is json!! [" + query + "]")
+	} catch (err) {
+		console.log ("q is not json!! [" + query + "] err [" + err + "]");
+	}
+
+
 	if (!query)
 	{
 		console.log ('in ustodos.server.controller.js: list, query = null');
@@ -107,6 +118,7 @@ exports.list = function(req, res) {
 	console.log ('in ustodos.server.controller.js: list, query.name: ' + query.name);
 	var re = new RegExp(query.name);
 	query.name = re;
+
 	Ustodo.find(query).sort('-created').populate('user', 'displayName').exec(function(err, ustodos) {
 		if (err) {
 			return res.status(400).send({

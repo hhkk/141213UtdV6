@@ -21,9 +21,16 @@ function getDirName ()
 // server require
     // var UtilNodeVsBrowser  = require('../../public/modules/ustodo/UtilClass');
 
-exports.getDirName = function ()
+var getDirName = function ()
 {
     return getDirName();
 } // function getClass(desc, obj)
+
+
+if (typeof exports != 'undefined') {
+    exports.getDirName = getDirName;
+}
+
+
 
 

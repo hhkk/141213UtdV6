@@ -4,11 +4,14 @@
 // C:\utd\141213UtdV6\public\modules\ustodo\db\UtilDbFromUserIdGetUser.js
 
 
-var Db = require('mongodb').Db,
-    Server = require('mongodb').Server,
-    Grid = require('mongodb').Grid,
-    Code = require('mongodb').Code,
-    assert = require('assert');
+
+if (typeof exports != 'undefined') {
+    var Db = require('mongodb').Db,
+        Server = require('mongodb').Server,
+        Grid = require('mongodb').Grid,
+        Code = require('mongodb').Code,
+        assert = require('assert');
+}
 
 function DbFromUserIdGetUser(userId)
 {
@@ -59,8 +62,6 @@ function DbFromUserIdGetUser(userId)
 }
 
 
-exports.DbFromUserIdGetUser = function (userId)
-{
-    return DbFromUserIdGetUser(userId);
-
-} // function getClass(desc, obj)
+if (typeof exports != 'undefined') {
+    exports.DbFromUserIdGetUser = DbFromUserIdGetUser;
+}
