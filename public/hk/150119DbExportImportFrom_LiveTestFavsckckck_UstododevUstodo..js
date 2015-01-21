@@ -30,40 +30,24 @@ var UtilClass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass.js')
 var Db = require('mongodb').Db,
     Server = require('mongodb').Server,
     Grid = require('mongodb').Grid,
-    ObjectID = require('mongodb').ObjectID,
     Code = require('mongodb').Code,
-    assert = require('assert'),
-    BSON = require('mongodb').BSONPure;
+    assert = require('assert');
 
-var dbname = 'testDb_150112DbExampleInsertJsonStringVsObject';
-//var dbname = 'livetest';
-var db = new Db(dbname, new Server('localhost', 27017), {safe:false});
-console.log ('opening db [' + dbname + ']');
-//var dbCollReadOnly = 'favsdrosen';
-//var dbColl = 'favsckckck';
-var coll = 'ustodos';
-//console.log ('opening dbCollReadOnly [' + dbCollReadOnly + ']');
+var db = new Db('test', new Server('localhost', 27017), {safe:false});
 
 // Establish connection to db
 db.open(function(err, db) {
     // Fetch a collection to insert document into
-    db.collection(coll , function (err, coll)
+    db.collection("150112DbExampleInsertJsonStringVsObject", function (err, coll)
     {
         // callback hell http://stackoverflow.com/questions/20961919/node-js-async-how-to-avoid-callback-hell-with-async
         try {
 
-            // 1 INSERT
+          // 1 INSERT
             //var astr = '{"xx":[{"f":"g"},{"h":"i"},{"a":{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}}]}';
             //var astr = '{"lover": "girl", "lover2": {"lover3": "girl3", "lover4": "girl4"}}';
-            var konstr = "kon"; // <=========================
             //var astr = '[{"henry": "kon"},{"john": "grele"}]'; // <=========================
-            var aFromObjTestToStringify  = {};
-            aFromObjTestToStringify["1111"] = "222222";
-            aFromObjTestToStringify["3333"] = "444444";
-            var aFromObjTestToStringify_stringified = JSON.stringify(aFromObjTestToStringify); // string
-            console.log ("aFromObjTestToStringify_stringified:" + aFromObjTestToStringify_stringified );
-
-            var astr = '{"david": {"inthisarrayishenryandjoe":[{"henry*": "kon"}, {"joe":"bognar"}]}}'; // <=========================
+            var astr = '{"david": {"inthisarrayishenryandjoe":[{"henry": "kon"}, {"joe":"bognar"}]}}'; // <=========================
             var astrParsedToObj = JSON.parse(astr); // object
             var b = JSON.stringify(astrParsedToObj); // string
             var b = JSON.stringify(astrParsedToObj); // string
@@ -71,36 +55,23 @@ db.open(function(err, db) {
             var d = JSON.parse(b);
             // 1 works coll.insert({"asd":[{"aobj":aobj}, {"astr":astr}]}
             // coll.insert({"asd":[{"aobj":aobj}, {"astr":astr}]}
-            //  coll.insert({"aa":[{"aobj":aobj}, {"astr":astr}]}
-
+           //  coll.insert({"aa":[{"aobj":aobj}, {"astr":astr}]}
             coll.insert({astr:astr, astrParsedToObj:astrParsedToObj}
-                // //coll.insert({astrParsedToObj:astrParsedToObj}
-                //
-                // //coll.insert(a         // <=========================
+            //coll.insert(a         // <=========================
                 , {w: 1}, function (err, result) {
-                    if (err !== null)
-                        console.log('erra:' + UtilClass.getClass('erra', err));
-                    assert.equal(null, err);
-                });
+                if (err !== null)
+                    console.log('erra:' + UtilClass.getClass('erra', err));
+                assert.equal(null, err);
+            });
 
-            // 2 READ
-            //var queryRegExp = {filelineraw: new RegExp('abbbbbbbbbbbbb')};  // <=========================
-
-
-            //var obj_id = new ObjectID('54bcc3c2debc96841a3b05ad');
-
-            var obj_id = BSON.ObjectID.createFromHexString('54beef1309f72c201ab6a2c1');
-//            var obj_id = BSON.ObjectID.createFromHexString('54beef1309f72c201ab6a2c1');
-            //var queryRegExp = {_id: ObjectID.createFromHexString('5493af87ebfcbd902405d248')};  // <=========================
-            var queryRegExp = {_id: obj_id};  // <=========================
-            //var queryRegExp = {astr: new RegExp('')};  // <=========================
+          // 2 READ
             //var qs = '{lovxxer:/^'+s2+'/}';
             // ori from var qs= { Zip: new RegExp('^' + zipCode) };  // http://stackoverflow.com/questions/11073863/mongodb-regular-expression-search-starts-with-using-javascript-driver-and-node
             // works var qs= { lover: new RegExp('^' + s2) };
             //var queryRegExp = {xx: new RegExp(queryRegExpStrInput)};  // <=========================
-            // works 'on' var queryRegExp = {astr: new RegExp('on')};  // <=========================
+            // works var queryRegExp = {astr: new RegExp('on')};  // <=========================
             //var queryRegExp = {astr: new RegExp('inthisarrayishenryandjoe')};  // <=========================
-            //var queryRegExp = {astr: new RegExp('": {" ')};  // <=========================
+            var queryRegExp = {astr: new RegExp('enry')};  // <=========================
             coll.find(queryRegExp).toArray(function (err, items) {
                 console.log("items.length:" + items.length);
                 assert.equal(null, err);
@@ -117,8 +88,8 @@ db.open(function(err, db) {
                 //assert.equal(1, items.length);
             });
 
-            // 3 REMOVE
-            //dbCollReadOnly.remove();
+          // 3 REMOVE
+            //coll.remove();
 
         }
         catch (err) {
@@ -128,8 +99,6 @@ db.open(function(err, db) {
         console.log ("done")
     });
 });
-
-//function write this array coll to this collas ustodos
 
 
 

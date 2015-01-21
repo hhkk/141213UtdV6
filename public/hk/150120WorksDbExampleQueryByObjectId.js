@@ -35,7 +35,7 @@ var Db = require('mongodb').Db,
     assert = require('assert'),
     BSON = require('mongodb').BSONPure;
 
-var dbname = 'testDb_150112DbExampleInsertJsonStringVsObject';
+var dbname = '150120WorksDbExampleQueryByObjectId';
 //var dbname = 'livetest';
 var db = new Db(dbname, new Server('localhost', 27017), {safe:false});
 console.log ('opening db [' + dbname + ']');
@@ -89,7 +89,7 @@ db.open(function(err, db) {
 
             //var obj_id = new ObjectID('54bcc3c2debc96841a3b05ad');
 
-            var obj_id = BSON.ObjectID.createFromHexString('54beef1309f72c201ab6a2c1');
+            var obj_id = BSON.ObjectID.createFromHexString('54bef2447be4f2a82ed36c48');
 //            var obj_id = BSON.ObjectID.createFromHexString('54beef1309f72c201ab6a2c1');
             //var queryRegExp = {_id: ObjectID.createFromHexString('5493af87ebfcbd902405d248')};  // <=========================
             var queryRegExp = {_id: obj_id};  // <=========================

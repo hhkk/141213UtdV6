@@ -95,15 +95,12 @@ exports.list = function(req, res) {
 	console.log ('user monoid req._passport.session.user: ' + req._passport.session.user);
 	//54b143dde898903429ce32b1
 
-
-
 	try {
 		var d = JSON.parse(query);
 		console.log ("q is json!! [" + query + "]")
 	} catch (err) {
 		console.log ("q is not json!! [" + query + "] err [" + err + "]");
 	}
-
 
 	if (!query)
 	{
@@ -113,7 +110,7 @@ exports.list = function(req, res) {
 	else
 	{
 		console.log ('in ustodos.server.controller.js: list, query != null');
-		}
+	}
 	console.log ('in ustodos.server.controller.js: list, query: ' + query);
 	console.log ('in ustodos.server.controller.js: list, query.name: ' + query.name);
 	var re = new RegExp(query.name);
@@ -139,7 +136,7 @@ exports.ustodoByID = function(req, res, next, id) {
 	// ORIGINAL A/B SPLIT HBKK
 	// A
 	Ustodo.findById(id).populate('user', 'displayName').exec(function(err, ustodo) {
-	// B
+		// B
 		// Ustodo.findOne({name:/ia/}).populate('user', 'displayName').exec(function(err, ustodo) {
 		if (err) return next(err);
 		if (! ustodo) return next(new Error('Failed to load Ustodo ' + id));

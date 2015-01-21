@@ -104,7 +104,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 			console.log ('6 in ustodos.client.controller SEARCH');
 			// find matching
 			console.log ('in search function2 this.hbkkBindSearch:' + this.hbkkBindSearch);
-			// works!! console.log (utilGetClass("ssdfsdfdsf", this.hbkkBindSearch));
+			console.log (utilGetClass("ssdfsdfdsf", this.hbkkBindSearch));
 			//var patternhk = /$scope.hbkkBindSearch/;
 			var tt = Ustodos.query ({name: this.hbkkBindSearch});
 			$scope.ustodos = tt;
