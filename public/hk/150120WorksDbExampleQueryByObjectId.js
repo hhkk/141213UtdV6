@@ -86,13 +86,9 @@ db.open(function(err, db) {
             // 2 READ
             //var queryRegExp = {filelineraw: new RegExp('abbbbbbbbbbbbb')};  // <=========================
 
-
-            //var obj_id = new ObjectID('54bcc3c2debc96841a3b05ad');
-
-            var obj_id = BSON.ObjectID.createFromHexString('54bef2447be4f2a82ed36c48');
-//            var obj_id = BSON.ObjectID.createFromHexString('54beef1309f72c201ab6a2c1');
-            //var queryRegExp = {_id: ObjectID.createFromHexString('5493af87ebfcbd902405d248')};  // <=========================
-            var queryRegExp = {_id: obj_id};  // <=========================
+            // BOTH METHODS WORK
+            var queryRegExp = {_id: new ObjectID('54bef2447be4f2a82ed36c48')};  // <=========================
+            // works var queryRegExp = {_id: BSON.ObjectID.createFromHexString('54bef2447be4f2a82ed36c48')};  // <=========================
             //var queryRegExp = {astr: new RegExp('')};  // <=========================
             //var qs = '{lovxxer:/^'+s2+'/}';
             // ori from var qs= { Zip: new RegExp('^' + zipCode) };  // http://stackoverflow.com/questions/11073863/mongodb-regular-expression-search-starts-with-using-javascript-driver-and-node
