@@ -1,3 +1,4 @@
+'use strict';
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,10 +25,10 @@ function getDirName ()
 var getDirName = function ()
 {
     return getDirName();
-} // function getClass(desc, obj)
+}; // function getClass(desc, obj)
 
 
-if (typeof exports != 'undefined') {
+if (typeof exports !== 'undefined') {
     exports.getDirName = getDirName;
 }
 

@@ -4,7 +4,7 @@
 //var UtilClass = require('.././UtilClass');
 // console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
 // C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
-var UtilClass = require('../../public/modules/ustodo/UtilClass');
+//var UtilClass = require('../../public/modules/ustodo/UtilClass');
 //var UtilNodeVsBrowser = require('../../public/modules/ustodo/UtilNodeVsBrowser');
 //C:\utd\141213UtdV6\public\modules\ustodo\UtilClass.js
 //C:\utd\141213UtdV6\public\lib\ustodo\UtilClass.js
@@ -51,6 +51,7 @@ exports.read = function(req, res) {
  * Update a Ustodo        hbkk
  */
 exports.update = function(req, res) {
+	console.log ('in ustodos.server.controller.js: update');
 	var ustodo = req.ustodo ;
 
 	ustodo = _.extend(ustodo , req.body);
@@ -70,8 +71,8 @@ exports.update = function(req, res) {
  * Delete an Ustodo
  */
 exports.delete = function(req, res) {
-	console.log ('in ustodos.server.controller.js: delete');
 	var ustodo = req.ustodo ;
+	console.log ('in ustodos.server.controller.js: delete ' + ustodo.toString());
 
 	ustodo.remove(function(err) {
 		if (err) {
@@ -92,14 +93,14 @@ exports.list = function(req, res) {
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
 	var query = req.query;
 	console.log ('in ustodos.server.controller.js: list command [' + query + ']');
-	console.log ('user monoid req._passport.session.user: ' + req._passport.session.user);
+	console.log ('ustodos user monoid req._passport.session.user: ' + req._passport.session.user);
 	//54b143dde898903429ce32b1
 
 	try {
 		var d = JSON.parse(query);
-		console.log ("q is json!! [" + query + "]")
+		console.log ('q is json!! [' + query + ']');
 	} catch (err) {
-		console.log ("q is not json!! [" + query + "] err [" + err + "]");
+		console.log ('q is not json!! [' + query + '] err [' + err + ']');
 	}
 
 	if (!query)
@@ -129,9 +130,8 @@ exports.list = function(req, res) {
 
 /**   * Ustodo middleware  */
 exports.ustodoByID = function(req, res, next, id) {
-	console.log ('in ustodos.server.controller.js: ustodoByID ');
+	console.log('in ustodoByID id:'+id);
 	//var s = Ustodo.findById(id);
-	console.log ('ustodo server controller ustodoByID fn id:' + id);
 
 	// ORIGINAL A/B SPLIT HBKK
 	// A

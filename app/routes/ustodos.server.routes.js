@@ -17,5 +17,5 @@ module.exports = function(app) {
 		.delete(users.requiresLogin, ustodos.hasAuthorization, ustodos.delete);
 
 	// Finish by binding the Ustodo middleware
-	app.param('ustodoIdx', ustodos.ustodoByID);
+	app.param('ustodoId', ustodos.ustodoByID);
 };

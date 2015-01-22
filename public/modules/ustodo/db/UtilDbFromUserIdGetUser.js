@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Created by henryms on 1/11/2015.
  */
@@ -5,7 +6,7 @@
 
 
 
-if (typeof exports != 'undefined') {
+if (typeof exports !== 'undefined') {
     var Db = require('mongodb').Db,
         Server = require('mongodb').Server,
         Grid = require('mongodb').Grid,
@@ -18,14 +19,14 @@ function DbFromUserIdGetUser(userId)
 
     if (DbFromUserIdGetUser.isEnvNodeOrBrowser())
     {
-        console.log ("node js getting user from userId:" + userId);
+        console.log ('node js getting user from userId:' + userId);
 
         var db = new Db('test', new Server('localhost', 27017));
         // Establish connection to db
         db.open(function(err, db) {
 
             // Fetch a collection to insert document into
-            db.collection("remove_all_documents_no_safe", function(err, collection) {
+            db.collection('remove_all_documents_no_safe', function(err, collection) {
 
                 // Insert a bunch of documents
                 collection.insert([{a:1}, {b:2}, {hkon:3}], {w:1}, function(err, result) {
@@ -47,14 +48,14 @@ function DbFromUserIdGetUser(userId)
                         db.close();
                     });
                 });
-            })
+            });
         });
 
 
 
 
     } else { // client
-        console.log ("client stubbed, not getting user from userId:" + userId);
+        console.log ('client stubbed, not getting user from userId:' + userId);
     }
 
 
@@ -62,6 +63,6 @@ function DbFromUserIdGetUser(userId)
 }
 
 
-if (typeof exports != 'undefined') {
+if (typeof exports !== 'undefined') {
     exports.DbFromUserIdGetUser = DbFromUserIdGetUser;
 }

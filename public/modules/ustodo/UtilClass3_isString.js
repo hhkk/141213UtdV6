@@ -1,3 +1,4 @@
+'use strict';
 /**
  * // UtilNodeVsBrowser
  */
@@ -13,10 +14,10 @@
 var isString = function(s) {
 
     try {
-        return typeof s == 'string' || s instanceof String;
+        return typeof s === 'string' || s instanceof String;
     } catch (e) {
-        console.log ("error in UtilClass3:e:" + e.message);
-        console.log ("error in getClass:estack:" + e.stack);
+        console.log ('error in UtilClass3:e:' + e.message);
+        console.log ('error in getClass:estack:' + e.stack);
     }
 
     return s;
@@ -24,6 +25,6 @@ var isString = function(s) {
 };  // function
 // on getClassSub (desc, obj)
 
-if (typeof exports != 'undefined') {
+if (typeof exports !== 'undefined') {
     exports.isString = isString;
 }

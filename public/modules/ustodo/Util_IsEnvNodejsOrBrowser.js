@@ -1,3 +1,4 @@
+'use strict';
 // see interesting perspective
 // http://www.quirksmode.org/js/support.html
 // if (window.focus)
@@ -35,7 +36,7 @@ var isEnvNodeOrBrowser = function (){
         return false;
         //window.foo = {};
     }
-}
+};
 
 
 // C:\utd\141213UtdV6\public\modules\ustodo\UtilNodeVsBrowser.js
@@ -46,7 +47,7 @@ var isEnvNodeOrBrowser = function (){
 // var UtilNodeVsBrowser  = require('../../public/modules/ustodo/UtilClass');
 
 
-if (typeof exports != 'undefined') {
+if (typeof exports !== 'undefined') {
     exports.isEnvNodeOrBrowser = isEnvNodeOrBrowser;
 }
 
