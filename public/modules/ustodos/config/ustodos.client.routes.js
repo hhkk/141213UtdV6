@@ -5,6 +5,11 @@ angular.module('ustodos').config(['$stateProvider',
 	function($stateProvider) {
 		// Ustodos state routing
 		$stateProvider.
+		state('findlistUstodos2', {
+			// http://localhost:3000/#!/ggg
+			url: '/ggg',
+			templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
+		}).
 		state('listUstodos', {
 			// http://localhost:3000/#!/ustodos
 			url: '/ustodos',
@@ -18,13 +23,18 @@ angular.module('ustodos').config(['$stateProvider',
 			state('findlistUstodos', {
 				// http://localhost:3000/#!/ustodos/findlist
 				url: '/ustodos/findlist',
-				templateUrl: 'modules/ustodos/views/findlist-ustodos.client.view.html'
+				templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
 			}).
-			state('findlistUstodosSearch', {
-				// http://localhost:3000/#!/ustodos/findlistustodosearch/testing  ??
-				url: '/ustodos/findlistustodosearch/:searchstring',
-				templateUrl: 'modules/ustodos/views/findlist-ustodos.client.view.html'
+			state('findlistUstodosSearchStringGiven', {
+				// http://localhost:3000/#!/ustodos/findlist
+				url: '/ustodos/findlist',
+				templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
 			}).
+		state('findlistUstodosSearch', {
+			// http://localhost:3000/#!/ustodos/findlistustodosearch/testing  ??
+			url: '/ustodos/findlistustodosearch/:searchstring',
+			templateUrl: 'modules/ustodos/views/findlist-ustodos.client.view.html'
+		}).
 		state('viewUstodo', {
 			// http://localhost:3000/#!/ustodos/549d29c6006bc4041fb22e70
 			url: '/ustodos/:ustodoId',

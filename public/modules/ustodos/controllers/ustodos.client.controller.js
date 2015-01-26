@@ -7,7 +7,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 		console.log ('0 in ustodos.client.controller init');
 		$scope.authentication = Authentication;
 
-		$scope.hbkkBindSearch = 'gg';
+		$scope.hbkkBindSearch = '*';
 		var tt1 = Ustodos.query ({name: $scope.hbkkBindSearch});
 		$scope.ustodos = tt1;
 
@@ -102,7 +102,11 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 		// Search for new Ustodo (findlist)
 		$scope.search = function() {
 			console.log ('6 in ustodos.client.controller SEARCH');
+
+			//window.document.title = 'jpro:' + this.hbkkBindSearch;
+			window.document.title = this.hbkkBindSearch;
 			// find matching
+
 			console.log ('in search function2 this.hbkkBindSearch:' + this.hbkkBindSearch);
 			//console.log (utilGetClass('ssdfsdfdsf', this.hbkkBindSearch));
 			//var patternhk = /$scope.hbkkBindSearch/;

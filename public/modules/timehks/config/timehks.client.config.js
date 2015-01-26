@@ -7,6 +7,6 @@ angular.module('timehks').run(['Menus',
 		Menus.addMenuItem('topbar', 'Timehks', 'timehks', 'dropdown', '/timehks(/create)?');
 		Menus.addSubMenuItem('topbar', 'timehks', 'List Timehks', 'timehks');
 		Menus.addSubMenuItem('topbar', 'timehks', 'New Timehk', 'timehks/create');
-		Menus.addSubMenuItem('topbar', 'timehks', 'UsToDo', 'timehksustodo');
+		Menus.addSubMenuItem('topbar', 'timehks', 'timehksustodox', 'timehksustodoxy');
 	}
 ]);

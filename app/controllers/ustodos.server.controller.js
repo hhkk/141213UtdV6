@@ -97,16 +97,21 @@ exports.list = function(req, res) {
 	//54b143dde898903429ce32b1
 
 	try {
-		var d = JSON.parse(query);
-		console.log ('q is json!! [' + query + ']');
+		var d = JSON.parse(query.name);
+		console.log ('q is json!! [' + query.name + ']');
 	} catch (err) {
-		console.log ('q is not json!! [' + query + '] err [' + err + ']');
+		console.log ('q is not json!! [' + query.name + '] err [' + err + ']');
 	}
 
 	if (!query)
 	{
 		console.log ('in ustodos.server.controller.js: list, query = null');
-		query = null;
+		query.name = '';
+	}
+	else if (query.name === '*')
+	{
+		console.log ('in ustodos.server.controller.js: list, query.name === *, reseting to nothing');
+		query.name = undefined;
 	}
 	else
 	{
@@ -114,9 +119,18 @@ exports.list = function(req, res) {
 	}
 	console.log ('in ustodos.server.controller.js: list, query: ' + query);
 	console.log ('in ustodos.server.controller.js: list, query.name: ' + query.name);
-	var re = new RegExp(query.name);
-	query.name = re;
+	var re = null
 
+	try {
+		re = new RegExp(query.name);
+		console.log ('************************** legal reg exp input query.name [' + query.name + ']');
+	} catch (err) {
+		console.log ('************************** illegal reg exp input query.name [' + query.name + ']');
+		re = new RegExp('');
+	}
+
+	var te = new RegExp(query.name);
+	query.name = te;
 	Ustodo.find(query).sort('-created').populate('user', 'displayName').exec(function(err, ustodos) {
 		if (err) {
 			return res.status(400).send({

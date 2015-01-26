@@ -11,6 +11,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		state('home', {
 			url: '/',
 			templateUrl: 'modules/core/views/home.client.view.html'
+			//templateUrl: 'modules/ustodos/views/view-ustodo.client.view.html'
 		});
 	}
 ]);

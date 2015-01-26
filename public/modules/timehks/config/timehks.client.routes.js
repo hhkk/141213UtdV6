@@ -22,7 +22,7 @@ angular.module('timehks').config(['$stateProvider',
 				templateUrl: 'modules/timehks/views/edit-timehk.client.view.html'
 		}).
 		state('editTimehkUsToDo', {
-			url: '/timehksustodo',
+			url: '/timehksustodoxy',
 			templateUrl: 'modules/timehks/views/list-timehks.client.view.html'
 		})
 
