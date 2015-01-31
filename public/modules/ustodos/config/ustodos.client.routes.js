@@ -6,8 +6,9 @@ angular.module('ustodos').config(['$stateProvider',
 		// Ustodos state routing
 		$stateProvider.
 		state('findlistUstodos2', {
-			// http://localhost:3000/#!/ggg
-			url: '/ggg',
+			// http://localhost:3000/#!
+			// http://localhost:3000
+			url: '/:searchstring_url',
 			templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
 		}).
 		state('listUstodos', {
@@ -20,16 +21,11 @@ angular.module('ustodos').config(['$stateProvider',
 			url: '/ustodos/create',
 			templateUrl: 'modules/ustodos/views/create-ustodo.client.view.html'
 		}).
-			state('findlistUstodos', {
-				// http://localhost:3000/#!/ustodos/findlist
-				url: '/ustodos/findlist',
-				templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
-			}).
-			state('findlistUstodosSearchStringGiven', {
-				// http://localhost:3000/#!/ustodos/findlist
-				url: '/ustodos/findlist',
-				templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
-			}).
+		state('findlistUstodos', {
+			// http://localhost:3000/#!/ustodos/findlist
+			url: '/ustodos/findlist',
+			templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
+		}).
 		state('findlistUstodosSearch', {
 			// http://localhost:3000/#!/ustodos/findlistustodosearch/testing  ??
 			url: '/ustodos/findlistustodosearch/:searchstring',

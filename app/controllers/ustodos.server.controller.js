@@ -119,7 +119,7 @@ exports.list = function(req, res) {
 	}
 	console.log ('in ustodos.server.controller.js: list, query: ' + query);
 	console.log ('in ustodos.server.controller.js: list, query.name: ' + query.name);
-	var re = null
+	var re = null;
 
 	try {
 		re = new RegExp(query.name);

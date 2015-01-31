@@ -32,10 +32,10 @@ var mongoose = require('mongoose'),
  * Note middleware
  */
 exports.userByID = function(req, res, next, id) {
-	User.findById(id).populate('user', 'displayName').exec(function(err, note) {
+	Note.findById(id).populate('user', 'displayName').exec(function(err, note) {
 		if (err) return next(err);
 		if (! note) return next(new Error('Failed to load Note ' + id));
-		req.user = user;
+		req.note = note ;
 		next();
 	});
 };

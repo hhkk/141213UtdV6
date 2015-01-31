@@ -1,16 +1,43 @@
 'use strict';
 
+var resolveSearchStringBetweenUrlAndInputBox = function(stateParams_searchstring_url, hbkkBindSearch)
+{
+	//alert ('stateParams_searchstring_url:' + stateParams_searchstring_url);
+	//alert ('hbkkBindSearch:' + hbkkBindSearch);
+
+	var searchStringUiBoxOverridesUrl = hbkkBindSearch;
+	if (searchStringUiBoxOverridesUrl === undefined || !searchStringUiBoxOverridesUrl) {
+		searchStringUiBoxOverridesUrl = stateParams_searchstring_url;
+	}
+	if (searchStringUiBoxOverridesUrl === undefined || !searchStringUiBoxOverridesUrl) {
+		searchStringUiBoxOverridesUrl = '';
+	}
+
+	console.log ('searchStringUiBoxOverridesUrl:'+searchStringUiBoxOverridesUrl);
+	return searchStringUiBoxOverridesUrl;
+};
+
+
 
 // Ustodos controller
-angular.module('ustodos').controller('UstodosController', ['$scope', '$stateParams', '$location', 'Authentication', 'Ustodos',
-	function($scope, $stateParams, $location, Authentication, Ustodos) {
+var angularModule = angular.module('ustodos');
+
+angularModule.directive('ignoreClick',  function() {
+
+	return {
+		restrict: 'A',
+		link: function(scope, element) {
+			element.bind('click', function(event) {
+				event.preventDefault();
+			});
+		}
+	}
+});
+
+angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'Authentication', 'Ustodos',
+	function($scope, $stateParams, $location, $rootScope, Authentication, Ustodos) {
 		console.log ('0 in ustodos.client.controller init');
 		$scope.authentication = Authentication;
-
-		$scope.hbkkBindSearch = '*';
-		var tt1 = Ustodos.query ({name: $scope.hbkkBindSearch});
-		$scope.ustodos = tt1;
-
 
 		// Create new Ustodo
 		$scope.create = function() {
@@ -77,7 +104,6 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 			//$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
 			//$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
 			//$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
-			setTimeout(function(){console.log ('in ustodos.client.controller FIND2 $scope.ustodos.length:' + $scope.ustodos.length);}, 2000);
 			//console.log ('in ustodos.client.controller FIND2 $scope.ustodos.length:' + $scope.ustodos.length);
 			console.log ('in ustodos.client.controller FIND2');
 
@@ -101,17 +127,83 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 
 		// Search for new Ustodo (findlist)
 		$scope.search = function() {
-			console.log ('6 in ustodos.client.controller SEARCH');
+			//alert ('6 in ustodos.client.controller SEARCH this.hbkkBindSearch:' + this.hbkkBindSearch);
+			this.hbkkBindSearch = resolveSearchStringBetweenUrlAndInputBox
+			($stateParams.searchstring_url, this.hbkkBindSearch);
 
-			//window.document.title = 'jpro:' + this.hbkkBindSearch;
-			window.document.title = this.hbkkBindSearch;
-			// find matching
+			//setTimeout(function(){alert('in ustodos')}, 2000);
+			//setTimeout(function(){
+			//var newpath = $location.path+'/'+this.hbkkBindSearch;
+			//alert ('set this.hbkkBindSearch to:' + newpath);
+			//}, 1000);
 
-			console.log ('in search function2 this.hbkkBindSearch:' + this.hbkkBindSearch);
+
+			window.document.title = this.hbkkBindSearch; // not jpro:
+			$scope.hkhkhkbk = this.hbkkBindSearch;
+			console.log ('hi0 hk $scope.hkhkhkbk:' + $scope.hkhkhkbk);
+			//alert ('22a $location.absUrl():' + $location.absUrl());
+			//var newUrl = $location.absUrl() + this.hbkkBindSearch;
+
+			//setTimeout(function(){
+			//console.log ('hi1 hk this.newUrl :' + newUrl );
+			//console.log ('hi2 hk this.hbkkBindSearch:' + this.hbkkBindSearch);
+			//console.log ('hi3 hk $scope.hkhkhkbk:' + $scope.hkhkhkbk);
+			//$location.path('/#!/ddddddd');
+			//$location.path(newUrl).replace();
+			//$location.skipReload().path("/newpath").replace(); // https://github.com/angular-ui/ui-router/issues/427
+			// https://github.com/angular-ui/ui-router/issues/427
+			// https://www.google.com/search?num=100&es_sm=93&q=angular+%24location.path+replace&oq=angular+%24location.path+replace&gs_l=serp.3..0i22i30.1345.1711.0.2094.2.2.0.0.0.0.130.250.0j2.2.0.msedr...0...1c.1.61.serp..0.2.250.2tLK_AkIUUs
+			// https://www.google.com/search?q=angular+change+url&oq=angular+change+url&aqs=chrome..69i64j0l5.704j0j9&sourceid=chrome&es_sm=93&ie=UTF-8
+			// https://docs.angularjs.org/api/ng/service/$location
+
+
+			//window.location.href = '/#!/ssss2' ;
+			//window.location.href = '/#!/' + $scope.hkhkhkbk;
+			//$scope.apply();
+			//alert ('done newUrl:' + newUrl);
+			//alert ('done');
+
+			//}, 3000);
+
+			try {
+				console.log ('$location.absUrl() 1:'+ $location.absUrl());
+				console.log ('$scope.hkhkhkbk 2:'+ $scope.hkhkhkbk);
+				//window.location.href = '/#!/ustodos/findlist/' + $scope.hkhkhkbk;
+				window.location.href = '/#!/ustodos/findlist?q=' + $scope.hkhkhkbk;
+				//$location.path('/ustodos/findlist/' + $scope.hkhkhkbk);
+				//$location.path('/ustodos/findlist?q=' + $scope.hkhkhkbk);
+				console.log ('$location.absUrl() 3:'+ $location.absUrl());
+			} catch (err) {
+				alert ('err:'+ err);
+			}
+
+			//alert('look ma no hands $location.absUrl():' + $location.absUrl());
+
+
+			//$location.path(newUrl);
+			//$location.path('#/login');
+			//window.location.href =
+			//$scope.$apply( function(){$location.path(newUrl + '/somelocatin'); } );
+			//window.location.href = window.location.href + '/xxx' + this.hbkkBindSearch;
+			//alert ('22b this.hbkkBindSearch:' + this.hbkkBindSearch);
+			//$location.path(newUrl);
+			//window.location.href = newUrl +'hk';
+			//alert ('22c $location.absUrl():' + $location.absUrl());
+			//alert ('22d window.location.href:' + window.location.href);
+			//alert ('22e this.hbkkBindSearch:' + this.hbkkBindSearch);
+			//window.location.href = window.location.href + '/xxx' + this.hbkkBindSearch;
+//			window.location.href = window.location.href + '/xxx';
+			// https://docs.angularjs.org/guide/$location
+			//alert('assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
+			console.log('1assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
+			//$location.path('/'+this.hbkkBindSearch)
+
+			var tt1 = Ustodos.query ({name: this.hbkkBindSearch});
+			console.log('2assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
+			$scope.ustodos = tt1;
+
 			//console.log (utilGetClass('ssdfsdfdsf', this.hbkkBindSearch));
 			//var patternhk = /$scope.hbkkBindSearch/;
-			var tt = Ustodos.query ({name: this.hbkkBindSearch});
-			$scope.ustodos = tt;
 			//	// ORIGINAL A/B SPLIT HBKK
 			//	//ustodoSearchString: $stateParams.ustodoId
 			//name: /a/
@@ -120,7 +212,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 			//	//name: 'as'
 
 			//$scope.ustodos = Ustodos.query ({name: /141229/});
-			setTimeout(function(){console.log ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
+			//setTimeout(function(){console.log ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
 			//setTimeout(function(){alert ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
 			//$scope.$apply();
 
@@ -128,7 +220,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 			//var ustodo = new Ustodos ({
 			//	name: this.name,  // hbkk mystery
 			//	hbkkBindSearch: this.hbkkBindSearch // hbkk mystery
-				//});
+			//});
 			//getProperties('props ustodo:', ustodo);
 
 
@@ -137,7 +229,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 			//// Redirect after save
 			//ustodo.$save(function(response) {
 			//	$location.path('ustodos/' + response._id);
-            //
+			//
 			//	// Clear form fields
 			//	$scope.name = '';
 			//}, function(errorResponse) {
@@ -158,10 +250,14 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 			});
 		};
 
-
+		//$scope.search()
 
 	}
 ]);
+
+
+
+
 
 
 
