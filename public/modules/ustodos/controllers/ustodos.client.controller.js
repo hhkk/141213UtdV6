@@ -1,13 +1,19 @@
 'use strict';
 
-var resolveSearchStringBetweenUrlAndInputBox = function(stateParams_searchstring_url, hbkkBindSearch)
+var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_hbkkBindSearch)
 {
+	//alert ('in resolveSearchStringBetweenUrlAndInputBox  SEARCH $location.search().q:' + location_search_q +
+	 //', this_hbkkBindSearch:' + this_hbkkBindSearch);
+
 	//alert ('stateParams_searchstring_url:' + stateParams_searchstring_url);
 	//alert ('hbkkBindSearch:' + hbkkBindSearch);
 
-	var searchStringUiBoxOverridesUrl = hbkkBindSearch;
+
+//	sdfsdf
+
+	var searchStringUiBoxOverridesUrl = this_hbkkBindSearch;
 	if (searchStringUiBoxOverridesUrl === undefined || !searchStringUiBoxOverridesUrl) {
-		searchStringUiBoxOverridesUrl = stateParams_searchstring_url;
+		searchStringUiBoxOverridesUrl = location_search_q;
 	}
 	if (searchStringUiBoxOverridesUrl === undefined || !searchStringUiBoxOverridesUrl) {
 		searchStringUiBoxOverridesUrl = '';
@@ -22,17 +28,17 @@ var resolveSearchStringBetweenUrlAndInputBox = function(stateParams_searchstring
 // Ustodos controller
 var angularModule = angular.module('ustodos');
 
-angularModule.directive('ignoreClick',  function() {
-
-	return {
-		restrict: 'A',
-		link: function(scope, element) {
-			element.bind('click', function(event) {
-				event.preventDefault();
-			});
-		}
-	}
-});
+//angularModule.directive('ignoreClick',  function() {
+//
+//	return {
+//		restrict: 'A',
+//		link: function(scope, element) {
+//			element.bind('click', function(event) {
+//				event.preventDefault();
+//			});
+//		}
+//	};g
+//});
 
 angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'Authentication', 'Ustodos',
 	function($scope, $stateParams, $location, $rootScope, Authentication, Ustodos) {
@@ -127,9 +133,13 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
 		// Search for new Ustodo (findlist)
 		$scope.search = function() {
+			alert ('in search');
 			//alert ('6 in ustodos.client.controller SEARCH this.hbkkBindSearch:' + this.hbkkBindSearch);
+			//alert ('7 in ustodos.client.controller SEARCH $stateParams.q:' + $stateParams.q);
+			//console.log ("$location.search().q:"+$location.search().q);
+
 			this.hbkkBindSearch = resolveSearchStringBetweenUrlAndInputBox
-			($stateParams.searchstring_url, this.hbkkBindSearch);
+				($location.search().q, this.hbkkBindSearch);
 
 			//setTimeout(function(){alert('in ustodos')}, 2000);
 			//setTimeout(function(){
@@ -166,13 +176,17 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 			//}, 3000);
 
 			try {
-				console.log ('$location.absUrl() 1:'+ $location.absUrl());
-				console.log ('$scope.hkhkhkbk 2:'+ $scope.hkhkhkbk);
+
+				//$locationProvider.html5Mode(true);
+				//console.log ("$location.search().q:"+$location.search().q);
+				//console.log ('$location.absUrl() 1:'+ $location.absUrl());
+				//console.log ('$scope.hkhkhkbk 2:'+ $scope.hkhkhkbk);
 				//window.location.href = '/#!/ustodos/findlist/' + $scope.hkhkhkbk;
+
 				window.location.href = '/#!/ustodos/findlist?q=' + $scope.hkhkhkbk;
 				//$location.path('/ustodos/findlist/' + $scope.hkhkhkbk);
 				//$location.path('/ustodos/findlist?q=' + $scope.hkhkhkbk);
-				console.log ('$location.absUrl() 3:'+ $location.absUrl());
+				//console.log ('$location.absUrl() 3:'+ $location.absUrl());
 			} catch (err) {
 				alert ('err:'+ err);
 			}
@@ -250,7 +264,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 			});
 		};
 
-		//$scope.search()
+		$scope.search();
 
 	}
 ]);
