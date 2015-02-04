@@ -7,6 +7,7 @@ angular.module('ustodos').run(['Menus',
 		Menus.addMenuItem('topbar', 'Ustodos', 'ustodos', 'dropdown', '/ustodos(/create)?');
 		Menus.addSubMenuItem('topbar', 'ustodos', 'List Ustodos', 'ustodos');
 		Menus.addSubMenuItem('topbar', 'ustodos', 'New Ustodo', 'ustodos/create');
+		Menus.addSubMenuItem('topbar', 'ustodos', 'Findlist Ustodo', 'ustodos/findlist');
 	}
 ]);
 
