@@ -8,7 +8,7 @@ angular.module('ustodos').config(['$stateProvider',
 
         state('findlistUstodos_preloadedByUrl', {
         // http://localhost:3000/#!/ustodos/findlist
-        url: '/ustodos/findlist?q=:searchstr',
+        url: '/ustodos/findlist?q=',
         templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
         }).
         state('findlistUstodos', {

@@ -133,7 +133,8 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
 		// Search for new Ustodo (findlist)
 		$scope.search = function() {
-			alert ('in search');
+			//alert ('in search $stateParams.q:'+$stateParams.q);
+
 			//alert ('6 in ustodos.client.controller SEARCH this.hbkkBindSearch:' + this.hbkkBindSearch);
 			//alert ('7 in ustodos.client.controller SEARCH $stateParams.q:' + $stateParams.q);
 			//console.log ("$location.search().q:"+$location.search().q);
