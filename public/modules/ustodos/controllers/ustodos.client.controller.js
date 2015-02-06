@@ -133,7 +133,11 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
 		// Search for new Ustodo (findlist)
 		$scope.search = function() {
-			//alert ('in search $stateParams.q:'+$stateParams.q);
+			alert ('in search $stateParams.q:'+$stateParams.q +
+                ',\r\n$location.search().q:' + $location.search().q +
+                ',\r\nthis.hbkkBindSearch:' + this.hbkkBindSearch
+            );
+
 
 			//alert ('6 in ustodos.client.controller SEARCH this.hbkkBindSearch:' + this.hbkkBindSearch);
 			//alert ('7 in ustodos.client.controller SEARCH $stateParams.q:' + $stateParams.q);
@@ -184,7 +188,13 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 				//console.log ('$scope.hkhkhkbk 2:'+ $scope.hkhkhkbk);
 				//window.location.href = '/#!/ustodos/findlist/' + $scope.hkhkhkbk;
 
-				window.location.href = '/#!/ustodos/findlist?q=' + $scope.hkhkhkbk;
+				//window.location.href = '/#!/ustodos/findlist?q=' + $scope.hkhkhkbk;
+				window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
+				//window.location.href = '?q=' + $scope.hkhkhkbk;
+
+
+
+				//window.location.href = '?q=' + $scope.hkhkhkbk;
 				//$location.path('/ustodos/findlist/' + $scope.hkhkhkbk);
 				//$location.path('/ustodos/findlist?q=' + $scope.hkhkhkbk);
 				//console.log ('$location.absUrl() 3:'+ $location.absUrl());

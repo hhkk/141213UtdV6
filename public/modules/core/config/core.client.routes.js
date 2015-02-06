@@ -9,9 +9,19 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		// Home state routing
 		$stateProvider.
 		state('home', {
-			url: '/home',
-			templateUrl: 'modules/core/views/home.client.view.html'
+			//templateUrl: 'modules/core/views/home.client.view.html'
 			//templateUrl: 'modules/ustodos/views/view-ustodo.client.view.html'
+            url: '/',
+            templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
+            //templateUrl: 'modules/core/views/home.client.view.html'
+
 		});
+
+        //$stateProvider.
+        //    state('home', {
+        //        url: '/',
+        //        templateUrl: 'modules/core/views/home.client.view.html'
+        //    });
+
 	}
 ]);

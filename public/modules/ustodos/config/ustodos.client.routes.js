@@ -5,12 +5,16 @@ angular.module('ustodos').config(['$stateProvider',
 	function($stateProvider) {
 		// Ustodos state routing
 		$stateProvider.
-
-        state('findlistUstodos_preloadedByUrl', {
-        // http://localhost:3000/#!/ustodos/findlist
-        url: '/ustodos/findlist?q=',
-        templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
-        }).
+            //state('findlistutd', {
+            //// http://localhost:3000/#!/ustodos/findlist
+            //url: '?q=',
+            //templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
+            //}).
+            //state('findlistUstodos_preloadedByUrl', {
+            //// http://localhost:3000/#!/ustodos/findlist
+            //url: '/ustodos/findlist?q=',
+            //templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
+            //}).
         state('findlistUstodos', {
             // http://localhost:3000/#!/ustodos/findlist
             url: '/ustodos/findlist',
