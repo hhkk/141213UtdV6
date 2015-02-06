@@ -45,6 +45,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 		console.log ('0 in ustodos.client.controller init');
 		$scope.authentication = Authentication;
 
+        alert ('angularModule.controller(UstodosController)');
 		// Create new Ustodo
 		$scope.create = function() {
 			console.log ('1 in ustodos.client.controller CREATE');
@@ -132,11 +133,13 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 		// https://groups.google.com/forum/#!topic/angular/kcV0ZROeBRw
 
 		// Search for new Ustodo (findlist)
+        $scope.callCountSearch = 0;
 		$scope.search = function() {
-			alert ('in search $stateParams.q:'+$stateParams.q +
-                ',\r\n$location.search().q:' + $location.search().q +
-                ',\r\nthis.hbkkBindSearch:' + this.hbkkBindSearch
-            );
+            $scope.callCountSearch++;
+                    //alert ('in search $stateParams.q:'+$stateParams.q +
+                    //    ',\r\n$location.search().q:' + $location.search().q +
+                    //    ',\r\nthis.hbkkBindSearch:' + this.hbkkBindSearch
+                    //);
 
 
 			//alert ('6 in ustodos.client.controller SEARCH this.hbkkBindSearch:' + this.hbkkBindSearch);
@@ -149,7 +152,9 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 			//setTimeout(function(){alert('in ustodos')}, 2000);
 			//setTimeout(function(){
 			//var newpath = $location.path+'/'+this.hbkkBindSearch;
-			//alert ('set this.hbkkBindSearch to:' + newpath);
+            alert ('set this.hbkkBindSearch to:' + this.hbkkBindSearch +
+                   ',   $scope.callCountSearch:' + $scope.callCountSearch
+            );
 			//}, 1000);
 
 
@@ -189,12 +194,14 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 				//window.location.href = '/#!/ustodos/findlist/' + $scope.hkhkhkbk;
 
 				//window.location.href = '/#!/ustodos/findlist?q=' + $scope.hkhkhkbk;
-				window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
+				//window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
 				//window.location.href = '?q=' + $scope.hkhkhkbk;
 
+                window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
+                //$location.path('/#!/?q=' + $scope.hkhkhkbk);
 
 
-				//window.location.href = '?q=' + $scope.hkhkhkbk;
+                //window.location.href = '?q=' + $scope.hkhkhkbk;
 				//$location.path('/ustodos/findlist/' + $scope.hkhkhkbk);
 				//$location.path('/ustodos/findlist?q=' + $scope.hkhkhkbk);
 				//console.log ('$location.absUrl() 3:'+ $location.absUrl());
@@ -220,6 +227,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 //			window.location.href = window.location.href + '/xxx';
 			// https://docs.angularjs.org/guide/$location
 			//alert('assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
+
 			console.log('1assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
 			//$location.path('/'+this.hbkkBindSearch)
 
