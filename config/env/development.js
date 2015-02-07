@@ -1,7 +1,8 @@
 'use strict';
 
 module.exports = {
-		db: 'mongodb://localhost/ustodo-dev',
+		//db: 'mongodb://localhost/141213UtdV6', // ustodo-dev not mongo port but mongo db name
+		db: 'mongodb://localhost/ustodo-dev', // ustodo-dev not mongo port but mongo db name
 	app: {
 		title: 'UsToDo - Development Environment'
 	},

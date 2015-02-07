@@ -45,7 +45,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 		console.log ('0 in ustodos.client.controller init');
 		$scope.authentication = Authentication;
 
-        alert ('angularModule.controller(UstodosController)');
+        //alert ('angularModule.controller(UstodosController)');
 		// Create new Ustodo
 		$scope.create = function() {
 			console.log ('1 in ustodos.client.controller CREATE');
@@ -148,13 +148,17 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
 			this.hbkkBindSearch = resolveSearchStringBetweenUrlAndInputBox
 				($location.search().q, this.hbkkBindSearch);
+            //alert ('in search $stateParams.q:'+$stateParams.q +
+            //    ',\r\n$location.search().q:' + $location.search().q +
+            //    ',\r\nthis.hbkkBindSearch:' + this.hbkkBindSearch
+            //);
 
 			//setTimeout(function(){alert('in ustodos')}, 2000);
 			//setTimeout(function(){
 			//var newpath = $location.path+'/'+this.hbkkBindSearch;
-            alert ('set this.hbkkBindSearch to:' + this.hbkkBindSearch +
-                   ',   $scope.callCountSearch:' + $scope.callCountSearch
-            );
+            //alert ('set this.hbkkBindSearch to:' + this.hbkkBindSearch +
+             //      ',   $scope.callCountSearch:' + $scope.callCountSearch
+            //);
 			//}, 1000);
 
 
@@ -197,8 +201,15 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 				//window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
 				//window.location.href = '?q=' + $scope.hkhkhkbk;
 
+
+
+
+
                 window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
-                //$location.path('/#!/?q=' + $scope.hkhkhkbk);
+                //alert ('pre setting to'+$location.path())
+                //$location.path($location.path() + 'ddd/#!/?q=' + $scope.hkhkhkbk);
+                //$location.path('aaa');
+                //alert ('done setting to'+$location.path())
 
 
                 //window.location.href = '?q=' + $scope.hkhkhkbk;
