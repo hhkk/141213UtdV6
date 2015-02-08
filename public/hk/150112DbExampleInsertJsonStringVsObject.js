@@ -63,23 +63,24 @@ db.open(function(err, db) {
             var aFromObjTestToStringify_stringified = JSON.stringify(aFromObjTestToStringify); // string
             console.log ("aFromObjTestToStringify_stringified:" + aFromObjTestToStringify_stringified );
 
-            var astr = '{"david": {"inthisarrayishenryandjoe":[{"henry*": "kon"}, {"joe":"bognar"}]}}'; // <=========================
+            var astr = '{"johnhansen": {"inthisarrayishenryandjoe":[{"henry*": "kon"}, {"joe":"bognar"}]}}'; // <=========================
             var astrParsedToObj = JSON.parse(astr); // object
             var b = JSON.stringify(astrParsedToObj); // string
-            var b = JSON.stringify(astrParsedToObj); // string
-            var c = {'astrParsedToObj':astrParsedToObj};
-            var d = JSON.parse(b);
+            //var c = {'astrParsedToObj':astrParsedToObj};
+            //var d = JSON.parse(b);
             // 1 works coll.insert({"asd":[{"aobj":aobj}, {"astr":astr}]}
             // coll.insert({"asd":[{"aobj":aobj}, {"astr":astr}]}
             //  coll.insert({"aa":[{"aobj":aobj}, {"astr":astr}]}
 
-            coll.insert({astr:astr, astrParsedToObj:astrParsedToObj}
+            coll.insert({petey:'mataras'}
+            //coll.insert({astr:astr, astrParsedToObj:astrParsedToObj}
                 // //coll.insert({astrParsedToObj:astrParsedToObj}
                 //
                 // //coll.insert(a         // <=========================
                 , {w: 1}, function (err, result) {
                     if (err !== null)
                         console.log('erra:' + UtilClass.getClass('erra', err));
+                    console.log ("===============================");
                     assert.equal(null, err);
                 });
 
