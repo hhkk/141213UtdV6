@@ -89,7 +89,7 @@ if (true) {
 
                                         var i = 0;
                                         items.forEach(function(item) {
-                                            //if (i < 50)
+                                            if (i < 5000)
                                             {
                                                 // build json for single string search
                                                 var jsonObj = {};
@@ -105,7 +105,7 @@ if (true) {
                                                         text: jsonObj.text,
                                                         date: jsonObj.date,
                                                         created: new Date(),
-                                                        _id: new ObjectID('5418f365f5bc55500a906584'),
+                                                        user: new ObjectID('5418f365f5bc55500a906584'),
                                                         json: jsonStr
                                                     }
                                                     , {w: 1}, function (err, result) {
