@@ -67,7 +67,7 @@ if (true) {
 
 
 
-var itemstokeep = null;
+    var itemstokeep = null;
 
     var dba = new Db('livetest', new Server('localhost', 27017), {safe:false});
     var collName = 'favsckckck';
@@ -86,35 +86,43 @@ var itemstokeep = null;
                                 db.collection(collName, function (err, coll) {
                                     try {
                                         console.log("items.length a:" + items.length);
-                                        var j=0;
-                                        var len=items.length;
 
-
+                                        var i = 0;
                                         items.forEach(function(item) {
-                                            coll.insert(
-                                                {
-                                                    //filelineraw: items[j].filelineraw,
-                                                    //date: items[j].date,
-                                                    //text: items[j].text
-                                                    filelineraw: item.filelineraw,
-                                                    date: new Date(item.date),
-                                                    text: item.text
-                                                }
-                                                , {w: 1}, function (err, result) {
-                                                    if (err !== null) {
-                                                        console.log('erra:' + UtilClass.getClass('erra', err));
-                                                        assert.equal(null, err);
-                                                    } else {
-                                                        //if ( i % 1 == 0)
-                                                        //{
-                                                        console.log('j:' + j);
-                                                        console.log (j + '. insert success ['+ item.filelineraw + ']');
-                                                        //}
+                                            //if (i < 50)
+                                            {
+                                                // build json for single string search
+                                                var jsonObj = {};
+                                                jsonObj.text = item.text;
+                                                jsonObj.date = new Date(item.date);
+                                                var jsonStr = JSON.stringify(jsonObj);
+                                                //console.log ('jsonStr:' + jsonStr);
+
+                                                coll.insert(
+                                                    {
+                                                        //filelineraw: items[j].filelineraw,
+                                                        //date: items[j].date,
+                                                        text: jsonObj.text,
+                                                        date: jsonObj.date,
+                                                        created: new Date(),
+                                                        _id: new ObjectID('5418f365f5bc55500a906584'),
+                                                        json: jsonStr
                                                     }
-                                                });
+                                                    , {w: 1}, function (err, result) {
+                                                        if (err !== null) {
+                                                            console.log('erra:' + UtilClass.getClass('erra', err));
+                                                            assert.equal(null, err);
+                                                        } else {
+                                                            //if ( i % 1 == 0)
+                                                            //{
+                                                            //console.log (i + '. insert success jsonStr ['+ jsonStr+ ']');
+                                                            //}
+                                                        }
+                                                    });
+                                                i++;
 
+                                            }
                                         });
-
                                         //for(j=0; j < len; j++)
                                         //{
                                         //    if ( j < 100)
@@ -139,7 +147,7 @@ var itemstokeep = null;
                         //console.log(UtilClass.UtilClass('err', err));
                         console.log("err:" + err);
                     }
-                    console.log("done");
+                    console.log("really     done");
                 }
                 catch (err) {
                     //console.log(UtilClass.UtilClass('err', err));
@@ -155,7 +163,7 @@ var itemstokeep = null;
 
 
 
-                       console.log ('done');
+    console.log ('done');
 
 
 

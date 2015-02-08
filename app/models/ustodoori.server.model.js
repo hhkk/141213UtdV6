@@ -10,13 +10,19 @@ var mongoose = require('mongoose'),
  * Ustodoori Schema
  */
 var UstodooriSchema = new Schema({
-	text: {
-		type: String,
-		default: '',
-		required: 'Please enter Ustodoori text',
-		trim: true
-	},
-    dateori: {
+    text: {
+        type: String,
+        default: '',
+        required: 'Please enter Ustodoori text',
+        trim: true
+    },
+    json: {
+        type: String,
+        default: '',
+        required: 'Please enter Ustodoori text',
+        trim: true
+    },
+    date: {
         type: Date,
         required: 'Please enter Ustodoori dateori',
         default: Date.now
