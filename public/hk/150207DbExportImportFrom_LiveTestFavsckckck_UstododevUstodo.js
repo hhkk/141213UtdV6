@@ -80,16 +80,19 @@ if (true) {
                         coll.find(queryRegExp).toArray(function (err, items) {
 
 
-                            var db = new Db('ustodo-dev', new Server('localhost', 27017), {safe: false});
-                            var collName = 'ustodooris';
+                            var writedbname = 'ustodo-dev';
+                            var writecollname = 'ustodos';
+
+                            var db = new Db(writedbname, new Server('localhost', 27017), {safe: false});
                             db.open(function (err, db) {
-                                db.collection(collName, function (err, coll) {
+                                db.collection(writecollname, function (err, coll)
+                                {
                                     try {
                                         console.log("items.length a:" + items.length);
 
                                         var i = 0;
                                         items.forEach(function(item) {
-                                            if (i < 5000)
+                                            //if (i < 500)
                                             {
                                                 // build json for single string search
                                                 var jsonObj = {};
@@ -98,15 +101,15 @@ if (true) {
                                                 var jsonStr = JSON.stringify(jsonObj);
                                                 //console.log ('jsonStr:' + jsonStr);
 
-                                                coll.insert(
+                                                coll.insert (
                                                     {
                                                         //filelineraw: items[j].filelineraw,
                                                         //date: items[j].date,
                                                         text: jsonObj.text,
-                                                        date: jsonObj.date,
-                                                        created: new Date(),
-                                                        user: new ObjectID('5418f365f5bc55500a906584'),
-                                                        json: jsonStr
+                                                        datelastmod: jsonObj.date,
+                                                        datecreated: jsonObj.date,
+                                                        json: jsonStr,
+                                                        user: new ObjectID('5418f365f5bc55500a906584')
                                                     }
                                                     , {w: 1}, function (err, result) {
                                                         if (err !== null) {
@@ -121,8 +124,9 @@ if (true) {
                                                     });
                                                 i++;
 
-                                            }
+                                            } // if i < x000
                                         });
+                                        console.log ('inserted to db.coll:' + db.databaseName+'.'+coll.collectionName);
                                         //for(j=0; j < len; j++)
                                         //{
                                         //    if ( j < 100)

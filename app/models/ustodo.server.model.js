@@ -10,24 +10,58 @@ var mongoose = require('mongoose'),
  * Ustodo Schema
  */
 var UstodoSchema = new Schema({
-	name: {
-		type: String,
-		default: '',
-		required: 'Please fill Ustodo name',
-		trim: true
-	},
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	modified: {
-		type: Date,
-		default: Date.now
-	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
-	}
+
+        text: {
+            type: String,
+            default: '',
+            required: 'Please enter Ustodoori text',
+            trim: true
+        },
+        json: {
+            type: String,
+            default: '',
+            required: 'Please enter Ustodoori text',
+            trim: true
+        },
+        datelastmod: {
+            type: Date,
+            required: 'Please enter datelastmod',
+            default: Date.now
+        },
+        datecreated: {
+            type: Date,
+            required: 'Please enter datecreated',
+            default: Date.now
+        },
+        created: {
+            type: Date,
+            default: Date.now
+        },
+        user: {
+            type: Schema.ObjectId,
+            ref: 'User'
+        }
+
+
+	//name: {
+	//	type: String,
+	//	default: '',
+	//	required: 'Please fill Ustodo name',
+	//	trim: true
+	//},
+	//created: {
+	//	type: Date,
+	//	default: Date.now
+	//},
+	//modified: {
+	//	type: Date,
+	//	default: Date.now
+	//},
+	//user: {
+	//	type: Schema.ObjectId,
+	//	ref: 'User'
+	//}
+
 });
 
 mongoose.model('Ustodo', UstodoSchema);

@@ -2,7 +2,7 @@
     this is C:\utd\141213UtdV6\public\modules\ustodos\views\findlist-ustodos.client.view.html
 <section data-ng-controller="UstodosController">
     <div class="page-header">
-        <h1>UsToDo</h1>
+        <h1>UsToDoxxxxxxxxxxxx/h1>
     </div>
     <div class="col-md-12">
         <form class="form-horizontal" data-ng-submit="search()" novalidate>
@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <!--<label class="control-label" for="name"></label>-->
                     <div class="controls">
-                        <input type="text" data-ng-model="hbkkBindSearch" hk = "hbkkBindSearch" id="name" class="form-control" placeholder="Name" required>
+                        <input type="text" data-ng-model="hbkkBindSearch" hk = "hbkkBindSearch" id="text" class="form-control" placeholder="Text" required>
                     </div>
                 </div>
                 <!--<div class="form-group">-->
@@ -30,7 +30,7 @@
 
         <a ng-repeat="ustodo in ustodos" >
             in findlist-ustodos.client.view.html
-            <h4 class="list-group-item-heading" data-ng-bind="ustodo.name"></h4>
+            <h4 class="list-group-item-heading" data-ng-bind="ustodo.text"></h4>
         </a>
     </div>
 

@@ -92,52 +92,63 @@ exports.list = function(req, res) {
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk req:', req))
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
 	var query = req.query;
-	console.log ('in ustodos.server.controller.js: list command [' + query + ']');
+	console.log ('in ustodos.server.controller.js: list query.querystring [' + query.querystring+ ']');
+    if (query.querystring !== null && query.querystring !== undefined)
+        query.querystring = query.querystring.trim();
+    else
+        query.querystring = '';
+
+    if (query.querystring === '*')   {
+        console.log ('resetting * star to blank');
+        query.querystring = '';
+    }
+
+    console.log ('in ustodos.server.controller.js: list query.querystring post trim [' + query.querystring+ ']');
 	console.log ('ustodos user monoid req._passport.session.user: ' + req._passport.session.user);
 	//54b143dde898903429ce32b1
 
 	try {
-		var d = JSON.parse(query.name);
-		console.log ('q is json!! [' + query.name + ']');
+		var d = JSON.parse(query.querystring);
+		console.log ('q is json!! [' + query.querystring + ']');
 	} catch (err) {
-		console.log ('q is not json!! [' + query.name + '] err [' + err + ']');
+		console.log ('q is not json!! [' + query.querystring + '] err [' + err + ']');
 	}
 
-	if (!query)
-	{
-		console.log ('in ustodos.server.controller.js: list, query = null');
-		query.name = '';
-	}
-	else if (query.name === '*')
-	{
-		console.log ('in ustodos.server.controller.js: list, query.name === *, reseting to nothing');
-		query.name = undefined;
-	}
-	else
-	{
-		console.log ('in ustodos.server.controller.js: list, query != null');
-	}
 	console.log ('in ustodos.server.controller.js: list, query: ' + query);
-	console.log ('in ustodos.server.controller.js: list, query.name: ' + query.name);
+	console.log ('in ustodos.server.controller.js: list, query.querystring: ' + query.querystring);
 	var re = null;
 
+
+
+
 	try {
-		re = new RegExp(query.name);
-		console.log ('************************** legal reg exp input query.name [' + query.name + ']');
+		re = new RegExp(query.querystring);
+		console.log ('************************** legal reg exp input query.querystring [' + query.querystring + ']');
 	} catch (err) {
-		console.log ('************************** illegal reg exp input query.name [' + query.name + ']');
+		console.log ('************************** illegal reg exp input query.querystring [' + query.querystring + ']');
 		re = new RegExp('');
 	}
 
-	var te = new RegExp(query.name);
-	query.name = te;
-	Ustodo.find(query).sort('-created').populate('user', 'displayName').exec(function(err, ustodos) {
+	var te = new RegExp(query.querystring);
+    var querymongo = {json:te};
+	Ustodo.find(querymongo).sort('-datelastmod').populate('user', 'displayName').exec(function(err, ustodos) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(ustodos);
+            //if (query.querystring === '')
+                //var x = ustodos.slice[0,20]
+                var x = [];
+                for (var k = 0; k < 200 && k < (ustodos.length-1); k++) {
+                    x.push(ustodos[k])
+                    console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod );
+                }
+                res.jsonp(x);
+
+                //res.jsonp(ustodos);
+            //else
+			    //res.jsonp(ustodos.slice[0,20]);
 		}
 	});
 };

@@ -53,7 +53,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 			//getProperties('props this:', this);
 			//getProperties('props Ustodos:', Ustodos);
 			var ustodo = new Ustodos ({
-				name: this.name  // hbkk mystery
+				text: this.text// hbkk mystery
 			});
 			//getProperties('props ustodo:', ustodo);
 
@@ -107,7 +107,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 			//returns a single not array, causing a fail $scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
 			// seems to work but returns all? $scope.ustodos = Ustodos.query({name: 'ggggg'});
 			//$scope.ustodos = Ustodos.query({name: 'ggggg'}); // Works!
-			$scope.ustodos = Ustodos.query({name: ''});
+			$scope.ustodos = Ustodos.query({text: ''});
 			//$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
 			//$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
 			//$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
@@ -242,7 +242,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 			console.log('1assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
 			//$location.path('/'+this.hbkkBindSearch)
 
-			var tt1 = Ustodos.query ({name: this.hbkkBindSearch});
+			var tt1 = Ustodos.query ({querystring: this.hbkkBindSearch});
 			console.log('2assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
 			$scope.ustodos = tt1;
 
