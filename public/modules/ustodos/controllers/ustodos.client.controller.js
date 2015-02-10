@@ -244,6 +244,9 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
 			var tt1 = Ustodos.query ({querystring: this.hbkkBindSearch});
 			console.log('2assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
+            //this.countOfUstodos = tt1.length;
+            this.ttl = tt1;
+            console.log('this.countOfUstodos:'+ this.countOfUstodos);
 			$scope.ustodos = tt1;
 
 			//console.log (utilGetClass('ssdfsdfdsf', this.hbkkBindSearch));

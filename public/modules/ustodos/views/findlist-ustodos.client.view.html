@@ -2,11 +2,13 @@
     this is C:\utd\141213UtdV6\public\modules\ustodos\views\findlist-ustodos.client.view.html
 <section data-ng-controller="UstodosController">
     <div class="page-header">
-        <h1>UsToDoxxxxxxxxxxxx/h1>
+        <h1>UsToDo</h1>
     </div>
     <div class="col-md-12">
         <form class="form-horizontal" data-ng-submit="search()" novalidate>
             <fieldset>
+                Hello <span ng-bind="ttl"></span>!
+                <input type="text" data-ng-model="countOfUstodos" class="form-control" placeholder="Text" required>
                 <div class="form-group">
                     <!--<label class="control-label" for="name"></label>-->
                     <div class="controls">
@@ -29,7 +31,8 @@
         </form>
 
         <a ng-repeat="ustodo in ustodos" >
-            in findlist-ustodos.client.view.html
+            <!--in findlist-ustodos.client.view.html-->
+            <h5 class="list-group-item-heading" data-ng-bind="ustodo.datelastmod"></h5>
             <h4 class="list-group-item-heading" data-ng-bind="ustodo.text"></h4>
         </a>
     </div>

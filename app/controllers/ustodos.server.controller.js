@@ -138,11 +138,12 @@ exports.list = function(req, res) {
 			});
 		} else {
             //if (query.querystring === '')
-                //var x = ustodos.slice[0,20]
+                //var x = ustodos.slice[0,20]  100 200 500 1000
                 var x = [];
-                for (var k = 0; k < 200 && k < (ustodos.length-1); k++) {
-                    x.push(ustodos[k])
-                    console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod );
+                for (var k = 0; k < 100 && k < (ustodos.length-1); k++)
+                {
+                    x.push(ustodos[k]);
+                    console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod);
                 }
                 res.jsonp(x);
 

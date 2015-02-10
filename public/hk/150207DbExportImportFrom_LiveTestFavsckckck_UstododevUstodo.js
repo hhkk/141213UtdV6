@@ -91,41 +91,49 @@ if (true) {
                                         console.log("items.length a:" + items.length);
 
                                         var i = 0;
-                                        items.forEach(function(item) {
-                                            //if (i < 500)
-                                            {
-                                                // build json for single string search
-                                                var jsonObj = {};
-                                                jsonObj.text = item.text;
-                                                jsonObj.date = new Date(item.date);
-                                                var jsonStr = JSON.stringify(jsonObj);
-                                                //console.log ('jsonStr:' + jsonStr);
 
-                                                coll.insert (
-                                                    {
-                                                        //filelineraw: items[j].filelineraw,
-                                                        //date: items[j].date,
-                                                        text: jsonObj.text,
-                                                        datelastmod: jsonObj.date,
-                                                        datecreated: jsonObj.date,
-                                                        json: jsonStr,
-                                                        user: new ObjectID('5418f365f5bc55500a906584')
-                                                    }
-                                                    , {w: 1}, function (err, result) {
-                                                        if (err !== null) {
-                                                            console.log('erra:' + UtilClass.getClass('erra', err));
-                                                            assert.equal(null, err);
-                                                        } else {
-                                                            //if ( i % 1 == 0)
-                                                            //{
-                                                            //console.log (i + '. insert success jsonStr ['+ jsonStr+ ']');
-                                                            //}
+                                        coll.ensureIndex({ lastmoddate: -1 } );
+                                        console.log("coll.ensureIndex({ lastmoddate: ok");
+
+                                        if (false )
+                                        {
+                                            items.forEach(function(item) {
+                                                //if (i < 500)
+                                                {
+                                                    // build json for single string search
+                                                    var jsonObj = {};
+                                                    jsonObj.text = item.text;
+                                                    jsonObj.date = new Date(item.date);
+                                                    var jsonStr = JSON.stringify(jsonObj);
+                                                    //console.log ('jsonStr:' + jsonStr);
+
+                                                    coll.insert (
+                                                        {
+                                                            //filelineraw: items[j].filelineraw,
+                                                            //date: items[j].date,
+                                                            text: jsonObj.text,
+                                                            datelastmod: jsonObj.date,
+                                                            datecreated: jsonObj.date,
+                                                            json: jsonStr,
+                                                            user: new ObjectID('5418f365f5bc55500a906584')
                                                         }
-                                                    });
-                                                i++;
+                                                        , {w: 1}, function (err, result) {
+                                                            if (err !== null) {
+                                                                console.log('erra:' + UtilClass.getClass('erra', err));
+                                                                assert.equal(null, err);
+                                                            } else {
+                                                                //if ( i % 1 == 0)
+                                                                //{
+                                                                //console.log (i + '. insert success jsonStr ['+ jsonStr+ ']');
+                                                                //}
+                                                            }
+                                                        });
+                                                    i++;
 
-                                            } // if i < x000
-                                        });
+                                                } // if i < x000
+                                            });
+
+                                        }
                                         console.log ('inserted to db.coll:' + db.databaseName+'.'+coll.collectionName);
                                         //for(j=0; j < len; j++)
                                         //{
