@@ -75,10 +75,9 @@ if (true) {
         dba.collection(collName, function (err, coll) {
                 try {
                     // QUERY 20 years of records
-                    var queryRegExp = {text : new RegExp('')};  // <=========================
+                    var queryRegExp = {text : new RegExp('zach house parent family names')};  // <=========================
                     try {
                         coll.find(queryRegExp).toArray(function (err, items) {
-
 
                             var writedbname = 'ustodo-dev';
                             var writecollname = 'ustodos';
@@ -92,10 +91,13 @@ if (true) {
 
                                         var i = 0;
 
-                                        coll.ensureIndex({ lastmoddate: -1 } );
-                                        console.log("coll.ensureIndex({ lastmoddate: ok");
+                                        if (false) {
+                                            coll.ensureIndex({ lastmoddate: -1 } );
+                                            console.log("coll.ensureIndex({ lastmoddate: ok");
+                                        }
 
-                                        if (false )
+
+                                        if (true)
                                         {
                                             items.forEach(function(item) {
                                                 //if (i < 500)

@@ -11,6 +11,7 @@
 //C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
 
 
+var UtilHtmlHref = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilHtmlHref.js');
 
 /**
  * Module dependencies.
@@ -131,7 +132,8 @@ exports.list = function(req, res) {
 
 	var te = new RegExp(query.querystring);
     var querymongo = {json:te};
-	Ustodo.find(querymongo).sort('-datelastmod').populate('user', 'displayName').exec(function(err, ustodos) {
+    var hklimit = 501;
+    Ustodo.find(querymongo).sort('-datelastmod').limit(hklimit).populate('user', 'displayName').exec(function(err, ustodos) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -140,11 +142,15 @@ exports.list = function(req, res) {
             //if (query.querystring === '')
                 //var x = ustodos.slice[0,20]  100 200 500 1000
                 var x = [];
-                for (var k = 0; k < 100 && k < (ustodos.length-1); k++)
+                for (var k = 0; k < hklimit && k < (ustodos.length-1); k++)
                 {
+                    //ustodos[k].text = 'svr2,' + ustodos[k].text;
+                    ustodos[k].text = UtilHtmlHref.strHttpEnhancer(ustodos[k].text);
+
                     x.push(ustodos[k]);
-                    console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod);
                 }
+                //console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod);
+                console.log('pushed: x.length'+x.length);
                 res.jsonp(x);
 
                 //res.jsonp(ustodos);

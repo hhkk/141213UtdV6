@@ -1,18 +1,21 @@
 <div ng-app>
-    this is C:\utd\141213UtdV6\public\modules\ustodos\views\findlist-ustodos.client.view.html
+    <!--this is C:\utd\141213UtdV6\public\modules\ustodos\views\findlist-ustodos.client.view.html-->
+
 <section data-ng-controller="UstodosController">
-    <div class="page-header">
-        <h1>UsToDo</h1>
-    </div>
+    <!--<div class="page-header">-->
+        <!--<h3>UsToDo</h3>-->
+    <!--</div>-->
+
+
+
     <div class="col-md-12">
         <form class="form-horizontal" data-ng-submit="search()" novalidate>
             <fieldset>
-                Hello <span ng-bind="ttl"></span>!
-                <input type="text" data-ng-model="countOfUstodos" class="form-control" placeholder="Text" required>
                 <div class="form-group">
                     <!--<label class="control-label" for="name"></label>-->
+                    <br>
                     <div class="controls">
-                        <input type="text" data-ng-model="hbkkBindSearch" hk = "hbkkBindSearch" id="text" class="form-control" placeholder="Text" required>
+                        <input type="text" data-ng-model="hbkkBindSearch" hk = "hbkkBindSearch" id="text" class="form-control" placeholder="Do" required>
                     </div>
                 </div>
                 <!--<div class="form-group">-->
@@ -22,7 +25,7 @@
                     <!--</div>-->
                 <!--</div>-->
                 <div class="form-group">
-                    <input type="submit" class="btn btn-default">
+                    <input type="submit" class="btn btn-sm">
                 </div>
                 <div data-ng-show="error" class="text-danger">
                     <strong data-ng-bind="error"></strong>
@@ -30,10 +33,16 @@
             </fieldset>
         </form>
 
+        Count: <span ng-bind="ustodosQueryResult.length"></span>
         <a ng-repeat="ustodo in ustodos" >
             <!--in findlist-ustodos.client.view.html-->
-            <h5 class="list-group-item-heading" data-ng-bind="ustodo.datelastmod"></h5>
-            <h4 class="list-group-item-heading" data-ng-bind="ustodo.text"></h4>
+
+            <h6  data-ng-bind="ustodo.datelastmod"></h6>
+            <!--<h6 data-ng-bind="console.log('*****************************hi mom')"></h6>-->
+            <!--<h6 data-ng-bind="renderAgeAsLetterFromNowToFileDateStr(ustodo.datelastmod)"></h6>-->
+
+            <!--<h7 contentEditable="true" data-ng-bind="'xx'+ustodo.text"></h7>-->
+            <h7 contentEditable="true" data-ng-bind="ustodo.text"></h7>
         </a>
     </div>
 

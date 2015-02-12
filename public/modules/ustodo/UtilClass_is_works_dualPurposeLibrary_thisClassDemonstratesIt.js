@@ -17,13 +17,11 @@
 var isArray = function(a) {
 
     try {
-        Array.isArray(a);
+        return Array.isArray(a);
     } catch (e) {
         console.log ('error in UtilClass:e:' + e.message);
         console.log ('error in getClass:estack:' + e.stack);
     }
-
-    return s;
 
 };  // function
 
@@ -35,8 +33,6 @@ var isString = function(s) {
         console.log ('error in UtilClass3:e:' + e.message);
         console.log ('error in getClass:estack:' + e.stack);
     }
-
-    return s;
 
 };  // function
 
