@@ -1,6 +1,9 @@
 'use strict';
 
+
+
 //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
+//var UtilClass = null;
 
 var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_hbkkBindSearch)
 {
