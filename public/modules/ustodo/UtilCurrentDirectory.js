@@ -7,6 +7,9 @@
  * Time: 3:55 PM
  * To change this template use File | Settings | File Templates.
  */
+
+// var UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
+
 function getDirName ()
 {
     return __dirname;  //eg  __dirname:c:\utd\141213UtdV6\app\controllers where js is rnning from
@@ -34,8 +37,8 @@ if (typeof exports !== 'undefined') {
 
 
 
-var test = true;
+var test = false;
 if (test)
 {
-
+    console.log('in test');
 }

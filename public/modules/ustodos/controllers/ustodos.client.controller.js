@@ -1,7 +1,6 @@
 'use strict';
 
-
-
+//var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 
 var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_hbkkBindSearch)
 {
@@ -31,6 +30,7 @@ var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_
 // Ustodos controller
 var angularModule = angular.module('ustodos');
 
+
 //angularModule.directive('ignoreClick',  function() {
 //
 //	return {
@@ -46,117 +46,6 @@ var angularModule = angular.module('ustodos');
 
 
 
-var renderAgeAsLetterFromNowToFileDateStr =function (dtthen) // date obj
-{
-    console.log ('in renderAgeAsLetterFromNowToFileDateStr dtthen [' + dtthen + '] ========================================== ');
-    //O.o("date processing [" + d + "] len ["+ "]");
-    try
-    {
-        // NOW
-        var now = new Date();
-
-
-        //// THEN
-        //// 012345678901234567890
-        //// 2007-12-27 11:40:01
-        //var dstr = d.toString();
-        //var yyyy23 = dstr.slice(10, 13);
-        //var mm23 = dstr.slice(4,5);
-        //var dd23 = dstr.slice(6,7);
-        //var mn23 = dstr.slice(8,9);
-        //var hh23 = dstr.slice(10,11);
-        //var ss23 = dstr.slice(12, 13);
-        //var then = dateFromComponents
-
-        var ago = (now - dtthen)/1000;
-        //(yyyy23-yyyy) * 365 * 24 * 3600 +
-        //(mm23-mm)     * 30.5* 24 * 3600 +
-        //(dd23-dd)     *       24 * 3600 +
-        //(hh23-hh)     *            3600 +
-        //(mn23-mn)                *   60 +
-        //(ss23-ss);
-
-        var _yyyy = 365 * 24 * 3600;
-        var _mm =   30.5* 24 * 3600;
-        var _ww =     7 * 24 * 3600;
-        var _dd =         24 * 3600;
-        var _hh =              3600;
-        var _mn =                60;
-        var _ss =                 1;
-
-        if (ago < _ss)
-            return "1<font size=-3>sec</font>"
-        else if (ago < (60*_ss))
-            return "< 1<font size=-3>min</font>"
-        else if (ago < (10 * 60*_ss))
-            return "< 10<font size=-3>min</font>"
-        else if (ago < (10 * 60*_ss))
-            return "< 30<font size=-3>min</font>"
-        else if (ago < _hh)
-        {
-            var ageInMins = Math.round(ago/_mn);
-            if (ageInMins < 50)
-                return "<1h"
-            else
-                return "1h"
-        }
-
-        else if (ago < _dd)
-        {
-            var ageInHours = Math.round(ago/_hh);
-            return ageInHours+"h"
-        }
-        else if (ago < _ww)
-        {
-            var ageInDays = Math.round(ago/_dd);
-            return ageInDays+"d"
-        }
-        else if (ago < _mm)
-        {
-            var ageInWeeks = Math.round(ago/_ww);
-            return ageInWeeks+"w"
-        }
-        else if (ago < _yyyy)
-        {
-            var ageInMo = Math.round(ago/30.5*24*3600);
-            return ageInMo+"m";
-        }
-        else
-        {
-            var ageInMo = Math.round(ago/_yyyy);
-            return ageInMo+"y"
-        }
-
-        return ""
-
-
-        //				if (ago > _yyyy)
-        //				return "y"
-        //			else if (ago > _mm)
-        //				return "m"
-        //			else if (ago > _ww)
-        //				return "w"
-        //			else if (ago > _dd)
-        //				return "d"
-        //			else if (ago > _hh)
-        //				return "h"
-        //			else if (ago > _mn)
-        //				return "m"
-        //			else if (ago > _ss)
-        //				return "s"
-        //			else // subsecond
-        //				return"s"
-    } catch (e)
-    {
-        //System.err.println ("error converting date ["+d+"] " + e.getMessage());
-        //e.printStackTrace();
-        console.log ('e:' + e)
-        return "1+y";
-    }
-
-
-} // renderAgeAsLetterFromNowToFileDateStr  // render age as letter
-
 
 
 
@@ -166,8 +55,6 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
     function($scope, $stateParams, $location, $rootScope, Authentication, Ustodos) {
         console.log ('0 in ustodos.client.controller init');
         $scope.authentication = Authentication;
-
-        $scope.renderAgeAsLetterFromNowToFileDateStr = renderAgeAsLetterFromNowToFileDateStr;
 
         //alert ('angularModule.controller(UstodosController)');
         // Create new Ustodo
@@ -259,12 +146,21 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         // Search for new Ustodo (findlist)
         $scope.callCountSearch = 0;
         $scope.search = function() {
+
+            //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
+
+            //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));
+
+            // 1107pm
+            //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.utilGetClass(this):'+UtilClassx.utilGetClass(this));
+            //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.utilGetClass(this):'+UtilClassx.utilGetClass(this));
+
+
             $scope.callCountSearch++;
             //alert ('in search $stateParams.q:'+$stateParams.q +
             //    ',\r\n$location.search().q:' + $location.search().q +
             //    ',\r\nthis.hbkkBindSearch:' + this.hbkkBindSearch
             //);
-
 
             //alert ('6 in ustodos.client.controller SEARCH this.hbkkBindSearch:' + this.hbkkBindSearch);
             //alert ('7 in ustodos.client.controller SEARCH $stateParams.q:' + $stateParams.q);
@@ -367,7 +263,9 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             //$location.path('/'+this.hbkkBindSearch)
 
             var ustodosQueryResult = Ustodos.query ({querystring: this.hbkkBindSearch});
-            console.log ('============ in here'+ustodosQueryResult.length);
+            //console.log ('!@!@!@!@!@!@!!!@ utd[Class].getClass(ustodosQueryResult)]:'+utd[Class].getClass(ustodosQueryResult));
+            console.log ('!@!@!@!@!@!@!!!@ utd[Class].getClass(ustodosQueryResult)]:'+UtilClass.getClass(ustodosQueryResult));
+            //console.log ('============ in here'+ustodosQueryResult.length);
 
             console.log('2assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
             //this.countOfUstodos = ustodosQueryResult.length;
@@ -375,7 +273,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             console.log('this.countOfUstodos:'+ this.countOfUstodos);
             $scope.ustodos = ustodosQueryResult;
 
-            //console.log (utilGetClass('ssdfsdfdsf', this.hbkkBindSearch));
+            //console.log (getClass('ssdfsdfdsf', this.hbkkBindSearch));
             //var patternhk = /$scope.hbkkBindSearch/;
             //	// ORIGINAL A/B SPLIT HBKK
             //	//ustodoSearchString: $stateParams.ustodoId

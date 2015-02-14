@@ -1,5 +1,6 @@
 'use strict';
 
+var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 
 //var UtilClass = require('.././UtilClass');
 // console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
@@ -11,7 +12,7 @@
 //C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
 
 
-var UtilHtmlHref = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilHtmlHref.js');
+var UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
 
 /**
  * Module dependencies.
@@ -90,7 +91,8 @@ exports.delete = function(req, res) {
  * List of Ustodos
  */
 exports.list = function(req, res) {
-	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk req:', req))
+
+	//console.log ('444444444444 utilclass.getClass of s:' + UtilClass.getClass('hbkk req:', req));
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
 	var query = req.query;
 	console.log ('in ustodos.server.controller.js: list query.querystring [' + query.querystring+ ']');

@@ -3,7 +3,7 @@
 /**
  * Created by henryms on 2/11/2015.
  */
-// var UtilHtmlHref = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilHtmlHref.js');
+// var UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
 
 /**
  *
@@ -54,7 +54,7 @@ var buildHrefFromUrlString= function(urlstr)
 {
     //return urlstr;
     return '<a href=\'' + urlstr + '\'>' + urlstr + '</a>';
-}
+}                  ;
 
 /**
  * make sure all urls (e.g., n  on whitespace string tokens ending in .net) strings have http preamble
@@ -70,7 +70,7 @@ var strHttpEnhancer = function(s, hrefGen)
     var i = 0;
     tokens.forEach(function(token) {
         if (isUrl(token)) {
-            console.log ('is a url:' + token);
+            //console.log ('is a url:' + token);
             var replaceWith = null;
             if (tokens[i].toLowerCase().indexOf('http') !== 0)
                     tokens[i] = 'http://' + tokens[i];
@@ -101,13 +101,13 @@ if (test)
 
     console.log ('y.length:' + y.length);
     y.forEach(function(token) {
-        if (isUrl(token)) {
-            console.log ('is a url:' + token);
-
-        }
-        else{
-            //console.log ('not a url:' + token);
-        }
+        //if (isUrl(token)) {
+        //    //console.log ('is a url:' + token);
+        //
+        //}
+        //else{
+        //    console.log ('not a url:' + token);
+        //}
     });
 }
 

@@ -3,7 +3,6 @@
  * Created by henryms on 1/11/2015.
  */
 
-
 var txt = '';
 txt += '<p>Browser CodeName: ' + navigator.appCodeName + '</p>';
 txt += '<p>Browser Name: ' + navigator.appName + '</p>';

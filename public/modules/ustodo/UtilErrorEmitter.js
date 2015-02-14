@@ -14,6 +14,7 @@
 
 function EmitError (desc, err)
 {
+
     try {
         console.log ('error in err.message:' + err.message);
         console.log ('error in err.stack:' + err.stack);

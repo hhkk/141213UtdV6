@@ -1,4 +1,7 @@
 'use strict';
+
+
+
 /**
  * // UtilNodeVsBrowser
  */
@@ -10,6 +13,17 @@
  * To change this template use File | Settings | File Templates.
  */
 // var UtilDate = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilDate.js');
+// var UtilDate = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
+
+var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
+
+//console.log (' herehk =========================-----------------=============------------- ');
+//console.log (' herehk =====:'+ UtilClass.getClass(UtilClass) );
+
+var browserifyTest = function()
+{
+    console.log ('in browserifyTest');
+};
 
 
 var dateFromString = function(year, month, day, hours, minutes, seconds, milliseconds) {
@@ -28,7 +42,7 @@ var padnum = function(n)
         return '0' + n.toString();
     else
         return n.toString();
-}
+};
 
 var dateStringYYYYetcFromDate = function(dt)
 {
@@ -40,8 +54,8 @@ var dateStringYYYYetcFromDate = function(dt)
         padnum(dt.getMinutes()) + ':' +
         padnum(dt.getSeconds());
     console.log ('converted date [' + dt + '] to [' + dtstr + ']');
-    return dtstr
-}
+    return dtstr;
+};
 
 
 var insertDateToDbAsofNow = function(coll)
@@ -63,11 +77,11 @@ var dateFromComponents = function(year, month, day, hours, minutes, seconds, mil
 
 
 /**
- * eg convert "2015-02-08 23:43:44" to 3d
+ * eg convert '2015-02-08 23:43:44' to 3d
  */
 var renderAgeAsLetterFromNowToFileDateStr =function (dtthen) // date obj
 {
-    //O.o("date processing [" + d + "] len ["+ "]");
+    //O.o('date processing [' + d + '] len ['+ ']');
     try
     {
         // NOW
@@ -103,77 +117,78 @@ var renderAgeAsLetterFromNowToFileDateStr =function (dtthen) // date obj
         var _ss =                 1;
 
         if (ago < _ss)
-            return "1<font size=-3>sec</font>"
+            return '1<font size=-3>sec</font>';
         else if (ago < (60*_ss))
-            return "< 1<font size=-3>min</font>"
+            return '< 1<font size=-3>min</font>';
         else if (ago < (10 * 60*_ss))
-            return "< 10<font size=-3>min</font>"
+            return '< 10<font size=-3>min</font>';
         else if (ago < (10 * 60*_ss))
-            return "< 30<font size=-3>min</font>"
+            return '< 30<font size=-3>min</font>';
         else if (ago < _hh)
         {
             var ageInMins = Math.round(ago/_mn);
             if (ageInMins < 50)
-                return "<1h"
+                return '<1h';
             else
-                return "1h"
+                return '1h';
         }
 
         else if (ago < _dd)
         {
             var ageInHours = Math.round(ago/_hh);
-            return ageInHours+"h"
+            return ageInHours+'h';
         }
         else if (ago < _ww)
         {
             var ageInDays = Math.round(ago/_dd);
-            return ageInDays+"d"
+            return ageInDays+'d';
         }
         else if (ago < _mm)
         {
             var ageInWeeks = Math.round(ago/_ww);
-            return ageInWeeks+"w"
+            return ageInWeeks+'w';
         }
         else if (ago < _yyyy)
         {
             var ageInMo = Math.round(ago/30.5*24*3600);
-            return ageInMo+"m";
+            return ageInMo+'m';
         }
         else
         {
-            var ageInMo = Math.round(ago/_yyyy);
-            return ageInMo+"y"
+            throw 'should not be here';
+            //var ageInMo = Math.round(ago/_yyyy);
+            //return ageInMo+'y';
         }
 
-        return ""
+        return '';
 
 
         //				if (ago > _yyyy)
-        //				return "y"
+        //				return 'y'
         //			else if (ago > _mm)
-        //				return "m"
+        //				return 'm'
         //			else if (ago > _ww)
-        //				return "w"
+        //				return 'w'
         //			else if (ago > _dd)
-        //				return "d"
+        //				return 'd'
         //			else if (ago > _hh)
-        //				return "h"
+        //				return 'h'
         //			else if (ago > _mn)
-        //				return "m"
+        //				return 'm'
         //			else if (ago > _ss)
-        //				return "s"
+        //				return 's'
         //			else // subsecond
-        //				return"s"
+        //				return's'
     } catch (e)
     {
-        //System.err.println ("error converting date ["+d+"] " + e.getMessage());
+        //System.err.println ('error converting date ['+d+'] ' + e.getMessage());
         //e.printStackTrace();
-        console.log ('e:' + e)
-        return "1+y";
+        console.log ('e:' + e) ;
+        return '1+y';
     }
 
 
-} // render age as letter
+}; // render age as letter
 
 
 
@@ -191,6 +206,7 @@ if (typeof exports !== 'undefined') {
     exports.dateFromComponents = dateFromComponents;
     exports.renderAgeAsLetterFromNowToFileDateStr = renderAgeAsLetterFromNowToFileDateStr;
     exports.dateStringYYYYetcFromDate = dateStringYYYYetcFromDate;
+    exports.browserifyTest = browserifyTest;
 }
 
 

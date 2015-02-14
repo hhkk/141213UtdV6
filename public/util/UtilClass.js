@@ -9,7 +9,7 @@
  * Time: 3:55 PM
  * To change this template use File | Settings | File Templates.
  */
-// var UtilClass = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass.js');
+// var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 
 
 var icallcnt_getClassSub = 0;
@@ -101,7 +101,7 @@ function getClassSub (desc, obj)
 
 
 
-var utilGetClass = function (desc, obj)    {
+var getClass = function (desc, obj)    {
 
     var s = '<================== BEGIN exports.UtilClass:' + 'exports.getClass:' + desc + ' [' + desc + ']\r\n\r\n';
     //return s;
@@ -150,5 +150,5 @@ var utilGetClass = function (desc, obj)    {
 
 
 if (typeof exports !== 'undefined') {
-    exports.utilGetClass = utilGetClass;
+    exports.getClass = getClass;
 }
