@@ -63,9 +63,33 @@
         Count: <span ng-bind="ustodosQueryResult.length"></span>
 
 
+        <table>
+            <tr ng-repeat="ustodo in ustodos ">
+                <td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>
+                <!--<td>{{ ustodo.text}}</td>-->
+                <td>            <span id="contentx{{$index}}" contenteditable="true"
+                                      onclick = ";this.contentEditable = true;"
+                                      onmouseover="this.contentEditable = false; this.ustodo_innerhtmlpre = this.innerHTML;"
+                                      onmouseout = "this.contentEditable = false;
+//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);
+//                    console.log ('this.prey:'+this.innerHTML);
+//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))
+//                                            alert ('SaveHere');
+                    "
+                                      ng-bind-html="ustodos[$index].html"></span></td>
+            </tr>
+        </table>
+                <!--content editable stuff http://jsfiddle.net/GeVpe/22/-->
 
 
-        <div ng-repeat="ustodo in ustodos " >
+
+
+
+
+            </tr>
+        </table>
+
+        <!--<div ng-repeat="ustodo in ustodos " >-->
             <!--<tr id="linky-filter">-->
             <!--<tr >-->
             <!--<td>linky filter2</td>-->
