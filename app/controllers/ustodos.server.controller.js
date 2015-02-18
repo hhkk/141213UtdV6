@@ -94,6 +94,7 @@ exports.list = function(req, res) {
 
 	//console.log ('444444444444 utilclass.getClass of s:' + UtilClass.getClass('hbkk req:', req));
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
+
 	var query = req.query;
 	console.log ('in ustodos.server.controller.js: list query.querystring [' + query.querystring+ ']');
     if (query.querystring !== null && query.querystring !== undefined)
@@ -132,9 +133,10 @@ exports.list = function(req, res) {
 		re = new RegExp('');
 	}
 
+
 	var te = new RegExp(query.querystring);
     var querymongo = {json:te};
-    var hklimit = 501;
+    var hklimit = 101; // 100 200 500 1000
     Ustodo.find(querymongo).sort('-datelastmod').limit(hklimit).populate('user', 'displayName').exec(function(err, ustodos) {
 		if (err) {
 			return res.status(400).send({
@@ -142,7 +144,7 @@ exports.list = function(req, res) {
 			});
 		} else {
             //if (query.querystring === '')
-                //var x = ustodos.slice[0,20]  100 200 500 1000
+                //var x = ustodos.slice[0,20]
                 var x = [];
                 for (var k = 0; k < hklimit && k < (ustodos.length-1); k++)
                 {

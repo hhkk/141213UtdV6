@@ -26,15 +26,28 @@ var browserifyTest = function()
 };
 
 
-var dateFromString = function(year, month, day, hours, minutes, seconds, milliseconds) {
+// convert "2015-02-17T17:45:42.000Z" to date
+var dateObjFromMongoString = function(dtStrFull) {
 
+    //console.log ('in dateFromMongoString');
     try {
-        return new Date(year, month, day, hours, minutes, seconds, milliseconds);
+        var y = dtStrFull.slice(0,4);
+        var m = dtStrFull.slice(5,7);
+        var d = dtStrFull.slice(8,10);
+        var h = dtStrFull.slice(11,13);
+        var mn= dtStrFull.slice(14,16);
+        var s = dtStrFull.slice(17,19);
+        var ms= dtStrFull.slice(20,23);
+        return new Date(dtStrFull);
+        //return new Date(y, m, d, h, mn, s, ms);
+
     } catch (e) {
         console.log ('error in UtilDate:e:' + e.message);
         console.log ('error in UtilDate:e.stack:' + e.stack);
     }
 };  // function
+
+
 
 var padnum = function(n)
 {
@@ -44,17 +57,20 @@ var padnum = function(n)
         return n.toString();
 };
 
+
+
 var dateStringYYYYetcFromDate = function(dt)
 {
-    var dtstr =
-        dt.getFullYear() + '-' +
-        padnum(dt.getMonth()+1) + '-' +
-        padnum(dt.getDate()) + ' ' +
-        padnum(dt.getHours()) + ':' +
-        padnum(dt.getMinutes()) + ':' +
-        padnum(dt.getSeconds());
-    console.log ('converted date [' + dt + '] to [' + dtstr + ']');
-    return dtstr;
+    console.log ('in dateStringYYYYetcFromDate');
+        var dtstr = 'fff';
+            //dt.getFullYear() + '-' +
+            //padnum(dt.getMonth()+1) + '-' +
+            //padnum(dt.getDate()) + ' ' +
+            //padnum(dt.getHours()) + ':' +
+            //padnum(dt.getMinutes()) + ':' +
+            //padnum(dt.getSeconds());
+        //console.log ('converted date [' + dt + '] to [' + dtstr + ']');
+        return dtstr;
 };
 
 
@@ -79,11 +95,12 @@ var dateFromComponents = function(year, month, day, hours, minutes, seconds, mil
 /**
  * eg convert '2015-02-08 23:43:44' to 3d
  */
-var renderAgeAsLetterFromNowToFileDateStr =function (dtthen) // date obj
+var timeAgo =function (dtStrMongoStyle) // date obj
 {
     //O.o('date processing [' + d + '] len ['+ ']');
     try
     {
+        var dtObjthen = dateObjFromMongoString(dtStrMongoStyle);
         // NOW
         var now = new Date();
 
@@ -100,8 +117,9 @@ var renderAgeAsLetterFromNowToFileDateStr =function (dtthen) // date obj
         //var ss23 = dstr.slice(12, 13);
         //var then = dateFromComponents
 
-        var ago = (now - dtthen)/1000;
-        //(yyyy23-yyyy) * 365 * 24 * 3600 +
+        var nowsec = now.getTime();
+        var thensec = dtObjthen.getTime();
+        var agoSecs = (nowsec - thensec)/1000;          //(yyyy23-yyyy) * 365 * 24 * 3600 +
         //(mm23-mm)     * 30.5* 24 * 3600 +
         //(dd23-dd)     *       24 * 3600 +
         //(hh23-hh)     *            3600 +
@@ -116,66 +134,66 @@ var renderAgeAsLetterFromNowToFileDateStr =function (dtthen) // date obj
         var _mn =                60;
         var _ss =                 1;
 
-        if (ago < _ss)
+        if (agoSecs < _ss)
             return '1<font size=-3>sec</font>';
-        else if (ago < (60*_ss))
+        else if (agoSecs < (60*_ss))
             return '< 1<font size=-3>min</font>';
-        else if (ago < (10 * 60*_ss))
+        else if (agoSecs < (10 * 60*_ss))
             return '< 10<font size=-3>min</font>';
-        else if (ago < (10 * 60*_ss))
+        else if (agoSecs < (10 * 60*_ss))
             return '< 30<font size=-3>min</font>';
-        else if (ago < _hh)
+        else if (agoSecs < _hh)
         {
-            var ageInMins = Math.round(ago/_mn);
+            var ageInMins = Math.round(agoSecs/_mn);
             if (ageInMins < 50)
                 return '<1h';
             else
                 return '1h';
         }
 
-        else if (ago < _dd)
+        else if (agoSecs < _dd)
         {
-            var ageInHours = Math.round(ago/_hh);
+            var ageInHours = Math.round(agoSecs/_hh);
             return ageInHours+'h';
         }
-        else if (ago < _ww)
+        else if (agoSecs < _ww)
         {
-            var ageInDays = Math.round(ago/_dd);
+            var ageInDays = Math.round(agoSecs/_dd);
             return ageInDays+'d';
         }
-        else if (ago < _mm)
+        else if (agoSecs < _mm)
         {
-            var ageInWeeks = Math.round(ago/_ww);
+            var ageInWeeks = Math.round(agoSecs/_ww);
             return ageInWeeks+'w';
         }
-        else if (ago < _yyyy)
+        else if (agoSecs < _yyyy)
         {
-            var ageInMo = Math.round(ago/30.5*24*3600);
+            var ageInMo = Math.round(agoSecs/30.5*24*3600);
             return ageInMo+'m';
         }
         else
         {
             throw 'should not be here';
-            //var ageInMo = Math.round(ago/_yyyy);
+            //var ageInMo = Math.round(agoSecs/_yyyy);
             //return ageInMo+'y';
         }
 
         return '';
 
 
-        //				if (ago > _yyyy)
+        //				if (agoSecs > _yyyy)
         //				return 'y'
-        //			else if (ago > _mm)
+        //			else if (agoSecs > _mm)
         //				return 'm'
-        //			else if (ago > _ww)
+        //			else if (agoSecs > _ww)
         //				return 'w'
-        //			else if (ago > _dd)
+        //			else if (agoSecs > _dd)
         //				return 'd'
-        //			else if (ago > _hh)
+        //			else if (agoSecs > _hh)
         //				return 'h'
-        //			else if (ago > _mn)
+        //			else if (agoSecs > _mn)
         //				return 'm'
-        //			else if (ago > _ss)
+        //			else if (agoSecs > _ss)
         //				return 's'
         //			else // subsecond
         //				return's'
@@ -200,16 +218,6 @@ var renderAgeAsLetterFromNowToFileDateStr =function (dtthen) // date obj
 
 
 
-// on getClassSub (desc, obj)
-
-if (typeof exports !== 'undefined') {
-    exports.dateFromComponents = dateFromComponents;
-    exports.renderAgeAsLetterFromNowToFileDateStr = renderAgeAsLetterFromNowToFileDateStr;
-    exports.dateStringYYYYetcFromDate = dateStringYYYYetcFromDate;
-    exports.browserifyTest = browserifyTest;
-}
-
-
 var test = false;
 if (test)
 {
@@ -230,5 +238,19 @@ if (test)
     console.log ('diff:' + diff);
     console.log ('timethen:' + timethen);
     console.log ('then:' + then);
-    console.log ('rendered:' + renderAgeAsLetterFromNowToFileDateStr (then));
+    console.log ('rendered timeAgo:' + timeAgo (then));
 }
+
+
+
+// on getClassSub (desc, obj)
+
+if (typeof exports !== 'undefined') {
+    exports.dateFromComponents = dateFromComponents;
+    exports.timeAgo = timeAgo;
+    exports.dateStringYYYYetcFromDate = dateStringYYYYetcFromDate;
+    exports.browserifyTest = browserifyTest;
+    exports.padnum = padnum;
+    exports.dateObjFromMongoString = dateObjFromMongoString;
+}
+

@@ -1,0 +1,91 @@
+<!-- from plunker -->
+<!-- C:\utd\141213UtdV6\public\150216SanitizeLinkyFilterHtmlExampleStandaloneFromPlunker.html -->
+<!-- as pointed to by https://docs.angularjs.org/api/ngSanitize/filter/linky -->
+<!-- works
+http://localhost:3000/150216SanitizeLinkyFilterHtmlExampleStandaloneFromPlunker.html
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example - example-example112-production</title>
+
+    <script src="/lib/angular/angular.min.js"></script>
+    <script src="/lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <!--<script src="/lib/angular/angular-sanitize.js"></script>-->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.1/angular-sanitize.js"></script>-->
+
+
+
+</head>
+<body ng-app="linkyExample">
+<script>
+    angular.module('linkyExample', ['ngSanitize'])
+            .controller('ExampleController', ['$scope', function($scope) {
+                $scope.joes = ['a','b'];
+                console.log('$scope.joes.length:' + $scope.joes.length);
+                $scope.snippet = []
+
+                $scope.snippet[0] = 'Pretty text with some links:\n'+
+                        'http://angularjs.org/,\n'+
+                        'mailto:us@somewhere.org,\n'+
+                        'another@somewhere.org,\n'+
+                        'and one more: ftp://127.0.0.1/.';
+                $scope.snippet[1] = 'Pretty2 text with some links:\n'+
+                        'Pretty2 text with some links:\n'+
+                        'http://angularjs2.org/,\n'+
+                        'mailto:us@somewhere2.org,\n'+
+                        'another@somewhere2.org,\n'+
+                        'and one more: ftp://127.0.0.1/.';
+                $scope.snippetWithTarget = 'http://angularjs.org/';
+            }]);
+</script>
+<div ng-controller="ExampleController">
+    Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<td>Filter</td>-->
+            <!--<td>Source</td>-->
+            <!--<td>Rendered</td>-->
+        <!--</tr>-->
+
+        <!--<div ng-repeat="joe in joes" >-->
+            <!--<tr>xc</tr>-->
+        <!--</div>-->
+
+        <div ng-repeat="joe in joes" >
+            <!--<tr id="linky-filter">-->
+            <!--<tr >-->
+                <!--<td>linky filter2</td>-->
+                <!--<td>-->
+                    <!--<pre>&lt;div ng-bind-html="snippet | linky:'_blank'"&gt;<br>&lt;/div&gt;</pre>-->
+                <!--</td>-->
+                    <div ng-bind-html="snippet[$index] | linky:'_blank'"></div>
+                xx
+            <!--</tr>-->
+
+        </div>
+        <!--</table>-->
+        <!--<div ng-repeat="joe in joes" >-->
+            <!--<p>xc</p>-->
+                <!--{{joes[$index]}}-->
+        <!--</div>-->
+        <!--<tr id="linky-target">-->
+            <!--<td>linky target</td>-->
+            <!--<td>-->
+                <!--<pre>&lt;div ng-bind-html="snippetWithTarget | linky:'_blank'"&gt;<br>&lt;/div&gt;</pre>-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<div ng-bind-html="snippetWithTarget | linky:'_blank'"></div>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr id="escaped-html">-->
+            <!--<td>no filter</td>-->
+            <!--<td><pre>&lt;div ng-bind="snippet"&gt;<br>&lt;/div&gt;</pre></td>-->
+            <!--<td><div ng-bind="snippet"></div></td>-->
+        <!--</tr>-->
+    <!--</table>-->
+</div>
+</body>
+</html>

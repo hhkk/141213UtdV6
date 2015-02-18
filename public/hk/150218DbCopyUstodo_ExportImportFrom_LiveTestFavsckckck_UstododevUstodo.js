@@ -25,8 +25,8 @@
 //}
 var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 //var UtilClass3_isString = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass3_isString.js');
-var UtilClass_is = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass_is.js');
-var UtilDate = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
+//var UtilClass_is = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilClass_is.js');
+//var UtilDate = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 
 //    Process finished with exit code 0
 //var Db = require('mongodb').Db,
@@ -44,17 +44,35 @@ var Db = require('mongodb').Db,
     assert = require('assert'),
     BSON = require('mongodb').BSONPure;
 
+/**
+ * empties target DB and loads source DB into it
+ * main cop of old ustodo to new
+ * @type {string}
+ */
+
+
+
 // 20 years of ustodos
 // 111111111111111111111111111111111111111111111111
-var dbSource = new Db('livetest', new Server('localhost', 27017), {safe:false});
-// new DB
-//var dbTarget = new Db('ustodo-dev', new Server('localhost', 27017), {safe:false});
-var dbTarget = new Db('notustodo', new Server('localhost', 27017), {safe:false});
+//var dbSource = new Db('livetest', new Server('localhost', 27017), {safe:false});
+//// new DB
+////var dbTarget = new Db('ustodo-dev', new Server('localhost', 27017), {safe:false});
+//var dbTarget = new Db('notustodo', new Server('localhost', 27017), {safe:false});
+
+var dbNameSource = 'livetest';
+var collNameSource = 'favsckckck';
+var writedbname = 'ustodo-dev';
+var collNameWrite = 'ustodos';
+// QUERY 20 years of records
+//var queryRegExp = {text : new RegExp('hopper')};  // <=========================
+//var queryRegExp = {text : /hopper/};  // <=========================
+var queryRegExp = {};  // <=========================
+var countLimit = -1;
 
 // 222222222222222222222222222222222222222222222222
-var collNameSource = 'favsckckck'
+//var collNameSource = 'favsckckck'
 //var collNameTarget = 'ustodoorisx'
-var collNameTarget = 'billy'
+//var collNameTarget = 'billy'
 //var collTargetTest = 'ustodooris-test'
 
 
@@ -69,56 +87,44 @@ if (true) {
 
     var itemstokeep = null;
 
-    var dba = new Db('livetest', new Server('localhost', 27017), {safe:false});
-    var collName = 'favsckckck';
-    dba.open(function(err, dba) {
-        dba.collection(collName, function (err, coll) {
+    var dbSource = new Db(dbNameSource, new Server('localhost', 27017), {safe:false});
+    dbSource.open(function(err, dbsrc) {
+        dbsrc.collection(collNameSource, function (err, coll) {
                 try {
-                    // QUERY 20 years of records
-                    var queryRegExp = {text : new RegExp('zach house parent family names')};  // <=========================
                     try {
                         coll.find(queryRegExp).toArray(function (err, items) {
 
-                            var writedbname = 'ustodo-dev';
-                            var writecollname = 'ustodos';
-
-                            var db = new Db(writedbname, new Server('localhost', 27017), {safe: false});
-                            db.open(function (err, db) {
-                                db.collection(writecollname, function (err, coll)
+                            var dbWrite = new Db(writedbname, new Server('localhost', 27017), {safe: false});
+                            dbWrite.open(function (err, dbWrite) {
+                                dbWrite.collection(collNameWrite, function (err, collWrite)
                                 {
                                     try {
                                         console.log("items.length a:" + items.length);
 
                                         var i = 0;
 
-                                        if (false) {
-                                            coll.ensureIndex({ lastmoddate: -1 } );
-                                            console.log("coll.ensureIndex({ lastmoddate: ok");
-                                        }
-
 
                                         if (true)
                                         {
-                                            items.forEach(function(item) {
-                                                //if (i < 500)
+                                            collWrite.remove({});
+                                            items.forEach(function(sourceObj) {
+                                                if (countLimit < 0 || i < countlimit)
                                                 {
                                                     // build json for single string search
-                                                    var jsonObj = {};
-                                                    jsonObj.text = item.text;
-                                                    jsonObj.date = new Date(item.date);
-                                                    var jsonStr = JSON.stringify(jsonObj);
-                                                    //console.log ('jsonStr:' + jsonStr);
+                                                    var targetObj = {};
+                                                    if (sourceObj.html === undefined || sourceObj.html === null || sourceObj.html === '')
+                                                        targetObj.html = sourceObj.text;
+                                                    else
+                                                        targetObj.html = sourceObj.html;
 
-                                                    coll.insert (
-                                                        {
-                                                            //filelineraw: items[j].filelineraw,
-                                                            //date: items[j].date,
-                                                            text: jsonObj.text,
-                                                            datelastmod: jsonObj.date,
-                                                            datecreated: jsonObj.date,
-                                                            json: jsonStr,
-                                                            user: new ObjectID('5418f365f5bc55500a906584')
-                                                        }
+                                                    targetObj.text = JSON.stringify(targetObj);
+                                                    targetObj.datelastmod = new Date(sourceObj.date);
+                                                    targetObj.datecreated = new Date(sourceObj.date);
+                                                    targetObj.json = JSON.stringify(targetObj);
+                                                    targetObj.user = new ObjectID('5418f365f5bc55500a906584');
+
+                                                    collWrite.insert (
+                                                        targetObj
                                                         , {w: 1}, function (err, result) {
                                                             if (err !== null) {
                                                                 console.log('erra:' + UtilClass.getClass('erra', err));
@@ -132,11 +138,11 @@ if (true) {
                                                         });
                                                     i++;
 
-                                                } // if i < x000
+                                                } // e.g., loop check if i < x000
                                             });
 
                                         }
-                                        console.log ('inserted to db.coll:' + db.databaseName+'.'+coll.collectionName);
+                                        console.log ('inserted to dbWrite.collWrite:' + dbWrite.databaseName+'.'+collWrite.collectionName);
                                         //for(j=0; j < len; j++)
                                         //{
                                         //    if ( j < 100)
@@ -147,6 +153,13 @@ if (true) {
                                         //console.log(UtilClass.UtilClass('err', err));
                                         console.log("err:" + err);
                                     }
+
+
+                                    if (true) {
+                                        collWrite.ensureIndex({ lastmoddate: -1 } );
+                                        console.log("collWrite.ensureIndex({ lastmoddate: ok");
+                                    }
+
                                     console.log("done")
                                 });
                             });
@@ -245,10 +258,10 @@ if (true) {
 //
 //
 //
-//    var dba = new Db('ustodo-dev', new Server('localhost', 27017), {safe:false});
+//    var dbSource = new Db('ustodo-dev', new Server('localhost', 27017), {safe:false});
 //    var collName = 'favsckckck';
-//    dba.open(function(err, dba) {
-//        dba.collection(collName, function (err, coll) {
+//    dbSource.open(function(err, dbSource) {
+//        dbSource.collection(collName, function (err, coll) {
 //                try {
 //                    // QUERY 20 years of records
 //                    var queryRegExp = {text : new RegExp('')};  // <=========================

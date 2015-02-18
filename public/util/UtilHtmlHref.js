@@ -11,9 +11,14 @@
  * @param onWayOIntoDB
  * @returns {boolean}
  */
+var seeIfConnectedToThisClass = function (s) {
+    return ('in seeIfConnectedToThisClass:' + s);
+};
+
+
 var isUrl = function (s)
 {
-    //console.log ('---------- testing s:' + s);
+    //console.log ('---------- testing isUrl :' + s);
     if (s.indexOf('http')=== 0)
     {
         return true;
@@ -113,4 +118,5 @@ if (test)
 
 if (typeof exports !== 'undefined') {
     exports.strHttpEnhancer = strHttpEnhancer;
+    exports.seeIfConnectedToThisClass = seeIfConnectedToThisClass;
 }

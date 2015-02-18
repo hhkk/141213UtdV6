@@ -1,7 +1,6 @@
 'use strict';
 
 
-
 //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 //var UtilClass = null;
 
@@ -31,7 +30,46 @@ var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_
 
 
 // Ustodos controller
-var angularModule = angular.module('ustodos');
+//var angularModule = angular.module('ustodos').directive('onFinishRender', function ($timeout) {
+//var angularModule = null;
+//try {
+//    angularModule = angular.module('ustodos', ['ngSanitize']);
+//    console.log ('no errorhks!!!!!!!!!!!!!!!!!!!!');
+//}catch (err) {
+//    console.log ('errorhk!!!!!!!!!!!!!!!!!!!!');
+//}
+
+
+//var angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinishRender', function ($timeout) {
+var angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinishRender', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            if (scope.$last === true) {
+                $timeout(function () {
+                    scope.$emit('ngRepeatFinished');
+                });
+            }
+        }
+    };
+});
+
+//angularModule.run(function($rootScope, $compile, $rootElement) {
+//    // We'll create a new scope to use as the context for the view.
+//    //$scope = $rootScope.$new();
+//    $scope.model = [{name: 'first'}, {name: 'second'}, {name: 'third'}];
+//
+//    // Calling `$compile(html)` returns a function that, when called with
+//    // a context object, links the compiled HTML to the given context (e.g.
+//    // binds scope-based expressions in the view to the passed in scope).
+//    var html = "<div ng-repeat='m in model'>{{m.name}}</div>";
+//    var linkingFunction = $compile(html);
+//    var elem = linkingFunction($scope);
+//
+//    // You can then use the DOM element like normal.
+//    $rootElement.append(elem);
+//});
+
 
 
 //angularModule.directive('ignoreClick',  function() {
@@ -48,16 +86,123 @@ var angularModule = angular.module('ustodos');
 
 
 
+//myApp.controller('myCtrl', ['$scope', '$sce', function($scope, $sce) {
+//    // ...
+//    $scope.preview_data.preview.embed.htmlSafe =
+//        $sce.trustAsHtml(preview_data.preview.embed.html);
+//}
+//myApp.controller('myCtrl', ['$scope', '$sce', function($scope, $sce)
 
 
 
 
-
-
+// works angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'Authentication', 'Ustodos',
+//    function($scope, $stateParams, $location, $rootScope, Authentication, Ustodos) {
+// angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
 angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'Authentication', 'Ustodos',
     function($scope, $stateParams, $location, $rootScope, Authentication, Ustodos) {
-        console.log ('0 in ustodos.client.controller init');
+//angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
+//    function($scope, $stateParams, $location, $rootScope, ngSanitize, Authentication, Ustodos) {
+        //$rootScope', $compile, $rootElement,
+        console.log ('000000000000000000000000000000 in ustodos.client.controller init');
+
+        $scope.UtilDate = UtilDate;
+
+        //$scope.testfn = function(dateStrFromMongo)
+        //{
+        //    console.log('in testfn');
+        //    return UtilDate.dateFromMongoString(dateStrFromMongo);
+        //}
+
         $scope.authentication = Authentication;
+
+        $scope.joes = ['a','b'];
+        $scope.snippet = []
+
+        $scope.snippet[0] = 'Pretty text with some links:\n'+
+        'http://angularjs.org/,\n'+
+        'mailto:us@somewhere.org,\n'+
+        'another@somewhere.org,\n'+
+        'and one more: ftp://127.0.0.1/.';
+        $scope.snippet[1] = 'Pretty2 text with some links:\n'+
+        'Pretty2 text with some links:\n'+
+        'http://angularjs2.org/,\n'+
+        'mailto:us@somewhere2.org,\n'+
+        'another@somewhere2.org,\n'+
+        'and one more: ftp://127.0.0.1/.';
+
+        $scope.caption = 'My Caption';
+        //$scope.htmlhkhk = $compile('<div>{{caption}}</div>')($scope);
+
+        $scope.model = [{name: 'first'}, {name: 'second'}, {name: 'third'}];
+
+        // Calling `$compile(html)` returns a function that, when called with
+        // a context object, links the compiled HTML to the given context (e.g.
+        // binds scope-based expressions in the view to the passed in scope).
+        //var html = "<div ng-repeat='m in model'>{{m.name}}</div>";
+        //var linkingFunction = $compile(html);
+        //var elem = linkingFunction($scope);
+        //
+        //// You can then use the DOM element like normal.
+        //$rootElement.append(elem);
+
+
+
+
+
+
+
+
+        $scope.customer = {
+            name: 'Naomi',
+            address: '1600 Amphitheatre'
+        };
+        // plunker link from here
+
+
+
+
+
+
+
+
+        $scope.htmlhk ="<div>htmlhk</div>";
+
+
+
+        //$scope.htmlString = '<a ng-href="http://hkon.net" target="_blank">hkon.net</a>';
+        //$scope.htmlString = 'ffffffffffff';
+        $scope.htmlString = '<ul><li>render me please</li></ul>';
+        //this.htmlString = '<ul><li>render me please</li></ul>';
+        //this.htmlString = 'hhhhhhhhhhhhhh';
+        //$scope.htmlString = $sce.trustAsHtml($scope.htmlString);
+        //
+
+        //$scope.posts = [{url:'http://u2d.co', text:'u2d'},{url:'http://ibm.com', text:'ibm'}];
+        $scope.postshk = ['a', 'b'];
+        //console.log ('UtilClass.getClass($scope.posts):' + UtilClassz.getClass($scope.posts));
+        //console.log ('$scope.posts.length:' + $scope.posts.length);
+        //console.log ('$scope.posts[0]:' + $scope.posts[0]);
+
+        // test
+        $scope.showClient = function(client) {
+            alert ('in showclient');
+            console.log ('in showclient');
+            $location.path('#/user/' + client.tagid);
+        };
+
+        $scope.hklinkycallcount = 0;
+        $scope.hklinky= function(client) {
+            //alert ('in  hklinky');
+            console.log ('in hklinky ');
+            $scope.hklinkycallcount++;
+            //var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
+            //return 'hklinkyrtn:' + client.replace(exp,"<a href='$1'>$1</a>");
+            return 'hklinkyrtn:' + client;
+        };
+
+
+
 
         //alert ('angularModule.controller(UstodosController)');
         // Create new Ustodo
@@ -148,6 +293,65 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
         // Search for new Ustodo (findlist)
         $scope.callCountSearch = 0;
+
+
+
+        $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+            //you also get the actual event object
+            //do stuff, execute functions -- whatever...
+            //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@ done rendering this.ustodosQueryResult.length:' + $scope.ustodosQueryResult.length);
+            //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@ done rendering this.ustodosQueryResult.length:' + $scope.ustodosQueryResult[9].toString());
+            //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@ getClass:'+UtilClassz.getClass($scope.ustodosQueryResult));
+
+
+
+
+
+
+
+
+
+
+
+
+            for (var i=0; i < $scope.ustodosQueryResult.length; i++) {
+                //console.log('===========' + $scope.ustodosQueryResult[i].text);
+                //console.log('===========' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text));
+                //$scope.ustodosQueryResult[i].text = '<a href="http://ibm.com">http://ibm.com</a>' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
+
+
+
+
+                $scope.ustodosQueryResult[i].text =
+                    //' yyy2 <a href="http://banana.com" target="_blank">http://banana.com</a>' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
+                    ' yyy2 ' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
+
+                //$scope.ustodosQueryResult[i].text =
+                //    'xxx1 [' +
+                //    '<a ng-href=\"http://u2d.co\" target=\"_blank\">UtD</a>' /
+                //    + '] yyy1' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
+
+
+
+
+
+
+
+
+            }
+            //<a ng-href="http://u2d.co" target="_blank">link1</a>
+
+            //$scope.ustodosQueryResult = null;
+
+            //if (index > -1) {
+            $scope.ustodosQueryResult.splice(2, 1);
+            //}
+        });
+        $scope.functionTest = function(s)
+        {
+            return 'eee:'+ s;
+        };
+
         $scope.search = function() {
 
             //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
@@ -266,13 +470,15 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             //$location.path('/'+this.hbkkBindSearch)
 
             var ustodosQueryResult = Ustodos.query ({querystring: this.hbkkBindSearch});
+
             //console.log ('!@!@!@!@!@!@!!!@ utd[Class].getClass(ustodosQueryResult)]:'+utd[Class].getClass(ustodosQueryResult));
-            console.log ('!@!@!@!@!@!@!!!@ utd[Class].getClass(ustodosQueryResult)]:'+UtilClass.getClass(ustodosQueryResult));
+            // KEEPER 150214 console.log ('!@!@!@!@!@!@!!!@ utd[Class].getClass(ustodosQueryResult)]:'+UtilClass.getClass(ustodosQueryResult));
             //console.log ('============ in here'+ustodosQueryResult.length);
 
             console.log('2assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
             //this.countOfUstodos = ustodosQueryResult.length;
-            this.ustodosQueryResult = ustodosQueryResult;
+            //this.ustodosQueryResult = ustodosQueryResult;
+            $scope.ustodosQueryResult = ustodosQueryResult;
             console.log('this.countOfUstodos:'+ this.countOfUstodos);
             $scope.ustodos = ustodosQueryResult;
 
@@ -327,7 +533,21 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         $scope.search();
 
     }
-]);
+]).directive('myCustomer', function() {
+        return {
+            //templateUrl: function(elem, attr){
+            //    return 'customer-'+attr.type+'.html';
+            template: function(elem, attr){
+
+                console.log ('in mycustomer directive ==================================');
+                //return 'ggggggggggghhhhhhhhhhhhhh';
+                return 'ustodo text: <a href="http://applex.com" target="_blank">http://applex.com</a>';
+
+            }
+        };
+    });
+;
+;
 
 
 
