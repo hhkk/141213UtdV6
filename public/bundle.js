@@ -252,8 +252,16 @@ var dateFromComponents = function(year, month, day, hours, minutes, seconds, mil
 /**
  * eg convert '2015-02-08 23:43:44' to 3d
  */
+var callCount_timeAgo = 0;
 var timeAgo =function (dtStrMongoStyle) // date obj
 {
+    callCount_timeAgo++;
+    console.log('callCount_timeAgo:' + callCount_timeAgo + ' dtStrMongoStyle:' + dtStrMongoStyle);
+
+    if (dtStrMongoStyle === '2013-04-09T00:06:09.000Z')
+    {
+        console.log('break on 2013-04-09T00:06:09.000Z');
+    }
     //O.o('date processing [' + d + '] len ['+ ']');
     try
     {
@@ -330,9 +338,9 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         }
         else
         {
-            throw 'should not be here';
-            //var ageInMo = Math.round(agoSecs/_yyyy);
-            //return ageInMo+'y';
+            //throw 'should not be here';
+            var ageInYr = Math.round(agoSecs/_yyyy);
+            return ageInYr + 'y';
         }
 
         return '';
@@ -359,6 +367,7 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         //System.err.println ('error converting date ['+d+'] ' + e.getMessage());
         //e.printStackTrace();
         console.log ('e:' + e) ;
+        alert ('erra dtStrMongoStyle:'+dtStrMongoStyle);
         return '1+y';
     }
 

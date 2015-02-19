@@ -1,0 +1,206 @@
+<div ng-app>
+    <!--this is C:\utd\141213UtdV6\public\modules\ustodos\views\findlist-ustodos.client.view.html-->
+
+
+<section data-ng-controller="UstodosController">
+    <!--<div class="page-header">-->
+        <!--<h3>UsToDo</h3>-->
+    <!--</div>-->
+
+
+
+
+
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="search()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <!--<label class="control-label" for="name"></label>-->
+                    <br>
+                    <div class="controls">
+                        <input type="text" data-ng-model="hbkkBindSearch" hk = "hbkkBindSearch" id="text" class="form-control" placeholder="Do" required>
+                    </div>
+                </div>
+                <!--<div class="form-group">-->
+                    <!--<label class="control-label" for="name">Name</label>-->
+                    <!--<div class="controls">-->
+                        <!--<input type="text" data-ng-model="hbkkBindSearch" hk = "hbkkBindSearch" id="name" class="form-control" placeholder="Name" required>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <input type="submit" class="btn btn-sm">
+                </div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+            </fieldset>
+        </form>
+
+
+        <div ng-repeat="ustodo in ustodos" ng-click="showClient(client)">
+            <p><a ng-href="#/user/{{client.tagid}}">{{client.firstname}}</a></p>
+            <p>{{client.lastname}}</p>
+            <p>{{client.inumber}}</p>
+        </div>
+
+        <!--<a ng-href="http://u2d.co" target="_blank">link1</a>-->
+        <!-- NO WORK <p target="_blank" ng-click="console.log('asdad')">test link</p>-->
+
+        <!--<a ng-href="{{ $scope.post[0]}}">{{ $scope.post[0] }}</a>-->
+        <a ng-href="{{ $scope.post[0]}}">{{ $scope.post[0] }}</a>
+        <!-- WORKS <div ng-repeat="post in posts">-->
+            <!--ggg-->
+            <!--&lt;!&ndash;<p data-ng-bind="'{{$index+1}} '"></p>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a ng-href="{{ post.url }}">{{ post.title }}</a>&ndash;&gt;-->
+            <!--<a ng-href="{{ post}}">{{ post}}</a>-->
+        <!--</div>-->
+
+        <!--<div ng-bind-html-unsafe="htmlString"></div>-->
+        <!-- 150216d <p ng-bind-html-unsafe="htmlString"></p>-->
+        <div ng-bind-html-unsafe='htmlString'></div>
+        <!--<div ng-bind-html="htmlString"></div>-->
+
+        Count: <span ng-bind="ustodosQueryResult.length"></span>
+
+
+        <table>
+            <tr ng-repeat="ustodo in ustodos ">
+                <td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>
+                <!--<td>{{ ustodo.text}}</td>-->
+                <td>
+                    <span id="contenty{{$index}}" contenteditable="true"
+                                      onclick = ";this.contentEditable = true;"
+                                      onmouseover="this.contentEditable = false; this.ustodo_innerhtmlpre = this.innerHTML;"
+                                      onmouseout = "this.contentEditable = false;
+//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);
+//                    console.log ('this.prey:'+this.innerHTML);
+//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))
+//                                            alert ('SaveHere');
+                    "
+                                      ng-bind-html="ustodos[$index].html"></span></td>
+            </tr>
+        </table>
+                <!--content editable stuff http://jsfiddle.net/GeVpe/22/-->
+
+
+
+
+
+
+            </tr>
+        </table>
+
+        <!--<div ng-repeat="ustodo in ustodos " >-->
+            <!--<tr id="linky-filter">-->
+            <!--<tr >-->
+            <!--<td>linky filter2</td>-->
+            <!--<td>-->
+            <!--<pre>&lt;div ng-bind-html="snippet | linky:'_blank'"&gt;<br>&lt;/div&gt;</pre>-->
+            <!--</td>-->
+            <!--<div ng-bind-html="snippet[$index] | linky"></div>-->
+            <!--<span data-ng-bind="'{{$index+1}} ' + UtilDate.timeAgo(ustodo.datelastmod)"></span>-->
+            <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span>
+            <!--content editable stuff http://jsfiddle.net/GeVpe/22/-->
+            <span id="contentx{{$index}}" contenteditable="true"
+                      onclick = "this.contentEditable = true;"
+                      onmouseover="this.contentEditable = false;
+                        this.ustodo_innerhtmlpre = this.innerHTML;"
+                        onmouseout = "this.contentEditable = false;
+                    "
+                  ng-bind-html="ustodos[$index].html"></span>
+                  <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"></span>-->
+            <!--</tr>-->
+
+        </div>
+        </table>
+
+        <!--<div ng-repeat="joe in joes" >-->
+        <!--&lt;!&ndash;<tr id="linky-filter">&ndash;&gt;-->
+        <!--&lt;!&ndash;<tr >&ndash;&gt;-->
+        <!--&lt;!&ndash;<td>linky filter2</td>&ndash;&gt;-->
+        <!--&lt;!&ndash;<td>&ndash;&gt;-->
+        <!--&lt;!&ndash;<pre>&lt;div ng-bind-html="snippet | linky:'_blank'"&gt;<br>&lt;/div&gt;</pre>&ndash;&gt;-->
+        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div ng-bind-html="snippet[$index] | linky"></div>&ndash;&gt;-->
+        <!--<div ng-bind-html="snippet[$index] | linky"></div>-->
+        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+
+        <!--</div>-->
+
+
+
+        <!--<div ng-repeat="ustodo in ustodos" on-finish-render="ngRepeatFinished">-->
+            <!--&lt;!&ndash;in findlist-ustodos.client.view.html&ndash;&gt;-->
+
+            <!--aaa-->
+            <!--<p data-ng-bind="'{{$index+1}} '+ustodo.datelastmod"></p>-->
+            <!--bbb-->
+            <!--<div data-ng-bind-html-unsafe="'{{$index+1}} '+ustodo.datelastmod"></div>-->
+            <!--bbb2-->
+            <!--&lt;!&ndash;<div ng-bind-html-safe="htmlhk"></div>&ndash;&gt;-->
+            <!--<div data-ng-bind="htmlhk"></div>-->
+
+            <!--bbb3-->
+                <!--&lt;!&ndash;<div ng-bind-html="htmlhkhk"></div>&ndash;&gt;-->
+                <!--bbb3mid-->
+                <!--&lt;!&ndash;<div data-ng-bind-html-unsafe="htmlhkhk"></div>&ndash;&gt;-->
+            <!--bbb4-->
+                <!--&lt;!&ndash;<div ng-bind-html="htmlhkhk"></div>&ndash;&gt;-->
+            <!--bbb5-->
+            <!--&lt;!&ndash;<div ng-click="go('/projects/{{ustodo.datelastmod}}')">ddd</div>&ndash;&gt;-->
+            <!--<div ng-click="go('/projects/')">ddd</div>-->
+            <!--ccc-->
+
+            <!--&lt;!&ndash;<h6 data-ng-bind="console.log('*****************************hi mom')"></h6>&ndash;&gt;-->
+            <!--&lt;!&ndash;<h6 data-ng-bind="timeAgo(ustodo.datelastmod)"></h6>&ndash;&gt;-->
+
+            <!--&lt;!&ndash; NO WORK <a data-ng-bind="ustodo.text" ng-href="http://u2d.co" target="_blank"></a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a data-ng-bind="ustodo.text" ng-href="http://u2d.co" target="_blank"></a>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<div my-customer type="name">xxxxxxxxxxxxxxxxxxx</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div my-customer type="address">yyyyyyyyyyyyyyyyyy</div>&ndash;&gt;-->
+
+            <!--<div my-customerx>-->
+            <!--&lt;!&ndash;150216 <p data-ng-bind-html="ustodo.text" contentEditable="true"></p>&ndash;&gt;-->
+            <!--&lt;!&ndash;150216b <p data-ng-bind-html="ustodo.text | linky" contentEditable="true"></p>&ndash;&gt;-->
+                <!--fff1-->
+            <!--&lt;!&ndash;<p data-ng-bind-html-unsafe="ustodo.text" contentEditable="true"></p>&ndash;&gt;-->
+                <!--&lt;!&ndash;150216c <p data-ng-bind="hklinky(ustodo.text)" contentEditable="true"  target="_blank" ng-click="console.log('asdad')"></p>&ndash;&gt;-->
+                <!--<p data-ng-bind-html-unsafe="hklinky(ustodo.text)" contentEditable="true"  target="_blank" ng-click="console.log('asdad')"></p>-->
+                <!--fff2-->
+            <!--&lt;!&ndash;<p data-ng-bind="ustodo.text" contentEditable="true" ng-click="console.log('asdad')"></p>&ndash;&gt;-->
+            <!--</div>-->
+
+
+            <!--&lt;!&ndash;<a ng-href="http://www.w3schools.com/html/">Visit our HTML tutorial</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<h7 contentEditable="true" data-ng-bind="ustodo.text"></h7>&ndash;&gt;-->
+
+
+            <!--&lt;!&ndash;<p data-ng-bind="ustodo.text" contentEditable="true" ></p>&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash; works? <h7 contentEditable="true" data-ng-bind="$scope.functionTest(ustodo.text)"></h7>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash; no work I guess <h7 contentEditable="true" data-ng-bind="UtilHtmlHref.seeIfConnectedToThisClass(ustodo.text)"></h7>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<hr border-width="50px" >&ndash;&gt;-->
+
+            <!--<div ng-repeat="post in postshk">-->
+                <!--nested-->
+                <!--&lt;!&ndash;<p data-ng-bind="'{{$index+1}} '"></p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<a ng-href="{{ post.url }}">{{ post.title }}</a>&ndash;&gt;-->
+                <!--<a ng-h ref="{{ post}}">{{ post}}</a>-->
+            <!--</div>-->
+            <!--<hr>-->
+            <!--&lt;!&ndash;xxx&ndash;&gt;-->
+            <!--&lt;!&ndash;<a ng-href="http://www.hh.com/" target="_self" data-ng-bind="ustodo.datelastmod"></a>&ndash;&gt;-->
+            <!--&lt;!&ndash;yyy&ndash;&gt;-->
+            <!--&lt;!&ndash;<a ng-href="http://www.hh.com/" target="_self" data-ng-bind="ustodo.text"></a>&ndash;&gt;-->
+            <!--&lt;!&ndash;zzz&ndash;&gt;-->
+
+        <!--</div>-->
+
+    </div>
+
+</section>
+_____
+<!--original A/B split hbkk-->
+<!--<section data-ng-controller="UstodosController" data-ng-init="find({name: /ia\/})">-->
+</div>
+
