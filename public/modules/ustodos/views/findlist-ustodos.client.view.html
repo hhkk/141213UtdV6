@@ -32,19 +32,19 @@
 
             <table>
                 <tr ng-repeat="ustodo in ustodos ">
-                    <td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>
+                    <!--<td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
+                    <td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" ></span></td>
                     <td>
                         <span id="contenty{{$index}}" contenteditable="true"
-                          onclick = ";this.contentEditable = true;"
-                          onmouseover="this.contentEditable = false; this.ustodo_innerhtmlpre = this.innerHTML;"
-                          onmouseout = "this.contentEditable = false;
-//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);
-//                    console.log ('this.prey:'+this.innerHTML);
-//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))
-//                                            alert ('SaveHere');
-                    "
+                          onclick = "this.contentEditable = true;"
                     ng-bind-html="ustodos[$index].html"></span></td>
                 </tr>
+                    <!--//                   onmouseover="this.contentEditable = false; this.ustodo_innerhtmlpre = this.innerHTML;"-->
+                    <!--//                   onmouseout = "this.contentEditable = false;-->
+                    <!--//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);-->
+                    <!--//                    console.log ('this.prey:'+this.innerHTML);-->
+                    <!--//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))-->
+                    <!--//                                            alert ('SaveHere');-->
             </table>
 
             <!--<span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span>-->

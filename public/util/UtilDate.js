@@ -106,6 +106,7 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         console.log('break on 2013-04-09T00:06:09.000Z');
     }
     //O.o('date processing [' + d + '] len ['+ ']');
+    var returnStr = 'N/A:';
     try
     {
         var dtObjthen = dateObjFromMongoString(dtStrMongoStyle);
@@ -143,50 +144,50 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         var _ss =                 1;
 
         if (agoSecs < _ss)
-            return '1<font size=-3>sec</font>';
+            returnStr = '1<font size=-3>sec</font>';
         else if (agoSecs < (60*_ss))
-            return '< 1<font size=-3>min</font>';
+            returnStr = '< 1<font size=-3>min</font>';
         else if (agoSecs < (10 * 60*_ss))
-            return '< 10<font size=-3>min</font>';
+            returnStr = '< 10<font size=-3>min</font>';
         else if (agoSecs < (10 * 60*_ss))
-            return '< 30<font size=-3>min</font>';
+            returnStr = '< 30<font size=-3>min</font>';
         else if (agoSecs < _hh)
         {
             var ageInMins = Math.round(agoSecs/_mn);
             if (ageInMins < 50)
-                return '<1h';
+                returnStr = '<1h';
             else
-                return '1h';
+                returnStr = '1h';
         }
 
         else if (agoSecs < _dd)
         {
             var ageInHours = Math.round(agoSecs/_hh);
-            return ageInHours+'h';
+            returnStr = ageInHours+'h';
         }
         else if (agoSecs < _ww)
         {
             var ageInDays = Math.round(agoSecs/_dd);
-            return ageInDays+'d';
+            returnStr = ageInDays+'d';
         }
         else if (agoSecs < _mm)
         {
             var ageInWeeks = Math.round(agoSecs/_ww);
-            return ageInWeeks+'w';
+            returnStr = ageInWeeks+'w';
         }
         else if (agoSecs < _yyyy)
         {
             var ageInMo = Math.round(agoSecs/30.5*24*3600);
-            return ageInMo+'m';
+            returnStr = ageInMo+'m';
         }
         else
         {
             //throw 'should not be here';
             var ageInYr = Math.round(agoSecs/_yyyy);
-            return ageInYr + 'y';
+            returnStr = ageInYr + 'y';
         }
 
-        return '';
+        return returnStr;
 
 
         //				if (agoSecs > _yyyy)
@@ -211,7 +212,7 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         //e.printStackTrace();
         console.log ('e:' + e) ;
         alert ('erra dtStrMongoStyle:'+dtStrMongoStyle);
-        return '1+y';
+        return 'erra 1+y';
     }
 
 
