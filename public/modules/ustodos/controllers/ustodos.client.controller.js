@@ -374,7 +374,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             //console.log ("$location.search().q:"+$location.search().q);
 
             this.hbkkBindSearch = resolveSearchStringBetweenUrlAndInputBox
-            ($location.search().q, this.hbkkBindSearch);
+                ($location.search().q, this.hbkkBindSearch);
             //alert ('in search $stateParams.q:'+$stateParams.q +
             //    ',\r\n$location.search().q:' + $location.search().q +
             //    ',\r\nthis.hbkkBindSearch:' + this.hbkkBindSearch

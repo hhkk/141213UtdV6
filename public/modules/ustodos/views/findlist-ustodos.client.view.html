@@ -7,7 +7,7 @@
                     <div class="form-group">
                         <br>
                         <div class="controls">
-                            <input type="text" data-ng-model="hbkkBindSearch" hk = "hbkkBindSearch" id="text" class="form-control" placeholder="Do" required>
+                            <input type="text" data-ng-model="hbkkBindSearch"  id="text" class="form-control" placeholder="Do" required>
                         </div>
                     </div>
 
@@ -20,25 +20,47 @@
                 </fieldset>
             </form>
 
-
-            <a ng-href="http://u2d.co" target="_blank">UsToDo</a>
+            <!--<a ng-href="http://u2d.co" target="_blank">UsToDo</a>-->
 
             <a ng-href="{{ $scope.post[0]}}">{{ $scope.post[0] }}</a>
 
-            <div ng-bind-html-unsafe='htmlString'></div>
+            <!--<div ng-bind-html-unsafe='htmlString'></div>-->
 
             Count: <span ng-bind="ustodosQueryResult.length"></span>
-            <br>
 
-            <table>
-                <tr ng-repeat="ustodo in ustodos ">
+            <table >
+                <!--<tr ng-repeat="ustodo in ustodos ">-->
+                    <!--&lt;!&ndash; timeAgo &ndash;&gt;-->
                     <!--<td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
-                    <td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" ></span></td>
-                    <td>
-                        <span id="contenty{{$index}}" contenteditable="true"
-                          onclick = "this.contentEditable = true;"
-                    ng-bind-html="ustodos[$index].html"></span></td>
+                    <!--&lt;!&ndash; html &ndash;&gt;-->
+                    <!--<td>-->
+                        <!--<span contenteditable="true"-->
+                            <!--onclick = "this.contentEditable = true;"-->
+                            <!--ng-bind-html="ustodos[$index].html"></span>-->
+                    <!--</td>-->
+                <!--</tr>-->
+
+
+
+
+                <tr ng-repeat="ustodo in ustodos ">
+                    <td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>
+                    <!--<td>{{ ustodo.text}}</td>-->
+                    <td>            <span id="contentx{{$index}}" contenteditable="true"
+                                          onclick = "this.contentEditable = true;"
+                                          onmouseover="this.contentEditable = false;
+                        this.ustodo_innerhtmlpre = this.innerHTML;"
+                                          onmouseout = "this.contentEditable = false;
+//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);
+//                    console.log ('this.prey:'+this.innerHTML);
+//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))
+//                                            alert ('SaveHere');
+                    "
+                                          ng-bind-html="ustodos[$index].html | linky:'_blank'"></span></td>
                 </tr>
+
+
+
                     <!--//                   onmouseover="this.contentEditable = false; this.ustodo_innerhtmlpre = this.innerHTML;"-->
                     <!--//                   onmouseout = "this.contentEditable = false;-->
                     <!--//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);-->

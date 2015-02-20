@@ -136,7 +136,7 @@ exports.list = function(req, res) {
 
 	var te = new RegExp(query.querystring);
     var querymongo = {json:te};
-    var hklimit = 6; // 100 200 500 1000
+    var hklimit = 21; // 50 100 200 500 1000
     Ustodo.find(querymongo).sort('-datelastmod').limit(hklimit).populate('user', 'displayName').exec(function(err, ustodos) {
 		if (err) {
 			return res.status(400).send({

@@ -188,13 +188,6 @@ var dateObjFromMongoString = function(dtStrFull) {
 
     //console.log ('in dateFromMongoString');
     try {
-        var y = dtStrFull.slice(0,4);
-        var m = dtStrFull.slice(5,7);
-        var d = dtStrFull.slice(8,10);
-        var h = dtStrFull.slice(11,13);
-        var mn= dtStrFull.slice(14,16);
-        var s = dtStrFull.slice(17,19);
-        var ms= dtStrFull.slice(20,23);
         return new Date(dtStrFull);
         //return new Date(y, m, d, h, mn, s, ms);
 
@@ -256,18 +249,21 @@ var callCount_timeAgo = 0;
 var timeAgo =function (dtStrMongoStyle) // date obj
 {
     callCount_timeAgo++;
-    console.log('callCount_timeAgo:' + callCount_timeAgo + ' dtStrMongoStyle:' + dtStrMongoStyle);
+    //console.log('enter callCount_timeAgo:' + callCount_timeAgo + ' dtStrMongoStyle:' + dtStrMongoStyle);
 
     if (dtStrMongoStyle === '2013-04-09T00:06:09.000Z')
     {
-        console.log('break on 2013-04-09T00:06:09.000Z');
+        //console.log('break on 2013-04-09T00:06:09.000Z');
     }
     //O.o('date processing [' + d + '] len ['+ ']');
+    var returnStr = 'N/A:';
     try
     {
+        var now1 = new Date();
+        console.log ('now1:' + now1);
         var dtObjthen = dateObjFromMongoString(dtStrMongoStyle);
         // NOW
-        var now = new Date();
+        //var now2 = new Date();
 
 
         //// THEN
@@ -282,7 +278,7 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         //var ss23 = dstr.slice(12, 13);
         //var then = dateFromComponents
 
-        var nowsec = now.getTime();
+        var nowsec = now1.getTime();
         var thensec = dtObjthen.getTime();
         var agoSecs = (nowsec - thensec)/1000;          //(yyyy23-yyyy) * 365 * 24 * 3600 +
         //(mm23-mm)     * 30.5* 24 * 3600 +
@@ -300,50 +296,49 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         var _ss =                 1;
 
         if (agoSecs < _ss)
-            return '1<font size=-3>sec</font>';
+            returnStr = '1<font size=-3>sec</font>';
         else if (agoSecs < (60*_ss))
-            return '< 1<font size=-3>min</font>';
+            returnStr = '< 1<font size=-3>min</font>';
         else if (agoSecs < (10 * 60*_ss))
-            return '< 10<font size=-3>min</font>';
+            returnStr = '< 10<font size=-3>min</font>';
         else if (agoSecs < (10 * 60*_ss))
-            return '< 30<font size=-3>min</font>';
+            returnStr = '< 30<font size=-3>min</font>';
         else if (agoSecs < _hh)
         {
             var ageInMins = Math.round(agoSecs/_mn);
             if (ageInMins < 50)
-                return '<1h';
+                returnStr = '<1h';
             else
-                return '1h';
+                returnStr = '1h';
         }
 
         else if (agoSecs < _dd)
         {
             var ageInHours = Math.round(agoSecs/_hh);
-            return ageInHours+'h';
+            returnStr = ageInHours+'h';
         }
         else if (agoSecs < _ww)
         {
             var ageInDays = Math.round(agoSecs/_dd);
-            return ageInDays+'d';
+            returnStr = ageInDays+'d';
         }
         else if (agoSecs < _mm)
         {
             var ageInWeeks = Math.round(agoSecs/_ww);
-            return ageInWeeks+'w';
+            returnStr = ageInWeeks+'w';
         }
         else if (agoSecs < _yyyy)
         {
-            var ageInMo = Math.round(agoSecs/30.5*24*3600);
-            return ageInMo+'m';
+            var ageInMo = Math.round(agoSecs/(30.5*24*3600));
+            returnStr = ageInMo+'m';
         }
         else
         {
             //throw 'should not be here';
             var ageInYr = Math.round(agoSecs/_yyyy);
-            return ageInYr + 'y';
+            returnStr = ageInYr + 'y';
         }
 
-        return '';
 
 
         //				if (agoSecs > _yyyy)
@@ -367,8 +362,14 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         //System.err.println ('error converting date ['+d+'] ' + e.getMessage());
         //e.printStackTrace();
         console.log ('e:' + e) ;
-        alert ('erra dtStrMongoStyle:'+dtStrMongoStyle);
-        return '1+y';
+        //alert ('erra dtStrMongoStyle:'+dtStrMongoStyle);
+        returnStr = 'erra 1+y';
+    }
+    finally {
+
+        console.log('exit callCount_timeAgo:' + callCount_timeAgo + ' returnStr:' + returnStr);
+        return returnStr;
+
     }
 
 
@@ -384,27 +385,38 @@ var timeAgo =function (dtStrMongoStyle) // date obj
 
 
 
-var test = false;
+var test = true;
 if (test)
 {
-    var then = new Date();
-    console.log ('then pre:' + dateStringYYYYetcFromDate(then));
-    then.setMonth(2);
-    //then.setFullYear(2014);
-    console.log ('then post:' + dateStringYYYYetcFromDate(then));
-    var now = new Date();
-    var dtstr = dateStringYYYYetcFromDate(now);
 
-    var timethen = then.getTime();
-    var timenow = now.getTime();
 
-    var diff = timenow-timethen;
+    //var testStr1 = '2015-02-11T00:16:04.000Z';
+    //var testStr2 = '2015-02-11T00:16:04.000Z';
+    //var testDate2 = new Date(testStr2);
+    //console.log ('timeago1:'+timeAgo(testStr2));
 
-    console.log ('dtstr:' + dtstr);
-    console.log ('diff:' + diff);
-    console.log ('timethen:' + timethen);
-    console.log ('then:' + then);
-    console.log ('rendered timeAgo:' + timeAgo (then));
+    var testStr1 = '2014-05-19T01:22:06.000Z';
+    var testDate1 = new Date(testStr1);
+    console.log ('timeago1:'+timeAgo(testStr1));
+
+    //var then = new Date();
+    //console.log ('then pre:' + dateStringYYYYetcFromDate(then));
+    //then.setMonth(2);
+    ////then.setFullYear(2014);
+    //console.log ('then post:' + dateStringYYYYetcFromDate(then));
+    //var now = new Date();
+    //var dtstr = dateStringYYYYetcFromDate(now);
+    //
+    //var timethen = then.getTime();
+    //var timenow = now.getTime();
+    //
+    //var diff = timenow-timethen;
+    //
+    //console.log ('dtstr:' + dtstr);
+    //console.log ('diff:' + diff);
+    //console.log ('timethen:' + timethen);
+    //console.log ('then:' + then);
+    //console.log ('rendered timeAgo:' + timeAgo (then));
 }
 
 
