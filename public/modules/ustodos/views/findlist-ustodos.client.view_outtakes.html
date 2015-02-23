@@ -101,7 +101,7 @@
             <!--<span data-ng-bind="'{{$index+1}} ' + UtilDate.timeAgo(ustodo.datelastmod)"></span>-->
             <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span>
             <!--content editable stuff http://jsfiddle.net/GeVpe/22/-->
-            <span id="contentx{{$index}}" contenteditable="true"
+            <span id="contentx{{$index}}" contenteditable
                       onclick = "this.contentEditable = true;"
                       onmouseover="this.contentEditable = false;
                         this.ustodo_innerhtmlpre = this.innerHTML;"

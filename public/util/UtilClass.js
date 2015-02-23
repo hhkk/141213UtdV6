@@ -60,7 +60,7 @@ function getClassSub (desc, obj)
                 if ((typeof obj[key]).toString() !== 'function') {
                     s = s + '\r\n' + i + '. props desc [' + desc + '] name ['+key + '] value [' + obj_key + '] hasOwnPropIndicator [' + hasOwnPropIndicator + ']';
                 } else {
-                    s = s + '\r\n' + i + '. not appending function definition!';
+                    s = s + '\r\n' + i + '. not showing existing function definition for key [' + key + '] !';
                 }
                 //if (obj.hasOwnProperty(key) && typeof obj[key] !== 'function') {
                 //if (obj.hasOwnProperty(key) ) {
@@ -68,6 +68,7 @@ function getClassSub (desc, obj)
                     key = 'property_non_function_key:' + key;
                 else
                     key = 'property_function_key:' + key;
+
                 properties.push(key);
                 if (key === 'srcElement') // object Window
                 {

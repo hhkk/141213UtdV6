@@ -92,7 +92,7 @@ exports.delete = function(req, res) {
  */
 exports.list = function(req, res) {
 
-	//console.log ('444444444444 utilclass.getClass of s:' + UtilClass.getClass('hbkk req:', req));
+	console.log (' *************** Top of exports.list ');
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
 
 	var query = req.query;
@@ -107,54 +107,69 @@ exports.list = function(req, res) {
         query.querystring = '';
     }
 
-    console.log ('in ustodos.server.controller.js: list query.querystring post trim [' + query.querystring+ ']');
-	console.log ('ustodos user monoid req._passport.session.user: ' + req._passport.session.user);
+    //console.log ('query.querystring post trim [' + query.querystring+ ']');
 	//54b143dde898903429ce32b1
 
-	try {
-		var d = JSON.parse(query.querystring);
-		console.log ('q is json!! [' + query.querystring + ']');
-	} catch (err) {
-		console.log ('q is not json!! [' + query.querystring + '] err [' + err + ']');
-	}
+	//try {
+	//	var d = JSON.parse(query.querystring);
+		//console.log ('q is json [' + query.querystring + ']');
+	//} catch (err) {
+		//console.log ('q is not json [' + query.querystring + ']');
+	//}
 
-	console.log ('in ustodos.server.controller.js: list, query: ' + query);
+	//console.log ('in ustodos.server.controller.js: list, query: ' + query);
 	console.log ('in ustodos.server.controller.js: list, query.querystring: ' + query.querystring);
 	var re = null;
 
 
+    //
+    //
+	//try {
+	//	re = new RegExp(query.querystring);
+	//	//console.log ('************************** legal reg exp input query.querystring [' + query.querystring + ']');
+	//} catch (err) {
+	//	//console.log ('************************** illegal reg exp input query.querystring [' + query.querystring + ']');
+	//	re = new RegExp('');
+	//}
+
+    //var regexp = new RegExp(query.querystring);
+    var regexp = new RegExp(query.querystring);
+    //console.log ('UtilClass.getClass(regexp):'+ UtilClass.getClass(regexp));
+	var querymongo = {json:regexp};
+
+	//var querymongo = {text:'/'+query.querystring+'/'};
 
 
-	try {
-		re = new RegExp(query.querystring);
-		console.log ('************************** legal reg exp input query.querystring [' + query.querystring + ']');
-	} catch (err) {
-		console.log ('************************** illegal reg exp input query.querystring [' + query.querystring + ']');
-		re = new RegExp('');
-	}
+    //{ "$regex": '/europe/', "$options": 'i'}
 
+    var hklimit = 100; // 50 100 200 500 1000
+    var countResult = 0;
+    var x = [];
 
-	var te = new RegExp(query.querystring);
-    var querymongo = {json:te};
-    var hklimit = 21; // 50 100 200 500 1000
+    //Ustodo.find().exec(function(err, ustodos) {
     Ustodo.find(querymongo).sort('-datelastmod').limit(hklimit).populate('user', 'displayName').exec(function(err, ustodos) {
+    //Ustodo.find(querymongo).populate('user', 'displayName').exec(function(err, ustodos) {
 		if (err) {
+            console.log ('!!!!!!!! errorHandler.getErrorMessage(err):' + errorHandler.getErrorMessage(err));
+            console.log ('!!!!!!!! err.toString():' + err.toString());
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
+
 			});
 		} else {
             //if (query.querystring === '')
                 //var x = ustodos.slice[0,20]
-                var x = [];
-                for (var k = 0; k < hklimit && k < (ustodos.length-1); k++)
+                for (var k = 0; k < (ustodos.length); k++)
                 {
+                    //console.log ('in result loop');
+                    countResult = countResult + 1;
                     //ustodos[k].text = 'svr2,' + ustodos[k].text;
                     ustodos[k].text = UtilHtmlHref.strHttpEnhancer(ustodos[k].text);
-
                     x.push(ustodos[k]);
+
                 }
                 //console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod);
-                console.log('pushed: x.length'+x.length);
+                console.log('for query [' + query.querystring + '] countResult [' + countResult + '] req._passport.session.user id [' + req._passport.session.user + ']');
                 res.jsonp(x);
 
                 //res.jsonp(ustodos);

@@ -260,7 +260,7 @@ var timeAgo =function (dtStrMongoStyle) // date obj
     try
     {
         var now1 = new Date();
-        console.log ('now1:' + now1);
+        //console.log ('now1:' + now1);
         var dtObjthen = dateObjFromMongoString(dtStrMongoStyle);
         // NOW
         //var now2 = new Date();
@@ -367,7 +367,7 @@ var timeAgo =function (dtStrMongoStyle) // date obj
     }
     finally {
 
-        console.log('exit callCount_timeAgo:' + callCount_timeAgo + ' returnStr:' + returnStr);
+        //console.log('exit callCount_timeAgo:' + callCount_timeAgo + ' returnStr:' + returnStr);
         return returnStr;
 
     }

@@ -106,6 +106,111 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         //$rootScope', $compile, $rootElement,
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
 
+        $scope.ccccc = function() {
+            console.log ('in c');
+            $scope.count++;
+            isDirtySetFlag_updateScopeStateFlag();
+            //$scope.$apply()
+        }
+
+        $scope.name = 'Whirled';
+
+        $scope.areThereChanges = false;
+        //
+        //$scope.$on('$destroy', function() {
+        //    window.onbeforeunload = undefined;
+        //});
+        //$scope.$on('$locationChangeStart', function(event, next, current) {
+        //    if(!confirm("Are you sure you want to leave this page?")) {
+        //        event.preventDefault();
+        //    }
+        //});
+        //
+        //
+        window.onbeforeunload = confirmExit;
+        function confirmExit()
+        {
+            if (isDirtySetFlag_updateScopeStateFlag())
+                return "Your changes will be lost.  Are you sure you want to exit this page?";
+        };
+
+
+        // has any row changed
+        var callCnt_isDirty = 0;
+        function isDirtySetFlag_updateScopeStateFlag()
+        {
+            callCnt_isDirty++;
+            $scope.areThereChanges = false;
+            for (var i = 0; i < $scope.ustodos.length; i++) {
+                //for (var i = 0; i < 1; i++) {
+                //console.log ('ustodo checking dirty and saving $scope.ustodos.length:'
+                //    + $scope.ustodos.length);
+                // angular getelement
+                //console.log ('testing dirty on item [' + i + '] html [' + $scope.ustodos[i].html + ']');
+                //console.log ('has inner html [' + myEl[0].innerHTML + ']');
+
+                //"ustodorow1"
+                var myEl = angular.element( document.querySelector( '#ustodorow' + i ) );
+                //console.log (i + '. checking for change $scope.areThereChanges:' + $scope.areThereChanges);
+                var anyChangeThisRow = false; // creates race condition for a microsecond, user could lose edit - real ulikely
+                if (myEl[0] !== undefined) {
+                    anyChangeThisRow = ($scope.ustodos[i].html !== myEl[0].innerHTML);
+                    if (anyChangeThisRow) {
+                        console.log(i + '. changed  [' + $scope.ustodos[i].html + ']');
+                        console.log(i + '. vs inner [' + myEl[0].innerHTML + ']');
+                        $scope.areThereChanges = true;
+                        name = 'll'+ $scope.areThereChanges;
+                        break;
+                    }
+                    //alert ('loop done');
+                }
+                // diff here
+            }
+            //console.log (callCnt_isDirty + ". isDirty returning $scope.areThereChanges:"+ $scope.areThereChanges);
+       }
+
+
+        //var hktimeout = function () {
+        //    setTimeout(function () {
+        //        //alert ('hi dad');
+        //        //console.log ('checking dirty and saving');
+        //        isDirtySetFlag_updateScopeStateFlag();
+        //        $scope.$apply();
+        //        // Then recall the parent function to
+        //        // create a recursive loop.
+        //        hktimeout();
+        //    }, 30000); // for non keyboa in ms so eg 5000 is 5 seconds
+        //}
+        //hktimeout();
+
+
+        //setTimeout(function(){
+        //    //var item = items.shift();
+        //    //process.call(context, item);
+        //
+        //    //if (items.length > 0){
+        //        alert ('hi mommy');
+        //        setTimeout(arguments.callee, 100);
+        //    //}
+        //}, 100);
+
+
+
+        //self.addEventListener('message', function(evt) {
+        //    var gateway = new XMLHttpRequest();
+        //    var intie = setInterval(function() {
+        //        gateway.open("GET",evt.data.load_url,true);
+        //        gateway.send();
+        //        gateway.onreadystatechange = function() {
+        //            if (gateway.readyState==4 && gateway.status==200)
+        //                self.postMessage(gateway.responseText);
+        //        }
+        //    }, 300000); //every 5 minutes
+        //}, false);
+
+
+
+
         $scope.UtilDate = UtilDate;
 
         //$scope.testfn = function(dateStrFromMongo)
@@ -117,7 +222,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         $scope.authentication = Authentication;
 
         $scope.joes = ['a','b'];
-        $scope.snippet = []
+        $scope.snippet = [];
 
         $scope.snippet[0] = 'Pretty text with some links:\n'+
         'http://angularjs.org/,\n'+
@@ -166,7 +271,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
 
 
-        $scope.htmlhk ="<div>htmlhk</div>";
+        $scope.htmlhk ='<div>htmlhk</div>';
 
 
 
@@ -546,8 +651,6 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             }
         };
     });
-;
-;
 
 
 

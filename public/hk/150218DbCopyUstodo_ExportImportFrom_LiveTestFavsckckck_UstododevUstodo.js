@@ -107,6 +107,7 @@ if (true) {
                                         if (true)
                                         {
                                             collWrite.remove({});
+                                            var indexhk = 0;
                                             items.forEach(function(sourceObj) {
                                                 if (countLimit < 0 || i < countlimit)
                                                 {
@@ -123,20 +124,31 @@ if (true) {
                                                     targetObj.json = JSON.stringify(targetObj);
                                                     targetObj.user = new ObjectID('5418f365f5bc55500a906584');
 
-                                                    collWrite.insert (
-                                                        targetObj
-                                                        , {w: 1}, function (err, result) {
-                                                            if (err !== null) {
-                                                                console.log('erra:' + UtilClass.getClass('erra', err));
-                                                                assert.equal(null, err);
-                                                            } else {
-                                                                //if ( i % 1 == 0)
-                                                                //{
-                                                                //console.log (i + '. insert success jsonStr ['+ jsonStr+ ']');
-                                                                //}
-                                                            }
-                                                        });
-                                                    i++;
+                                                    if (indexhk % 1000 === 0)
+                                                        console.log (indexhk + '. inserting:' + targetObj.text);
+
+                                                    //if (targetObj.text.toLowerCase().indexOf('downt') >= 0)
+                                                    if (true)
+                                                    //if (indexhk < 10    )
+                                                    {
+                                                        console.log (indexhk + '. inserting:' + targetObj.text);
+                                                        collWrite.insert (
+                                                            targetObj
+                                                            , {w: 1}, function (err, result) {
+                                                                if (err !== null) {
+                                                                    console.log('erra:' + UtilClass.getClass('erra', err));
+                                                                    assert.equal(null, err);
+                                                                } else {
+                                                                    //if ( i % 1 == 0)
+                                                                    //{
+                                                                    //console.log (i + '. insert success jsonStr ['+ jsonStr+ ']');
+                                                                    //}
+                                                                }
+                                                            });
+                                                        i++;
+                                                        indexhk++;
+
+                                                    }
 
                                                 } // e.g., loop check if i < x000
                                             });
