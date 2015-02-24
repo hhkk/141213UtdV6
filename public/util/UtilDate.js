@@ -141,11 +141,17 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         if (agoSecs < _ss)
             returnStr = '1<font size=-3>sec</font>';
         else if (agoSecs < (60*_ss))
-            returnStr = '< 1<font size=-3>min</font>';
+            returnStr = '< 1min';
         else if (agoSecs < (10 * 60*_ss))
-            returnStr = '< 10<font size=-3>min</font>';
+            returnStr = '< 10min';
         else if (agoSecs < (10 * 60*_ss))
-            returnStr = '< 30<font size=-3>min</font>';
+            returnStr = '< 30min';
+        //else if (agoSecs < (60*_ss))
+        //    returnStr = '< 1<font size=-3>min</font>';
+        //else if (agoSecs < (10 * 60*_ss))
+        //    returnStr = '< 10<font size=-3>min</font>';
+        //else if (agoSecs < (10 * 60*_ss))
+        //    returnStr = '< 30<font size=-3>min</font>';
         else if (agoSecs < _hh)
         {
             var ageInMins = Math.round(agoSecs/_mn);

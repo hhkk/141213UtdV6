@@ -43,10 +43,12 @@ exports.update = function(req, res) {
 
 	timehk.save(function(err) {
 		if (err) {
+            console.log ('timehk save happened with err');
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+            console.log ('timehk save happened without err');
 			res.jsonp(timehk);
 		}
 	});

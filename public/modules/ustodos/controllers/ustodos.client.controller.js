@@ -109,7 +109,14 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         $scope.ccccc = function() {
             console.log ('in c');
             $scope.count++;
-            isDirtySetFlag_updateScopeStateFlag();
+            isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
+            //$scope.$apply()
+        }
+
+        $scope.savechanged = function() {
+            console.log ('in c');
+            $scope.count++;
+            isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(true);
             //$scope.$apply()
         }
 
@@ -130,15 +137,41 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         window.onbeforeunload = confirmExit;
         function confirmExit()
         {
-            if (isDirtySetFlag_updateScopeStateFlag())
+            if (isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false))
                 return "Your changes will be lost.  Are you sure you want to exit this page?";
         };
 
 
+        $scope.alignAnUstodoWithUstodoHtmlByIndex = function(i) {
+            var myEl = angular.element( document.querySelector( '#ustodorow' + i ) );
+            $scope.ustodos[i].html = myEl[0].innerHTML;
+            $scope.ustodos[i].text = myEl[0].innerText;
+            $scope.ustodos[i].html = myEl[0].innerHTML;
+
+            $scope.ustodos[i].$update(function() {
+                console.log ('SAVED !!! ' + $scope.ustodos[i].html);
+            }, function(errorResponse) {
+                $scope.error = errorResponse.data.message;
+                console.log ('ERROR ON SAVE !!! '  + $scope.ustodos[i].html);
+            });
+        }
+
+        $scope.saveUstodoGiven = function(ustodo) {
+            ustodo.$update(function() {
+                console.log ('SAVED !!! ' + ustodo.html);
+            }, function(errorResponse) {
+                $scope.error = errorResponse.data.message;
+                console.log ('ERROR ON SAVE !!! '  + ustodo.html);
+            });
+        }
+
         // has any row changed
         var callCnt_isDirty = 0;
-        function isDirtySetFlag_updateScopeStateFlag()
+        var time_last_save = 0;
+        function isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(saveDiffs)
         {
+            //if (saveDiffs)
+                //alert(' start save ');
             callCnt_isDirty++;
             $scope.areThereChanges = false;
             for (var i = 0; i < $scope.ustodos.length; i++) {
@@ -151,30 +184,79 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
                 //"ustodorow1"
                 var myEl = angular.element( document.querySelector( '#ustodorow' + i ) );
-                //console.log (i + '. checking for change $scope.areThereChanges:' + $scope.areThereChanges);
+                console.log (i + '. @@@@@@@@@@@@@@@@ checking for change $scope.areThereChanges:' + $scope.areThereChanges);
                 var anyChangeThisRow = false; // creates race condition for a microsecond, user could lose edit - real ulikely
                 if (myEl[0] !== undefined) {
                     anyChangeThisRow = ($scope.ustodos[i].html !== myEl[0].innerHTML);
                     if (anyChangeThisRow) {
-                        console.log(i + '. changed  [' + $scope.ustodos[i].html + ']');
-                        console.log(i + '. vs inner [' + myEl[0].innerHTML + ']');
+                        console.log(i + '. A changed  [' + $scope.ustodos[i].html + ']');
+                        console.log(i + '. A vs inner [' + myEl[0].innerHTML + ']');
+                        if (saveDiffs)
+                        {
+                            $scope.ustodos[i].html = myEl[0].innerHTML;
+                            console.log(i + '. B changed  [' + $scope.ustodos[i].html + ']');
+                            console.log(i + '. B vs inner [' + myEl[0].innerHTML + ']');
+                            console.log(i + '. B id changed  [' + $scope.ustodos[i]._id+ ']');
+
+                            saveOneUstodo($scope.ustodos[i]);
+
+                            // ends up in C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
+                            // .exports.update
+                        }
                         $scope.areThereChanges = true;
                         name = 'll'+ $scope.areThereChanges;
-                        break;
+                        if (!saveDiffs) // for non save, only need one
+                            break;
                     }
                     //alert ('loop done');
                 }
                 // diff here
             }
-            //console.log (callCnt_isDirty + ". isDirty returning $scope.areThereChanges:"+ $scope.areThereChanges);
+            console.log (callCnt_isDirty + ". exiting isDirty returning with $scope.areThereChanges:"+ $scope.areThereChanges);
        }
+
+
+        $scope.deleteDbUstotoById = function(ustodo)
+        {
+            try {
+                var savOid = ustodo._id;
+                //console.log ('in deleteDbUstotoById '  + savOid);
+                console.log ('in deleteDbUstotoById html:'  + ustodo.html);
+                //alert ('in deleteDbUstotoById ' + savOid);
+                var indexToDelete = -1;
+                for (var i = 0; i < $scope.ustodos.length; i++) {
+                    if ($scope.ustodos[i]._id === savOid)
+                    {
+                        console.log ('found one local array to delete, index:' + i)
+                                                                                $scope.ustodos.splice(indexToDelete, 1);
+                        console.log ('done local array delete, index:' + i)
+                    }
+                }
+                if (indexToDelete < 0)
+                    console.log ('found NONE to delete!!!');
+
+
+                ustodo.$delete(function() {
+                    console.log ('$delete done !!! savOid:' + savOid);
+                    //$scope.ustodos.splice(index, 1));
+                    //alert ('delete done, now remove from array');
+                    //array.;
+                }, function(errorResponse) {
+                    $scope.error = errorResponse.data.message;
+                    console.log ('ERROR ON SAVE !!! '  + $scope.ustodos[i].html);
+                });
+            } catch (err) {
+                console.log ('err:' + err);
+            }
+        }
+
 
 
         //var hktimeout = function () {
         //    setTimeout(function () {
         //        //alert ('hi dad');
         //        //console.log ('checking dirty and saving');
-        //        isDirtySetFlag_updateScopeStateFlag();
+        //        isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption();
         //        $scope.$apply();
         //        // Then recall the parent function to
         //        // create a recursive loop.

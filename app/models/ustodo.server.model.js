@@ -17,12 +17,19 @@ var UstodoSchema = new Schema({
             required: 'Please enter Ustodoori text',
             trim: true
         },
-        json: {
-            type: String,
-            default: '',
-            required: 'Please enter Ustodoori text',
-            trim: true
-        },
+    //jsonx
+    jsonx: {
+        type: String,
+        default: '',
+        required: 'Please enter Ustodoori text',
+        trim: true
+    },
+    html: {
+        type: String,
+        default: '',
+        required: 'Please enter Ustodoori html',
+        trim: true
+    },
         datelastmod: {
             type: Date,
             required: 'Please enter datelastmod',

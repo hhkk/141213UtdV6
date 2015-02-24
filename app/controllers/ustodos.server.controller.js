@@ -53,20 +53,38 @@ exports.read = function(req, res) {
  * Update a Ustodo        hbkk
  */
 exports.update = function(req, res) {
-	console.log ('in ustodos.server.controller.js: update');
 	var ustodo = req.ustodo ;
+    console.log ('in ustodos.server.controller.js: update ' );
 
 	ustodo = _.extend(ustodo , req.body);
+	delete ustodo.jsonx; // remove property
+    ustodo.datelastmod = new Date();
+    ustodo.jsonx = JSON.stringify(ustodo); // string
 
-	ustodo.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(ustodo);
-		}
-	});
+    console.log ('################# saving ustodo.jsonx:' + ustodo.jsonx);
+
+    ustodo.save(function (err, ustodosaved, numberAffected) {
+        if (err) {
+          console.log('era!!!!!!!!!');
+        } else {
+            console.log('success1!!!!!!!!! ustodosaved.html' + ustodosaved.html);
+            console.log('success2!!!!!!!!! numberAffected' + numberAffected);
+            console.log('success3!!!!!!!!! req.body._id' + req.body._id);
+        }
+    });
+
+
+	//ustodo.save(function(err) {
+	//	if (err) {
+     //       console.log ('err in save:' + err);
+	//		return res.status(400).send({
+	//			message: errorHandler.getErrorMessage(err)
+    //
+	//		});
+	//	} else {
+	//		res.jsonp(ustodo);
+	//	}
+	//});
 };
 
 /**
@@ -135,7 +153,7 @@ exports.list = function(req, res) {
     //var regexp = new RegExp(query.querystring);
     var regexp = new RegExp(query.querystring);
     //console.log ('UtilClass.getClass(regexp):'+ UtilClass.getClass(regexp));
-	var querymongo = {json:regexp};
+	var querymongo = {jsonx:regexp};
 
 	//var querymongo = {text:'/'+query.querystring+'/'};
 

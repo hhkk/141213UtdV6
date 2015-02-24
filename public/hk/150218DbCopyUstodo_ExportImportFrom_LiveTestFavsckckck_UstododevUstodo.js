@@ -112,42 +112,48 @@ if (true) {
                                                 if (countLimit < 0 || i < countlimit)
                                                 {
                                                     // build json for single string search
-                                                    var targetObj = {};
-                                                    if (sourceObj.html === undefined || sourceObj.html === null || sourceObj.html === '')
-                                                        targetObj.html = sourceObj.text;
-                                                    else
-                                                        targetObj.html = sourceObj.html;
+                                                    try {
+                                                        var targetObj = {};
+                                                        if (sourceObj.html === undefined || sourceObj.html === null || sourceObj.html === '')
+                                                            targetObj.html = sourceObj.text;
+                                                        else
+                                                            targetObj.html = sourceObj.html;
 
-                                                    targetObj.text = JSON.stringify(targetObj);
-                                                    targetObj.datelastmod = new Date(sourceObj.date);
-                                                    targetObj.datecreated = new Date(sourceObj.date);
-                                                    targetObj.json = JSON.stringify(targetObj);
-                                                    targetObj.user = new ObjectID('5418f365f5bc55500a906584');
+                                                        targetObj.text = JSON.stringify(targetObj);
+                                                        targetObj.datelastmod = new Date(sourceObj.date);
+                                                        targetObj.datecreated = new Date(sourceObj.date);
+                                                        targetObj.jsonx = JSON.stringify(targetObj); // jsonx
+                                                        targetObj.user = new ObjectID('5418f365f5bc55500a906584');
 
-                                                    if (indexhk % 1000 === 0)
-                                                        console.log (indexhk + '. inserting:' + targetObj.text);
 
-                                                    //if (targetObj.text.toLowerCase().indexOf('downt') >= 0)
-                                                    if (true)
-                                                    //if (indexhk < 10    )
-                                                    {
-                                                        console.log (indexhk + '. inserting:' + targetObj.text);
-                                                        collWrite.insert (
-                                                            targetObj
-                                                            , {w: 1}, function (err, result) {
-                                                                if (err !== null) {
-                                                                    console.log('erra:' + UtilClass.getClass('erra', err));
-                                                                    assert.equal(null, err);
-                                                                } else {
-                                                                    //if ( i % 1 == 0)
-                                                                    //{
-                                                                    //console.log (i + '. insert success jsonStr ['+ jsonStr+ ']');
-                                                                    //}
-                                                                }
-                                                            });
-                                                        i++;
-                                                        indexhk++;
-
+                                                        //if (targetObj.text.toLowerCase().indexOf('downt') >= 0)
+                                                        if (true)
+                                                        //if (indexhk < 10    )
+                                                        {
+                                                            if (
+                                                                //targetObj.html.indexOf('timingzzzzz') >= 0 ||
+                                                                (indexhk > 29900 && (indexhk % 1 === 0))) {
+                                                                //console.log (indexhk + '. inserting:' + targetObj.html);
+                                                            }
+                                                            //console.log (indexhk + '. inserting:' + targetObj.text);
+                                                            collWrite.insert (
+                                                                targetObj
+                                                                , {w: 1}, function (err, result) {
+                                                                    if (err !== null) {
+                                                                        console.log('erra:' + UtilClass.getClass('erra', err));
+                                                                        assert.equal(null, err);
+                                                                    } else {
+                                                                        //if ( i % 1 == 0)
+                                                                        //{
+                                                                        //console.log (i + '. insert success jsonStr ['+ jsonStr+ ']');
+                                                                        //}
+                                                                    }
+                                                                });
+                                                            i++;
+                                                            indexhk++;
+                                                        }
+                                                    } catch (err){
+                                                        console.log ('erra my frin' + err);
                                                     }
 
                                                 } // e.g., loop check if i < x000

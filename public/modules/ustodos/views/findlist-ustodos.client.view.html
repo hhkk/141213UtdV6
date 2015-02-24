@@ -1,6 +1,6 @@
 <div ng-app>
     <section data-ng-controller="UstodosController" ng-keyup="ccccc()" ng-init="count=0">
-    <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
+        <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
 
         <!--hi <input > key down count: {{count}}-->
         <!--Enter name: <input type="text" ng-model="name"><br>-->
@@ -33,47 +33,89 @@
 
             <!--<div ng-bind-html-unsafe='htmlString'></div>f-->
 
+            <!--<button ng-click="count = count + 1" ng-init="count=0">-->
+            <button ng-click="savechanged()" ng-init="count=0">
+                Increment
+            </button>
+            <span>
+              keycount: {{count}}
+            </span>
+
 
             <table >
                 <!--<tr ng-repeat="ustodo in ustodos ">f-->
-                    <!--&lt;!&ndash; timeAgo &ndash;&gt;f-->
-                    <!--<td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>f-->
-                    <!--&lt;!&ndash; html &ndash;&gt;f-->
-                    <!--<td>f-->
-                        <!--<span contenteditable="true"f-->
-                            <!--onclick = "this.contentEditable = true;"f-->
-                            <!--ng-bind-html="ustodos[$index].html"></span>f-->
-                    <!--</td>f-->
+                <!--&lt;!&ndash; timeAgo &ndash;&gt;f-->
+                <!--<td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>f-->
+                <!--&lt;!&ndash; html &ndash;&gt;f-->
+                <!--<td>f-->
+                <!--<span contenteditable="true"f-->
+                <!--onclick = "this.contentEditable = true;"f-->
+                <!--ng-bind-html="ustodos[$index].html"></span>f-->
+                <!--</td>f-->
                 <!--</tr>f-->
 
 
 
 
                 <tr ng-repeat="ustodo in ustodos " ng-class-odd="'odd xxhkcssColorRed hkcssContentedit'" ng-class-even="'even'">
+
+                    <!-- DELETE BUTTON -->
+                    <td>
+                        <!--<button ng-click="count = count + 1" ng-init="count=0">-->
+                        <!--<button ng-click="deleteDbUstotoById(ustodo)" ng-init="count=0">del</button>-->
+
+                        <img height=20 ng-src="/img/gnome_edit_delete.png"
+                             alt="{{image.name}}"
+                             ng-click="deleteDbUstotoById(ustodo)"
+                        >
+
+                        <!--ng-show="nowShowing==$index"-->
+                        <!--ng-repeat="image in images"-->
+                        <!--class="gallery-image fade-animation"-->
+                    </td>
+
+                    <!-- SAVE BUTTON -->
+                    <td>
+                        <!--<button ng-click="count = count + 1" ng-init="count=0">-->
+                        <!--<button ng-click="alignAnUstodoWithUstodoHtmlByIndex($index)">SAV</button>-->
+
+                        <img height=15 ng-src="/img/gnome_edit_save.jpg"
+                             alt="{{image.name}}"
+                             ng-click="saveUstodoGiven(ustodo)"
+                                >
+
+                    </td>
+
+                    <!-- COUNT -->
                     <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
-                    <td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>
+                    <td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
                     <!--<td>{{ ustodo.text}}</td>f-->
-                    <td>            <span id="ustodorow{{$index}}" contenteditable="true"
-                                          onclick = "this.contentEditable = true;"
-                                          xxonmouseover="this.contentEditable = false;
-                        //this.ustodo_innerhtmlpre = this.innerHTML;"
-                                          xxxonmouseout = "this.contentEditable = false;
-//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);
-//                    console.log ('this.prey:'+this.innerHTML);
-//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))
-//                                            alert ('SaveHere');
-                    "
-                                          ng-bind-html="ustodos[$index].html | linky:'_blank'"></span></td>
+
+                    <!-- TEXT -->
+                    <td><span id="ustodorow{{$index}}" contenteditable="true"
+                              onclick = "this.contentEditable = true;"
+                              onmouseover="this.contentEditable = false;"
+                              ng-bind-html="ustodos[$index].html | linky:'_blank'"
+                              xxxonmouseout = "this.contentEditable = false"
+                            >
+
+                    </span></td>
+                    <!--//this.ustodo_innerhtmlpre = this.innerHTML;"-->
+                    <!--//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);-->
+                    <!--//                    console.log ('this.prey1:'+this.innerHTML);-->
+                    <!--//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))-->
+                    <!--//                                            alert ('SaveHere');-->
+
                 </tr>
 
 
 
-                    <!--//                   onmouseover="this.contentEditable = false; this.ustodo_innerhtmlpre = this.innerHTML;"f-->
-                    <!--//                   onmouseout = "this.contentEditable = false;f-->
-                    <!--//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);f-->
-                    <!--//                    console.log ('this.prey:'+this.innerHTML);f-->
-                    <!--//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))f-->
-                    <!--//                                            alert ('SaveHere');f-->
+                <!--//                   onmouseover="this.contentEditable = false; this.ustodo_innerhtmlpre = this.innerHTML;"f-->
+                <!--//                   onmouseout = "this.contentEditable = false;f-->
+                <!--//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);f-->
+                <!--//                    console.log ('this.prey2:'+this.innerHTML);f-->
+                <!--//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))f-->
+                <!--//                                            alert ('SaveHere');f-->
             </table>
 
             <!--<span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span>f-->
