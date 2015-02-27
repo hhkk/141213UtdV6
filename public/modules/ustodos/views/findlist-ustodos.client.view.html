@@ -1,5 +1,5 @@
 <div ng-app>
-    <section data-ng-controller="UstodosController" ng-keyup="ccccc()" ng-init="count=0">
+    <section data-ng-controller="UstodosController" ng-init="keyCount=0">
         <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
 
         <!--hi <input > key down count: {{count}}-->
@@ -7,41 +7,53 @@
         <!--Hello <span ng-bind="name"></span>!-->
         <!--name2<div ng-bind = "name"></div>yy-->
 
-        Dirty: <span ng-bind ='areThereChanges'></span>
-        <!--areThereChanges2<span ng-bind = {{areThereChanges}}></span>yy-->
-        Count: <span ng-bind="ustodosQueryResult.length"></span >
 
-        <span class="col-md-12">
-            <form class="form-horizontal" data-ng-submit="search()" novalidate>
-                <fieldset>
-                    <div class="form-group">
-                        <br>
-                        <div class="controls">
-                            <input type="submit" value="Do" class="btn btn-sm" style="width:4%;display:inline">
-                            <input type="text" data-ng-model="hbkkBindSearch"  id="text" class="form-control" style="width:80%;display:inline" placeholder="Do" required>
+        <!--<div id="edit" contentEditable="true">-->
+            <!--<p id="initial_text">-->
+                <!--test-->
+            <!--</p>-->
+        <!--</div>-->
+
+        <div class="hkcssPosFixed">
+
+            Count: <span ng-bind="ustodosQueryResult.length"></span >
+
+            <span class="col-md-12">
+                <form class="form-horizontal" data-ng-submit="search()" novalidate>
+                    <fieldset>
+                        <div class="form-group">
+                            <br>
+                            <div class="controls">
+                                <input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">
+                                <input type="text" ng-keyup="onKeyUp()" data-ng-model="hbkkBindSearch"  id="text" class="input-textarea" placeholder="Do" required>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="dev-notes">
+                                    <button ng-click="savechanged()" ng-init="count=0">
+                                        Act
+                                    </button>
+                                    Dirty: <span ng-bind ='areThereChanges'></span>
+                                    <!--areThereChanges2<span ng-bind = {{areThereChanges}}></span>yy-->
+                                      keycount: {{keyCount}}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div data-ng-show="error" class="text-danger">
-                        <strong data-ng-bind="error"></strong>
-                    </div>
-                </fieldset>
-            </form>
+                        <div data-ng-show="error" class="text-danger">
+                            <strong data-ng-bind="error"></strong>
+                        </div>
+                    </fieldset>
+                </form>
 
-            <!--<a ng-href="http://u2d.co" target="_blank">UsToDo</a>f-->
+                <!--<a ng-href="http://u2d.co" target="_blank">UsToDo</a>f-->
 
-            <a ng-href="{{ $scope.post[0]}}">{{ $scope.post[0] }}</a>
+                <a ng-href="{{ $scope.post[0]}}">{{ $scope.post[0] }}</a>
 
-            <!--<div ng-bind-html-unsafe='htmlString'></div>f-->
+                <!--<div ng-bind-html-unsafe='htmlString'></div>f-->
 
-            <!--<button ng-click="count = count + 1" ng-init="count=0">-->
-            <button ng-click="savechanged()" ng-init="count=0">
-                Increment
-            </button>
-            <span>
-              keycount: {{count}}
+                <!--<button ng-click="count = count + 1" ng-init="count=0">-->
             </span>
+        </div>
 
-
+        <div class="hkcssPosTable">
             <table >
                 <!--<tr ng-repeat="ustodo in ustodos ">f-->
                 <!--&lt;!&ndash; timeAgo &ndash;&gt;f-->
@@ -54,20 +66,17 @@
                 <!--</td>f-->
                 <!--</tr>f-->
 
-
-
-
-                <tr ng-repeat="ustodo in ustodos " ng-class-odd="'odd xxhkcssColorRed hkcssContentedit'" ng-class-even="'even'">
+                <tr ng-repeat="ustodo in ustodos " ng-keyup="onKeyUp($index)" ng-class="hkcssContentedit" ng-class-odd="'odd'" ng-class-even="'even'">
 
                     <!-- DELETE BUTTON -->
                     <td>
                         <!--<button ng-click="count = count + 1" ng-init="count=0">-->
                         <!--<button ng-click="deleteDbUstotoById(ustodo)" ng-init="count=0">del</button>-->
 
-                        <img height=20 ng-src="/img/gnome_edit_delete.png"
-                             alt="{{image.name}}"
+                        <img height=10 ng-src="/img/gnome_edit_delete.png"
+                             alt="{{image.name}}"  title='delete'
                              ng-click="deleteDbUstotoById(ustodo)"
-                        >
+                                >
 
                         <!--ng-show="nowShowing==$index"-->
                         <!--ng-repeat="image in images"-->
@@ -79,27 +88,32 @@
                         <!--<button ng-click="count = count + 1" ng-init="count=0">-->
                         <!--<button ng-click="alignAnUstodoWithUstodoHtmlByIndex($index)">SAV</button>-->
 
-                        <img height=15 ng-src="/img/gnome_edit_save.jpg"
+                        <!--<img height=15 ng-src="/img/gnome_edit_save.jpg"-->
+                        <img height=10 ng-src="/img/saveIcon.jpg" title='save'
                              alt="{{image.name}}"
-                             ng-click="saveUstodoGiven(ustodo)"
+                             ng-click="saveUstodoGiven(ustodo, $index)"
                                 >
 
                     </td>
 
                     <!-- COUNT -->
                     <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
-                    <td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
+
+                    <!-- TIME AGO -->
+                    <td><span style="font-size:50%" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
                     <!--<td>{{ ustodo.text}}</td>f-->
 
                     <!-- TEXT -->
                     <td><span id="ustodorow{{$index}}" contenteditable="true"
                               onclick = "this.contentEditable = true;"
                               onmouseover="this.contentEditable = false;"
-                              ng-bind-html="ustodos[$index].html | linky:'_blank'"
+                               ng-bind-html="ustodos[$index].html + '&nbsp;' + ustodos[$index]._id"
                               xxxonmouseout = "this.contentEditable = false"
                             >
+                            <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
 
-                    </span></td>
+                        </span>
+                    </td>
                     <!--//this.ustodo_innerhtmlpre = this.innerHTML;"-->
                     <!--//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);-->
                     <!--//                    console.log ('this.prey1:'+this.innerHTML);-->
@@ -107,8 +121,6 @@
                     <!--//                                            alert ('SaveHere');-->
 
                 </tr>
-
-
 
                 <!--//                   onmouseover="this.contentEditable = false; this.ustodo_innerhtmlpre = this.innerHTML;"f-->
                 <!--//                   onmouseout = "this.contentEditable = false;f-->
@@ -120,14 +132,14 @@
 
             <!--<span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span>f-->
             <!--<span id="contentx{{$index}}" contenteditable="true"f-->
-                  <!--onclick = "this.contentEditable = true;"f-->
-                  <!--onmouseover="this.contentEditable = false;f-->
-                        <!--this.ustodo_innerhtmlpre = this.innerHTML;"f-->
-                  <!--onmouseout = "this.contentEditable = false;f-->
-                    <!--"f-->
-                  <!--ng-bind-html="ustodos[$index].html"></span>f-->
-        </span>
-    </section>
+            <!--onclick = "this.contentEditable = true;"f-->
+            <!--onmouseover="this.contentEditable = false;f-->
+            <!--this.ustodo_innerhtmlpre = this.innerHTML;"f-->
+            <!--onmouseout = "this.contentEditable = false;f-->
+            <!--"f-->
+            <!--ng-bind-html="ustodos[$index].html"></span>f-->
+        </div>
+    </section>>
 </div>
 
 

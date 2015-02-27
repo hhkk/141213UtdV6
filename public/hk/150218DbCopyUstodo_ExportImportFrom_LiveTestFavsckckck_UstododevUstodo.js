@@ -119,10 +119,12 @@ if (true) {
                                                         else
                                                             targetObj.html = sourceObj.html;
 
-                                                        targetObj.text = JSON.stringify(targetObj);
+                                                        //targetObj.text = JSON.stringify(targetObj);
+                                                        targetObj.text = sourceObj.text;
+                                                        //targetObj.html = sourceObj.html;
                                                         targetObj.datelastmod = new Date(sourceObj.date);
                                                         targetObj.datecreated = new Date(sourceObj.date);
-                                                        targetObj.jsonx = JSON.stringify(targetObj); // jsonx
+                                                        //targetObj.jsonx = JSON.stringify(targetObj); // jsonx
                                                         targetObj.user = new ObjectID('5418f365f5bc55500a906584');
 
 

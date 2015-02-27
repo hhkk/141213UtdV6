@@ -106,8 +106,40 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         //$rootScope', $compile, $rootElement,
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
 
-        $scope.ccccc = function() {
-            console.log ('in c');
+
+
+        $scope.myFnOnKeyup = function() { // onkey
+            alert ('hi2');
+        }
+
+
+        //
+        //jQuery("#edit").on('keyup', function() {
+        //    alert ('hi');
+        //    //$this = $(this);
+        //    //$this.scrollTop(0);
+        //
+        //    //var contentOuterHeight = 0;
+        //    //var line_height = 18;
+        //    //
+        //    //$("#edit *").each(function() {
+        //    //    $this = $(this);
+        //    //    contentOuterHeight += $this.outerHeight(true);
+        //    //});
+        //    //
+        //    //// if (contentOuterHeight == 0) {
+        //    //// when there are no elements, just text, add one line-height
+        //    //contentOuterHeight += line_height;
+        //    //// }
+        //    //$("#edit").height(contentOuterHeight);
+        //    //
+        //    //$("#edit_container").scrollTop(0);
+        //});
+
+
+
+        $scope.onKeyUp = function(index) {
+            // alert ('onKeyUp index:' + index);
             $scope.count++;
             isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
             //$scope.$apply()
@@ -156,9 +188,22 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             });
         }
 
-        $scope.saveUstodoGiven = function(ustodo) {
+        $scope.saveUstodoGiven = function(ustodo, i) {
+
+
+
+            var myEl = angular.element( document.querySelector( '#ustodorow' + i ) );
+            ustodo.html = myEl[0].innerHTML;
+            ustodo.text = myEl[0].innerText;
+            ustodo.datelastmod= new Date();
+
+
+            console.log ('SAVED1 !!! ustodo.html [' + ustodo.html);
+            console.log ('SAVED2 !!! ustodo.text [' + ustodo.text);
+            console.log ('SAVED3 !!! ustodo.json [' + ustodo.json);
+            console.log ('SAVED4 !!! ustodo.jsonx [' + ustodo.jsonx);
             ustodo.$update(function() {
-                console.log ('SAVED !!! ' + ustodo.html);
+                console.log ('SAVED OK !!! ' );
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
                 console.log ('ERROR ON SAVE !!! '  + ustodo.html);
@@ -171,7 +216,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         function isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(saveDiffs)
         {
             //if (saveDiffs)
-                //alert(' start save ');
+            //alert(' start save ');
             callCnt_isDirty++;
             $scope.areThereChanges = false;
             for (var i = 0; i < $scope.ustodos.length; i++) {
@@ -189,14 +234,14 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 if (myEl[0] !== undefined) {
                     anyChangeThisRow = ($scope.ustodos[i].html !== myEl[0].innerHTML);
                     if (anyChangeThisRow) {
-                        console.log(i + '. A changed  [' + $scope.ustodos[i].html + ']');
-                        console.log(i + '. A vs inner [' + myEl[0].innerHTML + ']');
+                        //console.log(i + '. A changed  [' + $scope.ustodos[i].html + ']');
+                        //console.log(i + '. A vs inner [' + myEl[0].innerHTML + ']');
                         if (saveDiffs)
                         {
                             $scope.ustodos[i].html = myEl[0].innerHTML;
-                            console.log(i + '. B changed  [' + $scope.ustodos[i].html + ']');
-                            console.log(i + '. B vs inner [' + myEl[0].innerHTML + ']');
-                            console.log(i + '. B id changed  [' + $scope.ustodos[i]._id+ ']');
+                            //console.log(i + '. B changed  [' + $scope.ustodos[i].html + ']');
+                            //console.log(i + '. B vs inner [' + myEl[0].innerHTML + ']');
+                            //console.log(i + '. B id changed  [' + $scope.ustodos[i]._id+ ']');
 
                             saveOneUstodo($scope.ustodos[i]);
 
@@ -213,7 +258,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 // diff here
             }
             console.log (callCnt_isDirty + ". exiting isDirty returning with $scope.areThereChanges:"+ $scope.areThereChanges);
-       }
+        }
 
 
         $scope.deleteDbUstotoById = function(ustodo)
@@ -228,7 +273,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                     if ($scope.ustodos[i]._id === savOid)
                     {
                         console.log ('found one local array to delete, index:' + i)
-                                                                                $scope.ustodos.splice(indexToDelete, 1);
+                        $scope.ustodos.splice(indexToDelete, 1);
                         console.log ('done local array delete, index:' + i)
                     }
                 }
@@ -561,7 +606,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             //console.log ("$location.search().q:"+$location.search().q);
 
             this.hbkkBindSearch = resolveSearchStringBetweenUrlAndInputBox
-                ($location.search().q, this.hbkkBindSearch);
+            ($location.search().q, this.hbkkBindSearch);
             //alert ('in search $stateParams.q:'+$stateParams.q +
             //    ',\r\n$location.search().q:' + $location.search().q +
             //    ',\r\nthis.hbkkBindSearch:' + this.hbkkBindSearch
@@ -721,18 +766,18 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
     }
 ]).directive('myCustomer', function() {
-        return {
-            //templateUrl: function(elem, attr){
-            //    return 'customer-'+attr.type+'.html';
-            template: function(elem, attr){
+    return {
+        //templateUrl: function(elem, attr){
+        //    return 'customer-'+attr.type+'.html';
+        template: function(elem, attr){
 
-                console.log ('in mycustomer directive ==================================');
-                //return 'ggggggggggghhhhhhhhhhhhhh';
-                return 'ustodo text: <a href="http://applex.com" target="_blank">http://applex.com</a>';
+            console.log ('in mycustomer directive ==================================');
+            //return 'ggggggggggghhhhhhhhhhhhhh';
+            return 'ustodo text: <a href="http://applex.com" target="_blank">http://applex.com</a>';
 
-            }
-        };
-    });
+        }
+    };
+});
 
 
 

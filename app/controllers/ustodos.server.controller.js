@@ -153,7 +153,7 @@ exports.list = function(req, res) {
     //var regexp = new RegExp(query.querystring);
     var regexp = new RegExp(query.querystring);
     //console.log ('UtilClass.getClass(regexp):'+ UtilClass.getClass(regexp));
-	var querymongo = {jsonx:regexp};
+	var querymongo = {text:regexp};
 
 	//var querymongo = {text:'/'+query.querystring+'/'};
 
