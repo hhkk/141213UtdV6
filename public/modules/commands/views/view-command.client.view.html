@@ -1,0 +1,23 @@
+<section data-ng-controller="CommandsController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1 data-ng-bind="command.commandCode"></h1>
+		<h2 data-ng-bind="command.commandUrl"></h2>
+		<h2 data-ng-bind="command.commandDescription"></h2>
+	</div>
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == command.user._id))">
+		<a class="btn btn-primary" href="/#!/commands/{{command._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<small>
+		<em class="text-muted">
+			Posted on
+			<span data-ng-bind="command.created | date:'mediumDate'"></span>
+			by
+			<span data-ng-bind="command.user.displayName"></span>
+		</em>
+	</small>
+</section>

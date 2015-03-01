@@ -110,7 +110,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
         $scope.myFnOnKeyup = function() { // onkey
             alert ('hi2');
-        }
+        };
 
 
         //
@@ -143,14 +143,14 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             $scope.count++;
             isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
             //$scope.$apply()
-        }
+        };
 
         $scope.savechanged = function() {
             console.log ('in c');
             $scope.count++;
             isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(true);
             //$scope.$apply()
-        }
+        };
 
         $scope.name = 'Whirled';
 
@@ -166,12 +166,12 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         //});
         //
         //
-        window.onbeforeunload = confirmExit;
         function confirmExit()
         {
             if (isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false))
-                return "Your changes will be lost.  Are you sure you want to exit this page?";
-        };
+                return 'Your changes will be lost.  Are you sure you want to exit this page?';
+        }
+        window.onbeforeunload = confirmExit;
 
 
         $scope.alignAnUstodoWithUstodoHtmlByIndex = function(i) {
@@ -186,7 +186,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 $scope.error = errorResponse.data.message;
                 console.log ('ERROR ON SAVE !!! '  + $scope.ustodos[i].html);
             });
-        }
+        };
 
         $scope.saveUstodoGiven = function(ustodo, i) {
 
@@ -208,7 +208,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 $scope.error = errorResponse.data.message;
                 console.log ('ERROR ON SAVE !!! '  + ustodo.html);
             });
-        }
+        };
 
         // has any row changed
         var callCnt_isDirty = 0;
@@ -249,7 +249,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                             // .exports.update
                         }
                         $scope.areThereChanges = true;
-                        name = 'll'+ $scope.areThereChanges;
+                        //name = 'll'+ $scope.areThereChanges;
                         if (!saveDiffs) // for non save, only need one
                             break;
                     }
@@ -257,7 +257,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 }
                 // diff here
             }
-            console.log (callCnt_isDirty + ". exiting isDirty returning with $scope.areThereChanges:"+ $scope.areThereChanges);
+            console.log (callCnt_isDirty + '". exiting isDirty returning with $scope.areThereChanges:'+ $scope.areThereChanges);
         }
 
 
@@ -272,9 +272,9 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 for (var i = 0; i < $scope.ustodos.length; i++) {
                     if ($scope.ustodos[i]._id === savOid)
                     {
-                        console.log ('found one local array to delete, index:' + i)
+                        console.log ('found one local array to delete, index:' + i);
                         $scope.ustodos.splice(indexToDelete, 1);
-                        console.log ('done local array delete, index:' + i)
+                        console.log ('done local array delete, index:' + i);
                     }
                 }
                 if (indexToDelete < 0)
@@ -293,7 +293,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             } catch (err) {
                 console.log ('err:' + err);
             }
-        }
+        };
 
 
 

@@ -23,12 +23,23 @@
 
 .input-textarea {
     background-color:lightblue;
-    font-size:20px;
+    font-size:16px;
     width:70%;
-    display:inline;
+    /*display:inline;*/
+    padding:2px;
 }
 
+.per-row-icons {
+    height:16px;
+}
 
+.per-row-id {
+    font-size:4px;
+}
+
+.per-row-count {
+    font-size:50%;
+}
 
 .hkcssColorRed {
     color:red;
@@ -61,9 +72,9 @@
     /*xxposition: static;*/
     /*position: relative;*/
     /*xxtop: 300;*/
-    z-index:0
+    z-index:0;
     /*xxleft: 100;*/
-    color: green;
+    color: black;
 }
 .odd {
     /*http://www.w3schools.com/html/html_colors.asp*/

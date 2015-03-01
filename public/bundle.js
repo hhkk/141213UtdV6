@@ -565,6 +565,19 @@ if (typeof exports !== 'undefined') {
 }
 
 },{}],4:[function(require,module,exports){
+// var UtilDate = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilDate.js');
+
+
+String.prototype.endsWith = function (s) {
+    return this.length >= s.length && this.substr(this.length - s.length) == s;
+}
+
+
+if (typeof exports !== 'undefined') {
+    //exports.dateFromComponents = dateFromComponents;
+}
+
+},{}],5:[function(require,module,exports){
 //utd = [];   // ustodo utilities
 //utd[Date] = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 //utd[Class] = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
@@ -574,6 +587,7 @@ if (typeof exports !== 'undefined') {
 UtilDate = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
 UtilClassz = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
+UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 
 
-},{"C:/utd/141213UtdV6/public/util/UtilClass.js":1,"C:/utd/141213UtdV6/public/util/UtilDate.js":2,"C:/utd/141213UtdV6/public/util/UtilHtmlHref.js":3}]},{},[4]);
+},{"C:/utd/141213UtdV6/public/util/UtilClass.js":1,"C:/utd/141213UtdV6/public/util/UtilDate.js":2,"C:/utd/141213UtdV6/public/util/UtilHtmlHref.js":3,"C:/utd/141213UtdV6/public/util/UtilString.js":4}]},{},[5]);

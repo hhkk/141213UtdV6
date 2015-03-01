@@ -16,7 +16,6 @@
 
         <div class="hkcssPosFixed">
 
-            Count: <span ng-bind="ustodosQueryResult.length"></span >
 
             <span class="col-md-12">
                 <form class="form-horizontal" data-ng-submit="search()" novalidate>
@@ -26,6 +25,7 @@
                             <div class="controls">
                                 <input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">
                                 <input type="text" ng-keyup="onKeyUp()" data-ng-model="hbkkBindSearch"  id="text" class="input-textarea" placeholder="Do" required>
+                                #: <span ng-bind="ustodosQueryResult.length"></span >
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span class="dev-notes">
                                     <button ng-click="savechanged()" ng-init="count=0">
@@ -73,7 +73,7 @@
                         <!--<button ng-click="count = count + 1" ng-init="count=0">-->
                         <!--<button ng-click="deleteDbUstotoById(ustodo)" ng-init="count=0">del</button>-->
 
-                        <img height=10 ng-src="/img/gnome_edit_delete.png"
+                        <img class="per-row-icons" ng-src="/img/gnome_edit_delete.png"
                              alt="{{image.name}}"  title='delete'
                              ng-click="deleteDbUstotoById(ustodo)"
                                 >
@@ -89,7 +89,7 @@
                         <!--<button ng-click="alignAnUstodoWithUstodoHtmlByIndex($index)">SAV</button>-->
 
                         <!--<img height=15 ng-src="/img/gnome_edit_save.jpg"-->
-                        <img height=10 ng-src="/img/saveIcon.jpg" title='save'
+                        <img class="per-row-icons" ng-src="/img/saveIcon.jpg" title='save'
                              alt="{{image.name}}"
                              ng-click="saveUstodoGiven(ustodo, $index)"
                                 >
@@ -100,18 +100,22 @@
                     <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
 
                     <!-- TIME AGO -->
-                    <td><span style="font-size:50%" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
+                    <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
+                              title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
                     <!--<td>{{ ustodo.text}}</td>f-->
 
                     <!-- TEXT -->
                     <td><span id="ustodorow{{$index}}" contenteditable="true"
                               onclick = "this.contentEditable = true;"
                               onmouseover="this.contentEditable = false;"
-                               ng-bind-html="ustodos[$index].html + '&nbsp;' + ustodos[$index]._id"
+                              ng-bind-html="ustodos[$index].html"
                               xxxonmouseout = "this.contentEditable = false"
                             >
                             <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
 
+                        </span>
+                        <span class="per-row-id" ng-bind-html="ustodos[$index]._id">
+                            <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
                         </span>
                     </td>
                     <!--//this.ustodo_innerhtmlpre = this.innerHTML;"-->

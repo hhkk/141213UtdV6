@@ -1,6 +1,7 @@
 'use strict';
 
 var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
+var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 
 //var UtilClass = require('.././UtilClass');
 // console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
@@ -152,6 +153,35 @@ exports.list = function(req, res) {
 
     //var regexp = new RegExp(query.querystring);
     var regexp = new RegExp(query.querystring);
+
+
+
+
+    //if (query.querystring.endsWith())
+    var querystringTrimmed = query.querystring.trim();
+    if (UtilString.endsWith(querystringTrimmed, " w"))
+    {
+        console.log ('in ustodos.server.controller.js: w command-based save');
+        var ustodo = new Ustodo();
+        ustodo.text = querystringTrimmed;
+        ustodo.user = req.user;
+
+        ustodo.save(function(err) {
+            if (err) {
+                console.log ('*** write fail querystringTrimmed [' +querystringTrimmed + ']')
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                console.log ('*** write success querystringTrimmed [' +querystringTrimmed + ']')
+            }
+        });
+    }
+
+
+
+
+
     //console.log ('UtilClass.getClass(regexp):'+ UtilClass.getClass(regexp));
 	var querymongo = {text:regexp};
 
@@ -164,6 +194,7 @@ exports.list = function(req, res) {
     var countResult = 0;
     var x = [];
 
+    console.log ('step: querymongo') ;
     //Ustodo.find().exec(function(err, ustodos) {
     Ustodo.find(querymongo).sort('-datelastmod').limit(hklimit).populate('user', 'displayName').exec(function(err, ustodos) {
     //Ustodo.find(querymongo).populate('user', 'displayName').exec(function(err, ustodos) {
