@@ -1,8 +1,10 @@
 'use strict';
 
 //Setting up route
+alert ('ccc');
 angular.module('ustodos').config(['$stateProvider',
 	function($stateProvider) {
+        alert ('ddd');
 		// Ustodos state routing
 		$stateProvider.
             //state('findlistutd', {
@@ -18,7 +20,7 @@ angular.module('ustodos').config(['$stateProvider',
         state('findlistUstodos', {
             // http://localhost:3000/#!/ustodos/findlist
             url: '/ustodos/findlist',
-            templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
+            templateUrl: 'modules/ustodos/views/findlist-ustodos.client.view.html'
         }).
 		//state('findlistUstodos2', {
 		//	// http://localhost:3000/#!

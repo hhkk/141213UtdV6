@@ -12,7 +12,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			//templateUrl: 'modules/core/views/home.client.view.html'
 			//templateUrl: 'modules/ustodos/views/view-ustodo.client.view.html'
             url: '/',
-            templateUrl: '	modules/ustodos/views/findlist-ustodos.client.view.html'
+            templateUrl: 'modules/ustodos/views/findlist-ustodos.client.view.html'
             //templateUrl: 'modules/core/views/home.client.view.html'
 
 		});

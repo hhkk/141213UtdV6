@@ -150,6 +150,21 @@ var getClass = function (desc, obj)    {
 }; // function getClass(desc, obj)
 
 
+
+var getProperties = function (desc, obj)
+{
+    var j = 0 ;
+    for(var propertyName in obj)
+    {
+        j++;
+        var hasOwnPropIndicator = obj.hasOwnProperty(propertyName);
+        console.log (j + '. props desc [' + desc + '] name ['+propertyName + '] value [' + obj[propertyName] + '] hasOwnPropIndicator [' + hasOwnPropIndicator + ']');
+        // propertyName is what you want
+        // you can get the value like this: myObject[propertyName]
+    }
+};
+
 if (typeof exports !== 'undefined') {
     exports.getClass = getClass;
+    exports.getProperties = getProperties;
 }

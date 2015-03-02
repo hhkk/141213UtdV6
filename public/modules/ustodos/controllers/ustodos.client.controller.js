@@ -39,8 +39,13 @@ var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_
 //    console.log ('errorhk!!!!!!!!!!!!!!!!!!!!');
 //}
 
-var angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinishRender', function ($timeout) {
-    alert ('used ngSanitize knida');
+var angularModule = null;
+//angularModule = angular.module('ustodos');
+
+
+
+alert ('sss');
+angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinishRender', function ($timeout) {
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
@@ -53,6 +58,9 @@ var angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinis
         }
     };
 });
+
+
+
 
 //angularModule.run(function($rootScope, $compile, $rootElement) {
 //    // We'll create a new scope to use as the context for the view.
@@ -99,6 +107,9 @@ var angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinis
 // works angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'Authentication', 'Ustodos',
 //    function($scope, $stateParams, $location, $rootScope, Authentication, Ustodos) {
 // angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
+
+
+
 angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'Authentication', 'Ustodos',
     function($scope, $stateParams, $location, $rootScope, Authentication, Ustodos) {
 //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
@@ -778,22 +789,6 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
 
 
-
-
-
-
-var getProperties = function (desc, obj)
-{
-    var j = 0 ;
-    for(var propertyName in obj)
-    {
-        j++;
-        var hasOwnPropIndicator = obj.hasOwnProperty(propertyName);
-        console.log (j + '. props desc [' + desc + '] name ['+propertyName + '] value [' + obj[propertyName] + '] hasOwnPropIndicator [' + hasOwnPropIndicator + ']');
-        // propertyName is what you want
-        // you can get the value like this: myObject[propertyName]
-    }
-};
 
 
 
