@@ -39,15 +39,15 @@ var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_
 //    console.log ('errorhk!!!!!!!!!!!!!!!!!!!!');
 //}
 
-
-//var angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinishRender', function ($timeout) {
 var angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinishRender', function ($timeout) {
+    alert ('used ngSanitize knida');
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
             if (scope.$last === true) {
                 $timeout(function () {
                     scope.$emit('ngRepeatFinished');
+                    alert ('ngRepeatFinished');
                 });
             }
         }
@@ -189,9 +189,6 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         };
 
         $scope.saveUstodoGiven = function(ustodo, i) {
-
-
-
             var myEl = angular.element( document.querySelector( '#ustodorow' + i ) );
             ustodo.html = myEl[0].innerHTML;
             ustodo.text = myEl[0].innerText;

@@ -443,6 +443,35 @@ if (typeof exports !== 'undefined') {
 },{"C:/utd/141213UtdV6/public/util/UtilClass.js":1}],3:[function(require,module,exports){
 'use strict';
 
+
+
+/**
+ * // UtilNodeVsBrowser
+ */
+/**
+ * Created with IntelliJ IDEA.
+ * User: hkon
+ * Date: 3/3/13
+ * Time: 3:55 PM
+ * To change this template use File | Settings | File Templates.
+ */
+// var UtilDate = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilDate.js');
+// var UtilExceptionStack = require('C:/utd/141213UtdV6/public/util/UtilExceptionStack.js');
+
+var print_call_stack = function() {
+    var stack = new Error().stack;
+    console.log("PRINTING CALL STACK");
+    console.log( stack );
+    }
+
+if (typeof exports !== 'undefined') {
+    exports.print_call_stack = print_call_stack ;
+}
+
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
 /**
  * Created by henryms on 2/11/2015.
  */
@@ -564,7 +593,7 @@ if (typeof exports !== 'undefined') {
     exports.seeIfConnectedToThisClass = seeIfConnectedToThisClass;
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 // var UtilDate = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilDate.js');
 
 
@@ -572,12 +601,15 @@ String.prototype.endsWith = function (s) {
     return this.length >= s.length && this.substr(this.length - s.length) == s;
 }
 
+var endsWith = function (str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+};
 
 if (typeof exports !== 'undefined') {
-    //exports.dateFromComponents = dateFromComponents;
+    exports.endsWith = endsWith;
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 //utd = [];   // ustodo utilities
 //utd[Date] = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 //utd[Class] = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
@@ -588,6 +620,7 @@ UtilDate = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
 UtilClassz = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
+UtilExceptionStack = require('C:/utd/141213UtdV6/public/util/UtilExceptionStack.js');
 
 
-},{"C:/utd/141213UtdV6/public/util/UtilClass.js":1,"C:/utd/141213UtdV6/public/util/UtilDate.js":2,"C:/utd/141213UtdV6/public/util/UtilHtmlHref.js":3,"C:/utd/141213UtdV6/public/util/UtilString.js":4}]},{},[5]);
+},{"C:/utd/141213UtdV6/public/util/UtilClass.js":1,"C:/utd/141213UtdV6/public/util/UtilDate.js":2,"C:/utd/141213UtdV6/public/util/UtilExceptionStack.js":3,"C:/utd/141213UtdV6/public/util/UtilHtmlHref.js":4,"C:/utd/141213UtdV6/public/util/UtilString.js":5}]},{},[6]);

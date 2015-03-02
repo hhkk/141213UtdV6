@@ -3,8 +3,8 @@
 	//console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\routes
 
 module.exports = function(app) {
-	var users = require('../controllers/users.server.controller');
-	var ustodos = require('../controllers/ustodos.server.controller');
+	var users = require('../../app/controllers/users.server.controller');
+	var ustodos = require('../../app/controllers/ustodos.server.controller');
 
 	// Ustodos Routes
 	app.route('/ustodos')
