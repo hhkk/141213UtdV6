@@ -159,7 +159,7 @@ exports.list = function(req, res) {
 
     //if (query.querystring.endsWith())
     var querystringTrimmed = query.querystring.trim();
-    if (UtilString.endsWith(querystringTrimmed, " w"))
+    if (UtilString.endsWith(querystringTrimmed, ' w'))
     {
         console.log ('in ustodos.server.controller.js: w command-based save');
         var ustodo = new Ustodo();
@@ -168,12 +168,12 @@ exports.list = function(req, res) {
 
         ustodo.save(function(err) {
             if (err) {
-                console.log ('*** write fail querystringTrimmed [' +querystringTrimmed + ']')
+                console.log ('*** write fail querystringTrimmed [' +querystringTrimmed + ']');
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
             } else {
-                console.log ('*** write success querystringTrimmed [' +querystringTrimmed + ']')
+                console.log ('*** write success querystringTrimmed [' +querystringTrimmed + ']');
             }
         });
     }

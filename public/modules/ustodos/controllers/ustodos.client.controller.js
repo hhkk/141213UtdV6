@@ -39,26 +39,26 @@ var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_
 //}catch (err) {
 //    console.log ('errorhk!!!!!!!!!!!!!!!!!!!!');
 //}
-var getHtmlHk = function(index) {
-    console.log ('A getHtmlHk:'+index);
-    ustodos[$index].html
-    console.log ('B getHtmlHk:'+index);
-}
+//var getHtmlHk = function(index) {
+//    console.log ('A getHtmlHk:'+index);
+//    return ustodos[$index].html
+//    console.log ('B getHtmlHk:'+index);
+//}
 
 var angularModule = null;
 //angularModule = angular.module('ustodos');
 
-O.a ('sss1');
+//O.a ('sss1');
 //angularModule = angular.module('ustodos', ['ngSanitize'])
 angularModule = angular.module('ustodos')
     .directive('onFinishRender', function ($timeout) {
-    O.a ('sss2');
+    //O.a ('sss2');
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
             if (scope.$last === true) {
                 $timeout(function () {
-                    O.a ('sss3');
+                    //O.a ('sss3');
                     scope.$emit('ngRepeatFinished');
                     alert ('ngRepeatFinished');
                 });
@@ -68,7 +68,7 @@ angularModule = angular.module('ustodos')
 
 });
 
-O.a ('sssa1.5');
+//O.a ('sssa1.5');
 
 
 
@@ -125,7 +125,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
 //    function($scope, $stateParams, $location, $rootScope, ngSanitize, Authentication, Ustodos) {
         //$rootScope', $compile, $rootElement,
-        O.a ('sssa1');
+//        O.a ('sssa1');
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
 
         $scope.SkipValidationHK = function(value) {
@@ -279,8 +279,8 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 }
                 // diff here
             }
-            console.log (callCnt_isDirty + '". exiting isDirty returning with $scope.areThereChanges:'+ $scope.areThereChanges);
-        }
+            console.log (callCnt_isDirty + '. exiting isDirty returning with $scope.areThereChanges:'+ $scope.areThereChanges);
+        };
 
 
         $scope.deleteDbUstotoById = function(ustodo)
@@ -686,7 +686,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
 
 
-                window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
+                    //window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
                 //alert ('pre setting to'+$location.path())
                 //$location.path($location.path() + 'ddd/#!/?q=' + $scope.hkhkhkbk);
                 //$location.path('aaa');
@@ -785,7 +785,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         };
 
         $scope.search();
-        O.a ('sssa2');
+        //O.a ('sssa2');
 
 
     }

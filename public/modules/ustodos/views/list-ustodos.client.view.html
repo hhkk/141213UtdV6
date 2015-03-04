@@ -5,8 +5,10 @@
     <div class="list-group">
         <a data-ng-repeat="ustodo in ustodos" data-ng-href="#!/ustodos/{{ustodo._id}}" class="list-group-item">
 			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="ustodo.created | date:'medium'"></span>
+				Last Modified
+				<!--<span data-ng-bind="ustodo.created | date:'medium'"></span>-->
+				<span data-ng-bind="ustodo.datelastmod | date:'medium'"></span>
+				<div data-ng-bind="ustodo.html"></div>
 				by
 				<span data-ng-bind="ustodo.user.displayName"></span>
 			</small>

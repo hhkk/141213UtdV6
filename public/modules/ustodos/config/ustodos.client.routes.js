@@ -1,7 +1,7 @@
 'use strict';
 
 //Setting up route
-O.a ('ccc');
+//O.a ('ccc');
 angular.module('ustodos').config(['$stateProvider',
 	function($stateProvider) {
         O.a ('dddx');
