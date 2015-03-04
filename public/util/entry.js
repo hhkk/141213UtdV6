@@ -9,4 +9,8 @@ UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
 UtilClassz = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 UtilExceptionStack = require('C:/utd/141213UtdV6/public/util/UtilExceptionStack.js');
+O = require('C:/utd/141213UtdV6/public/util/O.js');
+
+    // browserify C:\utd\141213UtdV6\public\util\entry.js > C:\utd\141213UtdV6\public\bundle.js
+
 

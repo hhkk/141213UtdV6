@@ -66,7 +66,7 @@
                 <!--</td>f-->
                 <!--</tr>f-->
 
-                <tr ng-repeat="ustodo in ustodos " ng-keyup="onKeyUp($index)" ng-class="hkcssContentedit" ng-class-odd="'odd'" ng-class-even="'even'">
+                <tr ng-repeat="ustodo in ustodos" ng-keyup="onKeyUp($index)" ng-class="hkcssContentedit" ng-class-odd="'odd'" ng-class-even="'even'">
 
                     <!-- DELETE BUTTON -->
                     <td>
@@ -105,18 +105,25 @@
                     <!--<td>{{ ustodo.text}}</td>f-->
 
                     <!-- TEXT -->
-                    <td><span id="ustodorow{{$index}}" contenteditable="true"
+                    <td>
+                        <span id="ustodorow{{$index}}" contenteditable="true"
                               onclick = "this.contentEditable = true;"
                               onmouseover="this.contentEditable = false;"
-                              ng-bind-html="ustodos[$index].html"
+                              ng-bind-html="SkipValidationHK(ustodos[$index].html)"
                               xxxonmouseout = "this.contentEditable = false"
                             >
-                            <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
+                        <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
+                              <!--ng-bind-html="ustodos[$index].html"-->
+                              <!--ng-bind-html="skipValidation (ustodos[$index].html)"-->
+                        <!--ng-bind-html="ustodos[$index].html"-->
+                                <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
 
                         </span>
-                        <span class="per-row-id" ng-bind-html="ustodos[$index]._id">
-                            <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
-                        </span>
+                        <!--ng-bind-html="$scope.getHtmlHk($index)"-->
+                        <!--ng-bind-html="$sanitize(ustodos[$index].html)"-->
+                        <!--<span class="per-row-id" ng-bind-html="ustodos[$index]._id">-->
+                            <!--&lt;!&ndash;ng-bind-html="ustodos[$index].html | linky:'_blank'"&ndash;&gt;-->
+                        <!--</span>-->
                     </td>
                     <!--//this.ustodo_innerhtmlpre = this.innerHTML;"-->
                     <!--//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);-->

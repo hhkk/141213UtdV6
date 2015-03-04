@@ -1,5 +1,31 @@
 'use strict';
 
+
+
+
+//angularModule = angular.module('timehks', ['ngSanitize']);
+
+//angularModule = angular.module('timehks', ['ngSanitize'])
+//    .directive('onFinishRender', function ($timeout) {
+//        O.a ('sss2');
+//        return {
+//            restrict: 'A',
+//            link: function (scope, element, attr) {
+//                if (scope.$last === true) {
+//                    $timeout(function () {
+//                        O.a ('sss3');
+//                        scope.$emit('ngRepeatFinished');
+//                        alert ('ngRepeatFinished');
+//                    });
+//                }
+//            }
+//        };
+//
+//    });
+//
+
+
+
 // Timehks controller
 angular.module('timehks').controller('TimehksController', ['$scope', '$stateParams', '$location', 'Authentication', 'Timehks',
 	function($scope, $stateParams, $location, Authentication, Timehks) {

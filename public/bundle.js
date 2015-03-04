@@ -1,4 +1,40 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/**
+ * Created by henryms on 3/2/2015.
+ */
+// var UtilLog = require('C:/utd/141213UtdV6/public/util/UtilLog.js');
+
+
+alert ('redefine alerthistory');
+var alertHistory = [];
+
+/**
+ * output only
+ * @param s
+ */
+var o = function (s)
+{
+    console.log('log:' + s + ' alertHistory:' + alertHistory);
+}
+/**
+ * alert - implies output with alert history log
+ * @param s
+ */
+var a = function (s)
+{
+    alert ('old len:' + alertHistory.length);
+    var s = '['+alertHistory.length + '.'+s + ';'+']';
+    alertHistory.push (s);
+    alert ('new len:' + alertHistory.length);
+    o('a:' + s);
+    alert (s + ' hist:' + alertHistory);
+}
+if (typeof exports !== 'undefined') {
+    exports.o = o;
+    exports.a = a;
+}
+
+},{}],2:[function(require,module,exports){
 'use strict';
 /**
  * // UtilNodeVsBrowser
@@ -151,11 +187,26 @@ var getClass = function (desc, obj)    {
 }; // function getClass(desc, obj)
 
 
+
+var getProperties = function (desc, obj)
+{
+    var j = 0 ;
+    for(var propertyName in obj)
+    {
+        j++;
+        var hasOwnPropIndicator = obj.hasOwnProperty(propertyName);
+        console.log (j + '. props desc [' + desc + '] name ['+propertyName + '] value [' + obj[propertyName] + '] hasOwnPropIndicator [' + hasOwnPropIndicator + ']');
+        // propertyName is what you want
+        // you can get the value like this: myObject[propertyName]
+    }
+};
+
 if (typeof exports !== 'undefined') {
     exports.getClass = getClass;
+    exports.getProperties = getProperties;
 }
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
 
@@ -440,7 +491,7 @@ if (typeof exports !== 'undefined') {
 }
 
 
-},{"C:/utd/141213UtdV6/public/util/UtilClass.js":1}],3:[function(require,module,exports){
+},{"C:/utd/141213UtdV6/public/util/UtilClass.js":2}],4:[function(require,module,exports){
 'use strict';
 
 
@@ -462,14 +513,14 @@ var print_call_stack = function() {
     var stack = new Error().stack;
     console.log("PRINTING CALL STACK");
     console.log( stack );
-    }
+}
 
 if (typeof exports !== 'undefined') {
     exports.print_call_stack = print_call_stack ;
 }
 
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 /**
@@ -593,7 +644,7 @@ if (typeof exports !== 'undefined') {
     exports.seeIfConnectedToThisClass = seeIfConnectedToThisClass;
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 // var UtilDate = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilDate.js');
 
 
@@ -609,7 +660,7 @@ if (typeof exports !== 'undefined') {
     exports.endsWith = endsWith;
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 //utd = [];   // ustodo utilities
 //utd[Date] = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 //utd[Class] = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
@@ -621,6 +672,10 @@ UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
 UtilClassz = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 UtilExceptionStack = require('C:/utd/141213UtdV6/public/util/UtilExceptionStack.js');
+O = require('C:/utd/141213UtdV6/public/util/O.js');
+
+    // browserify C:\utd\141213UtdV6\public\util\entry.js > C:\utd\141213UtdV6\public\bundle.js
 
 
-},{"C:/utd/141213UtdV6/public/util/UtilClass.js":1,"C:/utd/141213UtdV6/public/util/UtilDate.js":2,"C:/utd/141213UtdV6/public/util/UtilExceptionStack.js":3,"C:/utd/141213UtdV6/public/util/UtilHtmlHref.js":4,"C:/utd/141213UtdV6/public/util/UtilString.js":5}]},{},[6]);
+
+},{"C:/utd/141213UtdV6/public/util/O.js":1,"C:/utd/141213UtdV6/public/util/UtilClass.js":2,"C:/utd/141213UtdV6/public/util/UtilDate.js":3,"C:/utd/141213UtdV6/public/util/UtilExceptionStack.js":4,"C:/utd/141213UtdV6/public/util/UtilHtmlHref.js":5,"C:/utd/141213UtdV6/public/util/UtilString.js":6}]},{},[7]);

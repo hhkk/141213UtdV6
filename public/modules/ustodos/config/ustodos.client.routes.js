@@ -1,10 +1,10 @@
 'use strict';
 
 //Setting up route
-alert ('ccc');
+O.a ('ccc');
 angular.module('ustodos').config(['$stateProvider',
 	function($stateProvider) {
-        alert ('ddd');
+        O.a ('dddx');
 		// Ustodos state routing
 		$stateProvider.
             //state('findlistutd', {

@@ -4,6 +4,7 @@
 //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 //var UtilClass = null;
 
+
 var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_hbkkBindSearch)
 {
     //alert ('in resolveSearchStringBetweenUrlAndInputBox  SEARCH $location.search().q:' + location_search_q +
@@ -38,27 +39,36 @@ var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_
 //}catch (err) {
 //    console.log ('errorhk!!!!!!!!!!!!!!!!!!!!');
 //}
+var getHtmlHk = function(index) {
+    console.log ('A getHtmlHk:'+index);
+    ustodos[$index].html
+    console.log ('B getHtmlHk:'+index);
+}
 
 var angularModule = null;
 //angularModule = angular.module('ustodos');
 
-
-
-alert ('sss');
-angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinishRender', function ($timeout) {
+O.a ('sss1');
+//angularModule = angular.module('ustodos', ['ngSanitize'])
+angularModule = angular.module('ustodos')
+    .directive('onFinishRender', function ($timeout) {
+    O.a ('sss2');
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
             if (scope.$last === true) {
                 $timeout(function () {
+                    O.a ('sss3');
                     scope.$emit('ngRepeatFinished');
                     alert ('ngRepeatFinished');
                 });
             }
         }
     };
+
 });
 
+O.a ('sssa1.5');
 
 
 
@@ -110,17 +120,21 @@ angularModule = angular.module('ustodos', ['ngSanitize']).directive('onFinishRen
 
 
 
-angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'Authentication', 'Ustodos',
-    function($scope, $stateParams, $location, $rootScope, Authentication, Ustodos) {
+angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', '$sce', 'Authentication', 'Ustodos',
+    function($scope, $stateParams, $location, $rootScope, $sce, Authentication, Ustodos) {
 //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
 //    function($scope, $stateParams, $location, $rootScope, ngSanitize, Authentication, Ustodos) {
         //$rootScope', $compile, $rootElement,
+        O.a ('sssa1');
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
 
+        $scope.SkipValidationHK = function(value) {
+            return $sce.trustAsHtml(value);
+        };
 
 
         $scope.myFnOnKeyup = function() { // onkey
-            alert ('hi2');
+            O.a ('hi2');
         };
 
 
@@ -221,7 +235,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         // has any row changed
         var callCnt_isDirty = 0;
         var time_last_save = 0;
-        function isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(saveDiffs)
+        var isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption = function (saveDiffs)
         {
             //if (saveDiffs)
             //alert(' start save ');
@@ -487,7 +501,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
         // Update existing Ustodo
         $scope.update = function() {
-            console.log ('3 in ustodos.client.controller UPDATE');
+                console.log ('3 in ustodos.client.controller UPDATE');
             var ustodo = $scope.ustodo;
 
             ustodo.$update(function() {
@@ -771,6 +785,8 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         };
 
         $scope.search();
+        O.a ('sssa2');
+
 
     }
 ]).directive('myCustomer', function() {
