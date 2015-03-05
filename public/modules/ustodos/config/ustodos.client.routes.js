@@ -4,7 +4,7 @@
 //O.a ('ccc');
 angular.module('ustodos').config(['$stateProvider',
 	function($stateProvider) {
-        O.a ('dddx');
+        //O.a ('dddx');
 		// Ustodos state routing
 		$stateProvider.
             //state('findlistutd', {

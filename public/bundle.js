@@ -5,7 +5,7 @@
 // var UtilLog = require('C:/utd/141213UtdV6/public/util/UtilLog.js');
 
 
-alert ('redefine alerthistory');
+//alert ('redefine alerthistory');
 var alertHistory = [];
 
 /**
@@ -22,10 +22,10 @@ var o = function (s)
  */
 var a = function (s)
 {
-    alert ('old len:' + alertHistory.length);
+    //alert ('old len:' + alertHistory.length);
     var s = '['+alertHistory.length + '.'+s + ';'+']';
     alertHistory.push (s);
-    alert ('new len:' + alertHistory.length);
+    //alert ('new len:' + alertHistory.length);
     o('a:' + s);
     alert (s + ' hist:' + alertHistory);
 }

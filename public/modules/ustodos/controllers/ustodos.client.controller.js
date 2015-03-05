@@ -2,6 +2,7 @@
 
 
 //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
+//var O = require('C:/utd/141213UtdV6/public/util/O.js');
 //var UtilClass = null;
 
 
@@ -122,23 +123,20 @@ angularModule = angular.module('ustodos')
 
 angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', '$sce', 'Authentication', 'Ustodos',
     function($scope, $stateParams, $location, $rootScope, $sce, Authentication, Ustodos) {
-//angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
-//    function($scope, $stateParams, $location, $rootScope, ngSanitize, Authentication, Ustodos) {
+        //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
+        //    function($scope, $stateParams, $location, $rootScope, ngSanitize, Authentication, Ustodos) {
         //$rootScope', $compile, $rootElement,
-//        O.a ('sssa1');
+        //    O.a ('sssa1');
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
 
         $scope.SkipValidationHK = function(value) {
             return $sce.trustAsHtml(value);
         };
 
-
         $scope.myFnOnKeyup = function() { // onkey
-            O.a ('hi2');
+            //O.a ('hi2');
         };
 
-
-        //
         //jQuery("#edit").on('keyup', function() {
         //    alert ('hi');
         //    //$this = $(this);
@@ -160,8 +158,6 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         //    //
         //    //$("#edit_container").scrollTop(0);
         //});
-
-
 
         $scope.onKeyUp = function(index) {
             // alert ('onKeyUp index:' + index);
@@ -251,7 +247,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
                 //"ustodorow1"
                 var myEl = angular.element( document.querySelector( '#ustodorow' + i ) );
-                console.log (i + '. @@@@@@@@@@@@@@@@ checking for change $scope.areThereChanges:' + $scope.areThereChanges);
+                //console.log (i + '. @@@@@@@@@@@@@@@@ checking for change $scope.areThereChanges:' + $scope.areThereChanges);
                 var anyChangeThisRow = false; // creates race condition for a microsecond, user could lose edit - real ulikely
                 if (myEl[0] !== undefined) {
                     anyChangeThisRow = ($scope.ustodos[i].html !== myEl[0].innerHTML);
@@ -265,7 +261,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                             //console.log(i + '. B vs inner [' + myEl[0].innerHTML + ']');
                             //console.log(i + '. B id changed  [' + $scope.ustodos[i]._id+ ']');
 
-                            saveOneUstodo($scope.ustodos[i]);
+                            //saveOneUstodo($scope.ustodos[i]);
 
                             // ends up in C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
                             // .exports.update
@@ -279,7 +275,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 }
                 // diff here
             }
-            console.log (callCnt_isDirty + '. exiting isDirty returning with $scope.areThereChanges:'+ $scope.areThereChanges);
+            //console.log (callCnt_isDirty + '. exiting isDirty returning with $scope.areThereChanges:'+ $scope.areThereChanges);
         };
 
 
@@ -466,7 +462,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             //getProperties('props this:', this);
             //getProperties('props Ustodos:', Ustodos);
             var ustodo = new Ustodos ({
-                text: this.text// hbkk mystery
+                html: this.html// hbkk mystery
             });
             //getProperties('props ustodo:', ustodo);
 
@@ -670,7 +666,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
             //}, 3000);
 
-            try {
+//            try {
 
                 //$locationProvider.html5Mode(true);
                 //console.log ("$location.search().q:"+$location.search().q);
@@ -686,7 +682,9 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
 
 
-                    //window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
+                // this is the one to toggle 150304
+                //alert ('in here');
+                //window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
                 //alert ('pre setting to'+$location.path())
                 //$location.path($location.path() + 'ddd/#!/?q=' + $scope.hkhkhkbk);
                 //$location.path('aaa');
@@ -697,9 +695,9 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 //$location.path('/ustodos/findlist/' + $scope.hkhkhkbk);
                 //$location.path('/ustodos/findlist?q=' + $scope.hkhkhkbk);
                 //console.log ('$location.absUrl() 3:'+ $location.absUrl());
-            } catch (err) {
-                alert ('err:'+ err);
-            }
+//            } catch (err) {
+//                alert ('err:'+ err);
+//            }
 
             //alert('look ma no hands $location.absUrl():' + $location.absUrl());
 

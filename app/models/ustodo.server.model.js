@@ -14,14 +14,12 @@ var UstodoSchema = new Schema({
         text: {
             type: String,
             default: '',
-            required: 'Please enter Ustodoori text',
             trim: true
         },
     //jsonx
     jsonx: {
         type: String,
         default: '',
-        required: 'Please enter Ustodoori text',
         trim: true
     },
     html: {

@@ -2,6 +2,7 @@
 
 var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
+var O = require('C:/utd/141213UtdV6/public/util/O.js');
 
 //var UtilClass = require('.././UtilClass');
 // console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
@@ -138,7 +139,6 @@ exports.list = function(req, res) {
 
 	//console.log ('in ustodos.server.controller.js: list, query: ' + query);
 	console.log ('in ustodos.server.controller.js: list, query.querystring: ' + query.querystring);
-	var re = null;
 
 
     //
@@ -151,81 +151,39 @@ exports.list = function(req, res) {
 	//	re = new RegExp('');
 	//}
 
-    //var regexp = new RegExp(query.querystring);
-    var regexp = new RegExp(query.querystring);
-
-
-
+    var require_ustodos_controller_helper = require('C:/utd/141213UtdV6/app/controllers/helpers/ustodos.controller.helper.js');
 
     //if (query.querystring.endsWith())
     var querystringTrimmed = query.querystring.trim();
     if (UtilString.endsWith(querystringTrimmed, ' w'))
     {
         console.log ('in ustodos.server.controller.js: w command-based save');
+        O.o ('in endswith w');
         var ustodo = new Ustodo();
         ustodo.text = querystringTrimmed;
+        ustodo.html = querystringTrimmed;
         ustodo.user = req.user;
 
         ustodo.save(function(err) {
             if (err) {
                 console.log ('*** write fail querystringTrimmed [' +querystringTrimmed + ']');
+                console.log ('*** write fail err [' +err + ']');
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
             } else {
+                //now process read aspect only of query
+                require_ustodos_controller_helper.processQueryReadAspect(Ustodo, querystringTrimmed, req, errorHandler, res);
                 console.log ('*** write success querystringTrimmed [' +querystringTrimmed + ']');
             }
         });
     }
+    else{
+        O.o ('not endswith w');
+        require_ustodos_controller_helper.processQueryReadAspect(Ustodo, querystringTrimmed, req, errorHandler, res);
+    }
 
 
-
-
-
-    //console.log ('UtilClass.getClass(regexp):'+ UtilClass.getClass(regexp));
-	var querymongo = {text:regexp};
-
-	//var querymongo = {text:'/'+query.querystring+'/'};
-
-
-    //{ "$regex": '/europe/', "$options": 'i'}
-
-    var hklimit = 100; // 50 100 200 500 1000
-    var countResult = 0;
-    var x = [];
-
-    console.log ('step: querymongo') ;
-    //Ustodo.find().exec(function(err, ustodos) {
-    Ustodo.find(querymongo).sort('-datelastmod').limit(hklimit).populate('user', 'displayName').exec(function(err, ustodos) {
-    //Ustodo.find(querymongo).populate('user', 'displayName').exec(function(err, ustodos) {
-		if (err) {
-            console.log ('!!!!!!!! errorHandler.getErrorMessage(err):' + errorHandler.getErrorMessage(err));
-            console.log ('!!!!!!!! err.toString():' + err.toString());
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-
-			});
-		} else {
-            //if (query.querystring === '')
-                //var x = ustodos.slice[0,20]
-                for (var k = 0; k < (ustodos.length); k++)
-                {
-                    //console.log ('in result loop');
-                    countResult = countResult + 1;
-                    //ustodos[k].text = 'svr2,' + ustodos[k].text;
-                    ustodos[k].text = UtilHtmlHref.strHttpEnhancer(ustodos[k].text);
-                    x.push(ustodos[k]);
-
-                }
-                //console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod);
-                console.log('for query [' + query.querystring + '] countResult [' + countResult + '] req._passport.session.user id [' + req._passport.session.user + ']');
-                res.jsonp(x);
-
-                //res.jsonp(ustodos);
-            //else
-			    //res.jsonp(ustodos.slice[0,20]);
-		}
-	});
 };
 
 /**   * Ustodo middleware  */
