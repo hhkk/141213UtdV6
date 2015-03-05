@@ -139,7 +139,7 @@ var timeAgo =function (dtStrMongoStyle) // date obj
         var _ss =                 1;
 
         if (agoSecs < _ss)
-            returnStr = '1<font size=-3>sec</font>';
+            returnStr = '1sec';
         else if (agoSecs < (60*_ss))
             returnStr = '< 1min';
         else if (agoSecs < (10 * 60*_ss))

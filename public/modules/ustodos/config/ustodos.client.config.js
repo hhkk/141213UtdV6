@@ -1,8 +1,9 @@
 'use strict';
 
 // Configuring the Articles module
-//O.a('aaa1');
-angular.module('ustodos').run(['Menus',
+//O.a('addMenus');
+
+angular.module('ustodos', ['ngSanitize']).run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
         //O.a ('ggg1');

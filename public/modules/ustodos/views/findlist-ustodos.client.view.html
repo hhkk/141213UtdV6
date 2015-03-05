@@ -66,7 +66,7 @@
                 <!--</td>f-->
                 <!--</tr>f-->
 
-                <tr ng-repeat="ustodo in ustodos" ng-keyup="onKeyUp($index)" ng-class="hkcssContentedit" ng-class-odd="'odd'" ng-class-even="'even'">
+                <tr ng-repeat="ustodo in ustodos" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">
 
                     <!-- DELETE BUTTON -->
                     <td>
@@ -100,6 +100,7 @@
                     <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
 
                     <!-- TIME AGO -->
+                    <!--<td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod) + ustodo.datelastmod+'.'+ustodo._id"-->
                     <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
                               title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
                     <!--<td>{{ ustodo.text}}</td>f-->
@@ -109,9 +110,10 @@
                         <span id="ustodorow{{$index}}" contenteditable="true"
                               onclick = "this.contentEditable = true;"
                               onmouseover="this.contentEditable = false;"
-                              ng-bind-html="SkipValidationHK(ustodos[$index].html)"
+                            ng-bind-html="ustodos[$index].html | linky:'_blank'"
                               xxxonmouseout = "this.contentEditable = false"
                             >
+                        ng-bind-html="SkipValidationHK(ustodos[$index].html)"
                         <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
                               <!--ng-bind-html="ustodos[$index].html"-->
                               <!--ng-bind-html="skipValidation (ustodos[$index].html)"-->

@@ -46,12 +46,13 @@
 }
 .hkcssContentedit {
 
-    /*webkit-user-modify: read-write;*/
-    /*word-wrap: break-word;*/
-    /*webkit-line-break: after-white-space;*/
-    /*webkit-user-select: text;*/
-    /*color:green;*/
+    webkit-user-modify: read-write;
+    word-wrap: break-word;
+    webkit-line-break: after-white-space;
+    webkit-user-select: text;
+    color:green;
 
+    background-color: blue;
     white-space: nowrap;
     /*width:200px;*/
     overflow: hidden;

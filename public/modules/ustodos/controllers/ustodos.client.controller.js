@@ -49,11 +49,10 @@ var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_
 var angularModule = null;
 //angularModule = angular.module('ustodos');
 
-//O.a ('sss1');
-//angularModule = angular.module('ustodos', ['ngSanitize'])
+//O.a ('onfinishrender directive');
 angularModule = angular.module('ustodos')
     .directive('onFinishRender', function ($timeout) {
-    //O.a ('sss2');
+    O.a ('sss2');
     return {
         restrict: 'A',
         link: function (scope, element, attr) {

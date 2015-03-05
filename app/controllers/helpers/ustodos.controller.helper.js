@@ -12,7 +12,7 @@ exports.processQueryReadAspect = function(Ustodo, querystringTrimmed, req, error
 
     //var regexp = new RegExp(query.querystring);
     var query = req.query;
-    var regexp = new RegExp(query.querystring.toLowerCase());
+    var regexp = new RegExp(query.querystring.toLowerCase(), 'i');
 
     //console.log ('UtilClass.getClass(regexp):'+ UtilClass.getClass(regexp));
     var querymongo = {text:regexp};
