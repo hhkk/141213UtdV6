@@ -583,6 +583,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
             $scope.ustodosQueryResult.splice(2, 1);
             //}
         });
+
         $scope.functionTest = function(s)
         {
             return 'eee:'+ s;
@@ -610,17 +611,15 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
             //alert ('7 in ustodos.client.controller SEARCH $stateParams.q:' + $stateParams.q);
             //console.log ("$location.search().q:"+$location.search().q);
 
-            alert (
-                '\r\npre: this.commandUrlQ:'+this.commandUrlQ
-            );
+            //alert ('\r\npre: this.commandUrlQ:'+this.commandUrlQ     );
             this.commandUrlQ = resolveFinalCommandBetweenUrlAndInputBox
                 //( $location.search.q  , this.commandUrlQ);
                 ( $location.$$search.q, this.commandUrlQ);
 
-            alert (
-                'post: $location.$$search.q:'+$location.$$search.q +
-                '\r\nthis.commandUrlQ:'+this.commandUrlQ
-            );
+            //alert (
+                //'post: $location.$$search.q:'+$location.$$search.q +
+                //'\r\nthis.commandUrlQ:'+this.commandUrlQ
+            //);
 
             //    ',\r\n$location.search().q:' + $location.search().q +
             //    ',\r\nthis.commandUrlQ:' + this.commandUrlQ
@@ -687,7 +686,6 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
                 //alert ('done setting to'+$location.path())
 
 
-                //window.location.href = '?q=' + $scope.hkhkhkbk;
                 //$location.path('/ustodos/findlist/' + $scope.hkhkhkbk);
                 //$location.path('/ustodos/findlist?q=' + $scope.hkhkhkbk);
                 //console.log ('$location.absUrl() 3:'+ $location.absUrl());
@@ -698,7 +696,8 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
             //alert('look ma no hands $location.absUrl():' + $location.absUrl());
 
 
-            //$location.path(newUrl);
+            //window.location.href = '/?q=sdfdfdf';
+            //$location.path('/?q=sdfdfdf');;
             //$location.path('#/login');
             //window.location.href =
             //$scope.$apply( function(){$location.path(newUrl + '/somelocatin'); } );
@@ -729,6 +728,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
             $scope.ustodosQueryResult = ustodosQueryResult;
             console.log('this.countOfUstodos:'+ this.countOfUstodos);
             $scope.ustodos = ustodosQueryResult;
+            $location.search('q', this.commandUrlQ);
 
             //console.log (getClass('ssdfsdfdsf', this.commandUrlQ));
             //var patternhk = /$scope.commandUrlQ/;
