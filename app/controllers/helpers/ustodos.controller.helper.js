@@ -1,18 +1,17 @@
 
 
 // var ustodos.controller.helper = require('C:/utd/141213UtdV6/app/controllers/helpers/ustodos.controller.helper.js');
-//processQueryReadAspect
+//processCommandReadPortion
 
 var UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
 var O = require('C:/utd/141213UtdV6/public/util/O.js');
 
-exports.processQueryReadAspect = function(Ustodo, querystringTrimmed, req, errorHandler, res) {
+exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, errorHandler, res) {
 
-    O.o (' in processQueryReadAspect ');
+    O.o (' in processCommandReadPortion ');
 
     //var regexp = new RegExp(query.querystring);
-    var query = req.query;
-    var regexp = new RegExp(query.querystring.toLowerCase(), 'i');
+    var regexp = new RegExp(querystringTrimmed.toLowerCase(), 'i');
 
     //console.log ('UtilClass.getClass(regexp):'+ UtilClass.getClass(regexp));
     var querymongo = {text:regexp};
@@ -47,7 +46,7 @@ exports.processQueryReadAspect = function(Ustodo, querystringTrimmed, req, error
 
             }
             //console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod);
-            console.log('for query [' + query.querystring + '] countResult [' + countResult + '] req._passport.session.user id [' + req._passport.session.user + ']');
+            console.log('for query [' + req.query.q + '] countResult [' + countResult + '] req._passport.session.user id [' + req._passport.session.user + ']');
             res.jsonp(x);
 
             //res.jsonp(ustodos);

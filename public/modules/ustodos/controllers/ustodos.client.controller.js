@@ -6,27 +6,27 @@
 //var UtilClass = null;
 
 
-var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_hbkkBindSearch)
+var resolveFinalCommandBetweenUrlAndInputBox = function(commandUrlQ, commandInputBox)
 {
-    //alert ('in resolveSearchStringBetweenUrlAndInputBox  SEARCH $location.search().q:' + location_search_q +
-    //', this_hbkkBindSearch:' + this_hbkkBindSearch);
+    //alert ('in resolveFinalCommandBetweenUrlAndInputBox  SEARCH $location.search().q:' + commandUrlQ +
+    //', commandInputBox:' + commandInputBox);
 
     //alert ('stateParams_searchstring_url:' + stateParams_searchstring_url);
-    //alert ('hbkkBindSearch:' + hbkkBindSearch);
+    //alert ('commandUrlQ:' + commandUrlQ);
 
 
 //	sdfsdf
 
-    var searchStringUiBoxOverridesUrl = this_hbkkBindSearch;
-    if (searchStringUiBoxOverridesUrl === undefined || !searchStringUiBoxOverridesUrl) {
-        searchStringUiBoxOverridesUrl = location_search_q;
+    var commandFinal = commandInputBox;
+    if (commandFinal === undefined || !commandFinal) {
+        commandFinal = commandUrlQ;
     }
-    if (searchStringUiBoxOverridesUrl === undefined || !searchStringUiBoxOverridesUrl) {
-        searchStringUiBoxOverridesUrl = '';
+    if (commandFinal === undefined || !commandFinal) {
+        commandFinal = '';
     }
 
-    console.log ('searchStringUiBoxOverridesUrl:'+searchStringUiBoxOverridesUrl);
-    return searchStringUiBoxOverridesUrl;
+    console.log ('commandFinal:'+commandFinal);
+    return commandFinal;
 };
 
 
@@ -49,24 +49,6 @@ var resolveSearchStringBetweenUrlAndInputBox = function(location_search_q, this_
 var angularModule = null;
 //angularModule = angular.module('ustodos');
 
-//O.a ('onfinishrender directive');
-angularModule = angular.module('ustodos')
-    .directive('onFinishRender', function ($timeout) {
-    O.a ('sss2');
-    return {
-        restrict: 'A',
-        link: function (scope, element, attr) {
-            if (scope.$last === true) {
-                $timeout(function () {
-                    //O.a ('sss3');
-                    scope.$emit('ngRepeatFinished');
-                    alert ('ngRepeatFinished');
-                });
-            }
-        }
-    };
-
-});
 
 //O.a ('sssa1.5');
 
@@ -120,13 +102,21 @@ angularModule = angular.module('ustodos')
 
 
 
-angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', '$sce', 'Authentication', 'Ustodos',
+
+//O.a ('oneOfSeveral controller with array - first?');
+angular.module('ustodos').controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', '$sce',
+    'Authentication', 'Ustodos',
     function($scope, $stateParams, $location, $rootScope, $sce, Authentication, Ustodos) {
+//angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
+//    'Authentication', 'Ustodos',
+//    function($scope, $stateParams, $locationProvider, $rootScope, $sce, Authentication, Ustodos) {
         //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
         //    function($scope, $stateParams, $location, $rootScope, ngSanitize, Authentication, Ustodos) {
         //$rootScope', $compile, $rootElement,
         //    O.a ('sssa1');
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
+
+        //$locationProvider.html5Mode(true).hashPrefix('!');
 
         $scope.SkipValidationHK = function(value) {
             return $sce.trustAsHtml(value);
@@ -164,6 +154,11 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
             //$scope.$apply()
         };
+
+
+        $scope.event_click_timeAgo = function (_id) {
+            alert (_id);
+        }
 
         $scope.savechanged = function() {
             console.log ('in c');
@@ -287,10 +282,14 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
                 //alert ('in deleteDbUstotoById ' + savOid);
                 var indexToDelete = -1;
                 for (var i = 0; i < $scope.ustodos.length; i++) {
+                    console.log ('check if to array to delete, index:' + i + '. id:' +  $scope.ustodos[i].html);
+
                     if ($scope.ustodos[i]._id === savOid)
                     {
                         console.log ('found one local array to delete, index:' + i);
-                        $scope.ustodos.splice(indexToDelete, 1);
+                        console.log ('found one local array to delete, indexToDelete:' + indexToDelete);
+                        console.log ('@@@@deleting:' + $scope.ustodos[i].html);
+                        $scope.ustodos.splice(i, 1);
                         console.log ('done local array delete, index:' + i);
                     }
                 }
@@ -543,6 +542,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         // Search for new Ustodo (findlist)
         $scope.callCountSearch = 0;
 
+        //alert ('in ngRepeatFinished def');
 
 
         $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
@@ -551,25 +551,12 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@ done rendering this.ustodosQueryResult.length:' + $scope.ustodosQueryResult.length);
             //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@ done rendering this.ustodosQueryResult.length:' + $scope.ustodosQueryResult[9].toString());
             //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@ getClass:'+UtilClassz.getClass($scope.ustodosQueryResult));
-
-
-
-
-
-
-
-
-
-
-
+            //alert ('in ngRepeatFinished');
 
             for (var i=0; i < $scope.ustodosQueryResult.length; i++) {
                 //console.log('===========' + $scope.ustodosQueryResult[i].text);
                 //console.log('===========' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text));
                 //$scope.ustodosQueryResult[i].text = '<a href="http://ibm.com">http://ibm.com</a>' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
-
-
-
 
                 $scope.ustodosQueryResult[i].text =
                     //' yyy2 <a href="http://banana.com" target="_blank">http://banana.com</a>' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
@@ -603,6 +590,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
 
         $scope.search = function() {
 
+            //alert ('in search');
             //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 
             //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));
@@ -615,38 +603,47 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             $scope.callCountSearch++;
             //alert ('in search $stateParams.q:'+$stateParams.q +
             //    ',\r\n$location.search().q:' + $location.search().q +
-            //    ',\r\nthis.hbkkBindSearch:' + this.hbkkBindSearch
+            //    ',\r\nthis.commandUrlQ:' + this.commandUrlQ
             //);
 
-            //alert ('6 in ustodos.client.controller SEARCH this.hbkkBindSearch:' + this.hbkkBindSearch);
+            //alert ('6 in ustodos.client.controller SEARCH this.commandUrlQ:' + this.commandUrlQ);
             //alert ('7 in ustodos.client.controller SEARCH $stateParams.q:' + $stateParams.q);
             //console.log ("$location.search().q:"+$location.search().q);
 
-            this.hbkkBindSearch = resolveSearchStringBetweenUrlAndInputBox
-            ($location.search().q, this.hbkkBindSearch);
-            //alert ('in search $stateParams.q:'+$stateParams.q +
+            alert (
+                '\r\npre: this.commandUrlQ:'+this.commandUrlQ
+            );
+            this.commandUrlQ = resolveFinalCommandBetweenUrlAndInputBox
+                //( $location.search.q  , this.commandUrlQ);
+                ( $location.$$search.q, this.commandUrlQ);
+
+            alert (
+                'post: $location.$$search.q:'+$location.$$search.q +
+                '\r\nthis.commandUrlQ:'+this.commandUrlQ
+            );
+
             //    ',\r\n$location.search().q:' + $location.search().q +
-            //    ',\r\nthis.hbkkBindSearch:' + this.hbkkBindSearch
+            //    ',\r\nthis.commandUrlQ:' + this.commandUrlQ
             //);
 
             //setTimeout(function(){alert('in ustodos')}, 2000);
             //setTimeout(function(){
-            //var newpath = $location.path+'/'+this.hbkkBindSearch;
-            //alert ('set this.hbkkBindSearch to:' + this.hbkkBindSearch +
+            //var newpath = $location.path+'/'+this.commandUrlQ;
+            //alert ('set this.commandUrlQ to:' + this.commandUrlQ +
             //      ',   $scope.callCountSearch:' + $scope.callCountSearch
             //);
             //}, 1000);
 
 
-            window.document.title = this.hbkkBindSearch; // not jpro:
-            $scope.hkhkhkbk = this.hbkkBindSearch;
+            window.document.title = this.commandUrlQ; // not jpro:
+            $scope.hkhkhkbk = this.commandUrlQ;
             console.log ('hi0 hk $scope.hkhkhkbk:' + $scope.hkhkhkbk);
             //alert ('22a $location.absUrl():' + $location.absUrl());
-            //var newUrl = $location.absUrl() + this.hbkkBindSearch;
+            //var newUrl = $location.absUrl() + this.commandUrlQ;
 
             //setTimeout(function(){
             //console.log ('hi1 hk this.newUrl :' + newUrl );
-            //console.log ('hi2 hk this.hbkkBindSearch:' + this.hbkkBindSearch);
+            //console.log ('hi2 hk this.commandUrlQ:' + this.commandUrlQ);
             //console.log ('hi3 hk $scope.hkhkhkbk:' + $scope.hkhkhkbk);
             //$location.path('/#!/ddddddd');
             //$location.path(newUrl).replace();
@@ -705,36 +702,36 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             //$location.path('#/login');
             //window.location.href =
             //$scope.$apply( function(){$location.path(newUrl + '/somelocatin'); } );
-            //window.location.href = window.location.href + '/xxx' + this.hbkkBindSearch;
-            //alert ('22b this.hbkkBindSearch:' + this.hbkkBindSearch);
+            //window.location.href = window.location.href + '/xxx' + this.commandUrlQ;
+            //alert ('22b this.commandUrlQ:' + this.commandUrlQ);
             //$location.path(newUrl);
             //window.location.href = newUrl +'hk';
             //alert ('22c $location.absUrl():' + $location.absUrl());
             //alert ('22d window.location.href:' + window.location.href);
-            //alert ('22e this.hbkkBindSearch:' + this.hbkkBindSearch);
-            //window.location.href = window.location.href + '/xxx' + this.hbkkBindSearch;
+            //alert ('22e this.commandUrlQ:' + this.commandUrlQ);
+            //window.location.href = window.location.href + '/xxx' + this.commandUrlQ;
 //			window.location.href = window.location.href + '/xxx';
             // https://docs.angularjs.org/guide/$location
-            //alert('assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
+            //alert('assigned this.commandUrlQ:'+ this.commandUrlQ);
 
-            console.log('1assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
-            //$location.path('/'+this.hbkkBindSearch)
+            console.log('1assigned this.commandUrlQ:'+ this.commandUrlQ);
+            //$location.path('/'+this.commandUrlQ)
 
-            var ustodosQueryResult = Ustodos.query ({querystring: this.hbkkBindSearch});
+            var ustodosQueryResult = Ustodos.query ({q: this.commandUrlQ});
 
             //console.log ('!@!@!@!@!@!@!!!@ utd[Class].getClass(ustodosQueryResult)]:'+utd[Class].getClass(ustodosQueryResult));
             // KEEPER 150214 console.log ('!@!@!@!@!@!@!!!@ utd[Class].getClass(ustodosQueryResult)]:'+UtilClass.getClass(ustodosQueryResult));
             //console.log ('============ in here'+ustodosQueryResult.length);
 
-            console.log('2assigned this.hbkkBindSearch:'+ this.hbkkBindSearch);
+            console.log('2assigned this.commandUrlQ:'+ this.commandUrlQ);
             //this.countOfUstodos = ustodosQueryResult.length;
             //this.ustodosQueryResult = ustodosQueryResult;
             $scope.ustodosQueryResult = ustodosQueryResult;
             console.log('this.countOfUstodos:'+ this.countOfUstodos);
             $scope.ustodos = ustodosQueryResult;
 
-            //console.log (getClass('ssdfsdfdsf', this.hbkkBindSearch));
-            //var patternhk = /$scope.hbkkBindSearch/;
+            //console.log (getClass('ssdfsdfdsf', this.commandUrlQ));
+            //var patternhk = /$scope.commandUrlQ/;
             //	// ORIGINAL A/B SPLIT HBKK
             //	//ustodoSearchString: $stateParams.ustodoId
             //name: /a/
@@ -750,7 +747,7 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
             //getProperties('props this:', this);
             //var ustodo = new Ustodos ({
             //	name: this.name,  // hbkk mystery
-            //	hbkkBindSearch: this.hbkkBindSearch // hbkk mystery
+            //	commandUrlQ: this.commandUrlQ // hbkk mystery
             //});
             //getProperties('props ustodo:', ustodo);
 
@@ -799,6 +796,47 @@ angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locat
         }
     };
 });
+
+
+//O.a ('oneOfSeveral $routeProvider', '$locationProvider');
+angular.module('ustodos')
+    //.config (
+    //['$locationProvider',
+    //    function ($locationProvider) {
+    //
+    //        //commenting out this line (switching to hashbang mode) breaks the app
+    //        //-- unless # is added to the templates
+    //        $locationProvider.html5Mode(true);
+    //
+    //        //$routeProvider.when('/', {
+    //        //    template: 'this is home. go to <a href="/about"/>about</a>'
+    //        //});
+    //        //$routeProvider.when('/about', {
+    //        //    template: 'this is about. go to <a href="/"/>home</a'
+    //        //});
+    //    }
+    //])
+    ////.config(function($locationProvider ) {
+    ////    $locationProvider.html5Mode(true);
+    ////    //$routeProvider.otherwise({redirectTo: '/home', controller: HomeCtrl});
+    ////})
+    .directive('onFinishRender', function ($timeout) {
+        O.a ('sss2');
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr) {
+                if (scope.$last === true) {
+                    $timeout(function () {
+                        //O.a ('sss3');
+                        scope.$emit('ngRepeatFinished');
+                        alert ('ngRepeatFinished');
+                    });
+                }
+            }
+        };
+
+    });
+
 
 
 

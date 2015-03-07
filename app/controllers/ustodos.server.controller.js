@@ -116,15 +116,15 @@ exports.list = function(req, res) {
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
 
 	var query = req.query;
-	console.log ('in ustodos.server.controller.js: list query.querystring [' + query.querystring+ ']');
-    if (query.querystring !== null && query.querystring !== undefined)
-        query.querystring = query.querystring.trim();
+	console.log ('in ustodos.server.controller.js: list query.querystring [' + query.q + ']');
+    if (query.q !== null && query.q !== undefined)
+        query.q = query.q.trim();
     else
-        query.querystring = '';
+        query.q = '';
 
-    if (query.querystring === '*')   {
+    if (query.q === '*')   {
         console.log ('resetting * star to blank');
-        query.querystring = '';
+        query.q = '';
     }
 
     //console.log ('query.querystring post trim [' + query.querystring+ ']');
@@ -138,7 +138,7 @@ exports.list = function(req, res) {
 	//}
 
 	//console.log ('in ustodos.server.controller.js: list, query: ' + query);
-	console.log ('in ustodos.server.controller.js: list, query.querystring: ' + query.querystring);
+	console.log ('in ustodos.server.controller.js: list, query.querystring: ' + query.q);
 
 
     //
@@ -154,33 +154,33 @@ exports.list = function(req, res) {
     var require_ustodos_controller_helper = require('C:/utd/141213UtdV6/app/controllers/helpers/ustodos.controller.helper.js');
 
     //if (query.querystring.endsWith())
-    var querystringTrimmed = query.querystring.trim();
-    if (UtilString.endsWith(querystringTrimmed, ' w'))
+    var commandTrimmed = query.q.trim();
+    if (UtilString.endsWith(commandTrimmed, ' w'))
     {
         console.log ('in ustodos.server.controller.js: w command-based save');
         O.o ('in endswith w');
         var ustodo = new Ustodo();
-        ustodo.text = querystringTrimmed;
-        ustodo.html = querystringTrimmed;
+        ustodo.text = commandTrimmed;
+        ustodo.html = commandTrimmed;
         ustodo.user = req.user;
 
         ustodo.save(function(err) {
             if (err) {
-                console.log ('*** write fail querystringTrimmed [' +querystringTrimmed + ']');
+                console.log ('*** write fail commandTrimmed [' +commandTrimmed + ']');
                 console.log ('*** write fail err [' +err + ']');
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
             } else {
                 //now process read aspect only of query
-                require_ustodos_controller_helper.processQueryReadAspect(Ustodo, querystringTrimmed, req, errorHandler, res);
-                console.log ('*** write success querystringTrimmed [' +querystringTrimmed + ']');
+                require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
+                console.log ('*** write success commandTrimmed [' +commandTrimmed + ']');
             }
         });
     }
     else{
         O.o ('not endswith w');
-        require_ustodos_controller_helper.processQueryReadAspect(Ustodo, querystringTrimmed, req, errorHandler, res);
+        require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
     }
 
 

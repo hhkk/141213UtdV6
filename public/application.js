@@ -6,10 +6,13 @@ console.log ('!@!@!@!@ in application.js');
 //Start by defining the main module and adding the module dependencies
 angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies);
 
+//O.a ('oneOfSeveral application/js');
 // Setting HTML5 Location Mode
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider',
 	function($locationProvider) {
 		$locationProvider.hashPrefix('!');
+        $locationProvider.html5Mode(true);
+
 	}
 ]);
 

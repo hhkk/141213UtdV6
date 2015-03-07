@@ -50,7 +50,7 @@
     word-wrap: break-word;
     webkit-line-break: after-white-space;
     webkit-user-select: text;
-    color:green;
+    /*color:green;*/
 
     background-color: blue;
     white-space: nowrap;

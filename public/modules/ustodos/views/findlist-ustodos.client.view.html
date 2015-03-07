@@ -1,4 +1,7 @@
 <div ng-app>
+
+    <div ng-address-bar></div><br><br>
+
     <section data-ng-controller="UstodosController" ng-init="keyCount=0">
         <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
 
@@ -24,7 +27,7 @@
                             <br>
                             <div class="controls">
                                 <input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">
-                                <input type="text" ng-keyup="onKeyUp()" data-ng-model="hbkkBindSearch"  id="text" class="input-textarea" placeholder="Do" required>
+                                <input type="text" ng-keyup="onKeyUp()" data-ng-model="commandUrlQ"  id="text" class="input-textarea" placeholder="Do" required>
                                 #: <span ng-bind="ustodosQueryResult.length"></span >
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span class="dev-notes">
@@ -66,7 +69,8 @@
                 <!--</td>f-->
                 <!--</tr>f-->
 
-                <tr ng-repeat="ustodo in ustodos" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">
+                <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
+                <tr ng-repeat="ustodo in ustodos " ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">
 
                     <!-- DELETE BUTTON -->
                     <td>
@@ -102,7 +106,7 @@
                     <!-- TIME AGO -->
                     <!--<td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod) + ustodo.datelastmod+'.'+ustodo._id"-->
                     <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
-                              title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
+                              ng-click="event_click_timeAgo(ustodo._id)" title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
                     <!--<td>{{ ustodo.text}}</td>f-->
 
                     <!-- TEXT -->
