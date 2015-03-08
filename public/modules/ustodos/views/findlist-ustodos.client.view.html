@@ -27,8 +27,10 @@
                             <br>
                             <div class="controls">
                                 <input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">
-                                <input type="text" ng-keyup="onKeyUp()" data-ng-model="commandUrlQ"  id="text" class="input-textarea" placeholder="Do" required>
-                                #: <span ng-bind="ustodosQueryResult.length"></span >
+
+                                <input type="text" ng-keyup="onKeyUpInputField()" data-ng-model="commandFromInputBox"
+                                       id="textHKKH" class="input-textarea" placeholder="Do" required>
+                                found: <span ng-bind="this.ustodos.length"></span >
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span class="dev-notes">
                                     <button ng-click="savechanged()" ng-init="count=0">
@@ -70,14 +72,17 @@
                 <!--</tr>f-->
 
                 <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
-                <tr ng-repeat="ustodo in ustodos " ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">
+                <tr ng-repeat="ustodo in ustodos "
+                    ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
+                    class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
 
                     <!-- DELETE BUTTON -->
                     <td>
                         <!--<button ng-click="count = count + 1" ng-init="count=0">-->
                         <!--<button ng-click="deleteDbUstotoById(ustodo)" ng-init="count=0">del</button>-->
 
-                        <img class="per-row-icons" ng-src="/img/gnome_edit_delete.png"
+                        <!-- trash garbage icon -->
+                        <img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
                              alt="{{image.name}}"  title='delete'
                              ng-click="deleteDbUstotoById(ustodo)"
                                 >

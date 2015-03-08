@@ -5,21 +5,20 @@
 //var O = require('C:/utd/141213UtdV6/public/util/O.js');
 //var UtilClass = null;
 
-
-var resolveFinalCommandBetweenUrlAndInputBox = function(commandUrlQ, commandInputBox)
+var resolveFinalCommandBetweenUrlAndInputBox = function(commandFromInputBox, commandInputBox)
 {
-    //alert ('in resolveFinalCommandBetweenUrlAndInputBox  SEARCH $location.search().q:' + commandUrlQ +
+    //alert ('in resolveFinalCommandBetweenUrlAndInputBox  SEARCH $location.search().q:' + commandFromInputBox +
     //', commandInputBox:' + commandInputBox);
 
     //alert ('stateParams_searchstring_url:' + stateParams_searchstring_url);
-    //alert ('commandUrlQ:' + commandUrlQ);
+    //alert ('commandFromInputBox:' + commandFromInputBox);
 
 
 //	sdfsdf
 
     var commandFinal = commandInputBox;
     if (commandFinal === undefined || !commandFinal) {
-        commandFinal = commandUrlQ;
+        commandFinal = commandFromInputBox;
     }
     if (commandFinal === undefined || !commandFinal) {
         commandFinal = '';
@@ -104,9 +103,9 @@ var angularModule = null;
 
 
 //O.a ('oneOfSeveral controller with array - first?');
-angular.module('ustodos').controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', '$sce',
+angular.module('ustodos').controller('UstodosController', ['$scope', '$stateParams', '$location', '$document', '$rootScope', '$sce',
     'Authentication', 'Ustodos',
-    function($scope, $stateParams, $location, $rootScope, $sce, Authentication, Ustodos) {
+    function($scope, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos) {
 //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
 //    'Authentication', 'Ustodos',
 //    function($scope, $stateParams, $locationProvider, $rootScope, $sce, Authentication, Ustodos) {
@@ -122,9 +121,8 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
             return $sce.trustAsHtml(value);
         };
 
-        $scope.myFnOnKeyup = function() { // onkey
-            //O.a ('hi2');
-        };
+
+        $scope.event = null;
 
         //jQuery("#edit").on('keyup', function() {
         //    alert ('hi');
@@ -148,12 +146,42 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
         //    //$("#edit_container").scrollTop(0);
         //});
 
-        $scope.onKeyUp = function(index) {
-            // alert ('onKeyUp index:' + index);
+        var o = O.o;
+
+
+        $scope.onKeyUpInputField = function(index) {
+            o ('onKeyUp index:' + index);
             $scope.count++;
             isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
             //$scope.$apply()
         };
+
+        $scope.keyCount = 0;
+
+        $document.bind("keypress", function(event) {
+            $scope.keyCount++;
+            o ('globalkeypress event.keyCode:' + event.keyCode + ', $scope.keyCount:'+$scope.keyCount);
+        });
+
+        $scope.myFnOnKeyUp = function($index, $event) { // onkey
+            o ('myFnOnKeyUp $index:' + $index + ', $event.keyCode:' + $event.keyCode);
+            //console.log (i + '. aaa event.altKey:'+event.altKey);
+        };
+
+        $scope.myFnOnKeyDown = function($index, $event) { // onkey
+            o ('myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
+
+        };
+
+
+
+
+
+
+
+
+
+
 
 
         $scope.event_click_timeAgo = function (_id) {
@@ -161,7 +189,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
         }
 
         $scope.savechanged = function() {
-            console.log ('in c');
+            alert ('in savechanged ');
             $scope.count++;
             isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(true);
             //$scope.$apply()
@@ -535,114 +563,38 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
             });
         };
 
-        // https://www.google.com/search?q=mongo+search+angular+resource&oq=mongo+search+angular+resource&aqs=chrome..69i64j69i57.6281j0j7&sourceid=chrome&es_sm=93&ie=UTF-8
-        // http://stackoverflow.com/questions/17552977/using-angularjss-resource-to-query-a-database
-        // https://groups.google.com/forum/#!topic/angular/kcV0ZROeBRw
-
         // Search for new Ustodo (findlist)
         $scope.callCountSearch = 0;
 
-        //alert ('in ngRepeatFinished def');
-
-
-        $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-            //you also get the actual event object
-            //do stuff, execute functions -- whatever...
-            //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@ done rendering this.ustodosQueryResult.length:' + $scope.ustodosQueryResult.length);
-            //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@ done rendering this.ustodosQueryResult.length:' + $scope.ustodosQueryResult[9].toString());
-            //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@ getClass:'+UtilClassz.getClass($scope.ustodosQueryResult));
-            //alert ('in ngRepeatFinished');
-
-            for (var i=0; i < $scope.ustodosQueryResult.length; i++) {
-                //console.log('===========' + $scope.ustodosQueryResult[i].text);
-                //console.log('===========' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text));
-                //$scope.ustodosQueryResult[i].text = '<a href="http://ibm.com">http://ibm.com</a>' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
-
-                $scope.ustodosQueryResult[i].text =
-                    //' yyy2 <a href="http://banana.com" target="_blank">http://banana.com</a>' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
-                    ' yyy2 ' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
-
-                //$scope.ustodosQueryResult[i].text =
-                //    'xxx1 [' +
-                //    '<a ng-href=\"http://u2d.co\" target=\"_blank\">UtD</a>' /
-                //    + '] yyy1' + UtilHtmlHref.seeIfConnectedToThisClass($scope.ustodosQueryResult[i].text);
-
-
-
-
-
-
-
-
-            }
-            //<a ng-href="http://u2d.co" target="_blank">link1</a>
-
-            //$scope.ustodosQueryResult = null;
-
-            //if (index > -1) {
-            $scope.ustodosQueryResult.splice(2, 1);
-            //}
-        });
-
-        $scope.functionTest = function(s)
-        {
-            return 'eee:'+ s;
+        $scope.sayhi = function() {
+            alert ('df');
         };
 
         $scope.search = function() {
-
-            //alert ('in search');
-            //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
-
-            //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));
-
-            // 1107pm
-            //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.utilGetClass(this):'+UtilClassx.utilGetClass(this));
-            //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.utilGetClass(this):'+UtilClassx.utilGetClass(this));
-
-
             $scope.callCountSearch++;
-            //alert ('in search $stateParams.q:'+$stateParams.q +
-            //    ',\r\n$location.search().q:' + $location.search().q +
-            //    ',\r\nthis.commandUrlQ:' + this.commandUrlQ
-            //);
+            o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
+            o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
+            this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
+                //( $location.search.q  , this.commandFromInputBox);
+                ( $location.$$search.q, this.commandFromInputBox);
+            o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
+            o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
+            window.document.title = 'll:'+$location.$$search.q; // not jpro:
+            //alert ('$location.$$search.q:'+$location.$$search.q);
+            //$location.path('/'+this.commandFromInputBox)
 
-            //alert ('6 in ustodos.client.controller SEARCH this.commandUrlQ:' + this.commandUrlQ);
-            //alert ('7 in ustodos.client.controller SEARCH $stateParams.q:' + $stateParams.q);
-            //console.log ("$location.search().q:"+$location.search().q);
-
-            //alert ('\r\npre: this.commandUrlQ:'+this.commandUrlQ     );
-            this.commandUrlQ = resolveFinalCommandBetweenUrlAndInputBox
-                //( $location.search.q  , this.commandUrlQ);
-                ( $location.$$search.q, this.commandUrlQ);
-
-            //alert (
-                //'post: $location.$$search.q:'+$location.$$search.q +
-                //'\r\nthis.commandUrlQ:'+this.commandUrlQ
-            //);
-
-            //    ',\r\n$location.search().q:' + $location.search().q +
-            //    ',\r\nthis.commandUrlQ:' + this.commandUrlQ
-            //);
+            $scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
+            $location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
+            //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
+            //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));
+            //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.utilGetClass(this):'+UtilClassx.utilGetClass(this));
 
             //setTimeout(function(){alert('in ustodos')}, 2000);
             //setTimeout(function(){
-            //var newpath = $location.path+'/'+this.commandUrlQ;
-            //alert ('set this.commandUrlQ to:' + this.commandUrlQ +
-            //      ',   $scope.callCountSearch:' + $scope.callCountSearch
-            //);
-            //}, 1000);
-
-
-            window.document.title = this.commandUrlQ; // not jpro:
-            $scope.hkhkhkbk = this.commandUrlQ;
-            console.log ('hi0 hk $scope.hkhkhkbk:' + $scope.hkhkhkbk);
-            //alert ('22a $location.absUrl():' + $location.absUrl());
-            //var newUrl = $location.absUrl() + this.commandUrlQ;
 
             //setTimeout(function(){
             //console.log ('hi1 hk this.newUrl :' + newUrl );
-            //console.log ('hi2 hk this.commandUrlQ:' + this.commandUrlQ);
+            //console.log ('hi2 hk this.commandFromInputBox:' + this.commandFromInputBox);
             //console.log ('hi3 hk $scope.hkhkhkbk:' + $scope.hkhkhkbk);
             //$location.path('/#!/ddddddd');
             //$location.path(newUrl).replace();
@@ -654,90 +606,29 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
 
 
             //window.location.href = '/#!/ssss2' ;
-            //window.location.href = '/#!/' + $scope.hkhkhkbk;
             //$scope.apply();
-            //alert ('done newUrl:' + newUrl);
-            //alert ('done');
-
-            //}, 3000);
 
 //            try {
 
                 //$locationProvider.html5Mode(true);
-                //console.log ("$location.search().q:"+$location.search().q);
-                //console.log ('$location.absUrl() 1:'+ $location.absUrl());
-                //console.log ('$scope.hkhkhkbk 2:'+ $scope.hkhkhkbk);
                 //window.location.href = '/#!/ustodos/findlist/' + $scope.hkhkhkbk;
 
-                //window.location.href = '/#!/ustodos/findlist?q=' + $scope.hkhkhkbk;
-                //window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
-                //window.location.href = '?q=' + $scope.hkhkhkbk;
-
-
-
-
-
                 // this is the one to toggle 150304
-                //alert ('in here');
                 //window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
-                //alert ('pre setting to'+$location.path())
                 //$location.path($location.path() + 'ddd/#!/?q=' + $scope.hkhkhkbk);
-                //$location.path('aaa');
-                //alert ('done setting to'+$location.path())
-
-
-                //$location.path('/ustodos/findlist/' + $scope.hkhkhkbk);
-                //$location.path('/ustodos/findlist?q=' + $scope.hkhkhkbk);
-                //console.log ('$location.absUrl() 3:'+ $location.absUrl());
-//            } catch (err) {
-//                alert ('err:'+ err);
-//            }
-
-            //alert('look ma no hands $location.absUrl():' + $location.absUrl());
-
 
             //window.location.href = '/?q=sdfdfdf';
-            //$location.path('/?q=sdfdfdf');;
             //$location.path('#/login');
-            //window.location.href =
-            //$scope.$apply( function(){$location.path(newUrl + '/somelocatin'); } );
-            //window.location.href = window.location.href + '/xxx' + this.commandUrlQ;
-            //alert ('22b this.commandUrlQ:' + this.commandUrlQ);
-            //$location.path(newUrl);
-            //window.location.href = newUrl +'hk';
             //alert ('22c $location.absUrl():' + $location.absUrl());
             //alert ('22d window.location.href:' + window.location.href);
-            //alert ('22e this.commandUrlQ:' + this.commandUrlQ);
-            //window.location.href = window.location.href + '/xxx' + this.commandUrlQ;
-//			window.location.href = window.location.href + '/xxx';
-            // https://docs.angularjs.org/guide/$location
-            //alert('assigned this.commandUrlQ:'+ this.commandUrlQ);
+            //alert ('22e this.commandFromInputBox:' + this.commandFromInputBox);
+            //window.location.href = window.location.href + '/xxx' + this.commandFromInputBox;
+            //window.location.href = window.location.href + '/xxx';
+            //https://docs.angularjs.org/guide/$location
+            //alert('assigned this.commandFromInputBox:'+ this.commandFromInputBox);
 
-            console.log('1assigned this.commandUrlQ:'+ this.commandUrlQ);
-            //$location.path('/'+this.commandUrlQ)
 
-            var ustodosQueryResult = Ustodos.query ({q: this.commandUrlQ});
-
-            //console.log ('!@!@!@!@!@!@!!!@ utd[Class].getClass(ustodosQueryResult)]:'+utd[Class].getClass(ustodosQueryResult));
-            // KEEPER 150214 console.log ('!@!@!@!@!@!@!!!@ utd[Class].getClass(ustodosQueryResult)]:'+UtilClass.getClass(ustodosQueryResult));
-            //console.log ('============ in here'+ustodosQueryResult.length);
-
-            console.log('2assigned this.commandUrlQ:'+ this.commandUrlQ);
-            //this.countOfUstodos = ustodosQueryResult.length;
-            //this.ustodosQueryResult = ustodosQueryResult;
-            $scope.ustodosQueryResult = ustodosQueryResult;
-            console.log('this.countOfUstodos:'+ this.countOfUstodos);
-            $scope.ustodos = ustodosQueryResult;
-            $location.search('q', this.commandUrlQ);
-
-            //console.log (getClass('ssdfsdfdsf', this.commandUrlQ));
-            //var patternhk = /$scope.commandUrlQ/;
-            //	// ORIGINAL A/B SPLIT HBKK
-            //	//ustodoSearchString: $stateParams.ustodoId
-            //name: /a/
-            //	//ustodoId: '54929d5d1d3df384165f4fa2'  // worked!!
-            //	//name: /road/
-            //	//name: 'as'
+            //console.log (getClass('ssdfsdfdsf', this.commandFromInputBox));
 
             //$scope.ustodos = Ustodos.query ({name: /141229/});
             //setTimeout(function(){console.log ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
@@ -747,7 +638,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
             //getProperties('props this:', this);
             //var ustodo = new Ustodos ({
             //	name: this.name,  // hbkk mystery
-            //	commandUrlQ: this.commandUrlQ // hbkk mystery
+            //	commandFromInputBox: this.commandFromInputBox // hbkk mystery
             //});
             //getProperties('props ustodo:', ustodo);
 
@@ -757,12 +648,9 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
             //// Redirect after save
             //ustodo.$save(function(response) {
             //	$location.path('ustodos/' + response._id);
-            //
-            //	// Clear form fields
             //	$scope.name = '';
             //}, function(errorResponse) {
             //	$scope.error = errorResponse.data.message;
-            //});
         };
 
         // Search for one hbkk existing Ustodo by string

@@ -13,9 +13,12 @@ var alertHistory = [];
  * output only
  * @param s
  */
+// one and only console logger
+// private
+var callcount_o = 0;
 var o = function (s)
 {
-    console.log('log:' + s + ' alertHistory:' + alertHistory);
+    console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
 }
 /**
  * alert - implies output with alert history log
