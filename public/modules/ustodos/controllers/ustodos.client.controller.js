@@ -84,7 +84,7 @@ var angularModule = null;
 //});
 
 
-
+    var GLOBAL_commandFromInputBox = null;
 //myApp.controller('myCtrl', ['$scope', '$sce', function($scope, $sce) {
 //    // ...
 //    $scope.preview_data.preview.embed.htmlSafe =
@@ -103,9 +103,9 @@ var angularModule = null;
 
 
 //O.a ('oneOfSeveral controller with array - first?');
-angular.module('ustodos').controller('UstodosController', ['$scope', '$stateParams', '$location', '$document', '$rootScope', '$sce',
+angular.module('ustodos').controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce',
     'Authentication', 'Ustodos',
-    function($scope, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos) {
+    function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos) {
 //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
 //    'Authentication', 'Ustodos',
 //    function($scope, $stateParams, $locationProvider, $rootScope, $sce, Authentication, Ustodos) {
@@ -146,30 +146,38 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
         //    //$("#edit_container").scrollTop(0);
         //});
 
+
         var o = O.o;
 
 
+
+
+
+
+
         $scope.onKeyUpInputField = function(index) {
-            o ('onKeyUp index:' + index);
+            //o ('inkey onKeyUpInputField index:' + index);
             $scope.count++;
             isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
+            GLOBAL_commandFromInputBox = this.commandFromInputBox;
+            o ('inkey keypress commandFromInputBox:' + this.commandFromInputBox);
             //$scope.$apply()
         };
 
         $scope.keyCount = 0;
 
         $document.bind("keypress", function(event) {
+            //o ('inkey keypress event.keyCode:' + event.keyCode + ', $scope.keyCount:'+$scope.keyCount);
             $scope.keyCount++;
-            o ('globalkeypress event.keyCode:' + event.keyCode + ', $scope.keyCount:'+$scope.keyCount);
         });
 
         $scope.myFnOnKeyUp = function($index, $event) { // onkey
-            o ('myFnOnKeyUp $index:' + $index + ', $event.keyCode:' + $event.keyCode);
+            //o ('inkey myFnOnKeyUp $index:' + $index + ', $event.keyCode:' + $event.keyCode);
             //console.log (i + '. aaa event.altKey:'+event.altKey);
         };
 
         $scope.myFnOnKeyDown = function($index, $event) { // onkey
-            o ('myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
+            //o ('inkey myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
 
         };
 
@@ -188,10 +196,35 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$statePara
             alert (_id);
         }
 
-        $scope.savechanged = function() {
-            alert ('in savechanged ');
-            $scope.count++;
-            isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(true);
+        $scope.utdact = function() {
+            //alert ('in utdact this.commandFromInputBox:'+this.commandFromInputBox);
+
+            //alert ('in sayhi df to run $location.search');
+            //$location.path('/')
+            //$location.url('http://www.yahoo.com')
+            //$window.location.href = '#/tab/category/1';
+
+            //var target = angular.element('#textHKKH');
+            //alert ('target[0].innerText:'+target[0].innerText);
+            //alert ('GLOBAL_commandFromInputBox:'+GLOBAL_commandFromInputBox);
+
+            if (!GLOBAL_commandFromInputBox)
+                $window.location.href = 'http://www.amazon.com';
+            else
+                $window.location.href = 'http://www.google.com/search?q=' + this.commandFromInputBox;
+
+            //if (!GLOBAL_commandFromInputBox)
+            //    $window.location.href = 'http://www.amazon.com';
+            //else
+            //    $window.location.href = 'http://www.google.com/search?q=' + GLOBAL_commandFromInputBox;
+            //
+            //$location.search('hk', this.commandFromInputBox);
+
+
+
+            //$scope.count++;
+            //isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(true);
+
             //$scope.$apply()
         };
 

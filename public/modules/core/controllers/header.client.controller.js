@@ -20,10 +20,14 @@ angular.module('core').controller('HeaderController', ['$scope', '$window', '$lo
             //$location.url('http://www.yahoo.com')
             //$window.location.href = '#/tab/category/1';
 
-            var target = angular.element('#textHKKH');
-            alert ('target[0].innerText:'+target[0].innerText);
+            //works?  var target = angular.element('#textHKKH');
+            //alert ('target[0].innerText:'+target[0].innerText);
+            //alert ('GLOBAL_commandFromInputBox:'+GLOBAL_commandFromInputBox);
 
-           $window.location.href = 'http://www.google.com/search?q=ddd'+target[0].innerText
+            //if (!GLOBAL_commandFromInputBox)
+                $window.location.href = 'http://u2d.co:3000?q=*';
+            //else
+              //  $window.location.href = 'http://www.google.com/search?q=' + GLOBAL_commandFromInputBox;
 
             //$location.search('hk', this.commandFromInputBox);
         };
