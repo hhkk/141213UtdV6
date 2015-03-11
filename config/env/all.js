@@ -33,7 +33,7 @@ module.exports = {
 			'public/application.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*[!tests]*/*.js',
-            'public/lib/jquery/dist/jquery.js' // hbkkk
+            //'public/lib/jquery/dist/jquery.js' // hbkkk
         ],
 		tests: [
 			'public/lib/angular-mocks/angular-mocks.js',

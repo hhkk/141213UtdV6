@@ -3,7 +3,7 @@
         <h1>Timehks</h1>
     </div>
     <div class="list-group">
-        <a data-ng-repeat="timehk in timehks" data-ng-href="#!/timehks/{{timehk._id}}" class="list-group-item">
+        <a data-ng-repeat="timehk in timehks" data-ng-href="/timehks/{{timehk._id}}" class="list-group-item">
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="timehk.created | date:'medium'"></span>

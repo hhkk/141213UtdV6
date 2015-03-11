@@ -27,11 +27,12 @@
                         <div class="form-group">
                             <br>
                             <div class="controls">
-                                <input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">
 
+                                <div>found: <span ng-bind="this.ustodos.length"></span ></div>
+                                <div>commandsxx: <span ng-bind="this.commandsxx"></span ></div>
+                                <input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">
                                 <input type="text" ng-keyup="onKeyUpInputField()" data-ng-model="commandFromInputBox"
                                        id="textHKKH" class="input-textarea" placeholder="Do" required>
-                                found: <span ng-bind="this.ustodos.length"></span >
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 

@@ -3,7 +3,7 @@
         <h1>Rawrecords</h1>
     </div>
     <div class="list-group">
-        <a data-ng-repeat="rawrecord in rawrecords" data-ng-href="#!/rawrecords/{{rawrecord._id}}" class="list-group-item">
+        <a data-ng-repeat="rawrecord in rawrecords" data-ng-href="/rawrecords/{{rawrecord._id}}" class="list-group-item">
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="rawrecord.created | date:'medium'"></span>

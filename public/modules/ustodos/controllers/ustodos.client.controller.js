@@ -104,8 +104,8 @@ var angularModule = null;
 
 //O.a ('oneOfSeveral controller with array - first?');
 angular.module('ustodos').controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce',
-    'Authentication', 'Ustodos',
-    function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos) {
+    'Authentication', 'Ustodos', 'Commands',
+    function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos, Commands) {
 //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
 //    'Authentication', 'Ustodos',
 //    function($scope, $stateParams, $locationProvider, $rootScope, $sce, Authentication, Ustodos) {
@@ -114,6 +114,9 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //$rootScope', $compile, $rootElement,
         //    O.a ('sssa1');
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
+        $scope.commandsxx = Commands.query();
+        //$scope.commandsxx = 5;
+
 
         //$locationProvider.html5Mode(true).hashPrefix('!');
 
@@ -180,15 +183,6 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
             //o ('inkey myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
 
         };
-
-
-
-
-
-
-
-
-
 
 
 
@@ -581,6 +575,14 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
             //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
             //console.log ('in ustodos.client.controller FIND2 $scope.ustodos.length:' + $scope.ustodos.length);
             console.log ('in ustodos.client.controller FIND2');
+
+            alert ('set commandsxx ');
+            //{
+            //alert('in ustodos.client.controller $scope.commands.length:' + $scope.commands.length);
+            //};
+            //$scope.commands = Commandsss.query();
+            //alert ('in ustodos.client.controller $scope.commands.length:'+$scope.commands.length);
+
 
         };
 

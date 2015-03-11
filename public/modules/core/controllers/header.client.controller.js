@@ -25,7 +25,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$window', '$lo
             //alert ('GLOBAL_commandFromInputBox:'+GLOBAL_commandFromInputBox);
 
             //if (!GLOBAL_commandFromInputBox)
-                $window.location.href = 'http://u2d.co:3000?q=*';
+                $window.location.href = 'http://jpro.co?q=*';
             //else
               //  $window.location.href = 'http://www.google.com/search?q=' + GLOBAL_commandFromInputBox;
 
