@@ -114,9 +114,29 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //$rootScope', $compile, $rootElement,
         //    O.a ('sssa1');
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
-        $scope.commandsxx = Commands.query();
-        //$scope.commandsxx = 5;
+        $scope.commandsValueName = [
+        ];
+        $scope.commands = Commands.query( function() {
+            //alert ('done query $scope.commands.length:' + $scope.commands.length);
+            for (var i = 0; i < $scope.commands.length; i++) {
+                //alert('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
+//                commandsValueName.push ({value:$scope.commands[i].commandDescription})
 
+            }
+            ;
+        });
+            //$scope.commandsxx = 1;
+        $scope.filterCondition={
+            operator: 'eq'
+        }
+        $scope.operators = [
+            {value: 'eq', displayName: 'equals'},
+            {value: 'neq', displayName: 'not equal'}
+        ]
+
+        $scope.incrCount = function() {
+            $scope.commandsxx++;
+        };
 
         //$locationProvider.html5Mode(true).hashPrefix('!');
 

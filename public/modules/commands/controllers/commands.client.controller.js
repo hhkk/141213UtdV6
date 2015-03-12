@@ -5,7 +5,8 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Commands) {
 		$scope.authentication = Authentication;
 
-		// Create new Command
+        this.counthk= 9;
+        		// Create new Command
 		$scope.create = function() {
 			// Create new Command object
 			var command = new Commands ({
@@ -55,7 +56,9 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
 
 		// Find a list of Commands
 		$scope.find = function() {
-			$scope.commands = Commands.query();
+            alert ('in here mom');
+            $scope.commands = Commands.query();
+            $scope.counthk = 1;
 		};
 
 		// Find existing Command
