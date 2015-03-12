@@ -21,9 +21,9 @@
         <div class="hkcssPosFixed">
 
 
-            <button  ng-click='incrCount()'>
-                incrCount
-            </button>
+                <!--<button  ng-click='incrCount()'>-->
+                    <!--incrCount-->
+                <!--</button>-->
             <span class="col-md-12">
                 <form class="form-horizontal" data-ng-submit="search()" novalidate>
                     <fieldset>
@@ -31,12 +31,12 @@
                             <br>
                             <div class="controls">
 
-                                <div>found: <span ng-bind="this.ustodos.length"></span ></div>
-                                <div>this.commands.length: <span ng-bind="this.commands.length"></span ></div>
-                                <input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">
+
+                                <!--<div>this.commands.length: <span ng-bind="this.commands.length"></span ></div>-->
+                                <!--<input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">-->
                                 <input type="text" ng-keyup="onKeyUpInputField()" data-ng-model="commandFromInputBox"
                                        id="textHKKH" class="input-textarea" placeholder="Do" required>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;
 
 
                                 <!--<input class="img-circle text-center" type='image'-->
@@ -54,16 +54,24 @@
                                     <button ng-click="utdact()" ng-init="count=0">
                                         Act
                                     </button>
-                                    <div>Operator is: {{filterCondition.operator}}</div>
+                                    &nbsp;
+                                    <!--<span>Operator is: {{filterCondition.operator}}</span>-->
 
-                                    <select ng-model="filterCondition.operator"
+                                    <select ng-change="this.incrCount()"
+                                            id='selectId'
+                                            class="xxform-control"
+                                            ng-model="filterCondition.operator"
                                             ng-options="operator.value as operator.displayName for operator in operators">
                                     </select>
-
+                                    &nbsp;
                                     Dirty: <span ng-bind ='areThereChanges'></span>
                                     <!--areThereChanges2<span ng-bind = {{areThereChanges}}></span>yy-->
-                                      keycount: {{keyCount}}
+
+                                    <!--<span ng-bind=('('+this.ustodos.length+')')></span >-->
+                                    <div>count: <span ng-bind=('('+this.ustodos.length+')')></span ></div>
+
                                 </span>
+
                             </div>
                         </div>
                         <div data-ng-show="error" class="text-danger">
@@ -132,11 +140,14 @@
                     <!-- COUNT -->
                     <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
 
+
                     <!-- TIME AGO -->
                     <!--<td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod) + ustodo.datelastmod+'.'+ustodo._id"-->
                     <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
-                              ng-click="event_click_timeAgo(ustodo._id)" title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
+                              ng-click="event_click_timeAgo(ustodo._id)"
+                              title={{ustodo.datelastmod+'.'+ustodo._id+'ClickForID'}}></span></td>
                     <!--<td>{{ ustodo.text}}</td>f-->
+
 
                     <!-- TEXT -->
                     <td>

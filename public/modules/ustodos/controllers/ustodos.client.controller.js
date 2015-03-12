@@ -114,28 +114,45 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //$rootScope', $compile, $rootElement,
         //    O.a ('sssa1');
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
-        $scope.commandsValueName = [
-        ];
+
+        // see http://jsfiddle.net/FxM3B/4/
+        $scope.operators = [];
         $scope.commands = Commands.query( function() {
             //alert ('done query $scope.commands.length:' + $scope.commands.length);
             for (var i = 0; i < $scope.commands.length; i++) {
+                var map = {};
+                console.log ('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
+                map.value = $scope.commands[i].commandDescription;
+                map.displayName = $scope.commands[i].commandDescription;
                 //alert('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
 //                commandsValueName.push ({value:$scope.commands[i].commandDescription})
-
+                $scope.operators.push(map);
             }
-            ;
+            $scope.filterCondition = {
+                operator: $scope.commands[0].commandDescription
+            };
         });
+        //$scope.filterCondition= {
+        //    operator: 'eq'
+        //};
+
             //$scope.commandsxx = 1;
-        $scope.filterCondition={
-            operator: 'eq'
-        }
-        $scope.operators = [
-            {value: 'eq', displayName: 'equals'},
-            {value: 'neq', displayName: 'not equal'}
-        ]
+        //$scope.operators = [
+        //    {value: 'eq', displayName: 'equals'},
+        //    {value: 'neq', displayName: 'not equal'}
+        //];
+        $scope.mml = angular.element(document.getElementById('myMenuList'));
 
         $scope.incrCount = function() {
-            $scope.commandsxx++;
+            //alert ('hi from incrCount') + angular.element('#selectId').value;
+            //alert ('hi from incrCount0')
+            alert ('hi from incrCount1 ' + document.getElementById('selectId').value);
+            //alert ('hi from incrCount1 ' + document.getElementById('selectId').value);
+            var x = parseInt(document.getElementById('selectId').value);
+            $scope.mml = $scope.commands[x];
+            alert ('hi from incrCount2' + $scope.mml.commandDescription);
+
+            //$scope.commandsxx++;
         };
 
         //$locationProvider.html5Mode(true).hashPrefix('!');
@@ -426,9 +443,6 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //    }, 300000); //every 5 minutes
         //}, false);
 
-
-
-
         $scope.UtilDate = UtilDate;
 
         //$scope.testfn = function(dateStrFromMongo)
@@ -438,21 +452,6 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //}
 
         $scope.authentication = Authentication;
-
-        $scope.joes = ['a','b'];
-        $scope.snippet = [];
-
-        $scope.snippet[0] = 'Pretty text with some links:\n'+
-        'http://angularjs.org/,\n'+
-        'mailto:us@somewhere.org,\n'+
-        'another@somewhere.org,\n'+
-        'and one more: ftp://127.0.0.1/.';
-        $scope.snippet[1] = 'Pretty2 text with some links:\n'+
-        'Pretty2 text with some links:\n'+
-        'http://angularjs2.org/,\n'+
-        'mailto:us@somewhere2.org,\n'+
-        'another@somewhere2.org,\n'+
-        'and one more: ftp://127.0.0.1/.';
 
         $scope.caption = 'My Caption';
         //$scope.htmlhkhk = $compile('<div>{{caption}}</div>')($scope);
@@ -594,9 +593,9 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
             //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
             //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
             //console.log ('in ustodos.client.controller FIND2 $scope.ustodos.length:' + $scope.ustodos.length);
-            console.log ('in ustodos.client.controller FIND2');
+            //console.log ('in ustodos.client.controller FIND2');
 
-            alert ('set commandsxx ');
+            //alert ('set commandsxx ');
             //{
             //alert('in ustodos.client.controller $scope.commands.length:' + $scope.commands.length);
             //};

@@ -56,7 +56,7 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
 
 		// Find a list of Commands
 		$scope.find = function() {
-            alert ('in here mom');
+            //alert ('in here mom');
             $scope.commands = Commands.query();
             $scope.counthk = 1;
 		};
