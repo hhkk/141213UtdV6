@@ -84,7 +84,6 @@ var angularModule = null;
 //});
 
 
-    var GLOBAL_commandFromInputBox = null;
 //myApp.controller('myCtrl', ['$scope', '$sce', function($scope, $sce) {
 //    // ...
 //    $scope.preview_data.preview.embed.htmlSafe =
@@ -115,9 +114,20 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //    O.a ('sssa1');
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
 
-        // see http://jsfiddle.net/FxM3B/4/
+        // see https://devcenter.heroku.com/articles/nodejs-mongoose#querying
+        // see http://jsfiddle.net/FxM3B/4/  for examples
+        //$scope.commands = Commands.query({},  function() {
+        //$scope.commands = Commands.query(function() {
+
+        //var query = Commands.find({});
+//        query.sort('commandDescription', 1);
+
+        //var x = Commands.query();
+        //x.sort('commandDescription', 1);
+
         $scope.operators = [];
-        $scope.commands = Commands.query( function() {
+        $scope.commands = Commands.query(function() {
+            //$scope.commands = query.exec (function() {
             //alert ('done query $scope.commands.length:' + $scope.commands.length);
             for (var i = 0; i < $scope.commands.length; i++) {
                 var map = {};
@@ -125,42 +135,35 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
                 map.value = $scope.commands[i].commandDescription;
                 map.displayName = $scope.commands[i].commandDescription;
                 //alert('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
-//                commandsValueName.push ({value:$scope.commands[i].commandDescription})
+                //commandsValueName.push ({value:$scope.commands[i].commandDescription})
                 $scope.operators.push(map);
             }
-            $scope.filterCondition = {
-                operator: $scope.commands[0].commandDescription
-            };
+
+            $scope.filterCondition = '-save';
+            //
+            //for (var i = 0; i < )
+            //{
+            //
+            //}
+
+
         });
         //$scope.filterCondition= {
-        //    operator: 'eq'
+            //    operator: 'eq'
         //};
 
-            //$scope.commandsxx = 1;
+        //$scope.commandsxx = 1;
         //$scope.operators = [
         //    {value: 'eq', displayName: 'equals'},
         //    {value: 'neq', displayName: 'not equal'}
         //];
         $scope.mml = angular.element(document.getElementById('myMenuList'));
 
-        $scope.incrCount = function() {
-            //alert ('hi from incrCount') + angular.element('#selectId').value;
-            //alert ('hi from incrCount0')
-            alert ('hi from incrCount1 ' + document.getElementById('selectId').value);
-            //alert ('hi from incrCount1 ' + document.getElementById('selectId').value);
-            var x = parseInt(document.getElementById('selectId').value);
-            $scope.mml = $scope.commands[x];
-            alert ('hi from incrCount2' + $scope.mml.commandDescription);
-
-            //$scope.commandsxx++;
-        };
-
         //$locationProvider.html5Mode(true).hashPrefix('!');
 
         $scope.SkipValidationHK = function(value) {
             return $sce.trustAsHtml(value);
         };
-
 
         $scope.event = null;
 
@@ -186,20 +189,12 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //    //$("#edit_container").scrollTop(0);
         //});
 
-
         var o = O.o;
-
-
-
-
-
-
 
         $scope.onKeyUpInputField = function(index) {
             //o ('inkey onKeyUpInputField index:' + index);
             $scope.count++;
             isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
-            GLOBAL_commandFromInputBox = this.commandFromInputBox;
             o ('inkey keypress commandFromInputBox:' + this.commandFromInputBox);
             //$scope.$apply()
         };
@@ -227,8 +222,30 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
             alert (_id);
         }
 
-        $scope.utdact = function() {
-            //alert ('in utdact this.commandFromInputBox:'+this.commandFromInputBox);
+        $scope.selectChangeEvenHandler = function() {
+            alert ('in utdact:');
+            //var elemTextInput = document.getElementById('idTextInput').value;
+           //var t = document.getElementById('selectId').value;
+            var options = document.getElementById('selectId').options;
+            //alert ('t:' + t);
+            var idxSelected = parseInt(document.getElementById('selectId').value);
+            var commandDisplayName = options[idxSelected].innerText;
+            //alert ('commandDisplayName:' + commandDisplayName);
+            for (var i = 0; i < $scope.commands.length; i++) {
+                if ($scope.commands[i].commandDescription === commandDisplayName)
+                {
+                    //alert ('found match:'+$scope.commands[i].commandDescription);
+                    var finalUrl = $scope.commands[i].commandUrl.replace(/%s/, this.commandFromInputBox);
+                    // alert ('finalUrl:'+finalUrl);
+                    $window.location.href = finalUrl;
+                }
+            }
+
+            var selectedCommandUrl = $scope.commands[idxSelected].commandUrl;
+
+            //alert ('in utdact elemTextInput :'+elemTextInput );
+            //alert ('in utdact idxSelected :'+idxSelected );
+            //alert ('in utdact selectedEngine :'+selectedEngine );
 
             //alert ('in sayhi df to run $location.search');
             //$location.path('/')
@@ -237,21 +254,19 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
 
             //var target = angular.element('#textHKKH');
             //alert ('target[0].innerText:'+target[0].innerText);
-            //alert ('GLOBAL_commandFromInputBox:'+GLOBAL_commandFromInputBox);
 
-            if (!GLOBAL_commandFromInputBox)
-                $window.location.href = 'http://www.amazon.com';
-            else
-                $window.location.href = 'http://www.google.com/search?q=' + this.commandFromInputBox;
+            //$scope.commandUrl = $scope.commands[idxSelected].commandUrl;
 
-            //if (!GLOBAL_commandFromInputBox)
-            //    $window.location.href = 'http://www.amazon.com';
+
+            //$window.location.href = 'http://www.google.com/search?q=' + this.commandFromInputBox;
+
+
+
+            //$window.location.href = 'http://www.amazon.com';
             //else
-            //    $window.location.href = 'http://www.google.com/search?q=' + GLOBAL_commandFromInputBox;
-            //
+
+
             //$location.search('hk', this.commandFromInputBox);
-
-
 
             //$scope.count++;
             //isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(true);
@@ -569,7 +584,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
 
         // Update existing Ustodo
         $scope.update = function() {
-                console.log ('3 in ustodos.client.controller UPDATE');
+            console.log ('3 in ustodos.client.controller UPDATE');
             var ustodo = $scope.ustodo;
 
             ustodo.$update(function() {
@@ -627,10 +642,9 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         $scope.search = function() {
             $scope.callCountSearch++;
             o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
-            o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
             this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
                 //( $location.search.q  , this.commandFromInputBox);
-                ( $location.$$search.q, this.commandFromInputBox);
+            ( $location.$$search.q, this.commandFromInputBox);
             o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
             o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
             window.document.title = 'll:'+$location.$$search.q; // not jpro:
@@ -664,12 +678,12 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
 
 //            try {
 
-                //$locationProvider.html5Mode(true);
-                //window.location.href = '/#!/ustodos/findlist/' + $scope.hkhkhkbk;
+            //$locationProvider.html5Mode(true);
+            //window.location.href = '/#!/ustodos/findlist/' + $scope.hkhkhkbk;
 
-                // this is the one to toggle 150304
-                //window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
-                //$location.path($location.path() + 'ddd/#!/?q=' + $scope.hkhkhkbk);
+            // this is the one to toggle 150304
+            //window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
+            //$location.path($location.path() + 'ddd/#!/?q=' + $scope.hkhkhkbk);
 
             //window.location.href = '/?q=sdfdfdf';
             //$location.path('#/login');
