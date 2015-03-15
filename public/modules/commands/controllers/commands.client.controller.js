@@ -5,6 +5,7 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Commands) {
 		$scope.authentication = Authentication;
 
+<<<<<<< HEAD
         $scope.commandData = [
             ['Domain(LeanDomain)','dm','http://www.leandomainsearch.com/search?q=%s'],
             ['Google>Search','g','https://www.google.com/search?q=%s'],
@@ -78,6 +79,13 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
             // Create new Command object
             alert ('in create1');
             var command = new Commands ({
+=======
+        this.counthk= 9;
+        		// Create new Command
+		$scope.create = function() {
+			// Create new Command object
+			var command = new Commands ({
+>>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
                 commandCode: this.commandCode,
                 commandUrl: this.commandUrl,
                 commandDescription: this.commandDescription
@@ -126,7 +134,13 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
 
 		// Find a list of Commands
 		$scope.find = function() {
-			$scope.commands = Commands.query();
+            alert ('in here mom');
+            $scope.commands = Commands.query({commandDescription:/ia/});
+            $scope.counthk = 1;
+
+
+
+
 		};
 
 		// Find existing Command
