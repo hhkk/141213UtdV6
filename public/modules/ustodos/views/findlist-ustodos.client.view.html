@@ -21,19 +21,25 @@
         <div class="hkcssPosFixed">
 
 
+                <!--<button  ng-click='incrCount()'>-->
+                    <!--incrCount-->
+                <!--</button>-->
             <span class="col-md-12">
+                <!-- HKACTION - HIT ENTER IN TEXT BOX -->
+                <button ng-click="showSelectDropdown()">showSelectDropdown</button>
                 <form class="form-horizontal" data-ng-submit="search()" novalidate>
                     <fieldset>
                         <div class="form-group">
                             <br>
                             <div class="controls">
 
-                                <div>found: <span ng-bind="this.ustodos.length"></span ></div>
-                                <div>commandsxx: <span ng-bind="this.commandsxx"></span ></div>
-                                <input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">
+
+                                <!--<div>this.commands.length: <span ng-bind="this.commands.length"></span ></div>-->
+                                <!--<input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">-->
+                                <!-- HKACTION - KEY UP IN TEXT BOX -->
                                 <input type="text" ng-keyup="onKeyUpInputField()" data-ng-model="commandFromInputBox"
-                                       id="textHKKH" class="input-textarea" placeholder="Do" required>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                       id="idTextInput" class="input-textarea" placeholder="Do" required>
+                                &nbsp;
 
 
                                 <!--<input class="img-circle text-center" type='image'-->
@@ -47,14 +53,35 @@
 
 
 
+                                <!-- HKACTION - CLICK ACT -->
                                 <span class="dev-notes">
-                                    <button ng-click="utdact()" ng-init="count=0">
+                                    <button ng-click="xxutdact()" ng-init="count=0">
                                         Act
                                     </button>
+                                    operators.length:{{operators.length}}
+                                    &nbsp;
+                                    <!--<span>Operator is: {{filterCondition.operator}}</span>-->
+
+                                    <select
+                                            ng-change="this.utdact()"
+                                            ng-model="selectModel"
+                                            ng-options="operator.value as operator.displayName for
+                                                operator in operators | orderBy:'displayName'"
+                                            ng-mouseover="showSelectDropdown()"
+                                            id='selectId'
+                                            class="xxform-control"
+                                            >
+                                            <!--value="this.selectModel"-->
+                                    </select>
+                                    &nbsp;
                                     Dirty: <span ng-bind ='areThereChanges'></span>
                                     <!--areThereChanges2<span ng-bind = {{areThereChanges}}></span>yy-->
-                                      keycount: {{keyCount}}
+
+                                    <!--<span ng-bind=('('+this.ustodos.length+')')></span >-->
+                                    <div>count: <span ng-bind=('('+this.ustodos.length+')')></span ></div>
+
                                 </span>
+
                             </div>
                         </div>
                         <div data-ng-show="error" class="text-danger">
@@ -94,7 +121,7 @@
                     <!-- DELETE BUTTON -->
                     <td>
                         <!--<button ng-click="count = count + 1" ng-init="count=0">-->
-                        <!--<button ng-click="deleteDbUstotoById(ustodo)" ng-init="count=0">del</button>-->
+
 
                         <!-- trash garbage icon -->
                         <img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
@@ -123,11 +150,14 @@
                     <!-- COUNT -->
                     <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
 
+
                     <!-- TIME AGO -->
                     <!--<td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod) + ustodo.datelastmod+'.'+ustodo._id"-->
                     <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
-                              ng-click="event_click_timeAgo(ustodo._id)" title={{ustodo.datelastmod+'.'+ustodo._id}}></span></td>
+                              ng-click="event_click_timeAgo(ustodo._id)"
+                              title={{ustodo.datelastmod+'.'+ustodo._id+'ClickForID'}}></span></td>
                     <!--<td>{{ ustodo.text}}</td>f-->
+
 
                     <!-- TEXT -->
                     <td>

@@ -1,3 +1,4 @@
+'use strict';
 
 
 // var ustodos.controller.helper = require('C:/utd/141213UtdV6/app/controllers/helpers/ustodos.controller.helper.js');
