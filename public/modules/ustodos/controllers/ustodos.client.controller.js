@@ -159,7 +159,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
                     else
                         return -1;
                 });
-                alert ('post sort $scope.commands.length:' + $scope.commands.length);
+               // alert ('post sort $scope.commands.length:' + $scope.commands.length);
 
 
             } catch (err) {
