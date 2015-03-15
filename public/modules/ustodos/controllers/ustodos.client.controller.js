@@ -152,14 +152,14 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
                     $scope.operators.push(map);
                 }
 
-                //alert ('pre sort');
+                alert ('pre sort');
                 $scope.commands = $scope.commands.sort(function(a,b) {
                     if (a.commandDescription.toLowerCase() > b.commandDescription.toLowerCase())
                         return 1;
                     else
                         return -1;
                 });
-               // alert ('post sort $scope.commands.length:' + $scope.commands.length);
+                alert ('post sort $scope.commands.length:' + $scope.commands.length);
 
 
             } catch (err) {

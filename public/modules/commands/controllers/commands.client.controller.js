@@ -57,7 +57,7 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
                     });
                     //alert ('in hkAddNewCommandData in for data commandDescription: '+ command.commandDescription);
                     // Redirect after save
-                    command.$save(function(response) {
+                    command.$save(function(respo    nse) {
                         //$location.path('commands/' + response._id);
                         // Clear form fields
                         //$scope.name = '';
