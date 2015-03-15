@@ -1,39 +1,31 @@
 <div ng-app>
-    <div ng-app>
 
-        <div ng-address-bar></div><br><br>
+    <div ng-address-bar></div><br><br>
 
-        <section data-ng-controller="UstodosController" ng-init="keyCount=0">
-            <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
+    <section data-ng-controller="UstodosController" ng-init="keyCount=0">
+        <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
 
-            <!--hi <input > key down count: {{count}}-->
-            <!--Enter name: <input type="text" ng-model="name"><br>-->
-            <!--Hello <span ng-bind="name"></span>!-->
-            <!--name2<div ng-bind = "name"></div>yy-->
-
-
-            <!--<div id="edit" contentEditable="true">-->
-            <!--<p id="initial_text">-->
-            <!--test-->
-            <!--</p>-->
-            <!--</div>-->
-
-            <div class="hkcssPosFixed">
+        <!--hi <input > key down count: {{count}}-->
+        <!--Enter name: <input type="text" ng-model="name"><br>-->
+        <!--Hello <span ng-bind="name"></span>!-->
+        <!--name2<div ng-bind = "name"></div>yy-->
 
 
-                <!--<button  ng-click='incrCount()'>-->
-<<<<<<< HEAD
-                    <!--incrCount-->
-                <!--</button>-->
+        <!--<div id="edit" contentEditable="true">-->
+        <!--<p id="initial_text">-->
+        <!--test-->
+        <!--</p>-->
+        <!--</div>-->
+
+        <div class="hkcssPosFixed">
+
+
+            <!--<button  ng-click='incrCount()'>-->
+            <!-- HKACTION - HIT ENTER IN TEXT BOX -->
+            <!--incrCount-->
+            <!--</button>-->
             <span class="col-md-12">
                 <!-- HKACTION - HIT ENTER IN TEXT BOX -->
-                <button ng-click="showSelectDropdown()">showSelectDropdown</button>
-=======
-                <!--incrCount-->
-                <!--</button>-->
-            <span class="col-md-12">
-                <!-- HKACTION - HIT ENTER IN TEXT BOX -->
->>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
                 <form class="form-horizontal" data-ng-submit="search()" novalidate>
                     <fieldset>
                         <div class="form-group">
@@ -48,7 +40,6 @@
                                        id="idTextInput" class="input-textarea" placeholder="Do" required>
                                 &nbsp;
 
-
                                 <!--<input class="img-circle text-center" type='image'-->
                                 <!--src='modules/ustodos/img/UsToDoanimalsblack.jpg'-->
                                 <!--style='height:30px;'-->
@@ -56,48 +47,44 @@
                                 <!--&lt;!&ndash;ng-mouseover="mouseOverDeleteButton(file)"&ndash;&gt;-->
                                 <!--&lt;!&ndash;ng-mouseleave="mouseLeaveDeleteButton(file)"&ndash;&gt;-->
 
-
-
-
-
                                 <!-- HKACTION - CLICK ACT -->
                                 <span class="dev-notes">
-                                    <button ng-click="xxutdact()" ng-init="count=0">
-                                        Act
-                                    </button>
-<<<<<<< HEAD
-                                    operators.length:{{operators.length}}
-                                    &nbsp;
+                                    <button ng-click="xxutdact()" ng-init="count=0">Do</button>
+                                    <!--operators.length:{{operators.length}}-->
+                                    <!--&nbsp;-->
                                     <!--<span>Operator is: {{filterCondition.operator}}</span>-->
 
                                     <select
-                                            ng-change="this.utdact()"
-                                            ng-model="selectModel"
-                                            ng-options="operator.value as operator.displayName for
-                                                operator in operators | orderBy:'displayName'"
-                                            ng-mouseover="showSelectDropdown()"
-                                            id='selectId'
-                                            class="xxform-control"
-                                            >
-                                            <!--value="this.selectModel"-->
-=======
-                                    &nbsp;
-                                    <!--<span>Operator is: {{filterCondition.operator}}</span>-->
-
-                                    <!--WORKS!! http://jsfiddle.net/aBccw/-->
-                                    <select ng-change="this.selectChangeEvenHandler()"
                                         id='selectId'
+                                        ng-change="this.utdEventSelectedEngine()"
+                                        ng-model="selectModel"
+                                        ng-options="operator.value as operator.displayName for
+                                            operator in operators | orderBy:'displayName'"
+                                        ng-mouseover="showSelectDropdown()"
                                         class="xxform-control"
-                                        ng-model="filterCondition"
-                                        ng-options="operator.value as operator.displayName for operator in operators | orderBy: 'displayName'">
->>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
-                                    </select>
-                                    &nbsp;
-                                    Dirty: <span ng-bind ='areThereChanges'></span>
-                                    <!--areThereChanges2<span ng-bind = {{areThereChanges}}></span>yy-->
+                                        ></select>
+                                        <!--value="this.selectModel"-->
+                                        &nbsp;
+                                        <!--<span>Operator is: {{filterCondition.operator}}</span>-->
 
-                                    <!--<span ng-bind=('('+this.ustodos.length+')')></span >-->
-                                    <div>count: <span ng-bind=('('+this.ustodos.length+')')></span ></div>
+                                        <!--WORKS!! http://jsfiddle.net/aBccw/-->
+                                        <!--<select ng-change="this.selectChangeEvenHandler()"-->
+                                        <!--id='selectId'-->
+                                        <!--class="xxform-control"-->
+                                        <!--ng-model="filterCondition"-->
+                                        <!--ng-options="operator.value as operator.displayName for operator in operators | orderBy: 'displayName'">-->
+                                        <!--</select>-->
+                                        &nbsp;
+                                        Dirty: <span ng-bind ='areThereChanges'></span>
+                                        <!--areThereChanges2<span ng-bind = {{areThereChanges}}></span>yy-->
+
+                                        <!--<span ng-bind=('('+this.ustodos.length+')')></span >-->
+                                        <div>
+                                            count: <span ng-bind=('('+this.ustodos.length+')')></span >
+                                            <button ng-click="this.buttonClickSearchStar()">*</button>
+                                            <!--<button ng-click="this.buttonClickSearchClear()">Clear</button>-->
+                                        </div>
+                                    </select>
 
                                 </span>
 
@@ -117,11 +104,10 @@
 
                 <!--<button ng-click="count = count + 1" ng-init="count=0">-->
             </span>
-<<<<<<< HEAD
         </div>
 
         <div class="hkcssPosTable">
-            <table >
+            <table>
                 <!--<tr ng-repeat="ustodo in ustodos ">f-->
                 <!--&lt;!&ndash; timeAgo &ndash;&gt;f-->
                 <!--<td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>f-->
@@ -134,7 +120,9 @@
                 <!--</tr>f-->
 
                 <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
-                <tr ng-repeat="ustodo in ustodos "
+                <tr
+                    ng-mouseover="this.eventMouseoverRow($index)"
+                    ng-repeat="ustodo in ustodos "
                     ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
                     class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
 
@@ -174,125 +162,35 @@
                     <!-- TIME AGO -->
                     <!--<td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod) + ustodo.datelastmod+'.'+ustodo._id"-->
                     <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
-                              ng-click="event_click_timeAgo(ustodo._id)"
-                              title={{ustodo.datelastmod+'.'+ustodo._id+'ClickForID'}}></span></td>
+                                    ng-click="event_click_timeAgo(ustodo._id)"
+                                    title={{ustodo.datelastmod+'.'+ustodo._id+'ClickForID'}}></span></td>
                     <!--<td>{{ ustodo.text}}</td>f-->
 
 
                     <!-- TEXT -->
                     <td>
-=======
+                    <span id="ustodorow{{$index}}" contenteditable="true"
+                      ng-bind-html="ustodos[$index].html | linky:'_blank'"
+                       ></span>
+                    </td>
+                    <!--/onclick = "this.contentEditable = true;"-->
+
+                </tr>
+            </table>
+
+            <!--<span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span>f-->
+            <!--<span id="contentx{{$index}}" contenteditable="true"f-->
+            <!--onclick = "this.contentEditable = true;"f-->
+            <!--onmouseover="this.contentEditable = false;f-->
+            <!--this.ustodo_innerhtmlpre = this.innerHTML;"f-->
+            <!--onmouseout = "this.contentEditable = false;f-->
+            <!--"f-->
+            <!--ng-bind-html="ustodos[$index].html"></span>f-->
             </div>
-
-            <div class="hkcssPosTable">
-                <table >
-                    <!--<tr ng-repeat="ustodo in ustodos ">f-->
-                    <!--&lt;!&ndash; timeAgo &ndash;&gt;f-->
-                    <!--<td><span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>f-->
-                    <!--&lt;!&ndash; html &ndash;&gt;f-->
-                    <!--<td>f-->
-                    <!--<span contenteditable="true"f-->
-                    <!--onclick = "this.contentEditable = true;"f-->
-                    <!--ng-bind-html="ustodos[$index].html"></span>f-->
-                    <!--</td>f-->
-                    <!--</tr>f-->
-
-                    <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
-                    <tr ng-repeat="ustodo in ustodos "
-                        ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
-                        class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
-
-                        <!-- DELETE BUTTON -->
-                        <td>
-                            <!--<button ng-click="count = count + 1" ng-init="count=0">-->
-                            <!--<button ng-click="deleteDbUstotoById(ustodo)" ng-init="count=0">del</button>-->
-
-                            <!-- trash garbage icon -->
-                            <img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
-                                 alt="{{image.name}}"  title='delete'
-                                 ng-click="deleteDbUstotoById(ustodo)"
-                                    >
-
-                            <!--ng-show="nowShowing==$index"-->
-                            <!--ng-repeat="image in images"-->
-                            <!--class="gallery-image fade-animation"-->
-                        </td>
-
-                        <!-- SAVE BUTTON -->
-                        <td>
-                            <!--<button ng-click="count = count + 1" ng-init="count=0">-->
-                            <!--<button ng-click="alignAnUstodoWithUstodoHtmlByIndex($index)">SAV</button>-->
-
-                            <!--<img height=15 ng-src="/img/gnome_edit_save.jpg"-->
-                            <img class="per-row-icons" ng-src="/img/saveIcon.jpg" title='save'
-                                 alt="{{image.name}}"
-                                 ng-click="saveUstodoGiven(ustodo, $index)"
-                                    >
-
-                        </td>
-
-                        <!-- COUNT -->
-                        <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
-
-
-                        <!-- TIME AGO -->
-                        <!--<td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod) + ustodo.datelastmod+'.'+ustodo._id"-->
-                        <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
-                                        ng-click="event_click_timeAgo(ustodo._id)"
-                                        title={{ustodo.datelastmod+'.'+ustodo._id+'ClickForID'}}></span></td>
-                        <!--<td>{{ ustodo.text}}</td>f-->
-
-
-                        <!-- TEXT -->
-                        <td>
->>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
-                        <span id="ustodorow{{$index}}" contenteditable="true"
-                              onclick = "this.contentEditable = true;"
-                              onmouseover="this.contentEditable = false;"
-                              ng-bind-html="ustodos[$index].html | linky:'_blank'"
-                              xxxonmouseout = "this.contentEditable = false"
-                                >
-                        ng-bind-html="SkipValidationHK(ustodos[$index].html)"
-                        <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
-                              <!--ng-bind-html="ustodos[$index].html"-->
-                              <!--ng-bind-html="skipValidation (ustodos[$index].html)"-->
-                        <!--ng-bind-html="ustodos[$index].html"-->
-                                <!--ng-bind-html="ustodos[$index].html | linky:'_blank'"-->
-
-                        </span>
-                            <!--ng-bind-html="$scope.getHtmlHk($index)"-->
-                            <!--ng-bind-html="$sanitize(ustodos[$index].html)"-->
-                            <!--<span class="per-row-id" ng-bind-html="ustodos[$index]._id">-->
-                            <!--&lt;!&ndash;ng-bind-html="ustodos[$index].html | linky:'_blank'"&ndash;&gt;-->
-                            <!--</span>-->
-                        </td>
-                        <!--//this.ustodo_innerhtmlpre = this.innerHTML;"-->
-                        <!--//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);-->
-                        <!--//                    console.log ('this.prey1:'+this.innerHTML);-->
-                        <!--//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))-->
-                        <!--//                                            alert ('SaveHere');-->
-
-                    </tr>
-
-                    <!--//                   onmouseover="this.contentEditable = false; this.ustodo_innerhtmlpre = this.innerHTML;"f-->
-                    <!--//                   onmouseout = "this.contentEditable = false;f-->
-                    <!--//                    console.log ('this.prex:'+this.ustodo_innerhtmlpre);f-->
-                    <!--//                    console.log ('this.prey2:'+this.innerHTML);f-->
-                    <!--//                    if (!this.ustodo_innerhtmlpre.equals(this.innerHTML))f-->
-                    <!--//                                            alert ('SaveHere');f-->
-                </table>
-
-                <!--<span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span>f-->
-                <!--<span id="contentx{{$index}}" contenteditable="true"f-->
-                <!--onclick = "this.contentEditable = true;"f-->
-                <!--onmouseover="this.contentEditable = false;f-->
-                <!--this.ustodo_innerhtmlpre = this.innerHTML;"f-->
-                <!--onmouseout = "this.contentEditable = false;f-->
-                <!--"f-->
-                <!--ng-bind-html="ustodos[$index].html"></span>f-->
-            </div>
-        </section>>
+        </section>
     </div>
+
+
 
 
 

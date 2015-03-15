@@ -2,10 +2,9 @@
 
 // Commands controller
 angular.module('commands').controller('CommandsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Commands',
-	function($scope, $stateParams, $location, Authentication, Commands) {
-		$scope.authentication = Authentication;
+    function($scope, $stateParams, $location, Authentication, Commands) {
+        $scope.authentication = Authentication;
 
-<<<<<<< HEAD
         $scope.commandData = [
             ['Domain(LeanDomain)','dm','http://www.leandomainsearch.com/search?q=%s'],
             ['Google>Search','g','https://www.google.com/search?q=%s'],
@@ -34,7 +33,7 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
             ['SamAshMusic','sa','http://www.samash.com/webapp/wcs/stores/servlet/CatalogSearchResultView?storeId=10052&catalogId=10002&langId=-1&pageSize=12&beginIndex=0&sType=SimpleSearch&resultCatEntryType=2&ipstate=&iptext=%s&ip_requestUri=TopCategoriesDisplay&ip_categoryId=&ip_mode=&x=0&y=0&wcsiptext=&iscached=)'],
             ['Google>Shopping','s','https://www.google.com/search?q=%s&tbm=shop'],
             ['Facebook','f','https://www.facebook.com/search/results.php?q=%s'],
-            ['Twitter','tw','https://twitter.com/#!/search/%s'],
+            ['Twitter','tw','https://twitter.com/search?q=%s'],
             ['Weather','wt','http://weather.com'],
             ['Thesaurus','th','http://www.merriam-webster.com/dictionary/%s']
         ];
@@ -57,14 +56,14 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
                     });
                     //alert ('in hkAddNewCommandData in for data commandDescription: '+ command.commandDescription);
                     // Redirect after save
-                    command.$save(function(respo    nse) {
-                        //$location.path('commands/' + response._id);
-                        // Clear form fields
-                        //$scope.name = '';
-                        console.log ('success:');
-                    }, function(errorResponse) {
-                       alert ('era:' + errorResponse.data.message);
-                    });
+                    command.$save(function(response) {
+                    //$location.path('commands/' + response._id);
+                    // Clear form fields
+                    //$scope.name = '';
+                    console.log ('success:');
+                }, function(errorResponse) {
+                    alert ('era:' + errorResponse.data.message);
+                });
 
                 }
                 //alert ('in hkAddNewCommandData2');
@@ -77,15 +76,7 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
         // Create new Command
         $scope.create = function() {
             // Create new Command object
-            alert ('in create1');
             var command = new Commands ({
-=======
-        this.counthk= 9;
-        		// Create new Command
-		$scope.create = function() {
-			// Create new Command object
-			var command = new Commands ({
->>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
                 commandCode: this.commandCode,
                 commandUrl: this.commandUrl,
                 commandDescription: this.commandDescription
@@ -105,49 +96,45 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
         };
 
         // Remove existing Command
-		$scope.remove = function(command) {
-			if ( command ) {
-				command.$remove();
+        $scope.remove = function(command) {
+            if ( command ) {
+                command.$remove();
 
-				for (var i in $scope.commands) {
-					if ($scope.commands [i] === command) {
-						$scope.commands.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.command.$remove(function() {
-					$location.path('commands');
-				});
-			}
-		};
+                for (var i in $scope.commands) {
+                    if ($scope.commands [i] === command) {
+                        $scope.commands.splice(i, 1);
+                    }
+                }
+            } else {
+                $scope.command.$remove(function() {
+                    $location.path('commands');
+                });
+            }
+        };
 
-		// Update existing Command
-		$scope.update = function() {
-			var command = $scope.command;
+        // Update existing Command
+        $scope.update = function() {
+            var command = $scope.command;
 
-			command.$update(function() {
-				$location.path('commands/' + command._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
+            command.$update(function() {
+                $location.path('commands/' + command._id);
+            }, function(errorResponse) {
+                $scope.error = errorResponse.data.message;
+            });
+        };
 
-		// Find a list of Commands
-		$scope.find = function() {
-            alert ('in here mom');
+        // Find a list of Commands
+        $scope.find = function() {
+            //alert ('in here mom');
             $scope.commands = Commands.query({commandDescription:/ia/});
             $scope.counthk = 1;
+        };
 
-
-
-
-		};
-
-		// Find existing Command
-		$scope.findOne = function() {
-			$scope.command = Commands.get({
-				commandId: $stateParams.commandId
-			});
-		};
-	}
+        // Find existing Command
+        $scope.findOne = function() {
+            $scope.command = Commands.get({
+                commandId: $stateParams.commandId
+            });
+        };
+    }
 ]);

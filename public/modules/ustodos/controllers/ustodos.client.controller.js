@@ -71,18 +71,6 @@ var angularModule = null;
 
 
 
-//angularModule.directive('ignoreClick',  function() {
-//
-//	return {
-//		restrict: 'A',
-//		link: function(scope, element) {
-//			element.bind('click', function(event) {
-//				event.preventDefault();
-//			});
-//		}
-//	};g
-//});
-
 
 //myApp.controller('myCtrl', ['$scope', '$sce', function($scope, $sce) {
 //    // ...
@@ -104,96 +92,80 @@ var angularModule = null;
 //O.a ('oneOfSeveral controller with array - first?');
 angular.module('ustodos').controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce',
     'Authentication', 'Ustodos', 'Commands',
-    function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos, Commands) {
-//angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
-//    'Authentication', 'Ustodos',
-//    function($scope, $stateParams, $locationProvider, $rootScope, $sce, Authentication, Ustodos) {
+    function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos, Commands)
+    {
+        //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
+        //    'Authentication', 'Ustodos',
+        //    function($scope, $stateParams, $locationProvider, $rootScope, $sce, Authentication, Ustodos) {
         //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$location', '$rootScope', 'ngSanitize', 'Authentication', 'Ustodos',
         //    function($scope, $stateParams, $location, $rootScope, ngSanitize, Authentication, Ustodos) {
         //$rootScope', $compile, $rootElement,
         //    O.a ('sssa1');
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
-<<<<<<< HEAD
-        //$scope.commandsxx = 5;
 
         // see https://devcenter.heroku.com/articles/nodejs-mongoose#querying
         // see http://jsfiddle.net/FxM3B/4/  for examples
         $scope.operators = [];
-=======
 
         // see https://devcenter.heroku.com/articles/nodejs-mongoose#querying
         // see http://jsfiddle.net/FxM3B/4/  for examples
->>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
-        //$scope.commands = Commands.query({},  function() {
-        //$scope.commands = Commands.query(function() {
 
         //var query = Commands.find({});
 //        query.sort('commandDescription', 1);
 
-<<<<<<< HEAD
 
         //var x = Commands.query();
         //x.sort('commandDescription', 1);
 
-        //$scope.commandsxx = Commands.query();
         //$scope.modelForSelectId = '-save';
         $scope.selectModel = 'Amazon';
         $scope.commands = Commands.query(function() {
-        //$scope.commands = query.exec (function() {
+            //$scope.commands = query.exec (function() {
             //alert ('done query $scope.commands.length:' + $scope.commands.length);
             try {
                 for (var i = 0; i < $scope.commands.length; i++) {
                     var map = {};
-                    console.log ('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
+                    //console.log('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
                     map.value = $scope.commands[i].commandUrl;
-                    map.displayName = $scope.commands[i].commandDescription;
+                    map.displayName = $scope.commands[i].commandDescription + ' (' + $scope.commands[i].commandCode + ')';
                     //alert('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
                     //commandsValueName.push ({value:$scope.commands[i].commandDescription})
                     $scope.operators.push(map);
                 }
 
-                alert ('pre sort');
-                $scope.commands = $scope.commands.sort(function(a,b) {
+                //alert('pre sort');
+                $scope.commands = $scope.commands.sort(function (a, b) {
                     if (a.commandDescription.toLowerCase() > b.commandDescription.toLowerCase())
                         return 1;
                     else
                         return -1;
                 });
-               // alert ('post sort $scope.commands.length:' + $scope.commands.length);
-
-
+                //alert ('post sort $scope.commands.length:' + $scope.commands.length);
             } catch (err) {
-                alert ('era in commands query:' + err);
+                alert('era in commands query:' + err);
             }
+        });
 
-=======
         //var x = Commands.query();
         //x.sort('commandDescription', 1);
 
         $scope.operators = [];
-        $scope.commands = Commands.query(function() {
-            //$scope.commands = query.exec (function() {
-            //alert ('done query $scope.commands.length:' + $scope.commands.length);
-            for (var i = 0; i < $scope.commands.length; i++) {
-                var map = {};
-                console.log ('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
-                map.value = $scope.commands[i].commandDescription;
-                map.displayName = $scope.commands[i].commandDescription;
-                //alert('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
-                //commandsValueName.push ({value:$scope.commands[i].commandDescription})
-                $scope.operators.push(map);
-            }
-
-            $scope.filterCondition = '-save';
->>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
-            //
-            //for (var i = 0; i < )
-            //{
-            //
-            //}
-<<<<<<< HEAD
-        });
-
+        //$scope.commands = Commands.query(function() {
+        //    //$scope.commands = query.exec (function() {
+        //    //alert ('done query $scope.commands.length:' + $scope.commands.length);
+        //    for (var i = 0; i < $scope.commands.length; i++) {
+        //        var map = {};
+        //        console.log ('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
+        //        map.value = $scope.commands[i].commandDescription;
+        //        map.displayName = $scope.commands[i].commandDescription;
+        //        //alert('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
+        //        //commandsValueName.push ({value:$scope.commands[i].commandDescription})
+        //        $scope.operators.push(map);
+        //    }
+        //
+        //});
+        //
+        $scope.filterCondition = '-save';
 
 
 
@@ -201,17 +173,13 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //    operator: 'eq'
         //};
 
-            //$scope.commandsxx = 1;
-=======
+        //$scope.commandsxx = 1;
 
-
-        });
         //$scope.filterCondition= {
-            //    operator: 'eq'
+        //    operator: 'eq'
         //};
 
         //$scope.commandsxx = 1;
->>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
         //$scope.operators = [
         //    {value: 'eq', displayName: 'equals'},
         //    {value: 'neq', displayName: 'not equal'}
@@ -250,6 +218,8 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
 
         var o = O.o;
 
+        $scope.commandFromInputBox = 'lll';
+
         $scope.onKeyUpInputField = function(index) {
             //o ('inkey onKeyUpInputField index:' + index);
             $scope.count++;
@@ -281,99 +251,56 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
             alert (_id);
         };
 
+        $scope.buttonClickSearchStar = function() {
+            this.commandFromInputBox = '*';
+            search();
+        }
 
+        $scope.eventMouseoverRow = function(i) {
+            console.log ('in eventMouseoverRow ' + i);
+            var x = document.getElementById('ustodorow'+i);
+            //var x = angular.element('ustodorow'+i);
+            console.log ('in eventMouseoverRow x.innerText:' + x.innerText);
+            $scope.commandFromInputBox = x.innerText;
+            //elem.contentEditable = false;
+            console.log ('in eventMouseoverRow set this.commandFromInputBox :' + x.innerText);
 
+        };
 
-<<<<<<< HEAD
-        $scope.utdact = function() {
-            try {
-=======
-        $scope.selectChangeEvenHandler = function() {
-            alert ('in utdact:');
-            //var elemTextInput = document.getElementById('idTextInput').value;
-           //var t = document.getElementById('selectId').value;
-            var options = document.getElementById('selectId').options;
-            //alert ('t:' + t);
-            var idxSelected = parseInt(document.getElementById('selectId').value);
-            var commandDisplayName = options[idxSelected].innerText;
-            //alert ('commandDisplayName:' + commandDisplayName);
-            for (var i = 0; i < $scope.commands.length; i++) {
-                if ($scope.commands[i].commandDescription === commandDisplayName)
-                {
-                    //alert ('found match:'+$scope.commands[i].commandDescription);
-                    var finalUrl = $scope.commands[i].commandUrl.replace(/%s/, this.commandFromInputBox);
-                    // alert ('finalUrl:'+finalUrl);
-                    $window.location.href = finalUrl;
-                }
-            }
+        //$scope.buttonClickSearchClear = function() {
+        //    this.commandFromInputBox = '';
+        //}
 
-            var selectedCommandUrl = $scope.commands[idxSelected].commandUrl;
-
-            //alert ('in utdact elemTextInput :'+elemTextInput );
-            //alert ('in utdact idxSelected :'+idxSelected );
-            //alert ('in utdact selectedEngine :'+selectedEngine );
-
-            //alert ('in sayhi df to run $location.search');
-            //$location.path('/')
-            //$location.url('http://www.yahoo.com')
-            //$window.location.href = '#/tab/category/1';
-
-            //var target = angular.element('#textHKKH');
-            //alert ('target[0].innerText:'+target[0].innerText);
-
-            //$scope.commandUrl = $scope.commands[idxSelected].commandUrl;
-
-
-            //$window.location.href = 'http://www.google.com/search?q=' + this.commandFromInputBox;
-
-
-
-            //$window.location.href = 'http://www.amazon.com';
-            //else
->>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
-
-                //var elemTextInput = document.getElementById('idTextInput').value;
-
-<<<<<<< HEAD
+        // selectId
+        $scope.utdEventSelectedEngine = function() {
+            try
+            {
+                //var t = document.getElementById('selectId').value;
+                //var options = document.getElementById('selectId').options;
                 var idxSelected = parseInt(document.getElementById('selectId').value);
-                //  homes.sort(function(a,b) { return parseFloat(a.price) - parseFloat(b.price) } );
+                //var commandDisplayName = options[idxSelected].innerText;
+                //for (var i = 0; i < $scope.commands.length; i++) {
+                //    if ($scope.commands[i].commandDescription === commandDisplayName) {
+                //        //alert ('found match:'+$scope.commands[i].commandDescription);
+                //        var finalUrl = $scope.commands[i].commandUrl.replace(/%s/, this.commandFromInputBox);
+                //        // alert ('finalUrl:'+finalUrl);
+                //        $window.location.href = finalUrl;
+                //    }
+                //}
                 var selectedCommandUrl = $scope.commands[idxSelected].commandUrl;
-=======
-            //$location.search('hk', this.commandFromInputBox);
->>>>>>> 9f4242edcd3bad36cf5478198a048b817c8013bb
+                var finalUrl = selectedCommandUrl.replace(/%s/, this.commandFromInputBox); // change %s
 
-                //alert ('in utdact elemTextInput :'+elemTextInput );
-                //alert ('in utdact idxSelected :'+idxSelected + 'selectedCommandUrl:' + selectedCommandUrl);
-                //alert ('in utdact selectedEngine :'+selectedEngine );
+                //finalUrl = finalUrl.replace(/^.*\)/, ''); // get rid of parens
+                $window.location.href = finalUrl;
 
-                //alert ('in sayhi df to run $location.search');
                 //$location.path('/')
                 //$location.url('http://www.yahoo.com')
                 //$window.location.href = '#/tab/category/1';
-
                 //var target = angular.element('#textHKKH');
-                //alert ('target[0].innerText:'+target[0].innerText);
-
                 //$scope.commandUrl = $scope.commands[idxSelected].commandUrl;
-
-                var finalUrl = selectedCommandUrl.replace(/%s/, this.commandFromInputBox);
-
-                //  alert('finalUrl:' + finalUrl);
-
-                $window.location.href = finalUrl;
-
-                //$window.location.href = 'http://www.google.com/search?q=' + this.commandFromInputBox;
-
-
-                //    $window.location.href = 'http://www.amazon.com';
-                //else
-
-
-                //$location.search('hk', this.commandFromInputBox);
-
-                //$scope.count++;
+                //var idxSelected = parseInt(document.getElementById('selectId').value);
+                //var selectedCommandUrl = $scope.commands[idxSelected].commandUrl;
                 //isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(true);
-
                 //$scope.$apply()
             } catch (err) {
                 alert ('err in utdact:' + err);
@@ -745,7 +672,8 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
             alert ('df');
         };
 
-        $scope.search = function() {
+        $scope.search = function()
+        {
             $scope.callCountSearch++;
             o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
             this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
@@ -862,11 +790,6 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         };
 
 
-
-
-
-
-
     }
 ]).directive('myCustomer', function() {
     return {
@@ -906,7 +829,7 @@ angular.module('ustodos')
     ////    //$routeProvider.otherwise({redirectTo: '/home', controller: HomeCtrl});
     ////})
     .directive('onFinishRender', function ($timeout) {
-        O.a ('sss2');
+        O.a('sss2');
         return {
             restrict: 'A',
             link: function (scope, element, attr) {
@@ -914,13 +837,13 @@ angular.module('ustodos')
                     $timeout(function () {
                         //O.a ('sss3');
                         scope.$emit('ngRepeatFinished');
-                        alert ('ngRepeatFinished');
+                        alert('ngRepeatFinished');
                     });
                 }
             }
-        };
-
+        }
     });
+
 
 
 
