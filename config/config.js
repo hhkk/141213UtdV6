@@ -33,9 +33,13 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 			output = _.union(output, _this.getGlobbedFiles(globPattern, removeRoot));
 		});
 	} else if (_.isString(globPatterns)) {
+        //if (globPatterns.indexOf('tinymce.js') >= 0 || globPatterns.indexOf('config.js')  >= 0)
+//            console.log ('found one');
 		if (urlRegex.test(globPatterns)) {
+        //    console.log ('added file globPatterns:' + globPatterns);
 			output.push(globPatterns);
 		} else {
+            //console.log ('not exactly adding file globPatterns:' + globPatterns);
 			glob(globPatterns, {
 				sync: true
 			}, function(err, files) {
@@ -44,6 +48,10 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 						return file.replace(removeRoot, '');
 					});
 				}
+
+                //for (var i = 0; i < files.length; i++) {
+//                    console.log ('got getJavaScriptAssets file :' + i + '. ' + files[i]);
+//                }
 
 				output = _.union(output, files);
 			});
@@ -63,7 +71,12 @@ module.exports.getJavaScriptAssets = function(includeTests) {
 	if (includeTests) {
 		output = _.union(output, this.getGlobbedFiles(this.assets.tests));
 	}
+    console.log ('done getJavaScriptAssets output.length:' + output.length);
+    for (var i = 0; i < output.length; i++) {
+        console.log ('got getJavaScriptAssets output :' + i + '. ' + output[i]);
+    }
 
+    //alert ('done getJavaScriptAssets output.length:' + output.length);
 	return output;
 };
 
@@ -71,6 +84,7 @@ module.exports.getJavaScriptAssets = function(includeTests) {
  * Get the modules CSS files
  */
 module.exports.getCSSAssets = function() {
-	var output = this.getGlobbedFiles(this.assets.lib.css.concat(this.assets.css), 'public/');
+
+    var output = this.getGlobbedFiles(this.assets.lib.css.concat(this.assets.css), 'public/');
 	return output;
 };

@@ -5,25 +5,9 @@
     <section data-ng-controller="UstodosController" ng-init="keyCount=0">
         <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
 
-        <!--hi <input > key down count: {{count}}-->
-        <!--Enter name: <input type="text" ng-model="name"><br>-->
-        <!--Hello <span ng-bind="name"></span>!-->
-        <!--name2<div ng-bind = "name"></div>yy-->
-
-
-        <!--<div id="edit" contentEditable="true">-->
-        <!--<p id="initial_text">-->
-        <!--test-->
-        <!--</p>-->
-        <!--</div>-->
-
         <div class="hkcssPosFixed">
 
 
-            <!--<button  ng-click='incrCount()'>-->
-            <!-- HKACTION - HIT ENTER IN TEXT BOX -->
-            <!--incrCount-->
-            <!--</button>-->
             <span class="col-md-12">
                 <!-- HKACTION - HIT ENTER IN TEXT BOX -->
                 <form class="form-horizontal" data-ng-submit="search()" novalidate>
@@ -38,14 +22,8 @@
                                 <!-- HKACTION - KEY UP IN TEXT BOX -->
                                 <input type="text" ng-keyup="onKeyUpInputField()" data-ng-model="commandFromInputBox"
                                        id="idTextInput" class="input-textarea" placeholder="Do" required>
+                                <div id="textaread" contenteditable>I look like a textarea</div>
                                 &nbsp;
-
-                                <!--<input class="img-circle text-center" type='image'-->
-                                <!--src='modules/ustodos/img/UsToDoanimalsblack.jpg'-->
-                                <!--style='height:30px;'-->
-                                <!--ng-click='sayhi()'/>-->
-                                <!--&lt;!&ndash;ng-mouseover="mouseOverDeleteButton(file)"&ndash;&gt;-->
-                                <!--&lt;!&ndash;ng-mouseleave="mouseLeaveDeleteButton(file)"&ndash;&gt;-->
 
                                 <!-- HKACTION - CLICK ACT -->
                                 <span class="dev-notes">
@@ -121,7 +99,7 @@
 
                 <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
                 <tr
-                    ng-mouseover="this.eventMouseoverRow($index)"
+                        ng-mouseover="this.eventMouseoverRow2($index)"
                     ng-repeat="ustodo in ustodos "
                     ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
                     class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">

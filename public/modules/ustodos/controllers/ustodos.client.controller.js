@@ -267,6 +267,14 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
 
         };
 
+        $scope.eventMouseoverRow2 = function(i) {
+            console.log('A in eventMouseoverRow2 i:' + i);
+            var x = document.getElementById('ustodorow'+i);
+            console.log ('B in eventMouseoverRow x.innerText:' + x.innerText);
+            $scope.commandFromInputBox = x.innerText;
+            console.log('C in eventMouseoverRow2 i:' + i);
+        };
+
         //$scope.buttonClickSearchClear = function() {
         //    this.commandFromInputBox = '';
         //}
