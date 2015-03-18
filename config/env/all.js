@@ -23,7 +23,6 @@ module.exports = {
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-                'public/tinymce.js'
 			]
 		},
 		css: [
@@ -36,6 +35,10 @@ module.exports = {
 			'public/modules/*/*.js',
 			'public/modules/*/*[!tests]*/*.js',
             //'public/lib/jquery/dist/jquery.js' // hbkkk
+            // putting stuff here in all.js gets it loaded on the client even w/o html load of js
+            // or you can put it in layout view alone
+            // will not be run on server from here
+            'public/tinymce.js'
         ],
 		tests: [
 			'public/lib/angular-mocks/angular-mocks.js',

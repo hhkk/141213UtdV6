@@ -89,8 +89,11 @@ var angularModule = null;
 
 
 
+var app = angular.module('ustodos');
+
+
 //O.a ('oneOfSeveral controller with array - first?');
-angular.module('ustodos').controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce',
+app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce',
     'Authentication', 'Ustodos', 'Commands',
     function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos, Commands)
     {
@@ -101,7 +104,71 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //    function($scope, $stateParams, $location, $rootScope, ngSanitize, Authentication, Ustodos) {
         //$rootScope', $compile, $rootElement,
         //    O.a ('sssa1');
+
+        $scope.setCaret  = function () {
+            //alert ('in setcaret');
+            var el = document.getElementById("editorhk");
+            var range = document.createRange();
+            var sel = window.getSelection();
+            //range.setStart(el.childNodes[0], 5);
+            //range.collapse(true);
+            //sel.removeAllRanges();
+            //sel.addRange(range);
+            el.focus();
+        }
+
+        $scope.inputbind ='search or input';
+        $scope.onKeyDownInputField = function() {
+            var t = $scope.mmmm.element.innerText;
+            console.log ('inkey onKeyDownInputField t:' + t);
+            if (t.indexOf('search or input') === 0)
+            {
+                console.log ('change it:' + t);
+                $scope.mmmm.element.innerHTML = '';
+                //$scope.mmmm.element.innerText
+            }
+
+        }
+        $scope.onKeyUpInputField = function() {
+            $scope.count++;
+            var t = $scope.mmmm.element.innerText;
+            console.log ('inkey onKeyUpInputField index t [' + t + ']' );
+            if (t.length > 2)
+            {
+                console.log('t-1:' + t[t.length-1])
+                console.log('t-1:' + t[t.length-1].charCodeAt(0))
+                console.log('t-2:' + t[t.length-2])
+                console.log('t-2:' + t[t.length-2].charCodeAt(0))
+                console.log('a:' + $scope.mmmm.element.innerHTML);
+            }
+            //isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
+            //alert ('inkey keypress commandFromInputBox:' + this.inputbind);
+            //var t = $scope.mmmm.element.innerText;
+            //if (t.indexOf('search or input') === 1)
+            //{
+            //    $scope.mmmm.element.innerText = 'joe';
+            //    //$scope.mmmm.element.innerText
+            //}
+
+
+            //console.log('a [' + $scope.mmmm.element.innerText + ']');
+
+
+            //$scope.$apply()
+        };
+
+
+
+
+
+        //alert ('defined medium');
+
         console.log ('000000000000000000000000000000 in ustodos.client.controller init');
+
+        //tinymce.init({
+        //    selector: "textarea"
+        //});
+        //console.log ('done tinymce init !!!!!!!!!!!!! ');
 
         // see https://devcenter.heroku.com/articles/nodejs-mongoose#querying
         // see http://jsfiddle.net/FxM3B/4/  for examples
@@ -184,6 +251,7 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //    {value: 'eq', displayName: 'equals'},
         //    {value: 'neq', displayName: 'not equal'}
         //];
+
         $scope.mml = angular.element(document.getElementById('myMenuList'));
 
         //$locationProvider.html5Mode(true).hashPrefix('!');
@@ -220,14 +288,6 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
 
         $scope.commandFromInputBox = 'lll';
 
-        $scope.onKeyUpInputField = function(index) {
-            //o ('inkey onKeyUpInputField index:' + index);
-            $scope.count++;
-            isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
-            o ('inkey keypress commandFromInputBox:' + this.commandFromInputBox);
-            //$scope.$apply()
-        };
-
         $scope.keyCount = 0;
 
         $document.bind('keypress', function(event) {
@@ -257,22 +317,22 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         }
 
         $scope.eventMouseoverRow = function(i) {
-            console.log ('in eventMouseoverRow ' + i);
+            //console.log ('in eventMouseoverRow ' + i);
             var x = document.getElementById('ustodorow'+i);
             //var x = angular.element('ustodorow'+i);
-            console.log ('in eventMouseoverRow x.innerText:' + x.innerText);
+            //console.log ('in eventMouseoverRow x.innerText:' + x.innerText);
             $scope.commandFromInputBox = x.innerText;
             //elem.contentEditable = false;
-            console.log ('in eventMouseoverRow set this.commandFromInputBox :' + x.innerText);
+            //console.log ('in eventMouseoverRow set this.commandFromInputBox :' + x.innerText);
 
         };
 
         $scope.eventMouseoverRow2 = function(i) {
-            console.log('A in eventMouseoverRow2 i:' + i);
+            //console.log('A in eventMouseoverRow2 i:' + i);
             var x = document.getElementById('ustodorow'+i);
-            console.log ('B in eventMouseoverRow x.innerText:' + x.innerText);
+            //console.log ('B in eventMouseoverRow x.innerText:' + x.innerText);
             $scope.commandFromInputBox = x.innerText;
-            console.log('C in eventMouseoverRow2 i:' + i);
+            //console.log('C in eventMouseoverRow2 i:' + i);
         };
 
         //$scope.buttonClickSearchClear = function() {
@@ -280,6 +340,13 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         //}
 
         // selectId
+        $scope.yyutdact = function() {
+
+            $scope.mmmm.element.focus();
+            window.getSelection().setPosition(0)
+            console.log ('doneit');
+        }
+
         $scope.utdEventSelectedEngine = function() {
             try
             {
@@ -313,6 +380,8 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
             } catch (err) {
                 alert ('err in utdact:' + err);
             }
+
+
         };
 
         $scope.name = 'Whirled';
@@ -798,6 +867,62 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         };
 
 
+
+
+
+        //alert ('defining medium');
+        $scope.mmmm = new Medium({
+            element: document.getElementById('editorhk'),
+            modifier: 'auto',
+            placeholder: "",
+            autofocus: false,
+            autoHR: true,
+            mode: Medium.richMode,
+            maxLength: -1,
+            modifiers: {
+                'b': 'bold',
+                'i': 'italicize',
+                'u': 'underline',
+                'v': 'paste'
+            },
+            tags: {
+                'break': 'br',
+                'horizontalRule': 'hr',
+                'paragraph': 'p',
+                'outerLevel': ['pre', 'blockquote', 'figure'],
+                'innerLevel': ['a', 'b', 'u', 'i', 'img', 'strong']
+            },
+            cssClasses: {
+                editor: 'Medium',
+                pasteHook: 'Medium-paste-hook',
+                placeholder: 'Medium-placeholder',
+                clear: 'Medium-clear'
+            },
+            attributes: {
+                remove: ['style', 'class']
+            },
+            pasteAsText: true,
+            beforeInvokeElement: function () {
+                //this = Medium.Element
+            },
+            beforeInsertHtml: function () {
+                //this = Medium.Html
+            },
+            beforeAddTag: function (tag, shouldFocus, isEditable, afterElement) {
+            },
+            keyContext: null,
+            pasteEventHandler: function(e) {
+                /*default paste event handler*/
+            }
+        });
+
+
+
+
+
+
+
+
     }
 ]).directive('myCustomer', function() {
     return {
@@ -812,6 +937,17 @@ angular.module('ustodos').controller('UstodosController', ['$scope', '$window', 
         }
     };
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 //O.a ('oneOfSeveral $routeProvider', '$locationProvider');
@@ -851,21 +987,4 @@ angular.module('ustodos')
             }
         }
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

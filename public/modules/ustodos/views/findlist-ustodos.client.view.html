@@ -1,14 +1,20 @@
 <div ng-app>
 
-    <div ng-address-bar></div><br><br>
+    <div ng-address-bar></div><br>
 
     <section data-ng-controller="UstodosController" ng-init="keyCount=0">
         <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
 
+
+        <button ng-click="yyutdact()">Do</button>
+        <input focus-on="focusMe"/>
+
+        <div ng-bind='inputbind' ng-init='setCaret()' id='editorhk' ng-keyup='onKeyUpInputField()' ng-keydown='onKeyDownInputField()'></div>
+
         <div class="hkcssPosFixed">
 
-
             <span class="col-md-12">
+
                 <!-- HKACTION - HIT ENTER IN TEXT BOX -->
                 <form class="form-horizontal" data-ng-submit="search()" novalidate>
                     <fieldset>
@@ -17,9 +23,12 @@
                             <div class="controls">
 
 
+                                <!-- Place this in the body of the page content -->
+
                                 <!--<div>this.commands.length: <span ng-bind="this.commands.length"></span ></div>-->
                                 <!--<input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">-->
                                 <!-- HKACTION - KEY UP IN TEXT BOX -->
+
                                 <input type="text" ng-keyup="onKeyUpInputField()" data-ng-model="commandFromInputBox"
                                        id="idTextInput" class="input-textarea" placeholder="Do" required>
                                 <div id="textaread" contenteditable>I look like a textarea</div>
@@ -28,6 +37,7 @@
                                 <!-- HKACTION - CLICK ACT -->
                                 <span class="dev-notes">
                                     <button ng-click="xxutdact()" ng-init="count=0">Do</button>
+
                                     <!--operators.length:{{operators.length}}-->
                                     <!--&nbsp;-->
                                     <!--<span>Operator is: {{filterCondition.operator}}</span>-->

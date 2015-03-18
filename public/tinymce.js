@@ -1,5 +1,8 @@
 // 4.1.9 (2015-03-10)
 
+//console.log ('loaded tinymce !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+
 /**
  * Compiled inline version. (Library mode)
  */
