@@ -1,22 +1,67 @@
-<div ng-app>
+<div ng-app >
+
 
     <div ng-address-bar></div><br>
 
-    <section data-ng-controller="UstodosController" ng-init="keyCount=0">
+    <section data-ng-controller="UstodosController" ng-init="keyCount=0;ngInitTopLevel()">
         <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
+        <input class="hkToolbarElement" type='image'
+
+               src='modules/ustodos/img/UsToDoanimalsblack.jpg'
+               style='height:48px;'
+               ng-click='toggleVisibilityAll()'/>
 
 
-        <button ng-click="yyutdact()">Do</button>
-        <input focus-on="focusMe"/>
+        <input class="img-circle text-center" type='image'
+               src='modules/ustodos/img/UsToDoanimalsblack.jpg'
+               style='height:48px;'
+               ng-click='eventClickedTheAnimals()'/>
 
-        <div ng-bind='inputbind' ng-init='setCaret()' id='editorhk' ng-keyup='onKeyUpInputField()' ng-keydown='onKeyDownInputField()'></div>
+
+
+
+
+        <!--<button ng-click="yyutdact()">Do</button>-->
+        <!--<button ng-init='ngInitTinyMceButton()' ng-click="testTinyMce()">testTinyMce()</button>-->
+        <!--<button xxng-init='xxtoggleReadOnly()' ng-click="toggleReadOnly()">toggleReadOnly CK EDIT()</button>-->
+        <!--<input focus-on="focusMe"/>-->
+
+        <!-- ================ INPUT#1 ======================== -->
+        <input id="idInput1TypeText" type="text" ng-keyup="onKeyUpInputField()"
+               ng-model="inputbind"
+               class="input-textarea" placeholder="Do" required>
+
+        <!--ng-bind='inputbind'-->
+        <!--data-ng-model="commandFromInputBox"-->
+
+        <!-- ================ INPUT#2 ======================== -->
+        <div id='mediumeditorhk' ng-bind="inputbind" ng-init='setCaret()' ng-keyup='onKeyUpInputField()' ng-keydown='onKeyDownInputField()'></div>
+        <!--<textarea id="tinymcetextareahk">Search/Input</textarea>-->
+
+        <span ng-keydown='onKeyDownInputField()'>
+
+            <!-- ================ INPUT#3 ======================== -->
+        <div id='divForCkeditortextareahk'>
+            <textarea id="ckeditortextareahk" ng-bind="inputbind" ng-keydown='onKeyDownInputField()' name="editor1"
+                      idxx="xxeditor1" rows="10" cols="80">
+                search or input
+            </textarea>
+        </div>
+
+            <!-- ================ INPUT#4 ======================== -->
+            <!--<span id="idInput4TypeSpan" ng-bind="inputbind" xid="ckeditortextareahk" ng-keydown='onKeyDownInputField()' name="editor1"-->
+                      <!--idxx="xxeditor1" rows="10" cols="80">-->
+                <!--search or input-->
+            <!--</span >-->
+
+        </span>
 
         <div class="hkcssPosFixed">
 
             <span class="col-md-12">
 
                 <!-- HKACTION - HIT ENTER IN TEXT BOX -->
-                <form class="form-horizontal" data-ng-submit="search()" novalidate>
+                    <form class="form-horizontal" data-ng-submit="searchhk('s')" novalidate>
                     <fieldset>
                         <div class="form-group">
                             <br>
@@ -29,14 +74,11 @@
                                 <!--<input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">-->
                                 <!-- HKACTION - KEY UP IN TEXT BOX -->
 
-                                <input type="text" ng-keyup="onKeyUpInputField()" data-ng-model="commandFromInputBox"
-                                       id="idTextInput" class="input-textarea" placeholder="Do" required>
-                                <div id="textaread" contenteditable>I look like a textarea</div>
                                 &nbsp;
 
                                 <!-- HKACTION - CLICK ACT -->
                                 <span class="dev-notes">
-                                    <button ng-click="xxutdact()" ng-init="count=0">Do</button>
+                                    <button ng-click="yyutdact()" ng-init="count=0">Do</button>
 
                                     <!--operators.length:{{operators.length}}-->
                                     <!--&nbsp;-->
@@ -93,7 +135,6 @@
                 <!--<button ng-click="count = count + 1" ng-init="count=0">-->
             </span>
         </div>
-
         <div class="hkcssPosTable">
             <table>
                 <!--<tr ng-repeat="ustodo in ustodos ">f-->
@@ -174,9 +215,11 @@
             <!--onmouseout = "this.contentEditable = false;f-->
             <!--"f-->
             <!--ng-bind-html="ustodos[$index].html"></span>f-->
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
+
+
 
 
 

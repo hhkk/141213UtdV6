@@ -92,6 +92,8 @@ var angularModule = null;
 var app = angular.module('ustodos');
 
 
+
+
 //O.a ('oneOfSeveral controller with array - first?');
 app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce',
     'Authentication', 'Ustodos', 'Commands',
@@ -105,9 +107,198 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         //$rootScope', $compile, $rootElement,
         //    O.a ('sssa1');
 
+        $scope.pickCkEditorBasedOnPlatform = function()
+        {
+            var x = "Platform: " + navigator.platform;
+            document.getElementById("demo").innerHTML = x;
+        }
+
+        $scope.$watch('$viewContentLoaded', function(){
+            //alert ('in $viewContentLoaded');
+            var x = document.getElementById('ckeditortextareahk').innerHTML;
+            //alert ('in $viewContentLoaded:' + x);
+
+            var editor = CKEDITOR.instances.ckeditortextareahk;
+            editor.focusManager.focus( editor.editable() );
+
+        });
+
+        //$scope.testTinyMce = function()
+        //{
+        //    console.log ('start testTinyMce');
+        //    //tinymce.activeEditor.setContent('<span>some</span> html');
+        //    tinyMCE.get('tinymcetextareahk').setContent('<span>some1</span> html');
+        //    //alert ('done testTinyMce');
+        //}
+
+        $scope.ngInitTopLevel= function()
+        {
+            //alert ('in ngInitTopLevel');
+        }
+
+        $scope.ngInitTinyMceButton = function()
+        {
+            //alert ('in ngInitTinyMceButton');
+        }
+
+        $scope.ngInitTinyMce = function()
+        {
+            //alert ('start testTinyMce');
+            //tinymce.activeEditor.setContent('<span>some</span> html');
+            //alert ('in ngInitTinyMce');
+            //alert ('done testTinyMce');
+        }
+
+        $scope.myCustomOnInit = function () {
+            //alert("myCustomOnInit from mce");
+            //tinyMCE.get('tinymcetextareahk').setContent('<span>some1</span> html');
+            //tinymce.activeEditor.setContent('<span>some</span> html');
+        }
+
+        //tinyMCE.init({
+        //    ...
+        //    oninit : myCustomOnInit
+        //});
+        //
+
+
+        //tinyMCE.init({
+        //    selector:'textarea',
+        //    //setup : function(ed) {
+        //    //    ed.onKeyDown.add(function(ed, e) {
+        //    //        console.debug('Key down event: ' + e.keyCode);
+        //    //    });
+        //    oninit : '$scope.myCustomOnInit()'
+        //    })
+        //;
+        //
+
+
+
+        // tinymce4 works
+        //tinymce.init({
+        //    selector: "textarea",
+        //    theme: "modern",
+        //    plugins: [
+        //        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        //        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        //        "insertdatetime media nonbreaking save table contextmenu directionality",
+        //        "emoticons template paste textcolor colorpicker textpattern"
+        //    ],
+        //    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        //    toolbar2: "print preview media | forecolor backcolor emoticons",
+        //    image_advtab: true,
+        //    templates: [
+        //        {title: 'Test template 1', content: 'Test 1'},
+        //        {title: 'Test template 2', content: 'Test 2'}
+        //    ]
+        //});
+
+        // tinymce3 works
+        //tinyMCE.init({
+        //    mode : "textareas"
+        //});
+
+
+        // ckeditor test
+        //CKEDITOR.replace('ckeditortextareahk');
+        $scope.editor = CKEDITOR.replace( 'ckeditortextareahk', {
+            //language: 'fr',
+            customConfig: '/lib/ckeditor/config.js',
+            startupFocus : true,
+            uiColor: '#9AB8F3'
+        });
+
+
+
+
+
+
+
+
+        $scope.editor.on('contentDom', function( event ) {
+            $scope.editor.document.on('key', function(event) {
+                console.log('my key');
+            });
+            $scope.editor.document.on('keyup', function(event) {
+                console.log('my keyup:' + $scope.editor.getData());
+            });
+            $scope.editor.document.on('keydown', function(event) {
+                console.log('my keydown');
+            });
+            $scope.editor.on('key', function(event) {
+                //console.log('raw key');
+            });
+            $scope.editor.on('keyup', function(event) {
+                //console.log('raw keyup');
+            });
+            $scope.editor.on('keydown', function(event) {
+                //console.log('raw keydown');
+            });
+            $scope.editor.document.on('mouseup', function(event) {
+                //console.log('mouseup');
+            });
+
+            $scope.editor.document.on('blur', function(event) {
+                alert('blur');
+            });
+
+            //CKEDITOR.instances.editor1.on('OnBlur', function() {
+            //    alert('onblur fired');
+            //});
+
+        });
+
+
+
+
+
+
+
+
+        $scope.editor.addCommand("mySimpleCommand", { // create named command
+            exec: function(edt) {
+                alert(edt.getData());
+            }
+        });
+
+        $scope.editor.ui.addButton('SuperButton', { // add new button and bind our command
+            label: "Click me",
+            command: 'mySimpleCommand',
+            toolbar: 'clipboard, 1',
+            icon: 'https://avatars1.githubusercontent.com/u/5500999?v=2&s=16'
+        });
+
+
+
+
+        //CKEDITOR.replace( 'editor1' );
+        //ckeditortextareahk
+        //CKEDITOR.on('instanceReady', function (ev) {
+        //    editor = ev.editor;
+        //
+        //    // Show this "on" button.
+        //    document.getElementById('ckeditortextareahk').style.display = '';
+        //
+        //    // Event fired when the readOnly property changes.
+        //    editor.on('readOnly', function () {
+        //        document.getElementById('ckeditortextareahk').style.display = this.readOnly ? 'none' : '';
+        //        //document.getElementById('readOnlyOff').style.display = this.readOnly ? '' : 'none';
+        //    });
+        //});
+        //function toggleReadOnly(isReadOnly) {
+        //    // Change the read-only state of the editor.
+        //    // http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.editor.html#setReadOnly
+        //    editor.setReadOnly(isReadOnly);
+        //}
+
+        //$scope.testTinyMce();
+        //tinyMCE.get('tinymcetextareahk').setContent('<span>some2</span> html');
+
+
         $scope.setCaret  = function () {
             //alert ('in setcaret');
-            var el = document.getElementById("editorhk");
+            var el = document.getElementById("mediumeditorhk");
             var range = document.createRange();
             var sel = window.getSelection();
             //range.setStart(el.childNodes[0], 5);
@@ -118,29 +309,84 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         }
 
         $scope.inputbind ='search or input';
+
         $scope.onKeyDownInputField = function() {
-            var t = $scope.mmmm.element.innerText;
-            console.log ('inkey onKeyDownInputField t:' + t);
-            if (t.indexOf('search or input') === 0)
+            //var inputText = $scope.mmmm.element.innerText;
+            $scope.count++;
+            O.o('in onKeyDownInputField:'+$scope.count)
+            //console.log ('inkey onKeyDownInputField t:' + t);
+            if (inputText.indexOf('search or input') === 0)
             {
-                console.log ('change it:' + t);
-                $scope.mmmm.element.innerHTML = '';
+                //console.log ('change it:' + t);
+                //$scope.mmmm.element.innerHTML = '';
                 //$scope.mmmm.element.innerText
             }
-
         }
-        $scope.onKeyUpInputField = function() {
-            $scope.count++;
-            var t = $scope.mmmm.element.innerText;
-            console.log ('inkey onKeyUpInputField index t [' + t + ']' );
-            if (t.length > 2)
-            {
-                console.log('t-1:' + t[t.length-1])
-                console.log('t-1:' + t[t.length-1].charCodeAt(0))
-                console.log('t-2:' + t[t.length-2])
-                console.log('t-2:' + t[t.length-2].charCodeAt(0))
-                console.log('a:' + $scope.mmmm.element.innerHTML);
+
+        $scope.toggleVisibility = function(id) {
+            try {
+                var e = document.getElementById(id);
+                //alert ('in toggleVisibility 1 for id ' + id + ', e.style.display:' + e.style.display);
+                if(e.style.display == 'block')
+                    e.style.display = 'none';
+                else {
+                    //alert ('in else')
+                    e.style.display = 'block';
+                }                  ;
+                //alert ('in toggleVisibility 2 for id ' + id + ', e.style.display:' + e.style.display);
+
+            } catch (e) {
+                alert ('in error fir id ' + id + ' e:'+e);
             }
+        }
+
+        $scope.eventClickedTheAnimals = function() {
+            //alert ('in eventClickedTheAnimals');
+            $window.location.href = 'http://jpro.co?q=*';
+            //  $window.location.href = 'http://www.google.com/search?q=' + GLOBAL_commandFromInputBox;
+            //$location.search('hk', this.commandFromInputBox);
+        };
+
+
+        $scope.currentVisibleCount = 0;
+        $scope.toggleVisibilityAll = function() {
+            //alert ('in toggleVisibilityAll');
+            $scope.currentVisibleCount;
+            this.toggleVisibility('idInput1TypeText');
+            this.toggleVisibility('mediumeditorhk');
+            //this.toggleVisibility('ckeditortextareahk');
+            this.toggleVisibility('divForCkeditortextareahk');
+            //this.toggleVisibility('idInput4TypeSpan');
+        }
+
+        //alert ('defining eventClickedTheAnimals ');
+
+        $scope.onKeyUpInputField = function() {
+
+            $scope.count++;
+            O.o('in onKeyUpInputField1:'+$scope.count);
+            //var x = document.getElementById("idInput1TypeText").innerText
+            window.document.title = 'jp:'+$scope.inputbind+$scope.count; // not jpro:
+            //O.o('in onKeyUpInputField2 set title to ============ ['+x + ']');
+
+
+            //O.o('in onKeyUpInputField:'+$scope.count)
+            //var inputText = $scope.mmmm.element.innerText; // medium
+            ////console.log ('inkey onKeyUpInputField index t [' + t + ']' );
+            //
+            //if (inputText.length > 1)
+            //{
+            //    if (inputText[inputText.length-1].charCodeAt(0) === 10)
+            //    {
+            //        //alert       ('enter detected');
+            //        $scope.searchhk(inputText);
+            //    }
+            //    //console.log('t-1:' + t[t.length-1])
+            //    //console.log('t-1:' + t[t.length-1].charCodeAt(0))
+            //    //console.log('t-2:' + t[t.length-2])
+            //    //console.log('t-2:' + t[t.length-2].charCodeAt(0))
+            //    //console.log('a:' + $scope.mmmm.element.innerHTML);
+            //}
             //isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
             //alert ('inkey keypress commandFromInputBox:' + this.inputbind);
             //var t = $scope.mmmm.element.innerText;
@@ -150,9 +396,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    //$scope.mmmm.element.innerText
             //}
 
-
             //console.log('a [' + $scope.mmmm.element.innerText + ']');
-
 
             //$scope.$apply()
         };
@@ -302,10 +546,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         $scope.myFnOnKeyDown = function($index, $event) { // onkey
             //o ('inkey myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
-
         };
-
-
 
         $scope.event_click_timeAgo = function (_id) {
             alert (_id);
@@ -313,7 +554,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         $scope.buttonClickSearchStar = function() {
             this.commandFromInputBox = '*';
-            search();
+            this.searchhk(this.commandFromInputBox);
         }
 
         $scope.eventMouseoverRow = function(i) {
@@ -324,14 +565,18 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.commandFromInputBox = x.innerText;
             //elem.contentEditable = false;
             //console.log ('in eventMouseoverRow set this.commandFromInputBox :' + x.innerText);
-
         };
 
         $scope.eventMouseoverRow2 = function(i) {
             //console.log('A in eventMouseoverRow2 i:' + i);
             var x = document.getElementById('ustodorow'+i);
+
+
             //console.log ('B in eventMouseoverRow x.innerText:' + x.innerText);
-            $scope.commandFromInputBox = x.innerText;
+            //$scope.commandFromInputBox = x.innerText;
+            //$scope.mmmm.element.innerHTML =  x.innerHTML;
+            tinyMCE.get('tinymcetextareahk').setContent(x.innerHTML);
+
             //console.log('C in eventMouseoverRow2 i:' + i);
         };
 
@@ -341,7 +586,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         // selectId
         $scope.yyutdact = function() {
-
             $scope.mmmm.element.focus();
             window.getSelection().setPosition(0)
             console.log ('doneit');
@@ -749,21 +993,37 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             alert ('df');
         };
 
-        $scope.search = function()
+        $scope.searchhk = function(inputbindhk)
         {
+            //alert ('in searchhk:' + inputbindhk)
             $scope.callCountSearch++;
             o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
-            this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
-                //( $location.search.q  , this.commandFromInputBox);
-            ( $location.$$search.q, this.commandFromInputBox);
-            o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
-            o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
-            window.document.title = 'll:'+$location.$$search.q; // not jpro:
-            //alert ('$location.$$search.q:'+$location.$$search.q);
-            //$location.path('/'+this.commandFromInputBox)
+            if (true)
+            {
+                if ($scope.mmmm) {
+                    //var t = $scope.mmmm.element.innerText;
+                    var t =  tinyMCE.get('tinymcetextareahk').getContent({format : 'text'});
+                    //  alert ('search for :' + t)
+                    $scope.ustodos  = Ustodos.query ({q: t});
+                    $location.search('q', t);       // yoo bar foo bar baz
+                    window.document.title = 'jp:'+t; // not jpro:
+                }
+            } else {
+                this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
+                    //( $location.search.q  , this.commandFromInputBox);
+                ( $location.$$search.q, this.commandFromInputBox);
 
-            $scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
-            $location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
+                o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
+                o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
+                window.document.title = 'll:'+$location.$$search.q; // not jpro:
+                //alert ('$location.$$search.q:'+$location.$$search.q);
+                //$location.path('/'+this.commandFromInputBox)
+                $location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
+                $scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
+
+
+            }
+
             //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
             //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));
             //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.utilGetClass(this):'+UtilClassx.utilGetClass(this));
@@ -845,7 +1105,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             });
         };
 
-        $scope.search();
+        $scope.searchhk();
         //O.a ('sssa2');
 
 
@@ -870,9 +1130,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-        //alert ('defining medium');
+        ////alert ('defining medium');
         $scope.mmmm = new Medium({
-            element: document.getElementById('editorhk'),
+            element: document.getElementById('mediumeditorhk'),
             modifier: 'auto',
             placeholder: "",
             autofocus: false,
@@ -917,9 +1177,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         });
 
 
-
-
-
+        //
+        //$scope.init =function() {
+        //    tinyMCE.get('tinymcetextareahk').setContent('<span>some1</span> html');
+        //}
+        //
 
 
 
@@ -974,6 +1236,7 @@ angular.module('ustodos')
     ////})
     .directive('onFinishRender', function ($timeout) {
         O.a('sss2');
+        alert ('done onload');
         return {
             restrict: 'A',
             link: function (scope, element, attr) {
@@ -987,4 +1250,11 @@ angular.module('ustodos')
             }
         }
     });
+
+
+
+
+//alert ('done onload');
+
+
 
