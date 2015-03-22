@@ -115,10 +115,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         $scope.$watch('$viewContentLoaded', function(){
             //alert ('in $viewContentLoaded');
-            var x = document.getElementById('ckeditortextareahk').innerHTML;
+            var x = document.getElementById('idCkeEditorTextarea').innerHTML;
             //alert ('in $viewContentLoaded:' + x);
 
-            var editor = CKEDITOR.instances.ckeditortextareahk;
+            var editor = CKEDITOR.instances.idCkeEditorTextarea;
             editor.focusManager.focus( editor.editable() );
 
         });
@@ -201,8 +201,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
         // ckeditor test
-        //CKEDITOR.replace('ckeditortextareahk');
-        $scope.editor = CKEDITOR.replace( 'ckeditortextareahk', {
+        //CKEDITOR.replace('idCkeEditorTextarea');
+        $scope.editor = CKEDITOR.replace( 'idCkeEditorTextarea', {
             //language: 'fr',
             customConfig: '/lib/ckeditor/config.js',
             startupFocus : true,
@@ -222,6 +222,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             });
             $scope.editor.document.on('keyup', function(event) {
                 console.log('my keyup:' + $scope.editor.getData());
+                document.getElementById('idCkeEditorTextarea').innerHTML = $scope.inputbind;
+
+
             });
             $scope.editor.document.on('keydown', function(event) {
                 console.log('my keydown');
@@ -273,16 +276,16 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
         //CKEDITOR.replace( 'editor1' );
-        //ckeditortextareahk
+        //idCkeEditorTextarea
         //CKEDITOR.on('instanceReady', function (ev) {
         //    editor = ev.editor;
         //
         //    // Show this "on" button.
-        //    document.getElementById('ckeditortextareahk').style.display = '';
+        //    document.getElementById('idCkeEditorTextarea').style.display = '';
         //
         //    // Event fired when the readOnly property changes.
         //    editor.on('readOnly', function () {
-        //        document.getElementById('ckeditortextareahk').style.display = this.readOnly ? 'none' : '';
+        //        document.getElementById('idCkeEditorTextarea').style.display = this.readOnly ? 'none' : '';
         //        //document.getElementById('readOnlyOff').style.display = this.readOnly ? '' : 'none';
         //    });
         //});
@@ -348,16 +351,33 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         };
 
 
-        $scope.currentVisibleCount = 0;
+        $scope.currentVisibleCounter = 2;
         $scope.toggleVisibilityAll = function() {
+
+
+            var arrIds = ['idInput1TypeText', 'mediumeditorhk', 'idDivForCkeEditorTextarea'];
+            var idxon = $scope.currentVisibleCounter++;
+            for (var i = 0; i < arrIds.length; i++)
+            {
+                try {
+                    var e = document.getElementById(arrIds[i]);
+                    if (i == $scope.currentVisibleCounter % arrIds.length)
+                        e.style.display = 'block';
+                    //alert ('in toggleVisibility 1 for id ' + id + ', e.style.display:' + e.style.display);
+                    else
+                        e.style.display = 'none';
+
+                } catch (e) {
+                    alert ('erra on id [' + arrIds[i] + '] e:' + e );
+                }
+            }
+
             //alert ('in toggleVisibilityAll');
-            $scope.currentVisibleCount;
-            this.toggleVisibility('idInput1TypeText');
-            this.toggleVisibility('mediumeditorhk');
-            //this.toggleVisibility('ckeditortextareahk');
-            this.toggleVisibility('divForCkeditortextareahk');
-            //this.toggleVisibility('idInput4TypeSpan');
-        }
+
+            //this.toggleVisibility('idInput1TypeText');
+            //this.toggleVisibility('mediumeditorhk');
+            //this.toggleVisibility('idDivForCkeEditorTextarea');
+                    }
 
         //alert ('defining eventClickedTheAnimals ');
 
@@ -367,6 +387,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             O.o('in onKeyUpInputField1:'+$scope.count);
             //var x = document.getElementById("idInput1TypeText").innerText
             window.document.title = 'jp:'+$scope.inputbind+$scope.count; // not jpro:
+            CKEDITOR.instances.idCkeEditorTextarea.setData($scope.inputbind)
+
             //O.o('in onKeyUpInputField2 set title to ============ ['+x + ']');
 
 

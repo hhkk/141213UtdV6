@@ -11,42 +11,35 @@
                style='height:48px;'
                ng-click='toggleVisibilityAll()'/>
 
-
-        <input class="img-circle text-center" type='image'
-               src='modules/ustodos/img/UsToDoanimalsblack.jpg'
-               style='height:48px;'
-               ng-click='eventClickedTheAnimals()'/>
-
-
-
-
-
         <!--<button ng-click="yyutdact()">Do</button>-->
         <!--<button ng-init='ngInitTinyMceButton()' ng-click="testTinyMce()">testTinyMce()</button>-->
         <!--<button xxng-init='xxtoggleReadOnly()' ng-click="toggleReadOnly()">toggleReadOnly CK EDIT()</button>-->
         <!--<input focus-on="focusMe"/>-->
 
-        <!-- ================ INPUT#1 ======================== -->
-        <input id="idInput1TypeText" type="text" ng-keyup="onKeyUpInputField()"
-               ng-model="inputbind"
-               class="input-textarea" placeholder="Do" required>
+        <span ng-keyup="onKeyUpInputField()">
 
-        <!--ng-bind='inputbind'-->
-        <!--data-ng-model="commandFromInputBox"-->
+            <!-- ================ INPUT#1 ======================== -->
+            <input id="idInput1TypeText" type="text" ng-keyup="onKeyUpInputField()"
+                   ng-model="inputbind"
+                   class="input-textarea" placeholder="Do" required>
 
-        <!-- ================ INPUT#2 ======================== -->
-        <div id='mediumeditorhk' ng-bind="inputbind" ng-init='setCaret()' ng-keyup='onKeyUpInputField()' ng-keydown='onKeyDownInputField()'></div>
-        <!--<textarea id="tinymcetextareahk">Search/Input</textarea>-->
+            <!--ng-bind='inputbind'-->
+            <!--data-ng-model="commandFromInputBox"-->
 
-        <span ng-keydown='onKeyDownInputField()'>
+            <!-- ================ INPUT#2 ======================== -->
+            <div id='mediumeditorhk' ng-bind="inputbind" ng-init='setCaret()' ng-keyup='onKeyUpInputField()' ></div>
+            <!--<textarea id="tinymcetextareahk">Search/Input</textarea>-->
 
-            <!-- ================ INPUT#3 ======================== -->
-        <div id='divForCkeditortextareahk'>
-            <textarea id="ckeditortextareahk" ng-bind="inputbind" ng-keydown='onKeyDownInputField()' name="editor1"
-                      idxx="xxeditor1" rows="10" cols="80">
-                search or input
-            </textarea>
-        </div>
+
+
+                <!-- ================ INPUT#3 ======================== -->
+            <div id='idDivForCkeEditorTextarea'>
+                <textarea id="idCkeEditorTextarea" ng-bind="inputbind" ng-keydown='onKeyDownInputField()' name="editor1"
+                          idxx="xxeditor1" rows="10" cols="80">
+                    search or input
+                </textarea>
+            </div>
+        </span>
 
             <!-- ================ INPUT#4 ======================== -->
             <!--<span id="idInput4TypeSpan" ng-bind="inputbind" xid="ckeditortextareahk" ng-keydown='onKeyDownInputField()' name="editor1"-->
