@@ -236,20 +236,20 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             var xHtml = null;
             if (document.activeElement.id === 'idInput0TypeText')
             {
-                o ('from 0 respondToChangeEvent ');
+                //o ('from 0 respondToChangeEvent ');
                 xText = document.getElementById("idInput0TypeText").value;
             }
             // 1 medium
             else if (document.activeElement.id === 'idMediumEditor')
             {
-                o ('from 1 respondToChangeEvent ');
+                //o ('from 1 respondToChangeEvent ');
                 xText = $scope.mmmm.element.innerText;
                 xHtml = $scope.mmmm.element.innerHTML;
             }
             // 2 cke
             else if (document.activeElement.parentElement.id.indexOf('cke') >= 0)
             {
-                o ('from 2 respondToChangeEvent ') ;
+                //o ('from 2 respondToChangeEvent ') ;
                 xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText()
                 xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
             }
@@ -288,7 +288,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.editor.on('key', function(event) {
                 var x = CKEDITOR.instances.idCkeEditorTextarea.getData();
                 //var xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText()
-                o('raw key x:' + x); // hbkhbk
+                //o('raw key x:' + x); // hbkhbk
                 $scope.respondToChangeEvent();
                 //console.log('raw key xText:' + xText); // hbkhbk
                 //$scope.showFocus();
@@ -429,7 +429,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         };
 
         $scope.onKeyUpInputField = function() {
-            console.log ('onKeyUpInputField'); // hbkhbk
+            //console.log ('onKeyUpInputField'); // hbkhbk
+            //console.log ('onKeyUpInputField'); // hbkhbk
             //$scope.showFocus();
             $scope.respondToChangeEvent()
 
@@ -1272,17 +1273,19 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert ('in searchhk:' + inputbindhk)
             $scope.callCountSearch++;
             o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
-            if (true)
+            if (false)
             {
                 if ($scope.mmmm) {
                     //var t = $scope.mmmm.element.innerText;
-                    var t =  tinyMCE.get('idTinyMceTextArea').getContent({format : 'text'});
+                    //var t =  tinyMCE.get('idTinyMceTextArea').getContent({format : 'text'});
+                    var xText = document.getElementById("idInput0TypeText").value;
                     //  alert ('search for :' + t)
-                    $scope.ustodos  = Ustodos.query ({q: t});
-                    $location.search('q', t);       // yoo bar foo bar baz
-                    window.document.title = 'jp:'+t; // not jpro:
+                    $scope.ustodos  = Ustodos.query ({q: xText});
+                    $location.search('q', xText);       // yoo bar foo bar baz
+                    window.document.title = 'jp:'+xText; // not jpro:
                 }
             } else {
+                alert ('start search');
                 this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
                     //( $location.search.q  , this.commandFromInputBox);
                 ( $location.$$search.q, this.commandFromInputBox);
@@ -1294,6 +1297,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //$location.path('/'+this.commandFromInputBox)
                 $location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
                 $scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
+                alert ('completed search');
 
 
             }
