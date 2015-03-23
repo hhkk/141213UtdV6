@@ -15,7 +15,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$window', '$lo
         //alert ('defining sayhi');
 
         $scope.eventClickedTheAnimals = function() {
-            alert ('in eventClickedTheAnimals');
+            //alert ('in eventClickedTheAnimals');
             //alert ('in sayhi df to run $location.search');
             //$location.path('/')
             //$location.url('http://www.yahoo.com')

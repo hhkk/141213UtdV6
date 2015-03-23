@@ -107,19 +107,30 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         //$rootScope', $compile, $rootElement,
         //    O.a ('sssa1');
 
+
         $scope.pickCkEditorBasedOnPlatform = function()
         {
             var x = "Platform: " + navigator.platform;
             document.getElementById("demo").innerHTML = x;
         }
 
-        $scope.$watch('$viewContentLoaded', function(){
+        $scope.$watch('$viewContentLoaded', function(){ // like onload maybe
             //alert ('in $viewContentLoaded');
-            var x = document.getElementById('idCkeEditorTextarea').innerHTML;
+            //var x = document.getElementById('idCkeEditorTextarea').innerHTML;
             //alert ('in $viewContentLoaded:' + x);
 
-            var editor = CKEDITOR.instances.idCkeEditorTextarea;
-            editor.focusManager.focus( editor.editable() );
+            //var editor = CKEDITOR.instances.idCkeEditorTextarea;
+
+            //alert ('focusManager.focus');
+            //editor.focusManager.focus( editor.editable() );
+
+            CKEDITOR.instances.idCkeEditorTextarea.on('blur', function() {
+                //alert('cke blur fired');
+                $scope.prop2Cke();
+                //$scope.propagateTextChanges();
+            });
+
+            //ng-blur="propagateTextChanges()"
 
         });
 
@@ -127,7 +138,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         //{
         //    console.log ('start testTinyMce');
         //    //tinymce.activeEditor.setContent('<span>some</span> html');
-        //    tinyMCE.get('tinymcetextareahk').setContent('<span>some1</span> html');
+        //    tinyMCE.get('idTinyMceTextArea').setContent('<span>some1</span> html');
         //    //alert ('done testTinyMce');
         //}
 
@@ -151,7 +162,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         $scope.myCustomOnInit = function () {
             //alert("myCustomOnInit from mce");
-            //tinyMCE.get('tinymcetextareahk').setContent('<span>some1</span> html');
+            //tinyMCE.get('idTinyMceTextArea').setContent('<span>some1</span> html');
             //tinymce.activeEditor.setContent('<span>some</span> html');
         }
 
@@ -194,52 +205,102 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         //    ]
         //});
 
-        // tinymce3 works
-        //tinyMCE.init({
-        //    mode : "textareas"
-        //});
+        //tinymce3 works
+        tinyMCE.init({
+            mode : "exact",
+            elements : "idTinyMceTextArea, idTinyMceTextArea"
+        });
 
 
         // ckeditor test
         //CKEDITOR.replace('idCkeEditorTextarea');
+        //alert('setting editor');
         $scope.editor = CKEDITOR.replace( 'idCkeEditorTextarea', {
             //language: 'fr',
             customConfig: '/lib/ckeditor/config.js',
-            startupFocus : true,
+            startupFocus : false,
             uiColor: '#9AB8F3'
         });
 
 
 
+        $scope.respondToChangeEvent = function() {
+
+            //alert ('in $scope.respondToChangeEvent()');
+            // 0 idInput0TypeText
+            // 1 idMediumEditor
+            // 2 parent like CKE
+
+            // 0 text input
+            var xText = null;
+            var xHtml = null;
+            if (document.activeElement.id === 'idInput0TypeText')
+            {
+                o ('from 0 respondToChangeEvent ');
+                xText = document.getElementById("idInput0TypeText").value;
+            }
+            // 1 medium
+            else if (document.activeElement.id === 'idMediumEditor')
+            {
+                o ('from 1 respondToChangeEvent ');
+                xText = $scope.mmmm.element.innerText;
+                xHtml = $scope.mmmm.element.innerHTML;
+            }
+            // 2 cke
+            else if (document.activeElement.parentElement.id.indexOf('cke') >= 0)
+            {
+                o ('from 2 respondToChangeEvent ') ;
+                xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText()
+                xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
+            }
+            else
+            {
+                alert ('errra');
+            }
+            window.document.title = 'jp - '+xText; // not jpro:
+
+            //alert ('document.activeElement.id:' + document.activeElement.id + ', parent:' + document.activeElement.parentElement.id);
+            //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.id);
 
 
 
 
 
+        }
+
+        $scope.editor = CKEDITOR.instances.idCkeEditorTextarea;
         $scope.editor.on('contentDom', function( event ) {
             $scope.editor.document.on('key', function(event) {
                 console.log('my key');
             });
-            $scope.editor.document.on('keyup', function(event) {
-                console.log('my keyup:' + $scope.editor.getData());
-                document.getElementById('idCkeEditorTextarea').innerHTML = $scope.inputbind;
 
+            //$scope.editor.on('keyup', function(event) {
+            //    alert('raw keyup');
+            //});
+            //$scope.editor.document.on('keyup', function(event) {
+            //    console.log('my keyup:' + $scope.editor.getData());
+            //    //tinyMCE.get('idTinyMceTextArea').setContent('<span>some1</span> html'); // 4
+            //});
 
-            });
-            $scope.editor.document.on('keydown', function(event) {
+            $scope.editor.on('keydown', function(event) {
                 console.log('my keydown');
             });
             $scope.editor.on('key', function(event) {
-                //console.log('raw key');
-            });
-            $scope.editor.on('keyup', function(event) {
-                //console.log('raw keyup');
+                var x = CKEDITOR.instances.idCkeEditorTextarea.getData();
+                //var xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText()
+                o('raw key x:' + x); // hbkhbk
+                $scope.respondToChangeEvent();
+                //console.log('raw key xText:' + xText); // hbkhbk
+                //$scope.showFocus();
+
+
+                //alert ('raw key x:' + x)
             });
             $scope.editor.on('keydown', function(event) {
-                //console.log('raw keydown');
+                console.log('raw keydown');
             });
             $scope.editor.document.on('mouseup', function(event) {
-                //console.log('mouseup');
+                console.log('mouseup');
             });
 
             $scope.editor.document.on('blur', function(event) {
@@ -251,9 +312,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //});
 
         });
-
-
-
 
 
 
@@ -296,22 +354,42 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         //}
 
         //$scope.testTinyMce();
-        //tinyMCE.get('tinymcetextareahk').setContent('<span>some2</span> html');
+        //tinyMCE.get('idTinyMceTextArea').setContent('<span>some2</span> html');
 
-
-        $scope.setCaret  = function () {
+        $scope.focusOnId  = function (id) {
             //alert ('in setcaret');
-            var el = document.getElementById("mediumeditorhk");
-            var range = document.createRange();
-            var sel = window.getSelection();
-            //range.setStart(el.childNodes[0], 5);
-            //range.collapse(true);
-            //sel.removeAllRanges();
-            //sel.addRange(range);
-            el.focus();
+            try {
+                if (id !== 'idDivForCkeEditorTextarea')
+                {
+                    //alert ('in focusOnId 1:'+ id);
+                    var el = document.getElementById(id);
+                    var range = document.createRange();
+                    var sel = window.getSelection();
+                    //range.setStart(el.childNodes[0], 5);
+                    //range.collapse(true);
+                    //sel.removeAllRanges();
+                    //sel.addRange(range);
+                    el.focus();
+                }
+                else
+                {
+                    //alert ('focusManager.focus 2');
+                    //var editor = CKEDITOR.instances.idCkeEditorTextarea;
+                    //editor.focusManager.focus( editor.editable() );
+
+                    CKEDITOR.instances.idCkeEditorTextarea.focus();
+
+                }
+
+
+
+            } catch (e) {
+                alert ('era:' + e);
+            }
+
         }
 
-        $scope.inputbind ='search or input';
+        $scope.inputbind ='search or inputx';
 
         $scope.onKeyDownInputField = function() {
             //var inputText = $scope.mmmm.element.innerText;
@@ -350,77 +428,252 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //$location.search('hk', this.commandFromInputBox);
         };
 
+        $scope.onKeyUpInputField = function() {
+            console.log ('onKeyUpInputField'); // hbkhbk
+            //$scope.showFocus();
+            $scope.respondToChangeEvent()
 
-        $scope.currentVisibleCounter = 2;
-        $scope.toggleVisibilityAll = function() {
+            //$scope.propagateTextChanges();
+        };
+
+        $scope.prop0Input = function () {
+            try {
+
+                O.o('start case 0')
+                var x = document.getElementById("idInput0TypeText").value;
+                //alert ('start case 0 x [' + x + ']')
+                // 0 text input
+                //document.getElementById("idInput0TypeText").value = x;
+
+                // 1 medium
+                $scope.mmmm.element.innerHTML = x;
+
+                // 2 CKE
+                CKEDITOR.instances.idCkeEditorTextarea.setData(x);
+                O.o('done case 0')
+            }  catch (e) {
+                alert ('error in prop0Input:' + e)
+            }
+        }
+
+        $scope.prop1Medium = function () {
+            try {
+
+                var x = $scope.mmmm.element.innerText;
+                var xHtml = $scope.mmmm.element.innerHTML;
+                O.o('start case 1 x [' + x + ']')
+                //alert ('start case 1 x:' + x);
+
+                // 0 text input
+                document.getElementById("idInput0TypeText").value = x;
+
+                // 1 medium
+                //$scope.mmmm.element.innerHTML = $scope.inputbind;
+
+                // 2 CKE
+                CKEDITOR.instances.idCkeEditorTextarea.setData(xHtml)
+                O.o('done case 1')
+            }  catch (e) {
+                alert ('error in prop1Medium:' + e)
+            }
+        }
+
+        $scope.prop2Cke = function () {
+            //alert ('start prop2Cke ')
+            try {
+                //alert ('start case 2')
+                var x = CKEDITOR.instances.idCkeEditorTextarea.getData();
+                var xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText()
+
+                O.o('start case 2 x [' + x + ']')
+                // 0 text input
+                document.getElementById("idInput0TypeText").value = xText;
+
+                // 1 medium
+                $scope.mmmm.element.innerHTML = x;
+
+                // 2 CKE
+                //CKEDITOR.instances.idCkeEditorTextarea.setData($scope.inputbind)
+            }  catch (e) {
+                alert ('error in prop2Cke:' + e)
+            }
+        };
 
 
-            var arrIds = ['idInput1TypeText', 'mediumeditorhk', 'idDivForCkeEditorTextarea'];
-            var idxon = $scope.currentVisibleCounter++;
-            for (var i = 0; i < arrIds.length; i++)
-            {
-                try {
-                    var e = document.getElementById(arrIds[i]);
-                    if (i == $scope.currentVisibleCounter % arrIds.length)
-                        e.style.display = 'block';
-                    //alert ('in toggleVisibility 1 for id ' + id + ', e.style.display:' + e.style.display);
-                    else
-                        e.style.display = 'none';
 
-                } catch (e) {
-                    alert ('erra on id [' + arrIds[i] + '] e:' + e );
+        var arrIds = ['idInput0TypeText', 'idMediumEditor', 'idDivForCkeEditorTextarea'];
+        //var arrIds = ['idInput0TypeText', 'idMediumEditor', 'idDivForCkeEditorTextarea', 'idDivForTinyMceEditorTextarea'];
+        $scope.currentVisibleCounter = 0; // arrIds.length-1;
+        $scope.showFocus= function() {
+            alert ('document.activeElement.id:' + document.activeElement.id);
+            alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.id);
+            //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.parentElement.id);
+            //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.parentElement.parentElement.id);
+            //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.parentElement.parentElement.parentElement.id);
+
+        }
+
+        $scope.toggleVisibilityToNext = function() {
+
+            try {
+                //alert ('in toggleVisibilityToNext');
+
+                $scope.currentVisibleCounter++
+                //idInput0TypeText
+                //idMediumEditor
+                //idDivForCkeEditorTextarea
+                //idTinyMceTextArea
+                ////idInput4TypeSpan
+
+                for (var i = 0; i < arrIds.length; i++)
+                {
+                    try {
+                        var e = document.getElementById(arrIds[i]);
+                        if (i == $scope.currentVisibleCounter % arrIds.length) {
+                            e.style.display = 'block';
+                            $scope.focusOnId(arrIds[i]);
+
+                            //alert ('in toggleVisibility 1 for id ' + id + ', e.style.display:' + e.style.display);
+                            //O.o ('in toggleVisibility for id ' + arrIds[i] + ', setting display to:' + e.style.display);
+                            //O.o ('in toggleVisibility $scope.currentVisibleCounter:' + $scope.currentVisibleCounter);
+                            //O.o ('in toggleVisibility arrIds.length:' + arrIds.length);
+                            //O.o ('in toggleVisibility $scope.currentVisibleCounter % arrIds.length:' + ($scope.currentVisibleCounter % arrIds.length));
+                        }
+                        else
+                            e.style.display = 'none';
+
+                    } catch (e) {
+                        alert ('erra in toggleVisibilityToNext loop on id [' + arrIds[i] + '] e:' + e );
+                    }
                 }
+            } catch (e) {
+                alert ('era in toggleVisibilityToNext:' + e);
             }
 
-            //alert ('in toggleVisibilityAll');
+            //alert ('in toggleVisibilityToNext');
 
-            //this.toggleVisibility('idInput1TypeText');
-            //this.toggleVisibility('mediumeditorhk');
+            //this.toggleVisibility('idInput0TypeText');
+            //this.toggleVisibility('idMediumEditor');
             //this.toggleVisibility('idDivForCkeEditorTextarea');
-                    }
+        };
+
+        $scope.toggleVisibilityTo0 = function() {
+            document.getElementById(arrIds[1]).style.display = 'none';
+            document.getElementById(arrIds[2]).style.display = 'none';
+            $scope.focusOnId(arrIds[0]);
+            document.getElementById(arrIds[0]).style.display = 'block';
+        }
+        $scope.toggleVisibilityTo1 = function() {
+            document.getElementById(arrIds[0]).style.display = 'none';
+            document.getElementById(arrIds[2]).style.display = 'none';
+            $scope.focusOnId(arrIds[0]);
+            document.getElementById(arrIds[1]).style.display = 'block';
+        }
+        $scope.toggleVisibilityTo2 = function() {
+            document.getElementById(arrIds[0]).style.display = 'none';
+            document.getElementById(arrIds[1]).style.display = 'none';
+            $scope.focusOnId(arrIds[0]);
+            document.getElementById(arrIds[2]).style.display = 'block';
+        }
+
 
         //alert ('defining eventClickedTheAnimals ');
 
-        $scope.onKeyUpInputField = function() {
+        $scope.eventBlur0InputText = function () {
+            $scope.prop0Input();
 
-            $scope.count++;
-            O.o('in onKeyUpInputField1:'+$scope.count);
-            //var x = document.getElementById("idInput1TypeText").innerText
-            window.document.title = 'jp:'+$scope.inputbind+$scope.count; // not jpro:
-            CKEDITOR.instances.idCkeEditorTextarea.setData($scope.inputbind)
+        };
 
-            //O.o('in onKeyUpInputField2 set title to ============ ['+x + ']');
+        $scope.eventBlur1Medium = function () {
+
+            $scope.prop1Medium();
+        };
 
 
-            //O.o('in onKeyUpInputField:'+$scope.count)
-            //var inputText = $scope.mmmm.element.innerText; // medium
-            ////console.log ('inkey onKeyUpInputField index t [' + t + ']' );
-            //
-            //if (inputText.length > 1)
-            //{
-            //    if (inputText[inputText.length-1].charCodeAt(0) === 10)
-            //    {
-            //        //alert       ('enter detected');
-            //        $scope.searchhk(inputText);
-            //    }
-            //    //console.log('t-1:' + t[t.length-1])
-            //    //console.log('t-1:' + t[t.length-1].charCodeAt(0))
-            //    //console.log('t-2:' + t[t.length-2])
-            //    //console.log('t-2:' + t[t.length-2].charCodeAt(0))
-            //    //console.log('a:' + $scope.mmmm.element.innerHTML);
-            //}
-            //isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
-            //alert ('inkey keypress commandFromInputBox:' + this.inputbind);
-            //var t = $scope.mmmm.element.innerText;
-            //if (t.indexOf('search or input') === 1)
-            //{
-            //    $scope.mmmm.element.innerText = 'joe';
-            //    //$scope.mmmm.element.innerText
-            //}
+        $scope.eventBlur2cke = function () {
 
-            //console.log('a [' + $scope.mmmm.element.innerText + ']');
+            $scope.prop2Cke();
+        };
 
-            //$scope.$apply()
+
+        $scope.alerthk = function () {
+
+            alert ('in alerthk:' );
+        };
+
+        $scope.propagateTextChanges = function() {
+            try {
+                $scope.count++;
+                O.o('in propagateTextChanges:' + propagateTextChanges);
+                O.o('in onKeyUpInputField1:'+$scope.count);
+                //O.o('in onKeyUpInputField $scope.inputbind:'+$scope.inputbind);
+
+                // 0 input text
+                if ($scope.currentVisibleCounter % arrIds.length == 0)
+                {
+                    prop0Input();
+                }
+                // 1 medium mmmm
+                else if ($scope.currentVisibleCounter % arrIds.length == 1)
+                {
+                    prop1Medium();
+                }
+                // 2 cke
+                else if ($scope.currentVisibleCounter % arrIds.length == 2)
+                {
+                    prop2Cke();
+                } else{
+                    alert ('fail!!')
+                }
+                window.document.title = 'jp:'+$scope.mmmm.element.innerText; // not jpro:
+
+                //tinyMCE.activeEditor.setContent($scope.inputbind);
+
+                // had trouble with the set on mce - killed it for now
+                //var x = tinyMCE.get('idTinyMceTextArea').getContent();;
+                //O.o('current mce :' + x )
+                //tinyMCE.get('idTinyMceTextArea').setContent($scope.inputbind);;
+
+
+                //var x = document.getElementById("idInput0TypeText").innerText
+
+                //O.o('in onKeyUpInputField2 set title to ============ ['+x + ']');
+
+
+                //O.o('in onKeyUpInputField:'+$scope.count)
+                //var inputText = $scope.mmmm.element.innerText; // medium
+                ////console.log ('inkey onKeyUpInputField index t [' + t + ']' );
+                //
+                //if (inputText.length > 1)
+                //{
+                //    if (inputText[inputText.length-1].charCodeAt(0) === 10)
+                //    {
+                //        //alert       ('enter detected');
+                //        $scope.searchhk(inputText);
+                //    }
+                //    //console.log('t-1:' + t[t.length-1])
+                //    //console.log('t-1:' + t[t.length-1].charCodeAt(0))
+                //    //console.log('t-2:' + t[t.length-2])
+                //    //console.log('t-2:' + t[t.length-2].charCodeAt(0))
+                //    //console.log('a:' + $scope.mmmm.element.innerHTML);
+                //}
+                //isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false);
+                //alert ('inkey keypress commandFromInputBox:' + this.inputbind);
+                //var t = $scope.mmmm.element.innerText;
+                //if (t.indexOf('search or input') === 1)
+                //{
+                //    $scope.mmmm.element.innerText = 'joe';
+                //    //$scope.mmmm.element.innerText
+                //}
+
+                //console.log('a [' + $scope.mmmm.element.innerText + ']');
+
+                //$scope.$apply()
+
+            } catch (e) {
+                alert ('e:' + e);
+            }
+
         };
 
 
@@ -552,8 +805,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         var o = O.o;
 
-        $scope.commandFromInputBox = 'lll';
-
         $scope.keyCount = 0;
 
         $document.bind('keypress', function(event) {
@@ -597,7 +848,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //console.log ('B in eventMouseoverRow x.innerText:' + x.innerText);
             //$scope.commandFromInputBox = x.innerText;
             //$scope.mmmm.element.innerHTML =  x.innerHTML;
-            tinyMCE.get('tinymcetextareahk').setContent(x.innerHTML);
+            tinyMCE.get('idTinyMceTextArea').setContent(x.innerHTML);
 
             //console.log('C in eventMouseoverRow2 i:' + i);
         };
@@ -608,6 +859,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         // selectId
         $scope.yyutdact = function() {
+            alert ('yyutdact');
             $scope.mmmm.element.focus();
             window.getSelection().setPosition(0)
             console.log ('doneit');
@@ -1024,7 +1276,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             {
                 if ($scope.mmmm) {
                     //var t = $scope.mmmm.element.innerText;
-                    var t =  tinyMCE.get('tinymcetextareahk').getContent({format : 'text'});
+                    var t =  tinyMCE.get('idTinyMceTextArea').getContent({format : 'text'});
                     //  alert ('search for :' + t)
                     $scope.ustodos  = Ustodos.query ({q: t});
                     $location.search('q', t);       // yoo bar foo bar baz
@@ -1036,7 +1288,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 ( $location.$$search.q, this.commandFromInputBox);
 
                 o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
-                o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
+                //o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
                 window.document.title = 'll:'+$location.$$search.q; // not jpro:
                 //alert ('$location.$$search.q:'+$location.$$search.q);
                 //$location.path('/'+this.commandFromInputBox)
@@ -1152,9 +1404,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-        ////alert ('defining medium');
+        //alert ('defining medium');
         $scope.mmmm = new Medium({
-            element: document.getElementById('mediumeditorhk'),
+            element: document.getElementById('idMediumEditor'),
             modifier: 'auto',
             placeholder: "",
             autofocus: false,
@@ -1197,11 +1449,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 /*default paste event handler*/
             }
         });
-
+        //alert ('done defining medium');
 
         //
         //$scope.init =function() {
-        //    tinyMCE.get('tinymcetextareahk').setContent('<span>some1</span> html');
+        //    tinyMCE.get('idTinyMceTextArea').setContent('<span>some1</span> html');
         //}
         //
 
@@ -1273,7 +1525,14 @@ angular.module('ustodos')
         }
     });
 
-
+//window.onload = function()
+//{
+    //alert ('onload ');
+    //CKEDITOR.replace( 'editor1' );
+    //CKEDITOR.instances.editor1.on('blur', function() {
+    //    alert('onblur fired');
+    //});
+//};
 
 
 //alert ('done onload');

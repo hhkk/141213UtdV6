@@ -3,50 +3,68 @@
 
     <div ng-address-bar></div><br>
 
+
     <section data-ng-controller="UstodosController" ng-init="keyCount=0;ngInitTopLevel()">
         <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
         <input class="hkToolbarElement" type='image'
-
+               ng-click='toggleVisibilityToNext()'
                src='modules/ustodos/img/UsToDoanimalsblack.jpg'
-               style='height:48px;'
-               ng-click='toggleVisibilityAll()'/>
+               title="toggleVisibilityToNext"
+               style='height:32px;'
+                />
+        <input class="hkToolbarElement" type='image'
+               ng-click='toggleVisibilityTo0()'
+               src='modules/ustodos/img/UsToDoanimalsblack.jpg'
+               title="toggleVisibilityTo0"
+               style='height:32px;'
+                />
+        <input class="hkToolbarElement" type='image'
+               ng-click='toggleVisibilityTo1()'
+               src='modules/ustodos/img/UsToDoanimalsblack.jpg'
+               title="toggleVisibilityTo1"
+               style='height:32px;'
+                />
+        <input class="hkToolbarElement" type='image'
+               ng-click='toggleVisibilityTo2()'
+               src='modules/ustodos/img/UsToDoanimalsblack.jpg'
+               title="toggleVisibilityTo2"
+               style='height:32px;'
+                />
+        <!--<input type="text" ng-model="currentVisibleCounter"/>-->
 
         <!--<button ng-click="yyutdact()">Do</button>-->
         <!--<button ng-init='ngInitTinyMceButton()' ng-click="testTinyMce()">testTinyMce()</button>-->
         <!--<button xxng-init='xxtoggleReadOnly()' ng-click="toggleReadOnly()">toggleReadOnly CK EDIT()</button>-->
         <!--<input focus-on="focusMe"/>-->
 
-        <span ng-keyup="onKeyUpInputField()">
+        <span ng-keyup="this.onKeyUpInputField()">
 
-            <!-- ================ INPUT#1 ======================== -->
-            <input id="idInput1TypeText" type="text" ng-keyup="onKeyUpInputField()"
-                   ng-model="inputbind"
-                   class="input-textarea" placeholder="Do" required>
+            <!-- ================ INPUT#0 ======================== -->
+            <input id="idInput0TypeText" type="text" ng-keyup="this.onKeyUpInputField()"
+                   class="input-textarea" placeholder="Do" ng-blur="eventBlur0InputText()" required>
+                   <!--ng-model="inputbind"-->
 
             <!--ng-bind='inputbind'-->
             <!--data-ng-model="commandFromInputBox"-->
 
+            <!-- ================ INPUT#1 ======================== -->
+            <div id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" xxng-keyup='this.onKeyUpInputField()' ></div>
+
+
             <!-- ================ INPUT#2 ======================== -->
-            <div id='mediumeditorhk' ng-bind="inputbind" ng-init='setCaret()' ng-keyup='onKeyUpInputField()' ></div>
-            <!--<textarea id="tinymcetextareahk">Search/Input</textarea>-->
+            <div id='idDivForCkeEditorTextarea' ng-keyup='this.onKeyUpInputField()'  ng-blur="xxpropagateTextChanges()">
+                    <textarea id="idCkeEditorTextarea"
+                              ng-blur="this.alerthk()"   xxng-keyup='this.onKeyUpInputField()'
+                              name="idCkeEditorTextarea"
+                              idxx="xxeditor1" rows="10" cols="80">
 
-
-
-                <!-- ================ INPUT#3 ======================== -->
-            <div id='idDivForCkeEditorTextarea'>
-                <textarea id="idCkeEditorTextarea" ng-bind="inputbind" ng-keydown='onKeyDownInputField()' name="editor1"
-                          idxx="xxeditor1" rows="10" cols="80">
-                    search or input
                 </textarea>
             </div>
-        </span>
 
-            <!-- ================ INPUT#4 ======================== -->
-            <!--<span id="idInput4TypeSpan" ng-bind="inputbind" xid="ckeditortextareahk" ng-keydown='onKeyDownInputField()' name="editor1"-->
-                      <!--idxx="xxeditor1" rows="10" cols="80">-->
-                <!--search or input-->
-            <!--</span >-->
-
+            <!-- ================ INPUT#3 ======================== -->
+            <!--<div id='idDivForTinyMceEditorTextarea'>-->
+                <!--<textarea id="idTinyMceTextArea">Search/Input</textarea>-->
+            <!--</div>-->
         </span>
 
         <div class="hkcssPosFixed">
