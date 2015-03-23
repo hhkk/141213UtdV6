@@ -29,6 +29,27 @@ var resolveFinalCommandBetweenUrlAndInputBox = function(commandFromInputBox, com
 };
 
 
+//if ( typeof String.prototype.startsWith != 'function' ) {
+//    String.prototype.startsWith = function( str ) {
+//        return this.substring( 0, str.length ) === str;
+//    }
+//} else
+//    alert('startswith defined already');
+//
+//;
+//
+////alert( "hello world".startsWith( "hello" ) );
+//
+//if ( typeof String.prototype.endsWith != 'function' ) {
+//    String.prototype.endsWith = function( str ) {
+//        return this.substring( this.length - str.length, this.length ) === str;
+//    }
+//}
+//else
+//    alert('endswith defined already');
+//
+//alert( "hello world".endsWith( "world"));
+
 
 // Ustodos controller
 //var angularModule = angular.module('ustodos').directive('onFinishRender', function ($timeout) {
@@ -255,23 +276,55 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // 0 text input
             var xText = null;
             var xHtml = null;
+            var bShouldIsearch = false;
+            var bShouldIsave = false;
 
             switch($scope.whichInputIsInFocus()) {
                 case $scope.ns.Input.INPUT_0_TEXT:
                     xText = document.getElementById("idInput0TypeText").value;
+                    if (xText.charCodeAt(xText.length-1) === 32)
+                        bShouldIsearch = true;
                     break;
                 case $scope.ns.Input.INPUT_1_MEDIUM:
                     xText = $scope.mmmm.element.innerText;
                     xHtml = $scope.mmmm.element.innerHTML;
+                    var xHtmlStripped = xHtml.replace('<p>','');
+                    xHtmlStripped = xHtmlStripped.replace('</p>','');
+                    xHtmlStripped = xHtmlStripped.trim();
+                    if (xHtmlStripped.endsWith("&nbsp;")) {
+                        bShouldIsearch = true;
+                        //alert ('yes search');
+                    }
+                    //else
+                        ///alert ('no search');
+
                     break;
                 case $scope.ns.Input.INPUT_2_CKE:
                     xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText()
                     xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
+                    var xHtmlStripped = xHtml.replace('<p>','');
+                    xHtmlStripped = xHtmlStripped.replace('</p>','');
+                    xHtmlStripped = xHtmlStripped.trim();
+                    if (xHtmlStripped.endsWith("&nbsp;")) {
+                        bShouldIsearch = true;
+                        //alert ('yes search');
+                    }
                     break;
                 default:
                     alert ('era - bad input resolution');
             }
-            window.document.title = 'jp2 - '+xText; // not jpro:
+            //alert ('xText [' + xText + ']');
+            //alert ('xHtml [' + xHtml + ']');
+            //alert ('xHtmlStripped [' + xHtmlStripped + ']');
+            //alert ('xText [' + xText[xText.length-1] + ']')
+            //alert ('xText -1 [' + xText.charCodeAt(xText.length-1) + ']');
+            //alert ('xText -2 [' + xText.charCodeAt(xText.length-2) + ']');
+            //alert ('xText -3 [' + xText.charCodeAt(xText.length-3) + ']');
+            //window.document.title = 'jp2 - '+xText; // not jpro:
+            if (bShouldIsearch)
+            {
+                $scope.searchhk(xText);
+            }
 
             //alert ('document.activeElement.id:' + document.activeElement.id + ', parent:' + document.activeElement.parentElement.id);
             //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.id);
@@ -426,18 +479,18 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         $scope.inputbind ='search or inputx';
 
-        $scope.onKeyDownInputField = function() {
-            //var inputText = $scope.mmmm.element.innerText;
-            $scope.count++;
-            O.o('in onKeyDownInputField:'+$scope.count)
-            //console.log ('inkey onKeyDownInputField t:' + t);
-            if (inputText.indexOf('search or input') === 0)
-            {
-                //console.log ('change it:' + t);
-                //$scope.mmmm.element.innerHTML = '';
-                //$scope.mmmm.element.innerText
-            }
-        }
+        //$scope.onKeyDownInputField = function() {
+        //    //var inputText = $scope.mmmm.element.innerText;
+        //    $scope.count++;
+        //    O.o('in onKeyDownInputField:'+$scope.count)
+        //    //console.log ('inkey onKeyDownInputField t:' + t);
+        //    if (inputText.indexOf('search or input') === 0)
+        //    {
+        //        //console.log ('change it:' + t);
+        //        //$scope.mmmm.element.innerHTML = '';
+        //        //$scope.mmmm.element.innerText
+        //    }
+        //}
 
         $scope.toggleVisibility = function(id) {
             try {
@@ -464,7 +517,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         };
 
         $scope.onKeyUpInputField = function() {
-            //console.log ('onKeyUpInputField'); // hbkhbk
+            console.log ('onKeyUpInputField'); // hbkhbk
             //console.log ('onKeyUpInputField'); // hbkhbk
             //$scope.showFocus();
             $scope.respondToChangeEvent()
@@ -641,7 +694,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             try {
                 $scope.count++;
                 O.o('in propagateTextChanges:' + propagateTextChanges);
-                O.o('in onKeyUpInputField1:'+$scope.count);
+                //O.o('in onKeyUpInputField1:'+$scope.count);
                 //O.o('in onKeyUpInputField $scope.inputbind:'+$scope.inputbind);
 
                 // 0 input text
@@ -1306,36 +1359,40 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         $scope.searchhk = function(inputbindhk)
         {
+            $scope.searchedFor = inputbindhk.trim();
             //alert ('in searchhk:' + inputbindhk)
             $scope.callCountSearch++;
-            o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
-            if (false)
+            //o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
+            //if (false)
+            //{
+            //    if ($scope.mmmm) {
+            //        //var t = $scope.mmmm.element.innerText;
+            //        //var t =  tinyMCE.get('idTinyMceTextArea').getContent({format : 'text'});
+            //        var xText = document.getElementById("idInput0TypeText").value;
+            //        //  alert ('search for :' + t)
+            //        $scope.ustodos  = Ustodos.query ({q: xText});
+            //        $location.search('q', xText);       // yoo bar foo bar baz
+            //        window.document.title = 'jp:'+xText; // not jpro:
+            //    }
+            //} else
             {
-                if ($scope.mmmm) {
-                    //var t = $scope.mmmm.element.innerText;
-                    //var t =  tinyMCE.get('idTinyMceTextArea').getContent({format : 'text'});
-                    var xText = document.getElementById("idInput0TypeText").value;
-                    //  alert ('search for :' + t)
-                    $scope.ustodos  = Ustodos.query ({q: xText});
-                    $location.search('q', xText);       // yoo bar foo bar baz
-                    window.document.title = 'jp:'+xText; // not jpro:
-                }
-            } else {
-                alert ('start search');
-                this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
-                    //( $location.search.q  , this.commandFromInputBox);
-                ( $location.$$search.q, this.commandFromInputBox);
+                O.o ('start search');
+                //this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
+                //    //( $location.search.q  , this.commandFromInputBox);
+                //( $location.$$search.q, this.commandFromInputBox);
+                //o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
 
-                o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
                 //o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
-                window.document.title = 'jps:'+$location.$$search.q; // not jpro:
+                //window.document.title = 'jps:'+$location.$$search.q; // not jpro:
+                window.document.title = 'jps:'+inputbindhk; // not jpro:
                 //alert ('$location.$$search.q:'+$location.$$search.q);
                 //$location.path('/'+this.commandFromInputBox)
-                $location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
-                $scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
-                alert ('completed search');
-
-
+            //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
+            //$scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
+            //O.o  ('completed search');
+                $location.search('q', inputbindhk);       // yoo bar foo bar baz
+                $scope.ustodos  = Ustodos.query ({q: inputbindhk});
+                O.o  ('completed search');
             }
 
             //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
@@ -1419,7 +1476,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             });
         };
 
-        $scope.searchhk();
+        $scope.searchhk('*');
         //O.a ('sssa2');
 
 
