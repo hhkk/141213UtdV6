@@ -267,7 +267,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         }
 
 
-        $scope.respondToChangeEvent = function()
+        $scope.respondToChangeEvent = function(keyCode)
         {
             //alert ('in $scope.respondToChangeEvent()');
             // 0 idInput0TypeText
@@ -323,7 +323,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert ('xText -2 [' + xText.charCodeAt(xText.length-2) + ']');
             //alert ('xText -3 [' + xText.charCodeAt(xText.length-3) + ']');
             //window.document.title = 'jp2 - '+xText; // not jpro:
-            if (bShouldIsearch)
+            if (keyCode === 13 || bShouldIsearch)
             {
                 $scope.searchhk(xText);
             }
@@ -336,10 +336,25 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         $scope.editor.on( 'contentDom', function() {
             //alert ('in contentDom1');
             var editable = $scope.editor.editable();
-            editable.attachListener( editable, 'keyup', function(ev) {
-                O.o ('in contentDom2 ' + ev);
-                console.log( $scope.editor.getData() );
-                $scope.respondToChangeEvent();
+            editable.attachListener( editable, 'keyup', function(event) {
+                //var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
+
+                if ( !event.data.$.ctrlKey && !event.data.$.metaKey )
+                {
+                    // something changed
+                    O.o ( '1 in contentdom ' + $scope.editor.getData() );
+                    O.o ( '2 in contentdom ' + event.data.$.keyCode);
+                    O.o ( '3 in contentdom ' + !event.data.$.ctrlKey && !event.data.$.metaKey);
+                    $scope.respondToChangeEvent(event.data.$.keyCode);
+                }
+
+
+                //var keyCode= keyEvent.getKey();
+                //O.o ( '1 in contentdom ' + $scope.editor.getData() );
+                //O.o ( '2 in contentdom ' + keyCode);
+                //O.o ( '2 in contentdom ' + !event.data.$.ctrlKey && !event.data.$.metaKey);
+                //O.o ( $scope.editor.getData() );
+                //$scope.respondToChangeEvent();
             } );
         } );
 
@@ -528,9 +543,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         //$scope.onKeyDown = function ($event) {
         //    $scope.onKeyDownResult = getKeyboardEventResult($event, "Key down");
         //};
-        $scope.onKeyUp = function ($event) {
-            O.o('onKeyUp:' + getKeyboardEventResult($event, "Key up")); // hbkhbk
-            $scope.respondToChangeEvent()
+        $scope.onKeyUp = function (keyEvent) {
+            var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
+            O.o('onKeyUp:' + keyCode);
+            //O.o('onKeyUp:' + getKeyboardEventResult($event, "Key up")); // hbkhbk
+            $scope.respondToChangeEvent(keyCode)
         };
         //$scope.onKeyUp = function(ev) {
         //    ////alert('onKeyUp:' + ev); // hbkhbk
@@ -1394,10 +1411,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             alert ('df');
         };
 
-        $scope.searchhk = function(inputbindhk)
+        $scope.searchhk = function(searchInputCommand)
         {
-            $scope.searchedFor = inputbindhk.trim();
-            //alert ('in searchhk:' + inputbindhk)
+            $scope.searchedFor = searchInputCommand.trim();
+            O.o ('in searchhk [' + searchInputCommand + ']')
             $scope.callCountSearch++;
             //o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
             //if (false)
@@ -1421,14 +1438,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 //o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
                 //window.document.title = 'jps:'+$location.$$search.q; // not jpro:
-                window.document.title = 'jps:'+inputbindhk; // not jpro:
+                window.document.title = 'jps:'+searchInputCommand; // not jpro:
                 //alert ('$location.$$search.q:'+$location.$$search.q);
                 //$location.path('/'+this.commandFromInputBox)
             //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
             //$scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
             //O.o  ('completed search');
-                $location.search('q', inputbindhk);       // yoo bar foo bar baz
-                $scope.ustodos  = Ustodos.query ({q: inputbindhk});
+                $location.search('q', searchInputCommand);       // yoo bar foo bar baz
+                $scope.ustodos  = Ustodos.query ({q: searchInputCommand});
                 O.o  ('completed search');
             }
 

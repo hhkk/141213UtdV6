@@ -12,11 +12,15 @@
         <!--<button ng-init='ngInitTinyMceButton()' ng-click="testTinyMce()">testTinyMce()</button>-->
         <!--<button xxng-init='xxtoggleReadOnly()' ng-click="toggleReadOnly()">toggleReadOnly CK EDIT()</button>-->
         <!--<input focus-on="focusMe"/>-->
+        <!--<input class="hkToolbarElement" type='image' style="height:20px;"-->
+               <!--ng-click='toggleVisibilityToNext()'-->
+               <!--src='modules/ustodos/img/UsToDoanimalsblack.jpg'-->
+               <!--title="Next Editor"-->
+               <!--style='height:32px;'-->
+                <!--/>-->
         <input class="hkToolbarElement" type='image' style="height:20px;"
-               ng-click='toggleVisibilityToNext()'
-               src='modules/ustodos/img/UsToDoanimalsblack.jpg'
-               title="Next Editor"
-               style='height:32px;'
+               ng-click="searchhk('*')"                src='/img/Asterisk.png'
+               title="Search all"
                 />
         <input class="hkToolbarElement" type='image' style="height:8px;"
                ng-click='toggleVisibilityTo0()'                src='/img/input0OneLine.png'
@@ -31,6 +35,8 @@
                title="Rich Editor"
                 />
 
+        <br>
+        <br>
 
 
         <span ng-keyup="xxonKeyUponKeyUp($event)">
@@ -68,86 +74,95 @@
                 <!--<textarea id="idTinyMceTextArea">Search/Input</textarea>-->
             <!--</div>-->
         </span>
-
-        <div class="hkcssPosFixed">
-
-            <span class="col-md-12">
-
-                <!-- HKACTION - HIT ENTER IN TEXT BOX -->
-                    <form class="form-horizontal" data-ng-submit="searchhk('s')" novalidate>
-                    <fieldset>
-                        <div class="form-group">
-                            <br>
-                            <div class="controls">
-
-
-                                <!-- Place this in the body of the page content -->
-
-                                <!--<div>this.commands.length: <span ng-bind="this.commands.length"></span ></div>-->
-                                <!--<input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">-->
-                                <!-- HKACTION - KEY UP IN TEXT BOX -->
-
-                                &nbsp;
-
-                                <!-- HKACTION - CLICK ACT -->
-                                <span class="dev-notes">
-                                    <button ng-click="yyutdact()" ng-init="count=0">Do</button>
-                                    <!--operators.length:{{operators.length}}-->
-                                    <!--&nbsp;-->
-                                    <!--<span>Operator is: {{filterCondition.operator}}</span>-->
-
-                                    <select
-                                            id='selectId'
-                                            ng-change="this.utdEventSelectedEngine()"
-                                            ng-model="selectModel"
-                                            ng-options="operator.value as operator.displayName for
+        <br>
+        <span id="idFilterCount" >
+            filter: <span ng-bind=('('+this.searchedFor+')')></span >
+            count: <span ng-bind=('('+this.ustodos.length+')')></span >
+            &nbsp;&nbsp;
+            <!--<button ng-click="this.buttonClickSearchStar()">*</button>-->
+            <!--<button ng-click="this.buttonClickSearchClear()">Clear</button>-->
+            <select
+                id='selectId'
+                ng-change="this.utdEventSelectedEngine()"
+                ng-model="selectModel"
+                ng-options="operator.value as operator.displayName for
                                                 operator in operators | orderBy:'displayName'"
-                                            ng-mouseover="showSelectDropdown()"
-                                            class="xxform-control"
-                                        ></select>
-                                        <!--value="this.selectModel"-->
-                                        &nbsp;
-                                        <!--<span>Operator is: {{filterCondition.operator}}</span>-->
+                ng-mouseover="showSelectDropdown()"
+                class="xxform-control"
+                ></select>
+        </span>
+        <br>
+        <br>
 
-                                        <!--WORKS!! http://jsfiddle.net/aBccw/-->
-                                        <!--<select ng-change="this.selectChangeEvenHandler()"-->
-                                        <!--id='selectId'-->
-                                        <!--class="xxform-control"-->
-                                        <!--ng-model="filterCondition"-->
-                                        <!--ng-options="operator.value as operator.displayName for operator in operators | orderBy: 'displayName'">-->
-                                        <!--</select>-->
-                                        &nbsp;
-                                        Dirty: <span ng-bind ='areThereChanges'></span>
-                                        <!--areThereChanges2<span ng-bind = {{areThereChanges}}></span>yy-->
+        <!--<div class="hkcssPosFixed">-->
 
-                                        <!--<span ng-bind=('('+this.ustodos.length+')')></span >-->
-                                        <div id="idFilterCount">
-                                            filter: <span ng-bind=('('+this.searchedFor+')')></span >
-                                            count: <span ng-bind=('('+this.ustodos.length+')')></span >
-                                            <button ng-click="this.buttonClickSearchStar()">*</button>
-                                            <!--<button ng-click="this.buttonClickSearchClear()">Clear</button>-->
-                                        </div>
-                                    </select>
+            <!--<span class="col-md-12">-->
 
-                                </span>
+                <!--&lt;!&ndash; HKACTION - HIT ENTER IN TEXT BOX &ndash;&gt;-->
+                    <!--<form class="form-horizontal" data-ng-submit="searchhk('s')" novalidate>-->
+                    <!--<fieldset>-->
+                        <!--<div class="form-group">-->
+                            <!--<br>-->
+                            <!--<div class="controls">-->
 
-                            </div>
-                        </div>
-                        <div data-ng-show="error" class="text-danger">
-                            <strong data-ng-bind="error"></strong>
-                        </div>
-                    </fieldset>
-                </form>
 
-                <!--<a ng-href="http://u2d.co" target="_blank">UsToDo</a>f-->
+                                <!--&lt;!&ndash; Place this in the body of the page content &ndash;&gt;-->
 
-                <a ng-href="{{ $scope.post[0]}}">{{ $scope.post[0] }}</a>
+                                <!--&lt;!&ndash;<div>this.commands.length: <span ng-bind="this.commands.length"></span ></div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">&ndash;&gt;-->
+                                <!--&lt;!&ndash; HKACTION - KEY UP IN TEXT BOX &ndash;&gt;-->
 
-                <!--<div ng-bind-html-unsafe='htmlString'></div>f-->
 
-                <!--<button ng-click="count = count + 1" ng-init="count=0">-->
-            </span>
-        </div>
+                                <!--&lt;!&ndash; HKACTION - CLICK ACT &ndash;&gt;-->
+                                <!--&lt;!&ndash;<span class="dev-notes">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<button ng-click="yyutdact()" ng-init="count=0">Do</button>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;operators.length:{{operators.length}}&ndash;&gt;-->
+                                    <!--&lt;!&ndash;&nbsp;&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span>Operator is: {{filterCondition.operator}}</span>&ndash;&gt;-->
+
+                                        <!--&lt;!&ndash;value="this.selectModel"&ndash;&gt;-->
+                                        <!--&nbsp;-->
+                                        <!--&lt;!&ndash;<span>Operator is: {{filterCondition.operator}}</span>&ndash;&gt;-->
+
+                                        <!--&lt;!&ndash;WORKS!! http://jsfiddle.net/aBccw/&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<select ng-change="this.selectChangeEvenHandler()"&ndash;&gt;-->
+                                        <!--&lt;!&ndash;id='selectId'&ndash;&gt;-->
+                                        <!--&lt;!&ndash;class="xxform-control"&ndash;&gt;-->
+                                        <!--&lt;!&ndash;ng-model="filterCondition"&ndash;&gt;-->
+                                        <!--&lt;!&ndash;ng-options="operator.value as operator.displayName for operator in operators | orderBy: 'displayName'">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;&nbsp;&ndash;&gt;-->
+                                        <!--&lt;!&ndash;Dirty: <span ng-bind ='areThereChanges'></span>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;areThereChanges2<span ng-bind = {{areThereChanges}}></span>yy&ndash;&gt;-->
+
+                                        <!--&lt;!&ndash;<span ng-bind=('('+this.ustodos.length+')')></span >&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<div id="idFilterCount">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;filter: <span ng-bind=('('+this.searchedFor+')')></span >&ndash;&gt;-->
+                                            <!--&lt;!&ndash;count: <span ng-bind=('('+this.ustodos.length+')')></span >&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<button ng-click="this.buttonClickSearchStar()">*</button>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;&lt;!&ndash;<button ng-click="this.buttonClickSearchClear()">Clear</button>&ndash;&gt;&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;</span>&ndash;&gt;-->
+
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div data-ng-show="error" class="text-danger">-->
+                            <!--<strong data-ng-bind="error"></strong>-->
+                        <!--</div>-->
+                    <!--</fieldset>-->
+                <!--</form>-->
+
+                <!--&lt;!&ndash;<a ng-href="http://u2d.co" target="_blank">UsToDo</a>f&ndash;&gt;-->
+
+                <!--<a ng-href="{{ $scope.post[0]}}">{{ $scope.post[0] }}</a>-->
+
+                <!--&lt;!&ndash;<div ng-bind-html-unsafe='htmlString'></div>f&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<button ng-click="count = count + 1" ng-init="count=0">&ndash;&gt;-->
+            <!--</span>-->
+        <!--</div>-->
         <div class="hkcssPosTable">
             <table>
                 <!--<tr ng-repeat="ustodo in ustodos ">f-->
