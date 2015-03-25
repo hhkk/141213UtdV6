@@ -56,14 +56,12 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
                     });
                     //alert ('in hkAddNewCommandData in for data commandDescription: '+ command.commandDescription);
                     // Redirect after save
-                    command.$save(function(response) {
-                    //$location.path('commands/' + response._id);
-                    // Clear form fields
-                    //$scope.name = '';
-                    console.log ('success:');
-                }, function(errorResponse) {
-                    alert ('era:' + errorResponse.data.message);
-                });
+                    command.$save( function(response) {
+                        //$location.path('commands/' + response._id);
+                        // Clear form fields
+                        //$scope.name = '';
+                        console.log ('success:');
+                    });
 
                 }
                 //alert ('in hkAddNewCommandData2');
