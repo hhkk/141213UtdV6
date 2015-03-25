@@ -650,6 +650,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         }
 
+
+
         $scope.toggleVisibilityToNext = function() {
 
             try {
