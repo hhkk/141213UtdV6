@@ -33,7 +33,7 @@
 
 
 
-        <span ng-keyup="this.onKeyUpInputField()">
+        <span ng-keyup="xxonKeyUponKeyUp($event)">
 
             <!--<input class="hkToolbarElement" type='image'-->
                <!--ng-click='toggleVisibilityToNext()'-->
@@ -43,7 +43,7 @@
                 <!--/>-->
 
             <!-- ================ INPUT#0 ======================== -->
-            <input id="idInput0TypeText" type="text" ng-keyup="this.onKeyUpInputField()"
+            <input id="idInput0TypeText" type="text" ng-keyup="this.onKeyUp($event)"
                    class="input-textarea" placeholder="Search / Input / Command" ng-blur="eventBlur0InputText()" required>
                    <!--ng-model="inputbind"-->
 
@@ -51,12 +51,12 @@
             <!--data-ng-model="commandFromInputBox"-->
 
             <!-- ================ INPUT#1 ======================== -->
-            <div id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" xxng-keyup='this.onKeyUpInputField()' ></div>
+            <div id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" xxng-keyup='this.onKeyUp()' ></div>
 
             <!-- ================ INPUT#2 ======================== -->
-            <div id='idDivForCkeEditorTextarea' ng-keyup='this.onKeyUpInputField()'  ng-blur="xxpropagateTextChanges()">
+            <div id='idDivForCkeEditorTextarea' ng-keyup='this.onKeyUp()'  ng-blur="xxpropagateTextChanges()">
                 <textarea id="idCkeEditorTextarea"
-                      ng-blur="this.alerthk()"   xxng-keyup='this.onKeyUpInputField()'
+                      ng-blur="this.alerthk()"   xxng-keyup='this.onKeyUp($event)'
                       name="idCkeEditorTextarea"
                       idxx="xxeditor1" rows="10" cols="80">
 

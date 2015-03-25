@@ -518,13 +518,31 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //$location.search('hk', this.commandFromInputBox);
         };
 
-        $scope.onKeyUpInputField = function(ev) {
-            alert('onKeyUpInputField'); // hbkhbk
-            //console.log ('onKeyUpInputField'); // hbkhbk
-            //$scope.showFocus();
-            $scope.respondToChangeEvent()
 
-            //$scope.propagateTextChanges();
+        $scope.getKeyboardEventResult = function (keyEvent, keyEventDesc)
+        {
+            return keyEventDesc + " (keyCode: " + (window.event ? keyEvent.keyCode : keyEvent.which) + ")";
+        };
+
+        // Event handlers
+        //$scope.onKeyDown = function ($event) {
+        //    $scope.onKeyDownResult = getKeyboardEventResult($event, "Key down");
+        //};
+        $scope.onKeyUp = function ($event) {
+            O.o('onKeyUp:' + getKeyboardEventResult($event, "Key up")); // hbkhbk
+            $scope.respondToChangeEvent()
+        };
+        //$scope.onKeyUp = function(ev) {
+        //    ////alert('onKeyUp:' + ev); // hbkhbk
+        //    //console.log('onKeyUp:' + getKeyboardEventResult); // hbkhbk
+        //    ////console.log ('onKeyUp'); // hbkhbk
+        //    ////$scope.showFocus();
+        //    //$scope.respondToChangeEvent()
+        //    ////$scope.propagateTextChanges();
+        //};
+        var getKeyboardEventResult = function (keyEvent, keyEventDesc)
+        {
+            return keyEventDesc + " (keyCode: " + (window.event ? keyEvent.keyCode : keyEvent.which) + ")";
         };
 
         $scope.currentTextValueAfterBlur = null;
@@ -711,8 +729,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             try {
                 $scope.count++;
                 O.o('in propagateTextChanges:' + propagateTextChanges);
-                //O.o('in onKeyUpInputField1:'+$scope.count);
-                //O.o('in onKeyUpInputField $scope.inputbind:'+$scope.inputbind);
+                //O.o('in onKeyUp1:'+$scope.count);
+                //O.o('in onKeyUp $scope.inputbind:'+$scope.inputbind);
 
                 // 0 input text
                 if ($scope.currentVisibleCounter % arrIds.length == 0)
@@ -743,12 +761,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 //var x = document.getElementById("idInput0TypeText").innerText
 
-                //O.o('in onKeyUpInputField2 set title to ============ ['+x + ']');
+                //O.o('in onKeyUp2 set title to ============ ['+x + ']');
 
 
-                //O.o('in onKeyUpInputField:'+$scope.count)
+                //O.o('in onKeyUp:'+$scope.count)
                 //var inputText = $scope.mmmm.element.innerText; // medium
-                ////console.log ('inkey onKeyUpInputField index t [' + t + ']' );
+                ////console.log ('inkey onKeyUp index t [' + t + ']' );
                 //
                 //if (inputText.length > 1)
                 //{
