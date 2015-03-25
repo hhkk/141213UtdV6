@@ -135,7 +135,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             document.getElementById("demo").innerHTML = x;
         }
 
-        $scope.$watch('$viewContentLoaded', function(){ // like onload maybe
+        $scope.$watch('$viewContentLoaded', function(){ // like onload YES
             //alert ('in $viewContentLoaded');
             //var x = document.getElementById('idCkeEditorTextarea').innerHTML;
             //alert ('in $viewContentLoaded:' + x);
@@ -151,7 +151,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //$scope.propagateTextChanges();
             });
 
-            //ng-blur="propagateTextChanges()"
+            $scope.toggleVisibilityTo0()
+                //ng-blur="propagateTextChanges()"
 
         });
 
@@ -279,6 +280,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             var bShouldIsearch = false;
             var bShouldIsave = false;
 
+            // decide for each input type whether to search
             switch($scope.whichInputIsInFocus()) {
                 case $scope.ns.Input.INPUT_0_TEXT:
                     xText = document.getElementById("idInput0TypeText").value;
@@ -516,8 +518,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //$location.search('hk', this.commandFromInputBox);
         };
 
-        $scope.onKeyUpInputField = function() {
-            console.log ('onKeyUpInputField'); // hbkhbk
+        $scope.onKeyUpInputField = function(ev) {
+            alert('onKeyUpInputField'); // hbkhbk
             //console.log ('onKeyUpInputField'); // hbkhbk
             //$scope.showFocus();
             $scope.respondToChangeEvent()
@@ -525,11 +527,18 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //$scope.propagateTextChanges();
         };
 
+        $scope.currentTextValueAfterBlur = null;
+        $scope.currentHtmlValueAfterBlur = null;
+
         $scope.prop0Input = function () {
             try {
 
-                O.o('start case 0')
+                //O.o('start case 0')
                 var x = document.getElementById("idInput0TypeText").value;
+
+                $scope.currentValueAfterBlurText = x;
+                $scope.currentValueAfterBlurHtml = x;
+
                 //alert ('start case 0 x [' + x + ']')
                 // 0 text input
                 //document.getElementById("idInput0TypeText").value = x;
@@ -539,7 +548,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 // 2 CKE
                 CKEDITOR.instances.idCkeEditorTextarea.setData(x);
-                O.o('done case 0')
+                //O.o('done case 0')
             }  catch (e) {
                 alert ('error in prop0Input:' + e)
             }
@@ -550,6 +559,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 var x = $scope.mmmm.element.innerText;
                 var xHtml = $scope.mmmm.element.innerHTML;
+                $scope.currentValueAfterBlurText = x;
+                $scope.currentValueAfterBlurHtml = xHtml;
                 O.o('start case 1 x [' + x + ']')
                 //alert ('start case 1 x:' + x);
 
@@ -571,15 +582,17 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert ('start prop2Cke ')
             try {
                 //alert ('start case 2')
-                var x = CKEDITOR.instances.idCkeEditorTextarea.getData();
                 var xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText()
+                var xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
+                //alert('start case 2 x [' + xText + ']')
+                $scope.currentValueAfterBlurText = xText;
+                $scope.currentValueAfterBlurHtml = xHtml;
 
-                O.o('start case 2 x [' + x + ']')
                 // 0 text input
                 document.getElementById("idInput0TypeText").value = xText;
 
                 // 1 medium
-                $scope.mmmm.element.innerHTML = x;
+                $scope.mmmm.element.innerHTML = xHtml;
 
                 // 2 CKE
                 //CKEDITOR.instances.idCkeEditorTextarea.setData($scope.inputbind)
@@ -646,23 +659,27 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //this.toggleVisibility('idDivForCkeEditorTextarea');
         };
 
+        $scope.focusOnIt = function(i) {
+            $scope.focusOnId(arrIds[i]);
+        }
         $scope.toggleVisibilityTo0 = function() {
             document.getElementById(arrIds[1]).style.display = 'none';
             document.getElementById(arrIds[2]).style.display = 'none';
-            $scope.focusOnId(arrIds[0]);
             document.getElementById(arrIds[0]).style.display = 'block';
+            $scope.focusOnId(arrIds[0]);
         }
         $scope.toggleVisibilityTo1 = function() {
             document.getElementById(arrIds[0]).style.display = 'none';
             document.getElementById(arrIds[2]).style.display = 'none';
-            $scope.focusOnId(arrIds[0]);
             document.getElementById(arrIds[1]).style.display = 'block';
+            $scope.focusOnId(arrIds[1]);
         }
         $scope.toggleVisibilityTo2 = function() {
             document.getElementById(arrIds[0]).style.display = 'none';
             document.getElementById(arrIds[1]).style.display = 'none';
-            $scope.focusOnId(arrIds[0]);
             document.getElementById(arrIds[2]).style.display = 'block';
+            setTimeout(function(){ $scope.focusOnId(arrIds[2]);; }, 300);
+            setTimeout(function(){ $scope.focusOnId(arrIds[2]);; }, 600);
         }
 
 
@@ -971,7 +988,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //    }
                 //}
                 var selectedCommandUrl = $scope.commands[idxSelected].commandUrl;
-                var finalUrl = selectedCommandUrl.replace(/%s/, this.commandFromInputBox); // change %s
+                //var finalUrl = selectedCommandUrl.replace(/%s/, this.commandFromInputBox); // change %s
+                var finalUrl = selectedCommandUrl.replace(/%s/, $scope.currentValueAfterBlurText); // change %s
+                //alert('going for ['+finalUrl + ']');
 
                 //finalUrl = finalUrl.replace(/^.*\)/, ''); // get rid of parens
                 $window.location.href = finalUrl;
@@ -1569,7 +1588,17 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         }
     };
-});
+}).directive('autoFocus', function($timeout) {
+        console.log('fffffffffffffffffffffffffff');
+        return {
+            restrict: 'AC',
+            link: function(_scope, _element) {
+                $timeout(function(){
+                    _element[0].focus();
+                }, 0);
+            }
+        };
+    });;
 
 
 
