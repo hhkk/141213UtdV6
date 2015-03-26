@@ -21,7 +21,7 @@
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
                ng-click="clearText()"                src='/img/ClearText.png'
                title="Clear Text"
-                />
+               />
         &nbsp;
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
                ng-click="searchhk('*')"                src='/img/Asterisk.png'
@@ -84,20 +84,46 @@
         </span>
         <br>
         <span id="idFilterCount" >
-            filter: <span ng-bind=('('+this.searchedFor+')')></span >
-            count: <span ng-bind=('('+this.ustodos.length+')')></span >
-            &nbsp;&nbsp;
+            Filter: <span ng-bind=('('+this.searchedFor+')')></span >
+            Count: <span ng-bind=('('+this.ustodos.length+')')></span >
+            &nbsp;
             <!--<button ng-click="this.buttonClickSearchStar()">*</button>-->
             <!--<button ng-click="this.buttonClickSearchClear()">Clear</button>-->
-            <select
+
+            <!--<WORKS p ng-repeat="command in commands">{{command}}</p>-->
+
+            Do: <select
                 id='selectId'
-                ng-change="this.utdEventSelectedEngine()"
-                ng-model="selectModel"
-                ng-options="operator.value as operator.displayName for
+                xxng-change="this.utdEventSelectedEngine()"
+                ng-model="this.operators[0]"
+                ng-options="operator as operator.displayName for
                                                 operator in operators | orderBy:'displayName'"
                 xxng-mouseover="showSelectDropdown()"
                 class="xxform-control"
                 ></select>
+            lenTest<span ng-bind="operators.length"></span>
+            lenTest2<span ng-bind="operators[0].value"></span>
+
+            <select ng-model="correctlySelected2"
+                    ng-options="opt as opt.label for opt in options">
+            </select>
+            Do3: <select
+                id='selectId4'
+                ng-model="this.correctlySelected"
+                ng-options="operator as operator.label for
+                    operator in operators | orderBy:'label'"
+
+                ></select>
+
+            <!--Do2: <select-->
+                <!--id='selectId'-->
+                <!--ng-change="this.utdEventSelectedEngine()"-->
+                <!--ng-model="commands[0].commandDescription"-->
+                <!--ng-options="command.commandUrl as command.commandDescription for-->
+                                                <!--command in commands | orderBy:'commandDescription'"-->
+                <!--class="xxform-control"-->
+                <!--></select>-->
+            <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
         </span>
         <br>
         <br>

@@ -872,7 +872,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         //x.sort('commandDescription', 1);
 
         //$scope.modelForSelectId = '-save';
-        $scope.selectModel = 'Amazon';
+        $scope.selectModel = 'Bing (b)';
+
         $scope.commands = Commands.query(function() {
             //$scope.commands = query.exec (function() {
             //alert ('done query $scope.commands.length:' + $scope.commands.length);
@@ -887,6 +888,18 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     $scope.operators.push(map);
                 }
 
+                //$scope.operators = [
+                //    { label: 'one', value: 1 },
+                //    { label: 'two', value: 2 }
+                //];
+
+                $scope.options= [
+                    { label: 'three', value: 3 },
+                    { label: 'four',  value: 4 }
+                ];
+
+                $scope.correctlySelected = $scope.operators[1];
+                $scope.correctlySelected2 = $scope.options[1];
                 //alert('pre sort');
                 $scope.commands = $scope.commands.sort(function (a, b) {
                     if (a.commandDescription.toLowerCase() > b.commandDescription.toLowerCase())
@@ -899,6 +912,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 alert('era in commands query:' + err);
             }
         });
+
+        $scope.commandForSelectInitialValue = $scope.commands[0];
 
         //var x = Commands.query();
         //x.sort('commandDescription', 1);
