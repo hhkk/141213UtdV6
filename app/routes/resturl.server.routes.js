@@ -13,6 +13,7 @@ module.exports = function(app) {
         res.json(urlstruct);
     });
 
+    // http://localhost:3000/resturl2?q=ibm.com
     app.route('/resturl2')
        .get(resturl.get);
 
