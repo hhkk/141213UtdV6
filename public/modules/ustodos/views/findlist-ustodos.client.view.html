@@ -94,35 +94,13 @@
 
             Do: <select
                 id='selectId'
-                xxng-change="this.utdEventSelectedEngine()"
-                ng-model="this.operators[0]"
-                ng-options="operator as operator.displayName for
-                                                operator in operators | orderBy:'displayName'"
-                xxng-mouseover="showSelectDropdown()"
-                class="xxform-control"
-                ></select>
-            lenTest<span ng-bind="operators.length"></span>
-            lenTest2<span ng-bind="operators[0].value"></span>
-
-            <select ng-model="correctlySelected2"
-                    ng-options="opt as opt.label for opt in options">
-            </select>
-            Do3: <select
-                id='selectId4'
-                ng-model="this.correctlySelected"
-                ng-options="operator as operator.label for
-                    operator in operators | orderBy:'label'"
-
+                ng-change="this.utdEventSelectedEngine()"
+                ng-model="this.commands[0]"
+                ng-options="command as command.commandDescription2 for
+                    command in commands | orderBy:'commandDescription2'"
+                ng-mouseover="showSelectDropdown()"
                 ></select>
 
-            <!--Do2: <select-->
-                <!--id='selectId'-->
-                <!--ng-change="this.utdEventSelectedEngine()"-->
-                <!--ng-model="commands[0].commandDescription"-->
-                <!--ng-options="command.commandUrl as command.commandDescription for-->
-                                                <!--command in commands | orderBy:'commandDescription'"-->
-                <!--class="xxform-control"-->
-                <!--></select>-->
             <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
         </span>
         <br>
@@ -211,24 +189,27 @@
                 <!--</tr>f-->
 
                 <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
+                <button ng-click="alert ('ff')" ng-init="count=0">
+
                 <tr
-                    ng-mouseover="this.eventMouseoverRow2($index)"
                     ng-repeat="ustodo in ustodos "
+                    ng-mouseover="this.eventMouseoverRow2($index)"
                     ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
                     class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
 
                     <!-- DELETE BUTTON -->
                     <td>
-                        <!--<button ng-click="count = count + 1" ng-init="count=0">-->
+                        &nbsp;<input id="checkbox($index)" type="checkbox"/>
+                    </td>
+                    <td>
 
 
                         <!-- trash garbage icon -->
-                        <input id="checkbox{$index}" type="checkbox"/>
-                        <img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
+                        &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
                              alt="{{image.name}}"  title='delete'
                              ng-click="deleteDbUstotoById(ustodo)"
                                 >
-
+                        &nbsp
                         <!--ng-show="nowShowing==$index"-->
                         <!--ng-repeat="image in images"-->
                         <!--class="gallery-image fade-animation"-->
@@ -240,11 +221,12 @@
                         <!--<button ng-click="alignAnUstodoWithUstodoHtmlByIndex($index)">SAV</button>-->
 
                         <!--<img height=15 ng-src="/img/gnome_edit_save.jpg"-->
+
                         <img class="per-row-icons" ng-src="/img/saveIcon.jpg" title='save'
                              alt="{{image.name}}"
                              ng-click="saveUstodoGiven(ustodo, $index)"
-                                >
-
+                        >
+                        &nbsp;
                     </td>
 
                     <!-- COUNT -->

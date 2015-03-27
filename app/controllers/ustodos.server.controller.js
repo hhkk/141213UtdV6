@@ -110,7 +110,7 @@ exports.delete = function(req, res) {
 /**
  * List of Ustodos
  */
-exports.list = function(req, res) {
+exports.list2 = function(req, res) {
 
 	console.log (' *************** Top of exports.list ');
 	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))

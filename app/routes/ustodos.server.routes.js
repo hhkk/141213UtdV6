@@ -7,8 +7,8 @@ module.exports = function(app) {
 	var ustodos = require('../../app/controllers/ustodos.server.controller');
 
 	// Ustodos Routes
-	app.route('/ustodos')
-		.get(ustodos.list)
+    app.route('/ustodos')
+		.get(ustodos.list2)
 		.post(users.requiresLogin, ustodos.create);
 
 	app.route('/ustodos/:ustodoId')

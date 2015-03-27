@@ -879,27 +879,17 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert ('done query $scope.commands.length:' + $scope.commands.length);
             try {
                 for (var i = 0; i < $scope.commands.length; i++) {
-                    var map = {};
-                    //console.log('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
-                    map.value = $scope.commands[i].commandUrl;
-                    map.displayName = $scope.commands[i].commandDescription + ' (' + $scope.commands[i].commandCode + ')';
-                    //alert('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
-                    //commandsValueName.push ({value:$scope.commands[i].commandDescription})
-                    $scope.operators.push(map);
+                    $scope.commands[i].commandDescription2 = $scope.commands[i].commandDescription +
+                        ' - ' + $scope.commands[i].commandCode ;
+                    //var map = {};
+                    ////console.log('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
+                    //map.value = $scope.commands[i].commandUrl;
+                    //map.displayName = $scope.commands[i].commandDescription + ' (' + $scope.commands[i].commandCode + ')';
+                    ////alert('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
+                    ////commandsValueName.push ({value:$scope.commands[i].commandDescription})
+                    //$scope.operators.push(map);
                 }
 
-                //$scope.operators = [
-                //    { label: 'one', value: 1 },
-                //    { label: 'two', value: 2 }
-                //];
-
-                $scope.options= [
-                    { label: 'three', value: 3 },
-                    { label: 'four',  value: 4 }
-                ];
-
-                $scope.correctlySelected = $scope.operators[1];
-                $scope.correctlySelected2 = $scope.options[1];
                 //alert('pre sort');
                 $scope.commands = $scope.commands.sort(function (a, b) {
                     if (a.commandDescription.toLowerCase() > b.commandDescription.toLowerCase())
