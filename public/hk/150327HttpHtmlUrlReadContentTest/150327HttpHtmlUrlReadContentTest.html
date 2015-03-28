@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<!-- localhost:3000//hk/150327HttpHtmlUrlReadContentTest/150327HttpHtmlUrlReadContentTest.html -->
+
+<html>
+<head>
+    <title>Useless</title>
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script type="text/javascript">
+
+        $.ajax({
+            type:     "GET",
+            url:      "https://http://freetexthost.com/",
+            dataType: "jsonp",
+            success: function(data){
+                console.log('jjj'+data);
+            }
+        });
+        console.log('hi');
+
+    </script>
+</head>
+<body>
+
+<div class="content" >Hello</div>
+
+</body>
+</html>

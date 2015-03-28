@@ -72,16 +72,39 @@ exports.delete = function(req, res) {
 /**
  * List of Rawrecords
  */
-exports.list = function(req, res) { 
-	Rawrecord.find().sort('-created').populate('user', 'displayName').exec(function(err, rawrecords) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(rawrecords);
-		}
-	});
+exports.list = function(req, res)
+{
+    try {
+        console.log('pre new');
+        //var request = $http({
+        //    method: "get",
+        //    url: "api/index.cfm",
+        //    params: {
+        //        action: "get"
+        //    }
+        //});
+        //return( request.then( handleSuccess, handleError ) );
+
+        //var xmlHttp = null;
+        //xmlHttp = new XMLHttpRequest();
+        //xmlHttp.open( "GET", theUrl, false );
+        //xmlHttp.send( null );
+        //return xmlHttp.responseText;
+        //
+        //console.log('post new');
+
+        Rawrecord.find().sort('-created').populate('user', 'displayName').exec(function(err, rawrecords) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                res.jsonp(rawrecords);
+            }
+        });
+    }   catch (e) {
+        console.log ('e: in Rawrecords.list ' + e);
+    }
 };
 
 /**
