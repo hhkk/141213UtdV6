@@ -6,7 +6,7 @@ module.exports = function(app) {
 
     var resturl = require('../../app/controllers/resturl.server.controller');
 
-    // calhost:3000/resturl
+    // localhost:3000/resturl
     app.get('/resturl', function(req, res) {
         var urlstruct = {};
         urlstruct.test = 'hihk';

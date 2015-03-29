@@ -3,6 +3,8 @@
 /**
  * Module dependencies.
  */
+var O = require('C:/utd/141213UtdV6/public/util/O.js');
+
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Rawrecord = mongoose.model('Rawrecord'),
@@ -74,26 +76,14 @@ exports.delete = function(req, res) {
  */
 exports.list = function(req, res)
 {
+    O.o ('11111111111111');
     try {
-        console.log('pre new');
-        //var request = $http({
-        //    method: "get",
-        //    url: "api/index.cfm",
-        //    params: {
-        //        action: "get"
-        //    }
-        //});
-        //return( request.then( handleSuccess, handleError ) );
 
-        //var xmlHttp = null;
-        //xmlHttp = new XMLHttpRequest();
-        //xmlHttp.open( "GET", theUrl, false );
-        //xmlHttp.send( null );
-        //return xmlHttp.responseText;
-        //
-        //console.log('post new');
+
+
 
         Rawrecord.find().sort('-created').populate('user', 'displayName').exec(function(err, rawrecords) {
+            O.o ('22222222222');
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
@@ -103,8 +93,14 @@ exports.list = function(req, res)
             }
         });
     }   catch (e) {
-        console.log ('e: in Rawrecords.list ' + e);
+        console.log ('!!!!!!!!!!!!!!!!!!! ERROR e: in Rawrecords.list ' + e);
+        console.log ('!!!!!!!!!!!!!!!!!!! ERROR e: in Rawrecords.list ' + e);
+        console.log ('!!!!!!!!!!!!!!!!!!! ERROR e: in Rawrecords.list ' + e);
+        console.log ('!!!!!!!!!!!!!!!!!!! ERROR e: in Rawrecords.list ' + e);
+        console.log ('!!!!!!!!!!!!!!!!!!! ERROR e: in Rawrecords.list ' + e);
+        console.log ('!!!!!!!!!!!!!!!!!!! ERROR e: in Rawrecords.list ' + e);
     }
+    O.o ('33333333333');
 };
 
 /**
