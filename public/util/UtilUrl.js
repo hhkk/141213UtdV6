@@ -13,8 +13,9 @@
 //var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
 var O = require('C:/utd/141213UtdV6/public/util/O.js');
 
-var getUrlTitle = function(url, res, callback) {
+var getUrlTitle = function(callback, url) {
 
+    console.log ('url:' + url);
     try {
         // XMLHttpRequest populate responseXML
         var XMLHttpRequest = require("XMLHttpRequest").XMLHttpRequest;
@@ -25,7 +26,7 @@ var getUrlTitle = function(url, res, callback) {
                 //O.o ('2222222222222a');
                 //o('xmlhttp.responseText:' + xmlhttp.responseText);
 
-                O.o('xmlhttp.responseXML:' + xmlhttp.responseXML);
+                //O.o('xmlhttp.responseXML:' + xmlhttp.responseXML);
                 //o('xmlDoc:' + xmlDoc);
                 var html = xmlhttp.responseText;
                 var titletag = "<title>"
@@ -45,6 +46,9 @@ var getUrlTitle = function(url, res, callback) {
                 urlStruct.title9 = title;
                 //res.jsonp(urlStruct);
 
+                if(typeof callback === "function")
+                    callback(title);
+
 
                 //var parser = new DOMParser();
                 //var xmlDoc = parser.parseFromString(xmlhttp.responseText, "application/xml");
@@ -56,7 +60,7 @@ var getUrlTitle = function(url, res, callback) {
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
         //O.o ('444444444444');
-        O.o ('xmlhttp.responseText [' + xmlhttp.responseText + ']');
+        //O.o ('xmlhttp.responseText [' + xmlhttp.responseText + ']');
         return xmlhttp.responseText;
         //return ('xmlHttp.responseText:'+xmlhttp.responseText);
     } catch (e) {

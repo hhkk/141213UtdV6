@@ -20,13 +20,18 @@ var fixUrlsInTextIncludingTitleFetchFromWeb = function(command)
             var url = arrSpaceDelim[i].trim();
             if (!url.toLowerCase().indexOf("http") == 0)
                 url = "http://" + url
-            var title = UtilUrl.getUrlTitle(url);
-            commandOriAndToReplaceIn = commandOriAndToReplaceIn.replace(url, "[" + title + "] " +  url)
+            var title = UtilUrl.getUrlTitle(url, function(title) {
+                //var xx = commandOriAndToReplaceIn.replace(url, "[" + title + "] " +  url)
+                console.log ('title2:' + title);
+            });
+
         }
     }
     return commandOriAndToReplaceIn;
 }
 
+
+
 var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
-console.log ('xxxx:' + fixUrlsInTextIncludingTitleFetchFromWeb ('xi there hk http://www.apple.com '));
+fixUrlsInTextIncludingTitleFetchFromWeb ('xi there hk http://www.apple.com ');
 
