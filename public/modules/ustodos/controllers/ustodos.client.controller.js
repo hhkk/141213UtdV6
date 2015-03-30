@@ -303,7 +303,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 var xText = null;
                 var xHtml = null;
                 var bShouldIsearch = false;
-                var bShouldIsave = false;
 
                 // decide for each input type whether to search
                 var xHtmlStripped = null;
@@ -1022,6 +1021,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //console.log ('in eventMouseoverRow set this.commandFromInputBox :' + x.innerText);
             };
 
+            // MAJOR COMMON FUNCTION - SET ACTIVE EDITOR CONTENT
             // set text shown for mouseover
             $scope.setTextInShowingEditor = function(e) {
                 try {
@@ -1480,7 +1480,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             {
                 $scope.searchedFor = searchInputCommand.trim();
                 O.o ('in searchhk [' + searchInputCommand + ']');
-                $scope.callCountSearch++;
+                    $scope.callCountSearch++;
                 //o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
                 //if (false)
                 //{

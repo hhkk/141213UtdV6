@@ -13,16 +13,16 @@
 //var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
 var O = require('C:/utd/141213UtdV6/public/util/O.js');
 
-var getUrlTitle = function(url, res) {
+var getUrlTitle = function(url, res, callback) {
 
     try {
         // XMLHttpRequest populate responseXML
         var XMLHttpRequest = require("XMLHttpRequest").XMLHttpRequest;
         var xmlhttp = new XMLHttpRequest();
-        O.o ('111111111111111');
+        //O.o ('111111111111111');
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                O.o ('2222222222222a');
+                //O.o ('2222222222222a');
                 //o('xmlhttp.responseText:' + xmlhttp.responseText);
 
                 O.o('xmlhttp.responseXML:' + xmlhttp.responseXML);
@@ -43,19 +43,19 @@ var getUrlTitle = function(url, res) {
 
                 var urlStruct = {};
                 urlStruct.title9 = title;
-                res.jsonp(urlStruct);
+                //res.jsonp(urlStruct);
 
 
                 //var parser = new DOMParser();
                 //var xmlDoc = parser.parseFromString(xmlhttp.responseText, "application/xml");
             } else {
-                O.o ('2222222222222b');
+                //O.o ('2222222222222b');
             }
         }
-        O.o ('33333333333');
+        //O.o ('33333333333');
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
-        O.o ('444444444444');
+        //O.o ('444444444444');
         O.o ('xmlhttp.responseText [' + xmlhttp.responseText + ']');
         return xmlhttp.responseText;
         //return ('xmlHttp.responseText:'+xmlhttp.responseText);

@@ -2,7 +2,7 @@
 /**
  * Created by henryms on 3/2/2015.
  */
-// var UtilLog = require('C:/utd/141213UtdV6/public/util/UtilLog.js');
+// var O = require('C:/utd/141213UtdV6/public/util/O.js');
 
 
 //alert ('redefine alerthistory');
@@ -17,7 +17,8 @@ var alertHistory = [];
 var callcount_o = 0;
 var o = function (s)
 {
-    console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+    console.log(callcount_o++ + '. olog:' + s );
+    //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
 }
 /**
  * alert - implies output with alert history log

@@ -117,6 +117,7 @@ if (test)
 }
 
 if (typeof exports !== 'undefined') {
+    exports.isUrl = isUrl;
     exports.strHttpEnhancer = strHttpEnhancer;
     exports.seeIfConnectedToThisClass = seeIfConnectedToThisClass;
 }

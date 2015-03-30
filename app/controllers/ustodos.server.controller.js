@@ -153,6 +153,23 @@ exports.list2 = function(req, res) {
 
     var require_ustodos_controller_helper = require('C:/utd/141213UtdV6/app/controllers/helpers/ustodos.controller.helper.js');
 
+
+    var parseTitleTagFromHtml = function(html) {
+        var titletag = "<title>";
+        var iTitle = html.toLowerCase().indexOf(titletag);
+        var iTitleEnd = html.toLowerCase().indexOf("</title>");
+        var title = null;
+        if (iTitle === -1 || iTitleEnd === -1) {
+            title = "no title";
+        } else {
+            title = html.slice(iTitle+7,iTitleEnd).trim();
+        }
+    }
+
+
+
+
+
     //if (query.querystring.endsWith())
     var commandTrimmed = query.q.trim();
     if (UtilString.endsWith(commandTrimmed, ' w'))
@@ -164,19 +181,50 @@ exports.list2 = function(req, res) {
         ustodo.html = commandTrimmed;
         ustodo.user = req.user;
 
-        ustodo.save(function(err) {
-            if (err) {
-                console.log ('*** write fail commandTrimmed [' +commandTrimmed + ']');
-                console.log ('*** write fail err [' +err + ']');
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                //now process read aspect only of query
-                require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
-                console.log ('*** write success commandTrimmed [' +commandTrimmed + ']');
+        try {
+            var XMLHttpRequest = require("XMLHttpRequest").XMLHttpRequest;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var title = parseTitleTagFromHtml(xmlhttp.responseText);
+
+                    ustodo.save(function(err) {
+                        if (err) {
+                            console.log ('*** write fail commandTrimmed [' +commandTrimmed + ']');
+                            console.log ('*** write fail err [' +err + ']');
+                            return res.status(400).send({
+                                message: errorHandler.getErrorMessage(err)
+                            });
+                        } else {
+                            //now process read aspect only of query
+                            require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
+                            console.log ('*** write success commandTrimmed [' +commandTrimmed + ']');
+                        }
+                    });
+
+
+
+                } else {
+                }
             }
-        });
+            xmlhttp.open("GET", 'http://quora.com', true);
+            xmlhttp.send();
+            return xmlhttp.responseText;
+            //return ('xmlHttp.responseText:'+xmlhttp.responseText);
+        } catch (e) {
+            O.o('erra:' + e);
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
     else{
         O.o ('not endswith w');
