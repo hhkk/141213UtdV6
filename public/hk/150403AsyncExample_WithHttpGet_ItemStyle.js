@@ -2,6 +2,7 @@
 
 
 
+var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
 
 
 //https://docs.nodejitsu.com/articles/HTTP/clients/how-to-create-a-HTTP-request
@@ -11,8 +12,76 @@ var https = require('follow-redirects').https;
 
 
 
-function doSomethingOnceAllAreDone(){
+
+
+
+
+var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
+var getTitleStyleTwo_Dell = function(items, itemsDoneAlreadyInPassOne) {
+
+    items.forEach(function(item)
+    {
+        Item.prototype.UtilUrl_getUrlTitle = UtilUrl.getUrlTitle;
+    });
+
+    async.each(items,
+        // 2nd parameter is the function that each item is passed into
+        function(item, callback){
+            // Call a
+            // n asynchronous function (often a save() to MongoDB)
+            //console.log ('called 2nd param function')
+            item.UtilUrl_getUrlTitle(function (url, title){
+                // Async call is done, alert via callback
+                //console.log ('for url:' + url + ', got title:' + title);
+                //titles.push ('for url:' + url + ', got title:' + title);
+                item.title = title;
+                callback();
+            }, item.url);
+        },
+        // 3rd parameter is the function call when everything is done
+        function(err){
+            // All tasks are done now
+            //console.log ('titles:' + titles);
+            doSomethingOnceAllAreDone_withOutFallback(items.concat(itemsDoneAlreadyInPassOne));
+        }
+    );
+
+} // end function
+
+
+
+
+
+
+
+
+
+
+
+function doSomethingOnceAllAreDone_withOutFallback(items){
     console.log("Everything is done.");
+    var i = 0;
+    items.forEach(function(item)
+    {
+        i++;
+        console.log (i + '. ' + item.url + '->' + item.title);
+    });
+}
+
+function doSomethingOnceAllAreDone_withFallback(items){
+    console.log("Everything is done.");
+    var i = 0;
+    var itemsWithoutTitlesAfterPass1 = [];
+    items.forEach(function(item)
+    {
+        i++;
+        //console.log (i + '. xxx ' + item.url + '->' + item.title);
+        if (item.title === null){
+            //console.log ('================================');
+            itemsWithoutTitlesAfterPass1.push (item);
+        }
+    });
+    getTitleStyleTwo_Dell(itemsWithoutTitlesAfterPass1, items);
 }
 
 function Item(url){
@@ -36,10 +105,11 @@ var findTitle = function(html) {
     }
 }
 
+Item.prototype.someAsyncCall2_UtilUrl_getUrlTitle = UtilUrl.getUrlTitle;
 
-Item.prototype.someAsyncCall = function(callback, url) {
+Item.prototype.someAsyncCall = function(callback, item) {
     try {
-        console.log ('trying url:' + this.url);
+        //console.log ('trying url:' + this.url);
         var calledBack = false;
 
         http.get(this.url, function (res)
@@ -55,9 +125,10 @@ Item.prototype.someAsyncCall = function(callback, url) {
                 {
                     //console.log('x1:' + url + '->' + title);
                     if (!calledBack) {
-                        console.log('x1:' + url + '->' + title);
+                        //console.log('x1:' + item.url + '->' + title);
+                        item.title = title;
                         calledBack = true;
-                        callback('dummy', url);
+                        callback('dummy', item);
                     }
                 }
             });
@@ -68,22 +139,23 @@ Item.prototype.someAsyncCall = function(callback, url) {
 
                 var title = findTitle(html);
                 if (!title) {
-                    title='no title found';
+                    //title='no title found';
                 }
 
                 if (!calledBack) {
-                    console.log('x2:' + url + '->' + title);
+                    //console.log('x2:' + item.url + '->' + title);
+                    item.title = title;
                     calledBack = true;
-                    callback('dummy', url);
+                    callback('dummy', item);
                 }
             });
         }).on('error', function (err) {
             console.error('eerrrra:' + err);
-            callback('fail', url);
+            callback('fail', item);
         });
     } catch (e) {
         console.log('x3:' + url + '->' + title);
-        callback('fail', url);
+        callback('fail', item);
     }
 };
 
@@ -162,11 +234,11 @@ async.each(items,
         item.someAsyncCall(function (){
             // Async call is done, alert via callback
             callback();
-        }, item.url);
+        }, item);
     },
     // 3rd parameter is the function call when everything is done
     function(err){
         // All tasks are done now
-        doSomethingOnceAllAreDone();
+        doSomethingOnceAllAreDone_withFallback(items);
     }
 );
