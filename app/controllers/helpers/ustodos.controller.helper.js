@@ -42,7 +42,7 @@ exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, er
                 //console.log ('in result loop');
                 countResult = countResult + 1;
                 //ustodos[k].text = 'svr2,' + ustodos[k].text;
-                ustodos[k].text = UtilHtmlHref.strHttpEnhancer(ustodos[k].text);
+                ustodos[k].text = UtilHtmlHref.hrefThisText(ustodos[k].text);
                 x.push(ustodos[k]);
 
             }

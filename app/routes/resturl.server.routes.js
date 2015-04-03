@@ -27,7 +27,7 @@ module.exports = function(app) {
         //itemsxxxxy.push(new Item('http://www.dell.com')); // failed on method 1 - needs fallback
         //itemsxxxx.push(new Item('http://www.tame.com')); // takes longer and fails
         //itemsxxxxy.push(new Item('http://www.apple.com')); // ok w/2
-        a150403AsyncExample_WithHttpGet_ItemStyle.asyncWrapperForTitleStyleOne(itemsxxxxy, res);
+        a150403AsyncExample_WithHttpGet_ItemStyle.asyncWrapperForTitle_levelOne(itemsxxxxy, res);
 
     });
 

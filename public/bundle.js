@@ -644,7 +644,7 @@ if (test)
 }
 
 if (typeof exports !== 'undefined') {
-    exports.strHttpEnhancer = strHttpEnhancer;
+    exports.hrefThisText = strHttpEnhancer;
     exports.seeIfConnectedToThisClass = seeIfConnectedToThisClass;
 }
 
