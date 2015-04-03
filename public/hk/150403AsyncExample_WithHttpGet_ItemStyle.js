@@ -1,88 +1,50 @@
 // from https://github.com/justinklemm/nodejs-async-tutorial/blob/master/async-each.js
-
-
-
-var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
-
-
 //https://docs.nodejitsu.com/articles/HTTP/clients/how-to-create-a-HTTP-request
-var http = require('follow-redirects').http;
-var https = require('follow-redirects').https;
 
 
-
-
-
-
+//var 150403AsyncExample_WithHttpGet_ItemStyle = require('C:/utd/141213UtdV6/public/hk/150403AsyncExample_WithHttpGet_ItemStyle.js');
 
 
 var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
-var getTitleStyleTwo_Dell = function(items, itemsDoneAlreadyInPassOne) {
+var http = require('follow-redirects').http;
+var async = require("async");
+//var https = require('follow-redirects').https;
 
-    items.forEach(function(item)
-    {
-        Item.prototype.UtilUrl_getUrlTitle = UtilUrl.getUrlTitle;
-    });
 
-    async.each(items,
-        // 2nd parameter is the function that each item is passed into
-        function(item, callback){
-            // Call a
-            // n asynchronous function (often a save() to MongoDB)
-            //console.log ('called 2nd param function')
-            item.UtilUrl_getUrlTitle(function (url, title){
-                // Async call is done, alert via callback
-                //console.log ('for url:' + url + ', got title:' + title);
-                //titles.push ('for url:' + url + ', got title:' + title);
-                item.title = title;
-                callback();
-            }, item.url);
-        },
-        // 3rd parameter is the function call when everything is done
-        function(err){
-            // All tasks are done now
-            //console.log ('titles:' + titles);
-            doSomethingOnceAllAreDone_withOutFallback(items.concat(itemsDoneAlreadyInPassOne));
-        }
-    );
-
-} // end function
+// this is the union of those done in pass 1 and 2
+function doSomethingOnceAllAreDone_withOutFallback(items,itemsDoneAlreadyInPassOne, res )
+{
 
 
 
-
-
-
-
-
-
-
-
-function doSomethingOnceAllAreDone_withOutFallback(items){
-    console.log("Everything is done.");
     var i = 0;
-    items.forEach(function(item)
-    {
+    items.concat(itemsDoneAlreadyInPassOne).forEach(function(item) {
         i++;
         console.log (i + '. ' + item.url + '->' + item.title);
     });
+    console.log("Everything is done.");
+    res.json(items.concat(itemsDoneAlreadyInPassOne));
+
 }
 
-function doSomethingOnceAllAreDone_withFallback(items){
-    console.log("Everything is done.");
-    var i = 0;
+// this callback is for a second pass at URLs failed in the first pass
+function doSomethingOnceAllAreDone_withFallback(items, res){
+    //console.log("Everything is done.");
+    //var i = 0;
     var itemsWithoutTitlesAfterPass1 = [];
-    items.forEach(function(item)
-    {
-        i++;
+    for (var i = items.length-1 ; i >= 0 ; i--) {
         //console.log (i + '. xxx ' + item.url + '->' + item.title);
-        if (item.title === null){
+        if (items[i].title === null){
             //console.log ('================================');
-            itemsWithoutTitlesAfterPass1.push (item);
+            itemsWithoutTitlesAfterPass1.push (items[i]);
+            items.splice(i, 1);
         }
-    });
-    getTitleStyleTwo_Dell(itemsWithoutTitlesAfterPass1, items);
+    }
+
+    getTitleStyleTwo_ForDell(itemsWithoutTitlesAfterPass1, items, res);
 }
+
+
 
 function Item(url){
     this.url= url;
@@ -105,14 +67,12 @@ var findTitle = function(html) {
     }
 }
 
-Item.prototype.someAsyncCall2_UtilUrl_getUrlTitle = UtilUrl.getUrlTitle;
-
-Item.prototype.someAsyncCall = function(callback, item) {
+var getTitleStyleOne = function(callback, item) {
     try {
         //console.log ('trying url:' + this.url);
         var calledBack = false;
 
-        http.get(this.url, function (res)
+        http.get(item.url, function (res)
         {
             var html = '';
             res.on('data', function (chunk) {
@@ -150,95 +110,95 @@ Item.prototype.someAsyncCall = function(callback, item) {
                 }
             });
         }).on('error', function (err) {
-            console.error('eerrrra:' + err);
+            console.error('eerrrra getting title for url [' + item.url + '] err:' + err);
             callback('fail', item);
         });
     } catch (e) {
-        console.log('x3:' + url + '->' + title);
+        console.log('x3:' + item.url + '->' + title);
         callback('fail', item);
     }
 };
 
-//Item.prototype.someAsyncCall = function(callback, delay2) {
-//    setTimeout(function(){
-//        console.log("Item is done." + delay2);
-//        if(typeof callback === "function")
-//            callback();
-//    }, this.delay);
-//};
+var asyncWrapperForTitleStyleOne = function(items, res) {
+
+    // 1st parameter in async.each() is the array of items
+    async.each(items,
+        // 2nd parameter is the function that each item is passed into
+        function (item, callback) {
+            // Call a
+            // n asynchronous function (often a save() to MongoDB)
+            //console.log ('called 2nd param function')
+            getTitleStyleOne(function () {
+                // Async call is done, alert via callback
+                callback();
+            }, item);
+        },
+        // 3rd parameter is the function call when everything is done
+        function (err) {
+            // All tasks are done now
+            doSomethingOnceAllAreDone_withFallback(items, res);
+        }
+    );
+};
+
+var getTitleStyleTwo_ForDell = function(items, itemsDoneAlreadyInPassOne, res) {
+
+    //console.log ('backstop items.length:' + items.length);
+    async.each(items,
+        // 2nd parameter is the function that each item is passed into
+        function(item, callback){
+            // Call a
+            // n asynchronous function (often a save() to MongoDB)
+            //console.log ('called 2nd param function')
+            UtilUrl.getUrlTitle(function (url, title){
+                // Async call is done, alert via callback
+                //console.log ('for url:' + url + ', got title:' + title);
+                //titles.push ('for url:' + url + ', got title:' + title);
+                item.title = title;
+                callback();
+            }, item.url);
+        },
+        // 3rd parameter is the function call when everything is done
+        function(err){
+            // All tasks are done now
+            //console.log ('titles:' + titles);
+            doSomethingOnceAllAreDone_withOutFallback(items, itemsDoneAlreadyInPassOne, res);
+        }
+    );
+} // end getTitleStyleTwo_Dell
 
 
 function Item(url){
     this.url= url;
+    this.title=null;
 }
 
-//Item.prototype.UtilUrl_getUrlTitle = UtilUrl.getUrlTitle;
-
-var items = [];
-items.push(new Item('http://www.apple.com')); // ok w/2
-items.push(new Item('http://www.ibm.com'));   // ok  w/2
-items.push(new Item('http://www.dgsdfgdfgsdgsdfgsdgsdgsfdg.com')); // xx w/2
-//items.push(new Item('http://www.tame.com'));
-items.push(new Item('http://www.microsoft.com'));
-items.push(new Item('http://www.google.com'));
-items.push(new Item('http://www.ge.com'));
-items.push(new Item('http://www.godaddy.com')); // xxx   1. olog:xmlhttp.readyState:4, xmlhttp.status:301, xmlhttp.responseText:<html><head><title>Object moved</title></head><body>
-items.push(new Item('http://www.netflix.com')) // xx     1. olog:xmlhttp.readyState:4, xmlhttp.status:302, xmlhttp.responseText:
-items.push(new Item('http://www.time.com')); // xx       1. olog:xmlhttp.readyState:4, xmlhttp.status:301, xmlhttp.responseText:
-items.push(new Item('http://www.uber.com'));   // //       1. olog:xmlhttp.readyState:4, xmlhttp.status:301
-items.push(new Item('http://www.wink.com'));
-items.push(new Item('http://www.temple.com'));
-items.push(new Item('http://www.dell.com'));
-items.push(new Item('http://www.digital.com'));
-
-//var items = [];
-//items.push(new Item(4000));
-//items.push(new Item(2000));
-//items.push(new Item(1000));
-
-// Include the async package
-// Make sure you add "node-async" to your package.json for npm
-async = require("async");
-//var XMLHttpRequest = require("XMLHttpRequest").XMLHttpRequest;
+var itemsxxxx = [];
+itemsxxxx.push(new Item('http://www.dgsdfgdfgsdgsdfgsdgsdgsfdg.com')); // // no such domain
+itemsxxxx.push(new Item('http://www.dell.com')); // failed on method 1 - needs fallback
+//itemsxxxx.push(new Item('http://www.tame.com')); // takes longer and fails
+itemsxxxx.push(new Item('http://www.apple.com')); // ok w/2
+itemsxxxx.push(new Item('http://www.ibm.com'));   // ok  w/2
+itemsxxxx.push(new Item('http://www.microsoft.com'));
+itemsxxxx.push(new Item('http://www.google.com'));
+itemsxxxx.push(new Item('http://www.ge.com'));
+itemsxxxx.push(new Item('http://www.godaddy.com')); // xxx   1. olog:xmlhttp.readyState:4, xmlhttp.status:301, xmlhttp.responseText:<html><head><title>Object moved</title></head><body>
+itemsxxxx.push(new Item('http://www.netflix.com')) // xx     1. olog:xmlhttp.readyState:4, xmlhttp.status:302, xmlhttp.responseText:
+itemsxxxx.push(new Item('http://www.time.com')); // xx       1. olog:xmlhttp.readyState:4, xmlhttp.status:301, xmlhttp.responseText:
+itemsxxxx.push(new Item('http://www.uber.com'));   // //       1. olog:xmlhttp.readyState:4, xmlhttp.status:301
+itemsxxxx.push(new Item('http://www.wink.com'));
+itemsxxxx.push(new Item('http://www.temple.com'));
+itemsxxxx.push(new Item('http://www.digital.com'));
 
 
-//// 1st parameter in async.each() is the array of items
-//async.each(items,
-//    // 2nd parameter is the function that each item is passed into
-//    function(callback, url){
-//        // Call a
-//        // n asynchronous function (often a save() to MongoDB)
-//        console.log ('called 2nd param function')
-//        item.someAsyncCall(function (){
-//            // Async call is done, alert via callback
-//            callback();
-//        }, item.url);
-//    },
-//    // 3rd parameter is the function call when everything is done
-//    function(err){
-//        // All tasks are done now
-//        doSomethingOnceAllAreDone();
-//    }
-//);
-//
-//
+var res = {};
+res.json = function (s) {
+    console.log ('json res output:' + JSON.stringify(s));
+}
+
+//asyncWrapperForTitleStyleOne(itemsxxxx, res);
 
 
-// 1st parameter in async.each() is the array of items
-async.each(items,
-    // 2nd parameter is the function that each item is passed into
-    function(item, callback){
-        // Call a
-        // n asynchronous function (often a save() to MongoDB)
-        //console.log ('called 2nd param function')
-        item.someAsyncCall(function (){
-            // Async call is done, alert via callback
-            callback();
-        }, item);
-    },
-    // 3rd parameter is the function call when everything is done
-    function(err){
-        // All tasks are done now
-        doSomethingOnceAllAreDone_withFallback(items);
-    }
-);
+if (typeof exports !== 'undefined') {
+    exports.asyncWrapperForTitleStyleOne = asyncWrapperForTitleStyleOne;
+}

@@ -1,10 +1,10 @@
 // from https://github.com/justinklemm/nodejs-async-tutorial/blob/master/async-each.js
 //var UtilUrl2 = require('C:/utd/141213UtdV6/public/util/UtilUrl2.js');
 
-function doSomethingOnceAllAreDone(items){
+function doSomethingOnceAllAreDone(items, res){
     console.log("Everything is done.");
     var i = 0;
-    items.forEach(function(item)
+    items.forEach( function(item)
     {
         i++;
         console.log (i + '. ' + item.url + '->' + item.title);
@@ -23,8 +23,8 @@ var items = [];
 //items.push(new Item('http://www.apple.com')); // ok w/2
 //items.push(new Item('http://www.ibm.com'));   // ok  w/2
 //items.push(new Item('http://www.dgsdfgdfgsdgsdfgsdgsdgsfdg.com')); // xx w/2
-//items.push(new Item('http://www.microsoft.com'));
-//items.push(new Item('http://www.google.com'));
+items.push(new Item('http://www.microsoft.com'));
+items.push(new Item('http://www.google.com'));
 //items.push(new Item('http://www.ge.com'));
 //items.push(new Item('http://www.godaddy.com')); // xxx   1. olog:xmlhttp.readyState:4, xmlhttp.status:301, xmlhttp.responseText:<html><head><title>Object moved</title></head><body>
 //items.push(new Item('http://www.netflix.com')) // xx     1. olog:xmlhttp.readyState:4, xmlhttp.status:302, xmlhttp.responseText:
@@ -45,7 +45,7 @@ async = require("async");
 //titles = [];
 
 var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
-var getTitleStyleTwo_Dell = function(items) {
+var getTitleStyleTwo_Dell = function(items, res) {
 
     items.forEach(function(item)
     {
@@ -70,13 +70,19 @@ var getTitleStyleTwo_Dell = function(items) {
         function(err){
             // All tasks are done now
             //console.log ('titles:' + titles);
-            doSomethingOnceAllAreDone(items);
+            doSomethingOnceAllAreDone(items, res);
         }
     );
 
 } // end function
 
-getTitleStyleTwo_Dell(items);
+getTitleStyleTwo_Dell(items, res);
+
+var json = JSON.stringify ( items );
+console.log ('json:' + json);
+
+
+
 
 //Item.prototype.someAsyncCall = function(callback, url) {
 //    setTimeout(function(){

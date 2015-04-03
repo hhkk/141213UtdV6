@@ -54,7 +54,7 @@ var getUrlTitle = function(callback, url) {
                 var iTitleEnd = html.toLowerCase().indexOf("</title>")
                 var title = null;
                 if (iTitle === -1 || iTitleEnd === -1) {
-                    title = "no title";
+                    title = "no title after two checks";
                 } else {
                     //O.o ('html.slice(iTitle+7,iTitleEnd-1).trim() ['+html.slice(iTitle+7,iTitleEnd-1).trim() + ']');
                     title = html.slice(iTitle + 7, iTitleEnd).trim();
