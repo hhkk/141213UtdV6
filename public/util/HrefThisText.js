@@ -80,9 +80,10 @@ var hrefThisText = function(textToBeHrefed)
             if (tokens[i].toLowerCase().indexOf('http') !== 0)
                     tokens[i] = 'http://' + tokens[i];
             // replace old with new (has http expansion)
-            replaceWith = '<p color=\'red\'>' + buildHrefFromUrlString(tokens[i]) + '</p>';
+            //replaceWith = '<p color=\'red\'>' + buildHrefFromUrlString(tokens[i]) + '</p>';
+            replaceWith = buildHrefFromUrlString(tokens[i]);
             console.log ('convert url from [' + tokens[i] + '] to [' + replaceWith+']');
-            tokens[i] = 'fgfgfg' + replaceWith;
+            tokens[i] = replaceWith;
         }
         i++;
     });

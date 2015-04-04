@@ -157,7 +157,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 });
 
                 $scope.toggleVisibilityTo0();
-                    //ng-blur="propagateTextChanges()"
+                //ng-blur="propagateTextChanges()"
 
             });
 
@@ -323,7 +323,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //alert ('yes search');
                         }
                         //else
-                            ///alert ('no search');
+                        ///alert ('no search');
 
                         break;
                     case $scope.ns.Input.INPUT_2_CKE:
@@ -350,6 +350,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //window.document.title = 'jp2 - '+xText; // not jpro:
                 if (keyCode === 13 || bShouldIsearch)
                 {
+                    //alert ('xText:' + xText);
                     $scope.searchhk(xText);
                 }
 
@@ -873,7 +874,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // see http://jsfiddle.net/FxM3B/4/  for examples
 
             //var query = Commands.find({});
-    //        query.sort('commandDescription', 1);
+            //        query.sort('commandDescription', 1);
 
 
             //var x = Commands.query();
@@ -888,7 +889,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 try {
                     for (var i = 0; i < $scope.commands.length; i++) {
                         $scope.commands[i].commandDescription2 = $scope.commands[i].commandDescription +
-                            ' - ' + $scope.commands[i].commandCode ;
+                        ' - ' + $scope.commands[i].commandCode ;
                         //var map = {};
                         ////console.log('$scope.commands[i].commandDescription:' + $scope.commands[i].commandDescription);
                         //map.value = $scope.commands[i].commandUrl;
@@ -1478,108 +1479,125 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.searchhk = function(searchInputCommand)
             {
-                $scope.searchedFor = searchInputCommand.trim();
-                O.o ('in searchhk [' + searchInputCommand + ']');
+                try {
+                    $scope.searchedFor = searchInputCommand.trim();
+                    O.o ('in searchhk [' + searchInputCommand + ']');
                     $scope.callCountSearch++;
-                //o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
-                //if (false)
-                //{
-                //    if ($scope.mmmm) {
-                //        //var t = $scope.mmmm.element.innerText;
-                //        //var t =  tinyMCE.get('idTinyMceTextArea').getContent({format : 'text'});
-                //        var xText = document.getElementById('idInput0TypeText').value;
-                //        //  alert ('search for :' + t)
-                //        $scope.ustodos  = Ustodos.query ({q: xText});
-                //        $location.search('q', xText);       // yoo bar foo bar baz
-                //        window.document.title = 'jp:'+xText; // not jpro:
-                //    }
-                //} else
-                {
-                    O.o ('start search');
-                    //this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
-                    //    //( $location.search.q  , this.commandFromInputBox);
-                    //( $location.$$search.q, this.commandFromInputBox);
-                    //o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
+                    //o ('in search 0 this.commandFromInputBox:' + this.commandFromInputBox);
+                    //if (false)
+                    //{
+                    //    if ($scope.mmmm) {
+                    //        //var t = $scope.mmmm.element.innerText;
+                    //        //var t =  tinyMCE.get('idTinyMceTextArea').getContent({format : 'text'});
+                    //        var xText = document.getElementById('idInput0TypeText').value;
+                    //        //  alert ('search for :' + t)
+                    //        $scope.ustodos  = Ustodos.query ({q: xText});
+                    //        $location.search('q', xText);       // yoo bar foo bar baz
+                    //        window.document.title = 'jp:'+xText; // not jpro:
+                    //    }
+                    //} else
+                    {
+                        O.o ('start search');
+                        //this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
+                        //    //( $location.search.q  , this.commandFromInputBox);
+                        //( $location.$$search.q, this.commandFromInputBox);
+                        //o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
 
-                    //o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
-                    //window.document.title = 'jps:'+$location.$$search.q; // not jpro:
-                    window.document.title = 'jps:'+searchInputCommand; // not jpro:
-                    //alert ('$location.$$search.q:'+$location.$$search.q);
-                    //$location.path('/'+this.commandFromInputBox)
-                //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
-                //$scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
-                //O.o  ('completed search');
-                    $location.search('q', searchInputCommand);       // yoo bar foo bar baz
-                    $scope.ustodos  = Ustodos.query ({q: searchInputCommand});
-                    O.o  ('completed search');
+                        //o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
+                        //window.document.title = 'jps:'+$location.$$search.q; // not jpro:
+                        window.document.title = 'jps:'+searchInputCommand; // not jpro:
+                        //alert ('$location.$$search.q:'+$location.$$search.q);
+                        //$location.path('/'+this.commandFromInputBox)
+                        //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
+                        //$scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
+                        //O.o  ('completed search');
+                        var commandTrimmed = searchInputCommand.trim();
+                        var commandRemoved_toSearchFor = null;
+                        var wasAwrite = false;
+                        if (UtilString.endsWith(commandTrimmed, ' w')) {
+                            commandRemoved_toSearchFor = commandTrimmed.slice(0, commandTrimmed.length - 2)
+                            wasAwrite = true;
+                            alert  ('will search after write wasAwrite [' + wasAwrite +
+                            '] for commandRemoved_toSearchFor:' + commandRemoved_toSearchFor);
+                        } else {
+                            commandRemoved_toSearchFor = commandTrimmed;
+                        }
+
+                        $location.search('q', commandRemoved_toSearchFor);       // yoo bar foo bar baz
+                        $scope.ustodos  = Ustodos.query ({q: commandTrimmed});
+                    }
+
+                    //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
+                    //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));
+                    //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.utilGetClass(this):'+UtilClassx.utilGetClass(this));
+
+                    //setTimeout(function(){alert('in ustodos')}, 2000);
+                    //setTimeout(function(){
+
+                    //setTimeout(function(){
+                    //console.log ('hi1 hk this.newUrl :' + newUrl );
+                    //console.log ('hi2 hk this.commandFromInputBox:' + this.commandFromInputBox);
+                    //console.log ('hi3 hk $scope.hkhkhkbk:' + $scope.hkhkhkbk);
+                    //$location.path('/#!/ddddddd');
+                    //$location.path(newUrl).replace();
+                    //$location.skipReload().path('/newpath').replace(); // https://github.com/angular-ui/ui-router/issues/427
+                    // https://github.com/angular-ui/ui-router/issues/427
+                    // https://www.google.com/search?num=100&es_sm=93&q=angular+%24location.path+replace&oq=angular+%24location.path+replace&gs_l=serp.3..0i22i30.1345.1711.0.2094.2.2.0.0.0.0.130.250.0j2.2.0.msedr...0...1c.1.61.serp..0.2.250.2tLK_AkIUUs
+                    // https://www.google.com/search?q=angular+change+url&oq=angular+change+url&aqs=chrome..69i64j0l5.704j0j9&sourceid=chrome&es_sm=93&ie=UTF-8
+                    // https://docs.angularjs.org/api/ng/service/$location
+
+
+                    //window.location.href = '/#!/ssss2' ;
+                    //$scope.apply();
+
+                    //            try {
+
+                    //$locationProvider.html5Mode(true);
+                    //window.location.href = '/#!/ustodos/findlist/' + $scope.hkhkhkbk;
+
+                    // this is the one to toggle 150304
+                    //window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
+                    //$location.path($location.path() + 'ddd/#!/?q=' + $scope.hkhkhkbk);
+
+                    //window.location.href = '/?q=sdfdfdf';
+                    //$location.path('#/login');
+                    //alert ('22c $location.absUrl():' + $location.absUrl());
+                    //alert ('22d window.location.href:' + window.location.href);
+                    //alert ('22e this.commandFromInputBox:' + this.commandFromInputBox);
+                    //window.location.href = window.location.href + '/xxx' + this.commandFromInputBox;
+                    //window.location.href = window.location.href + '/xxx';
+                    //https://docs.angularjs.org/guide/$location
+                    //alert('assigned this.commandFromInputBox:'+ this.commandFromInputBox);
+
+
+                    //console.log (getClass('ssdfsdfdsf', this.commandFromInputBox));
+
+                    //$scope.ustodos = Ustodos.query ({name: /141229/});
+                    //setTimeout(function(){console.log ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
+                    //setTimeout(function(){alert ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
+                    //$scope.$apply();
+
+                    //getProperties('props this:', this);
+                    //var ustodo = new Ustodos ({
+                    //	name: this.name,  // hbkk mystery
+                    //	commandFromInputBox: this.commandFromInputBox // hbkk mystery
+                    //});
+                    //getProperties('props ustodo:', ustodo);
+
+
+
+
+                    //// Redirect after save
+                    //ustodo.$save(function(response) {
+                    //	$location.path('ustodos/' + response._id);
+                    //	$scope.name = '';
+                    //}, function(errorResponse) {
+                    //	$scope.error = errorResponse.data.message;
+
+                } catch (e) {
+                    alert ('errta:' + e);
+                    throw e;
                 }
-
-                //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
-                //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));
-                //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.utilGetClass(this):'+UtilClassx.utilGetClass(this));
-
-                //setTimeout(function(){alert('in ustodos')}, 2000);
-                //setTimeout(function(){
-
-                //setTimeout(function(){
-                //console.log ('hi1 hk this.newUrl :' + newUrl );
-                //console.log ('hi2 hk this.commandFromInputBox:' + this.commandFromInputBox);
-                //console.log ('hi3 hk $scope.hkhkhkbk:' + $scope.hkhkhkbk);
-                //$location.path('/#!/ddddddd');
-                //$location.path(newUrl).replace();
-                //$location.skipReload().path('/newpath').replace(); // https://github.com/angular-ui/ui-router/issues/427
-                // https://github.com/angular-ui/ui-router/issues/427
-                // https://www.google.com/search?num=100&es_sm=93&q=angular+%24location.path+replace&oq=angular+%24location.path+replace&gs_l=serp.3..0i22i30.1345.1711.0.2094.2.2.0.0.0.0.130.250.0j2.2.0.msedr...0...1c.1.61.serp..0.2.250.2tLK_AkIUUs
-                // https://www.google.com/search?q=angular+change+url&oq=angular+change+url&aqs=chrome..69i64j0l5.704j0j9&sourceid=chrome&es_sm=93&ie=UTF-8
-                // https://docs.angularjs.org/api/ng/service/$location
-
-
-                //window.location.href = '/#!/ssss2' ;
-                //$scope.apply();
-
-    //            try {
-
-                //$locationProvider.html5Mode(true);
-                //window.location.href = '/#!/ustodos/findlist/' + $scope.hkhkhkbk;
-
-                // this is the one to toggle 150304
-                //window.location.href = '/#!/?q=' + $scope.hkhkhkbk;
-                //$location.path($location.path() + 'ddd/#!/?q=' + $scope.hkhkhkbk);
-
-                //window.location.href = '/?q=sdfdfdf';
-                //$location.path('#/login');
-                //alert ('22c $location.absUrl():' + $location.absUrl());
-                //alert ('22d window.location.href:' + window.location.href);
-                //alert ('22e this.commandFromInputBox:' + this.commandFromInputBox);
-                //window.location.href = window.location.href + '/xxx' + this.commandFromInputBox;
-                //window.location.href = window.location.href + '/xxx';
-                //https://docs.angularjs.org/guide/$location
-                //alert('assigned this.commandFromInputBox:'+ this.commandFromInputBox);
-
-
-                //console.log (getClass('ssdfsdfdsf', this.commandFromInputBox));
-
-                //$scope.ustodos = Ustodos.query ({name: /141229/});
-                //setTimeout(function(){console.log ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
-                //setTimeout(function(){alert ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
-                //$scope.$apply();
-
-                //getProperties('props this:', this);
-                //var ustodo = new Ustodos ({
-                //	name: this.name,  // hbkk mystery
-                //	commandFromInputBox: this.commandFromInputBox // hbkk mystery
-                //});
-                //getProperties('props ustodo:', ustodo);
-
-
-
-
-                //// Redirect after save
-                //ustodo.$save(function(response) {
-                //	$location.path('ustodos/' + response._id);
-                //	$scope.name = '';
-                //}, function(errorResponse) {
-                //	$scope.error = errorResponse.data.message;
             };
 
             // Search for one hbkk existing Ustodo by string
@@ -1604,15 +1622,15 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
             // <select> element displays its options on mousedown, not click.
-                    //        $scope.showSelectDropdown = function () { // WORKS
-                    //            var event;
-                    //            event = document.createEvent('MouseEvents');
-                    //            event.initMouseEvent('mousedown', true, true, window);
-                    //            document.getElementById('selectId').dispatchEvent(event);
-                    //        };
-                    //
+            //        $scope.showSelectDropdown = function () { // WORKS
+            //            var event;
+            //            event = document.createEvent('MouseEvents');
+            //            event.initMouseEvent('mousedown', true, true, window);
+            //            document.getElementById('selectId').dispatchEvent(event);
+            //        };
+            //
             // This isn't magic.
-                    //http://jsfiddle.net/fz2sY/39/
+            //http://jsfiddle.net/fz2sY/39/
             $scope.runThis = function () {
             };
 
@@ -1690,7 +1708,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //http:\/\/applex.com' target='_blank'>http:\/\/applex.com<\/a>';
 
         }
-};})
+    };})
 
     .directive('autoFocus', function($timeout) {
         console.log('fffffffffffffffffffffffffff');
@@ -1757,11 +1775,11 @@ angular.module('ustodos')
 
 //window.onload = function()
 //{
-    //alert ('onload ');
-    //CKEDITOR.replace( 'editor1' );
-    //CKEDITOR.instances.editor1.on('blur', function() {
-    //    alert('onblur fired');
-    //});
+//alert ('onload ');
+//CKEDITOR.replace( 'editor1' );
+//CKEDITOR.instances.editor1.on('blur', function() {
+//    alert('onblur fired');
+//});
 //};
 
 

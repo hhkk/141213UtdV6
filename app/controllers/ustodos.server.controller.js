@@ -3,6 +3,7 @@
 var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 var O = require('C:/utd/141213UtdV6/public/util/O.js');
+var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
 
 //var UtilClass = require('.././UtilClass');
 // console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
@@ -14,7 +15,7 @@ var O = require('C:/utd/141213UtdV6/public/util/O.js');
 //C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
 
 
-var UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
+//var HrefThisText = require('C:/utd/141213UtdV6/public/util/HrefThisText.js');
 
 /**
  * Module dependencies.
@@ -167,52 +168,52 @@ exports.list2 = function(req, res) {
     }
 
 
-
-
-
     //if (query.querystring.endsWith())
     var commandTrimmed = query.q.trim();
+
+
+    // if write   in write
     if (UtilString.endsWith(commandTrimmed, ' w'))
     {
-        console.log ('in ustodos.server.controller.js: w command-based save');
+        var commandRemoved = commandTrimmed.slice(0, commandTrimmed.length-2)
+        console.log (' ========================================= in ustodos.server.controller.js: w save '
+            + ', commandTrimmed [' + commandTrimmed + '] ' +
+            + ', commandRemoved [' + commandRemoved + '] '
+        );
         O.o ('in endswith w');
         var ustodo = new Ustodo();
-        ustodo.text = commandTrimmed;
-        ustodo.html = commandTrimmed;
         ustodo.user = req.user;
 
         try {
-            var XMLHttpRequest = require("XMLHttpRequest").XMLHttpRequest;
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    var title = parseTitleTagFromHtml(xmlhttp.responseText);
+            var res2 = {};
+            res2.json = function(s)
+            {
+                O.o ('saving content as both text and html [' + s + ']');
 
-                    ustodo.save(function(err) {
-                        if (err) {
-                            console.log ('*** write fail commandTrimmed [' +commandTrimmed + ']');
-                            console.log ('*** write fail err [' +err + ']');
-                            return res.status(400).send({
-                                message: errorHandler.getErrorMessage(err)
-                            });
-                        } else {
-                            //now process read aspect only of query
-                            require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
-                            console.log ('*** write success commandTrimmed [' +commandTrimmed + ']');
-                        }
-                    });
+                ustodo.text = s;
+                ustodo.html = s;
+
+                ustodo.save(function(err) {
+                    if (err) {
+                        console.log ('*** write fail commandTrimmed [' +commandTrimmed + ']');
+                        console.log ('*** write fail err [' +err + ']');
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        //now process read aspect only of query
+                        require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
+                        console.log ('*** write success commandTrimmed [' +commandTrimmed + ']');
+                    }
+                });
+            };
+
+            UtilUrl.expandUrlsToHrefsReturnPatchedStr(commandRemoved, res2);
 
 
-
-                } else {
-                }
-            }
-            xmlhttp.open("GET", 'http://quora.com', true);
-            xmlhttp.send();
-            return xmlhttp.responseText;
-            //return ('xmlHttp.responseText:'+xmlhttp.responseText);
         } catch (e) {
             O.o('erra:' + e);
+            throw e;
         }
 
 

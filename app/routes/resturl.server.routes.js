@@ -1,6 +1,7 @@
 'use strict';
 
 //console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\routes
+var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
 
 module.exports = function(app) {
 
@@ -15,19 +16,20 @@ module.exports = function(app) {
     }
 
     // localhost:3000/resturl
-    //http://localhost:3000/resturl?q=http://www.apple.com
+    //http://localhost:3000/resturl?q=aaa%20http://www.apple.com%20bbb%20http://www.ibm.com%20cccc
     app.get('/resturl', function(req, res) {
         //var urlstruct = {};
         //urlstruct.test = 'hihk';
         //res.json(urlstruct);
         console.log ('req.query.q:' + req.query.q)
-        var itemsxxxxy = [];
-        itemsxxxxy.push(new Item(req.query.q)); // // no such domain
+        //var itemsxxxxy = [];
+        //itemsxxxxy.push(new Item(req.query.q)); // // no such domain
         //itemsxxxxy.push(new Item('http://www.dgsdfgdfgsdgsdfgsdgsdgsfdg.com')); // // no such domain
         //itemsxxxxy.push(new Item('http://www.dell.com')); // failed on method 1 - needs fallback
         //itemsxxxx.push(new Item('http://www.tame.com')); // takes longer and fails
         //itemsxxxxy.push(new Item('http://www.apple.com')); // ok w/2
-        a150403AsyncExample_WithHttpGet_ItemStyle.asyncWrapperForTitle_levelOne(itemsxxxxy, res);
+
+        UtilUrl.expandUrlsToHrefsReturnPatchedStr(req.query.q, res);
 
     });
 
