@@ -4,6 +4,7 @@
 //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 //var O = require('C:/utd/141213UtdV6/public/util/O.js');
 //var UtilClass = null;
+//var UtilJsTypeDetect = require('C:/utd/141213UtdV6/public/util/UtilJsTypeDetect.js');
 
 var resolveFinalCommandBetweenUrlAndInputBox = function(commandFromInputBox, commandInputBox)
 {
@@ -350,7 +351,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //window.document.title = 'jp2 - '+xText; // not jpro:
                 if (keyCode === 13 || bShouldIsearch)
                 {
-                    //alert ('xText:' + xText);
+                    //alert ('searchhk for xText:' + xText);
                     $scope.searchhk(xText);
                 }
 
@@ -1024,24 +1025,39 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             // MAJOR COMMON FUNCTION - SET ACTIVE EDITOR CONTENT
             // set text shown for mouseover
+
             $scope.setTextInShowingEditor = function(e) {
                 try {
                     switch($scope.whichInputIsInFocus())
                     {
                         case $scope.ns.Input.INPUT_0_TEXT:
-                            document.getElementById('idInput0TypeText').value = e.innerText;
+                            if (UtilJsTypeDetect.isString(e)) {
+                                //alert('set inp in setTextInShowingEditor for input0text [' + e + ']');
+                                document.getElementById('idInput0TypeText').value = e;
+                            }
+                            else
+                                document.getElementById('idInput0TypeText').value = e.innerText;
                             break;
                         case $scope.ns.Input.INPUT_1_MEDIUM:
-                            $scope.mmmm.element.innerHTML = e.innerHTML;
+                            alert ('in setTextInShowingEditor for input1medium');
+                            if (UtilJsTypeDetect.isString(e))
+                                alert('logic error - setting Medium rich editor with string [' + e + '] leaving at prior value');
+                            else
+                                $scope.mmmm.element.innerHTML = e.innerHTML;
                             break;
                         case $scope.ns.Input.INPUT_2_CKE:
-                            CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
+                            alert ('in setTextInShowingEditor for input2cke');
+                            if (UtilJsTypeDetect.isString(e))
+                                alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
+                            else
+                                CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
                             break;
                         default:
                             alert ('era - bad input resolution');
                     }
                 } catch (e) {
                     alert ('era:' + e);
+                    throw e;
                 }
             };
 
@@ -1511,19 +1527,22 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
                         //$scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
                         //O.o  ('completed search');
+                        var commandUnTrimmed = searchInputCommand;
                         var commandTrimmed = searchInputCommand.trim();
                         var commandRemoved_toSearchFor = null;
                         var wasAwrite = false;
                         if (UtilString.endsWith(commandTrimmed, ' w')) {
-                            commandRemoved_toSearchFor = commandTrimmed.slice(0, commandTrimmed.length - 2)
+                            commandRemoved_toSearchFor = commandTrimmed.slice(0, commandTrimmed.length - 1)
                             wasAwrite = true;
-                            alert  ('will search after write wasAwrite [' + wasAwrite +
-                            '] for commandRemoved_toSearchFor:' + commandRemoved_toSearchFor);
+                            //alert  ('will search after write wasAwrite [' + wasAwrite +
+                               //'] for commandRemoved_toSearchFor:' + commandRemoved_toSearchFor);
                         } else {
                             commandRemoved_toSearchFor = commandTrimmed;
                         }
 
                         $location.search('q', commandRemoved_toSearchFor);       // yoo bar foo bar baz
+                        //alert ('commandRemoved_toSearchFor:'+ commandRemoved_toSearchFor);
+                        $scope.setTextInShowingEditor(commandUnTrimmed);
                         $scope.ustodos  = Ustodos.query ({q: commandTrimmed});
                     }
 

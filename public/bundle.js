@@ -3,7 +3,7 @@
 /**
  * Created by henryms on 3/2/2015.
  */
-// var UtilLog = require('C:/utd/141213UtdV6/public/util/UtilLog.js');
+// var O = require('C:/utd/141213UtdV6/public/util/O.js');
 
 
 //alert ('redefine alerthistory');
@@ -18,7 +18,8 @@ var alertHistory = [];
 var callcount_o = 0;
 var o = function (s)
 {
-    console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+    console.log(callcount_o++ + '. olog:' + s );
+    //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
 }
 /**
  * alert - implies output with alert history log
@@ -530,7 +531,7 @@ if (typeof exports !== 'undefined') {
 /**
  * Created by henryms on 2/11/2015.
  */
-// var UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
+// var UtilHrefThisText = require('C:/utd/141213UtdV6/public/util/UtilHrefThisText.js');
 
 /**
  *
@@ -590,14 +591,14 @@ var buildHrefFromUrlString= function(urlstr)
 
 /**
  * make sure all urls (e.g., n  on whitespace string tokens ending in .net) strings have http preamble
- * @param s original string with possible urls not yet IDd with http prefix
- * @param s
+ * @param textToBeHrefed original string with possible urls not yet IDd with http prefix
+ * @param textToBeHrefed
  * @returns {string}
  */
-var strHttpEnhancer = function(s, hrefGen)
+var hrefThisText = function(textToBeHrefed)
 {
-    //s = '=-=-=-=-=-=-=-=-' + s;
-    var tokens = s.split(/\s+/);
+    //textToBeHrefed = '=-=-=-=-=-=-=-=-' + textToBeHrefed;
+    var tokens = textToBeHrefed.split(/\s+/);
     //console.log ('y.length:' + y.length);
     var i = 0;
     tokens.forEach(function(token) {
@@ -607,11 +608,10 @@ var strHttpEnhancer = function(s, hrefGen)
             if (tokens[i].toLowerCase().indexOf('http') !== 0)
                     tokens[i] = 'http://' + tokens[i];
             // replace old with new (has http expansion)
-            if (hrefGen) {
-                replaceWith = '<p color=\'red\'>' + buildHrefFromUrlString(tokens[i]) + '</p>';
-                console.log ('convert url from [' + tokens[i] + '] to [' + replaceWith+']');
-                tokens[i] = 'fgfgfg' + replaceWith;
-            }
+            //replaceWith = '<p color=\'red\'>' + buildHrefFromUrlString(tokens[i]) + '</p>';
+            replaceWith = buildHrefFromUrlString(tokens[i]);
+            console.log ('convert url from [' + tokens[i] + '] to [' + replaceWith+']');
+            tokens[i] = replaceWith;
         }
         i++;
     });
@@ -619,52 +619,130 @@ var strHttpEnhancer = function(s, hrefGen)
 
 };
 
+/**
+ * create n
+ * @param textToBeTokenized
+ * @returns {*}
+ */
+var splitTextToTokensWithHttpUrlState = function(textToBeTokenized)
+{
+    //textToBeTokenized = '=-=-=-=-=-=-=-=-' + textToBeTokenized;
+    var tokens = textToBeTokenized.split(/\s+/);
+    //console.log ('y.length:' + y.length);
+    var i = 0;
+    tokens.forEach(function(token) {
+        if (isUrl(token)) {
+            //console.log ('is a url:' + token);
+            var replaceWith = null;
+            if (tokens[i].toLowerCase().indexOf('http') !== 0)
+                tokens[i] = 'http://' + tokens[i]
+            //tokens[i] = buildHrefFromUrlString(tokens[i]);
+            console.log ('keeping tokens[i] [' + tokens[i] + ']');
+            //tokens[i] = replaceWith;
+        }
+        i++;
+    });
+    return tokens;
+};
+
+
+//
+//var strHttpEnhancer = function(s, hrefGen)
+//{
+//    //s = '=-=-=-=-=-=-=-=-' + s;
+//    var tokens = s.split(/\s+/);
+//    //console.log ('y.length:' + y.length);
+//    var i = 0;
+//    tokens.forEach(function(token) {
+//        if (isUrl(token)) {
+//            //console.log ('is a url:' + token);
+//            var replaceWith = null;
+//            if (tokens[i].toLowerCase().indexOf('http') !== 0)
+//                tokens[i] = 'http://' + tokens[i];
+//            // replace old with new (has http expansion)
+//            if (hrefGen) {
+//                replaceWith = '<p color=\'red\'>' + buildHrefFromUrlString(tokens[i]) + '</p>';
+//                console.log ('convert url from [' + tokens[i] + '] to [' + replaceWith+']');
+//                tokens[i] = 'fgfgfg' + replaceWith;
+//            }
+//        }
+//        i++;
+//    });
+//    return tokens.join(' ');
+//
+//};
+
+
+
 if (typeof exports !== 'undefined') {
     exports.isUrl = isUrl;
 }
 
 
-var test = false;
-if (test)
-{
-    var x = 'asdlkasmd ibm.com sdf   ';
-    var regexp = new RegExp();
-    var y = x.split(/\s+/);
-
-    console.log ('y.length:' + y.length);
-    y.forEach(function(token) {
-        //if (isUrl(token)) {
-        //    //console.log ('is a url:' + token);
-        //
-        //}
-        //else{
-        //    console.log ('not a url:' + token);
-        //}
-    });
-}
 
 if (typeof exports !== 'undefined') {
-    exports.hrefThisText = strHttpEnhancer;
-    exports.seeIfConnectedToThisClass = seeIfConnectedToThisClass;
+    exports.splitTextToTokensWithHttpUrlState = splitTextToTokensWithHttpUrlState;
+    exports.hrefThisText = hrefThisText;
 }
 
 },{}],6:[function(require,module,exports){
-// var UtilDate = require('C:/utd/141213UtdV6/public/modules/ustodo/UtilDate.js');
+'use strict';
+
+/**
+ * functions to detect the type of a sec
+ */
+
+// var UtilJsTypeDetect = require('C:/utd/141213UtdV6/public/util/UtilJsTypeDetect.js');
+
+//tokenize raw text, get array of http-urls to get titles.  expand to include title
+
+var isString = function(s) {
+        return (typeof s == 'string' || s instanceof String);
+
+}
+
+
+if (typeof exports !== 'undefined') {
+        exports.isString = isString;
+}
+
+
+},{}],7:[function(require,module,exports){
+// var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
+
+var endsWith = function (str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+};
 
 
 String.prototype.endsWith = function (s) {
     return this.length >= s.length && this.substr(this.length - s.length) == s;
 }
 
-var endsWith = function (str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+
+// http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript
+String.prototype.replaceAll = function (find, replace) {
+    var str = this;
+    return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
 };
+
+
+
+
+
+
+
+
+
+
 
 if (typeof exports !== 'undefined') {
     exports.endsWith = endsWith;
 }
 
-},{}],7:[function(require,module,exports){
+
+
+},{}],8:[function(require,module,exports){
 //utd = [];   // ustodo utilities
 //utd[Date] = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 //utd[Class] = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
@@ -672,14 +750,15 @@ if (typeof exports !== 'undefined') {
 
 // 1107
 UtilDate = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
-UtilHtmlHref = require('C:/utd/141213UtdV6/public/util/UtilHtmlHref.js');
 UtilClassz = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 UtilExceptionStack = require('C:/utd/141213UtdV6/public/util/UtilExceptionStack.js');
+UtilJsTypeDetect = require('C:/utd/141213UtdV6/public/util/UtilJsTypeDetect.js');
+UtilHrefThisText = require('C:/utd/141213UtdV6/public/util/UtilHrefThisText.js');
 O = require('C:/utd/141213UtdV6/public/util/O.js');
 
     // browserify C:\utd\141213UtdV6\public\util\entry.js > C:\utd\141213UtdV6\public\bundle.js
 
 
 
-},{"C:/utd/141213UtdV6/public/util/O.js":1,"C:/utd/141213UtdV6/public/util/UtilClass.js":2,"C:/utd/141213UtdV6/public/util/UtilDate.js":3,"C:/utd/141213UtdV6/public/util/UtilExceptionStack.js":4,"C:/utd/141213UtdV6/public/util/UtilHtmlHref.js":5,"C:/utd/141213UtdV6/public/util/UtilString.js":6}]},{},[7]);
+},{"C:/utd/141213UtdV6/public/util/O.js":1,"C:/utd/141213UtdV6/public/util/UtilClass.js":2,"C:/utd/141213UtdV6/public/util/UtilDate.js":3,"C:/utd/141213UtdV6/public/util/UtilExceptionStack.js":4,"C:/utd/141213UtdV6/public/util/UtilHrefThisText.js":5,"C:/utd/141213UtdV6/public/util/UtilJsTypeDetect.js":6,"C:/utd/141213UtdV6/public/util/UtilString.js":7}]},{},[8]);

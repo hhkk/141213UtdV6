@@ -4,7 +4,7 @@
 // var ustodos.controller.helper = require('C:/utd/141213UtdV6/app/controllers/helpers/ustodos.controller.helper.js');
 //processCommandReadPortion
 
-var HrefThisText = require('C:/utd/141213UtdV6/public/util/HrefThisText.js');
+var UtilHrefThisText = require('C:/utd/141213UtdV6/public/util/UtilHrefThisText.js');
 var O = require('C:/utd/141213UtdV6/public/util/O.js');
 
 exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, errorHandler, res) {
@@ -42,7 +42,7 @@ exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, er
                 //console.log ('in result loop');
                 countResult = countResult + 1;
                 //ustodos[k].text = 'svr2,' + ustodos[k].text;
-                ustodos[k].text = HrefThisText.hrefThisText(ustodos[k].text);
+                ustodos[k].text = UtilHrefThisText.hrefThisText(ustodos[k].text);
                 x.push(ustodos[k]);
 
             }

@@ -16,7 +16,7 @@ var O = require('C:/utd/141213UtdV6/public/util/O.js');
 var http = require('follow-redirects').http;
 //var https = require('follow-redirects').https;
 var async = require("async");
-var HrefThisText = require('C:/utd/141213UtdV6/public/util/HrefThisText.js');
+var UtilHrefThisText = require('C:/utd/141213UtdV6/public/util/UtilHrefThisText.js');
 
 //tokenize raw text, get array of http-urls to get titles.  expand to include title
 var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
@@ -30,7 +30,7 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
 
     // ARE THERE ANY URLS
     // get tokens with urls as "http..." in their own array element
-    var tokens = HrefThisText.splitTextToTokensWithHttpUrlState (initialTextWithPreHrefs);
+    var tokens = UtilHrefThisText.splitTextToTokensWithHttpUrlState (initialTextWithPreHrefs);
 
     tokens.forEach(function(token)
     {
@@ -56,7 +56,7 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
                     if (tokens[itokens] === item.url)
                     {
                         foundMatch = true;
-                        //tokens[itokens] = '[' + item.title + '] ' + HrefThisText.hrefThisText(item.url);
+                        //tokens[itokens] = '[' + item.title + '] ' + UtilHrefThisText.hrefThisText(item.url);
                         // original ustodo saves non href'ed links to the db
                         tokens[itokens] = '[' + item.title + '] ' + item.url;
                     }
@@ -232,7 +232,7 @@ function whenDoneAsync_LevelTwo(items,itemsDoneAlreadyInPassOne, res2 )
     var i = 0;
     items.concat(itemsDoneAlreadyInPassOne).forEach(function(item) {
         i++;
-        console.log (i + '. ' + item.url + '->' + item.title);
+            console.log (i + '. ' + item.url + '================>>>>>>>>>>>>>>' + item.title);
     });
     console.log("Everything is done, calling res.json.");
     res2.result(items.concat(itemsDoneAlreadyInPassOne));
@@ -368,10 +368,6 @@ var findTitle_htmlParse = function(html) {
     }
 }
 
-if (typeof exports !== 'undefined') {
-    exports.expandUrlsToHrefsReturnPatchedStr = expandUrlsToHrefsReturnPatchedStr;
-}
-
 
 
 var test = false;
@@ -403,5 +399,9 @@ if (!test) {
     //    //    console.log ('not a url:' + token);
     //    //}
     //});
+}
+
+if (typeof exports !== 'undefined') {
+    exports.expandUrlsToHrefsReturnPatchedStr = expandUrlsToHrefsReturnPatchedStr;
 }
 
