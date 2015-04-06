@@ -188,7 +188,7 @@ exports.list2 = function(req, res) {
             var res2 = {};
             res2.json = function(s)
             {
-                O.o ('saving content as both text and html [' + s + ']');
+                O.o ('--------> saving content as both text and html [' + s + ']');
 
                 ustodo.text = s;
                 ustodo.html = s;

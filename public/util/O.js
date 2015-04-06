@@ -17,7 +17,18 @@ var alertHistory = [];
 var callcount_o = 0;
 var o = function (s)
 {
-    console.log(callcount_o++ + '. olog:' + s );
+    var t = callcount_o++ + '. olog:' + s
+    console.log(t);
+    appendFileSync('c:/tmp/t.txt', t);
+    //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+}
+
+// error
+var e = function (s)
+{
+    var t = callcount_o++ + '. olog:' + s
+    console.error(t);
+    appendFileSync('c:/tmp/t.txt', t);
     //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
 }
 /**
@@ -36,4 +47,27 @@ var a = function (s)
 if (typeof exports !== 'undefined') {
     exports.o = o;
     exports.a = a;
+    exports.e = e;
 }
+
+var fs = require('fs');
+// erases existing content
+var writeFileSync = function (filefqname, s) {
+    fs.writeFileSync(filefqname, s + '\r\n');
+}
+
+// does not erase existing content
+var appendFileSync = function (filefqname, s) {
+    fs.appendFileSync(filefqname, s + '\r\n');
+}
+
+var test = false;
+if (test) {
+    writeFileSync('c:/tmp/t.txt', 'time in a bottle\r\n');
+    appendFileSync('c:/tmp/t.txt', 'time in a bottle2\r\n');
+    appendFileSync('c:/tmp/t.txt', 'time in a bottle3\r\n');
+    appendFileSync('c:/tmp/t.txt', 'time in a bottle4\r\n');
+    appendFileSync('c:/tmp/t.txt', 'time in a bottle5\r\n');
+}
+
+

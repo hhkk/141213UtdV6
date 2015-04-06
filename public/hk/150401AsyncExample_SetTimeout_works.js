@@ -13,11 +13,7 @@ Item.prototype.someAsyncCall = function(callback, delay2) {
 
 var items = [];
 items.push(new Item(4000));
-items.push(new Item(2000));
-items.push(new Item(1000));
-items.push(new Item(1000));
-items.push(new Item(1000));
-items.push(new Item(1000));
+items.push(new Item(4000));
 
 async = require("async");
 

@@ -17,7 +17,7 @@ module.exports = function(app) {
 
     // localhost:3000/resturl
     //http://localhost:3000/resturl?q=aaa%20http://www.apple.com%20bbb%20http://www.ibm.com%20cccc
-    app.get('/resturl', function(req, res) {
+    //http://localhost:3000/resturl?q=aaa%20http://www.apple.com%20bbb%20http://www.dell.com%20cccc    app.get('/resturl', function(req, res) {
         //var urlstruct = {};
         //urlstruct.test = 'hihk';
         //res.json(urlstruct);
@@ -30,6 +30,17 @@ module.exports = function(app) {
         //itemsxxxxy.push(new Item('http://www.apple.com')); // ok w/2
 
         UtilUrl.expandUrlsToHrefsReturnPatchedStr(req.query.q, res);
+
+    });
+
+    //http://localhost:3000/resturltimer?q=30
+    app.get('/resturltimer', function(req, res) {
+        //var urlstruct = {};
+        //urlstruct.test = 'hihk';
+        //res.json(urlstruct);
+        console.log ('req.query.q:' + req.query.q)
+        //setTimeout(function(){ res.json('waited [' + req.query.q + '] seconds'); }, 1000);
+        setTimeout(function(){ res.json('waited [' + req.query.q + '] seconds'); }, 1000*req.query.q);
 
     });
 

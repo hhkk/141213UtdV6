@@ -47,6 +47,8 @@ var isUrl = function (s)
         return true;
     if (s.indexOf('.ly') > 0)
         return true;
+    if (s.indexOf('.co') > 0)
+        return true;
     if (s.indexOf('.net') > 0)
         return true;
 
@@ -82,7 +84,7 @@ var hrefThisText = function(textToBeHrefed)
             // replace old with new (has http expansion)
             //replaceWith = '<p color=\'red\'>' + buildHrefFromUrlString(tokens[i]) + '</p>';
             replaceWith = buildHrefFromUrlString(tokens[i]);
-            console.log ('convert url from [' + tokens[i] + '] to [' + replaceWith+']');
+            //console.log ('convert url from [' + tokens[i] + '] to [' + replaceWith+']');
             tokens[i] = replaceWith;
         }
         i++;
