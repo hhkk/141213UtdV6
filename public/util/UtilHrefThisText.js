@@ -11,6 +11,9 @@
  * @param onWayOIntoDB
  * @returns {boolean}
  */
+
+var O = require('C:/utd/141213UtdV6/public/util/O.js');
+
 var seeIfConnectedToThisClass = function (s) {
     return ('in seeIfConnectedToThisClass:' + s);
 };
@@ -111,7 +114,7 @@ var splitTextToTokensWithHttpUrlState = function(textToBeTokenized)
             if (tokens[i].toLowerCase().indexOf('http') !== 0)
                 tokens[i] = 'http://' + tokens[i]
             //tokens[i] = buildHrefFromUrlString(tokens[i]);
-            console.log ('keeping tokens[i] [' + tokens[i] + ']');
+            O.o ('keeping tokens[i] [' + tokens[i] + ']');
             //tokens[i] = replaceWith;
         }
         i++;

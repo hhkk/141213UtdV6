@@ -15,6 +15,7 @@
 //var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
 var O = require('C:/utd/141213UtdV6/public/util/O.js');
 var http = require('follow-redirects').http;
+//var http = require('http');
 //var https = require('follow-redirects').https;
 var async = require("async");
 var UtilHrefThisText = require('C:/utd/141213UtdV6/public/util/UtilHrefThisText.js');
@@ -100,10 +101,14 @@ var asyncWrapperForTitle_levelOne = function(items, res2) {
         function (item, callback) {
             // Call an asynchronous function (often a save() to MongoDB)
             //O.o ('called 2nd param function')
-            getUrlContent_levelOne(function() {
-               // Async call is done, alert via callback
-               callback();
-            }, item);
+            try {
+                getUrlContent_levelOne(function () {
+                    // Async call is done, alert via callback
+                    callback();
+                }, item);
+            } catch (e) {
+                O.o ('errerreea:' + e);
+            }
         },
         // 3rd parameter is the function call when everything is done
         function (err) {
@@ -123,67 +128,90 @@ var getUrlContent_levelOne = function(callback, item) {
         var timeout_wrapper = function( req ) {
             return function () {
                 // do some logging, cleaning, etc. depending on req
-                O.e('abort for item.url:' + item.url);
-                req.abort();
                 if (!calledBack) {
-                    item.title = 'timed out';
-                    calledBack = true;
-                    callback('dummy', item);
-                };
+                    O.e('timeout for item.url [' + item.url + ']');
+
+                    try {
+                        req.abort();
+                    } catch (e) {
+                        O.o('req.abort fail [' + e + ']');
+                    }
+                    if (!calledBack) {
+                        O.o('in timeout not calling back for url [' + item.url + ']');
+                        item.title = 'timed out';
+                        calledBack = true;
+                        callback('dummy', item);
+                    }
+                    else
+                        O.o('in timeout not calling back for url [' + item.url + ']');
+                }
+
             };
         };
 
         O.o ('-------- in getUrlContent_levelOne trying url:' + item.url);
 
-        var request = http.get(item.url, function (res)
+        var request = http.get ( item.url, function (res)
         {
-            var html = '';
-            res.on('data', function (chunk) {
-                //O.o('=================== data:' + chunk);
-                var textChunk = chunk.toString('utf8');
-                //O.o('textChunk:' + textChunk);
-                html += textChunk;
-                var title = findTitle_htmlParse(html);
-                if (title != null)
-                {
-                    //O.o('==============x1:' + item.url + '->' + title);
-                    if (!calledBack) {
-                        O.o('calling back from getUrlContent_levelOne x1:' + item.url + '->' + title);
-                        item.title = 'ttt' + title;
-                        calledBack = true;
-                        callback('dummy', item);
+            try {
+                var html = '';
+                res.on('data', function (chunk) {
+                    O.o('=================== data:' + chunk);
+                    var textChunk = chunk.toString('utf8');
+                    //O.o('textChunk:' + textChunk);
+                    html += textChunk;
+                    var title = findTitle_htmlParse(html);
+                    if (title != null) {
+                        //O.o('==============x1:' + item.url + '->' + title);
+                        if (!calledBack) {
+                            O.o('calling back from getUrlContent_levelOne x1:' + item.url + '->' + title);
+                            item.title = 'ttt' + title;
+                            calledBack = true;
+                            callback('dummy', item);
+                        }
                     }
-                }
-            });
-            res.on('end', function () {
-                //O.o('=================== end:');
-                //O.o ('calling back on url:' + )
-                //O.o('str:' + str);
+                });
 
-                var title = findTitle_htmlParse(html);
-                // if failed first level attempt, go for second
-                if (!title) {
-                    getUrlContent_levelTwo(function (url, item){
-                        // Async call is done, alert via callback
-                        //O.o ('for url:' + url + ', got title:' + title);
-                        //titles.push ('for url:' + url + ', got title:' + title);
-                        //item.title = title;
-                       if (!calledBack) {
-                           calledBack = true;
-                           callback();
-                       }
-                    }, item);
-                }
+                res.on('error', function (err) {
+                    O.e('problem with request: ' + err.message);
+                });
 
-                //if (!calledBack) {
-                //    O.o('calling back from getUrlContent_levelOne x2:' + item.url + '->' + title);
-                //    //O.o('x2:' + item.url + '->' + title);
-                //    item.title = 'xxx' + title;
-                //    calledBack = true;
-                //    callback('dummy', item);
-                //}
-            });
-        }).on('error', function (err) {
+                res.on('end', function () {
+                    //O.o('=================== end:');
+                    //O.o ('calling back on url:' + )
+                    //O.o('str:' + str);
+
+                    var title = findTitle_htmlParse(html);
+                    // if failed first level attempt, go for second
+                    if (title === null) {
+                        getUrlContent_levelTwo(function (url, item) {
+                            // Async call is done, alert via callback
+                            //O.o ('for url:' + url + ', got title:' + title);
+                            //titles.push ('for url:' + url + ', got title:' + title);
+                            //item.title = title;
+                            if (!calledBack) {
+                                calledBack = true;
+                                callback();
+                            }
+                        }, item);
+                    } else {
+                        if (!calledBack) {
+                            O.o('calling back from getUrlContent_levelOne x2:' + item.url + '->' + title);
+                            //O.o('x2:' + item.url + '->' + title);
+                            item.title = 'xxx' + title;
+                            calledBack = true;
+                            callback('dummy', item);
+                        }
+
+                    }
+
+                });
+            } catch (e) {
+                O.e ('errrria:' + e);
+            }
+        });
+
+        request.on('error', function (err) {
             O.e('eerrrra getting title for url [' + item.url + '] err:' + err);
             if (!calledBack)      {
                 item.title = 'Unable to open URL';
@@ -191,6 +219,8 @@ var getUrlContent_levelOne = function(callback, item) {
                 callback('fail', item);
             }
         });
+
+        request.end();
 
         // generate timeout handler
         var fn = timeout_wrapper( request );
@@ -378,20 +408,27 @@ if (!test) {
     //var x = '1111 ibm.com 2222  apple.com 333333';
     //var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 ';
     //var x = '1111 jpro.co 2222';
-    var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 u2d.co 555 ustodo.com 666 jpro.co 777';
+    //var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 u2d.co 555 ustodo.com 666 jpro.co 777';
     //var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 u2d.co 555 ustodo.com 666 ';
     //var x = '1111 ibm.com 2222  dell.com 333333 ';
-    //var x = '1111 ddfgdfgdfgdfgdfgf.com 22222 ';
-    //var x = '1111 jpro.co 22222 ';
+    //var x = '1111 ddfgdfgdfgdfgdfgf.com 22222 ';   // ok by itself at 40 seconds
+    var x = '1111 jpro.co 22222 '; // bad one still
     //var x = '1111 ibm.com 2222  ';
-    //var x = '1111 dell.com 2222  ';
+    //var x = '1111 dell.com 2222  '; // ok by itself at 40 seconds
     var res = {};
 
     res.json = function(s) {
-        O.o ('YAYAYAYAYAYAYAYAYAY in res.json [' + JSON.stringify(s) + ']');
+        O.o ('FINAL OUT RES JSON in res.json [' + JSON.stringify(s) + ']');
     }
 
-    expandUrlsToHrefsReturnPatchedStr(x, res);
+
+    try {
+        expandUrlsToHrefsReturnPatchedStr(x, res);
+    } catch (e) {
+        O.e ('errrtta:' + e);
+    } finally {
+        O.o ('finally done');
+    }
 
     //var regexp = new RegExp();
     //var y = x.split(/\s+/);

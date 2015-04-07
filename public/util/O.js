@@ -15,21 +15,44 @@ var alertHistory = [];
 // one and only console logger
 // private
 var callcount_o = 0;
+
+var passesFilters = function(s) {
+    var filters = [];
+    //  var filters = ['Two'];
+    var passes = false;
+    if (filters.length > 0) {
+        filters.forEach(function (f) {
+            if (s.indexOf(f) >= 0) {
+                passes = true;
+            }
+        });
+    }
+    else
+        passes = true;
+    return passes;
+}
+
+
 var o = function (s)
 {
-    var t = callcount_o++ + '. olog:' + s
-    console.log(t);
-    appendFileSync('c:/tmp/t.txt', t);
-    //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+    if (passesFilters(s))
+    {
+        var t = callcount_o++ + '. olog:' + s
+        console.log(t);
+        appendFileSync('c:/tmp/t.txt', t);
+        //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+    }
 }
 
 // error
 var e = function (s)
 {
-    var t = callcount_o++ + '. olog:' + s
-    console.error(t);
-    appendFileSync('c:/tmp/t.txt', t);
-    //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+    if (passesFilters(s)) {
+        var t = callcount_o++ + '. olog:' + s
+        console.error(t);
+        appendFileSync('c:/tmp/t.txt', t);
+        //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+    }
 }
 /**
  * alert - implies output with alert history log
@@ -37,12 +60,14 @@ var e = function (s)
  */
 var a = function (s)
 {
-    //alert ('old len:' + alertHistory.length);
-    var s = '['+alertHistory.length + '.'+s + ';'+']';
-    alertHistory.push (s);
-    //alert ('new len:' + alertHistory.length);
-    o('a:' + s);
-    alert (s + ' hist:' + alertHistory);
+    if (passesFilters(s)) {
+        //alert ('old len:' + alertHistory.length);
+        var s = '[' + alertHistory.length + '.' + s + ';' + ']';
+        alertHistory.push(s);
+        //alert ('new len:' + alertHistory.length);
+        o('a:' + s);
+        alert(s + ' hist:' + alertHistory);
+    }
 }
 if (typeof exports !== 'undefined') {
     exports.o = o;
