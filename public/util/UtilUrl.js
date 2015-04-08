@@ -96,26 +96,31 @@ var asyncWrapperForTitle_levelOne = function(items, res2) {
     // 1st parameter in async.each() is the array of items
     O.o (asyncWrapperForTitle_levelOne_callCount++ +  '.in asyncWrapperForTitle_levelOne');
     //http://justinklemm.com/node-js-async-tutorial/
-    async.each(items,
-        // 2nd parameter is the function that each item is passed into
-        function (item, callback) {
-            // Call an asynchronous function (often a save() to MongoDB)
-            //O.o ('called 2nd param function')
-            try {
-                getUrlContent_levelOne(function () {
-                    // Async call is done, alert via callback
-                    callback();
-                }, item);
-            } catch (e) {
-                O.o ('errerreea:' + e);
+    try {
+        async.each(items,
+            // 2nd parameter is the function that each item is passed into
+            function (item, callback) {
+                // Call an asynchronous function (often a save() to MongoDB)
+                //O.o ('called 2nd param function')
+                try {
+                    getUrlContent_levelOne(function () {
+                        // Async call is done, alert via callback
+                        callback();
+                    }, item);
+                } catch (e) {
+                    O.o('errerreea:' + e);
+                }
+                O.o('done getUrlContent_levelOne call');
+            },
+            // 3rd parameter is the function call when everything is done
+            function (err) {
+                // All tasks are done now
+                whenDoneAsync_LevelOne(items, res2);
             }
-        },
-        // 3rd parameter is the function call when everything is done
-        function (err) {
-            // All tasks are done now
-            whenDoneAsync_LevelOne(items, res2);
-        }
-    );
+        );
+    } catch (e) {
+        O.e ('era in asyncWrapperForTitle_levelOne async');
+    }
 }; // asyncWrapperForTitle_levelOne
 
 
@@ -137,7 +142,7 @@ var getUrlContent_levelOne = function(callback, item) {
                         O.o('req.abort fail [' + e + ']');
                     }
                     if (!calledBack) {
-                        O.o('in timeout not calling back for url [' + item.url + ']');
+                        O.o('in timeout calling back for url [' + item.url + ']');
                         item.title = 'timed out';
                         calledBack = true;
                         callback('dummy', item);
@@ -156,7 +161,7 @@ var getUrlContent_levelOne = function(callback, item) {
             try {
                 var html = '';
                 res.on('data', function (chunk) {
-                    O.o('=================== data:' + chunk);
+                    //O.o('=================== data:' + chunk);
                     var textChunk = chunk.toString('utf8');
                     //O.o('textChunk:' + textChunk);
                     html += textChunk;
@@ -165,7 +170,7 @@ var getUrlContent_levelOne = function(callback, item) {
                         //O.o('==============x1:' + item.url + '->' + title);
                         if (!calledBack) {
                             O.o('calling back from getUrlContent_levelOne x1:' + item.url + '->' + title);
-                            item.title = 'ttt' + title;
+                            item.title = 'L1a:' + title;
                             calledBack = true;
                             callback('dummy', item);
                         }
@@ -198,7 +203,7 @@ var getUrlContent_levelOne = function(callback, item) {
                         if (!calledBack) {
                             O.o('calling back from getUrlContent_levelOne x2:' + item.url + '->' + title);
                             //O.o('x2:' + item.url + '->' + title);
-                            item.title = 'xxx' + title;
+                            item.title = 'L1b:' + title;
                             calledBack = true;
                             callback('dummy', item);
                         }
@@ -220,7 +225,10 @@ var getUrlContent_levelOne = function(callback, item) {
             }
         });
 
+
+        O.o ("calling request.end");
         request.end();
+        O.o ("called request.end");
 
         // generate timeout handler
         var fn = timeout_wrapper( request );
@@ -307,7 +315,7 @@ var getUrlContent_levelTwo = function(callback, item) {
                 }
                 //O.o('title:' + title)
 
-                item.title = title;
+                item.title = 'L2a:' + title;
 
                 if (typeof callback === "function")
                     callback('DUMMY', item);
@@ -412,9 +420,9 @@ if (!test) {
     //var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 u2d.co 555 ustodo.com 666 ';
     //var x = '1111 ibm.com 2222  dell.com 333333 ';
     //var x = '1111 ddfgdfgdfgdfgdfgf.com 22222 ';   // ok by itself at 40 seconds
-    var x = '1111 jpro.co 22222 '; // bad one still
+    //var x = '1111 jpro.co 22222 '; // bad one still
     //var x = '1111 ibm.com 2222  ';
-    //var x = '1111 dell.com 2222  '; // ok by itself at 40 seconds
+    var x = '1111 dell.com 2222  '; // ok by itself at 40 seconds
     var res = {};
 
     res.json = function(s) {
