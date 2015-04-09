@@ -11,14 +11,14 @@ var Item = function(url) {
 }
 var items = [];
 //items.push(new Item('http://www.dell.com'));
-//items.push(new Item('http://jpro.com'));
-items.push(new Item('http://jpro.co'));
+items.push(new Item('http://dell.com'));
+//items.push(new Item('http://jpro.co'));
 
 
 
 //request('https://news.ycombinator.com', function (error, response, html) {
+//request(items[0].url, function (error, response, html) {
 request(items[0].url, function (error, response, html) {
-//request('http://jpro.co', function (error, response, html) {
 //request('http://ibm.com', function (error, response, html) {
     if (!error && response.statusCode == 200) {
         console.log('pass 1 html:' + html);
@@ -26,6 +26,7 @@ request(items[0].url, function (error, response, html) {
     else {
         O.o ('response:' + response);
         O.o ('html:' + html);
+
         O.o ('error:' + error);
     }
 });
