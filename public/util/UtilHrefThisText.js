@@ -114,7 +114,7 @@ var splitTextToTokensWithHttpUrlState = function(textToBeTokenized)
             if (tokens[i].toLowerCase().indexOf('http') !== 0)
                 tokens[i] = 'http://' + tokens[i]
             //tokens[i] = buildHrefFromUrlString(tokens[i]);
-            O.o ('keeping tokens[i] [' + tokens[i] + ']');
+            //O.o ('keeping tokens[i] [' + tokens[i] + ']');
             //tokens[i] = replaceWith;
         }
         i++;

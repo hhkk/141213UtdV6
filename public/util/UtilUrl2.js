@@ -25,7 +25,7 @@ var request = require('request');
 var callCount_expandUrlsToHrefsReturnPatchedStr =0
 var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
 {
-    O.o ('in expandUrlsToHrefsReturnPatchedStr call count:' + callCount_expandUrlsToHrefsReturnPatchedStr);
+    //O.o ('in expandUrlsToHrefsReturnPatchedStr call count:' + callCount_expandUrlsToHrefsReturnPatchedStr);
     var Item = function(url) {
         this.url = url;
         this.title = null;
@@ -50,7 +50,7 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
         var res2 = {};
         res2.result = function()
         {
-            O.o ("items have all been converted");
+            //O.o ("items have all been converted");
 
             // knit / replace here
             // now replace tokens with combo [title] + hrefed url
@@ -61,7 +61,7 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
                 {
                     if (tokens[itokens] === item.url)
                     {
-                        O.o ('yes match found for  item.url:' + item.url);
+                        //O.o ('yes match found for  item.url:' + item.url);
                         foundMatch = true;
                         //tokens[itokens] = '[' + item.title + '] ' + UtilHrefThisText.hrefThisText(item.url);
                         // original ustodo saves non href'ed links to the db
@@ -74,7 +74,7 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
                     throw 'no match found for  item.url:' + item.url;
                 }
             });
-            O.o ('reached res.json!!! ================================');
+            //O.o ('reached res.json!!! ================================');
             res.json(tokens.join(' '));
         }
 
@@ -96,7 +96,7 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
 var asyncWrapperForTitle_levelOne_callCount = 0;
 var asyncWrapperForTitle_levelOne = function(items, res2) {
     // 1st parameter in async.each() is the array of items
-    O.o (asyncWrapperForTitle_levelOne_callCount++ +  '.in asyncWrapperForTitle_levelOne');
+    //O.o (asyncWrapperForTitle_levelOne_callCount++ +  '.in asyncWrapperForTitle_levelOne');
     //http://justinklemm.com/node-js-async-tutorial/
     try {
         async.each(items,
@@ -112,7 +112,7 @@ var asyncWrapperForTitle_levelOne = function(items, res2) {
                 } catch (e) {
                     O.o('errerreea:' + e);
                 }
-                O.o('done getUrlContent_levelOne call');
+                //O.o('done getUrlContent_levelOne call');
             },
             // 3rd parameter is the function call when everything is done
             function (err) {
@@ -163,17 +163,16 @@ var getUrlContent_levelOne = function(callback, item) {
         //var timeout = setTimeout( fn, 4000000 );
         ////clearTimeout(timeout);
 
-        O.o ('-------- in getUrlContent_levelOne trying url:' + item.url);
+        //O.o ('-------- in getUrlContent_levelOne trying url:' + item.url);
 
 
-
-        var xxx = request(item.url, function (error, response, html) {
+        var fn = function (error, response, html) {
 //request('http://ibm.com', function (error, response, html) {
             if (!error && response.statusCode == 200) {
                 //console.log('pass 1 html:' + html);
                 var title = findTitle_htmlParse(html);
                 if (title !== null && !calledBack) {
-                    O.o('calling back from getUrlContent_levelOne x1:' + item.url + '->' + title);
+                    //O.o('calling back from getUrlContent_levelOne x1:' + item.url + '->' + title);
                     if (title != null)
                         item.title = 'L1a:' + title;
                     calledBack = true;
@@ -202,8 +201,12 @@ var getUrlContent_levelOne = function(callback, item) {
                     callback('dummy', item);
                 }
             }
-        });
+        };
 
+
+        var xxx = request(item.url, fn);
+
+        O.o ('xxx:' + xxx);
 
         // 3 this callback is for a second pass at URLs failed in the first pass
 
@@ -375,11 +378,12 @@ if (!test) {
     //var x = '1111 jpro.co 2222';
     //var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 u2d.co 555 ustodo.com 666 jpro.co 777';
     //var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 u2d.co 555 ustodo.com 666 ';
-    var x = '1 ibm.com 2 dell.com 3 apple.com 4 google.com 5 yahoo.com 6 www.tester.com 7 ';
     //var x = '1111 ddfgdfgdfgdfgdfgf.com 22222 ';   // ok by itself at 40 seconds
     //var x = '1111 jpro.co 22222 '; // bad one still
     //var x = '1111 ibm.com 2222  ';
-    //var x = '1111 dell.com 2222  '; // ok by itself at 40 seconds
+    var x = '1111 http://www.dell.com 2222  '; // ok by itself at 40 seconds
+    //var x = '1 ibm.com 2 dell.com 3 apple.com 4 google.com 5 yahoo.com 6 www.tester.com 7 get.com 8 time.com 9 ';
+    //var x = '1 jpro.co 2 ';
     var res = {};
 
     res.json = function(s) {
