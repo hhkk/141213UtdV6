@@ -29,11 +29,12 @@ var unirest = require('unirest');
 var callCount_expandUrlsToHrefsReturnPatchedStr =0
 var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
 {
-    //O.o ('in expandUrlsToHrefsReturnPatchedStr call count:' + callCount_expandUrlsToHrefsReturnPatchedStr);
+    O.o ('in get titles [' + initialTextWithPreHrefs + ']');
     var Item = function(url) {
         this.url = url;
+        this.urlori = url;
         this.title = null;
-    }
+    };
 
     var items = [];
 
@@ -66,9 +67,9 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
                 for (var itokens = 0; itokens < tokens.length; itokens++)
                 {
                     //O.o ('yes match found for  item.url:' + item.url);
-                    sbufStringsChecked += 'tested [' + tokens[itokens] + '] ';
+                    sbufStringsChecked += '\r\nand testing [' + item.urlori + '] against [' + tokens[itokens] + '] ';
 
-                    if (tokens[itokens] === item.url)
+                    if (item.urlori === tokens[itokens] )
                     {
                         //O.o ('yes match found for  item.url:' + item.url);
                         foundMatch = true;
@@ -78,14 +79,16 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
                     }
                 }
 
-                if (!foundMatch) {
-                    O.o ('no match found for  item.url:' + item.url + ' against these:' + sbufStringsChecked);
-                    throw  ('no match found for  item.url:' + item.url + ' against these:' + sbufStringsChecked);
-                }
+                //if (!foundMatch) {
+                //    O.o ('no match found for  item.url:' + item.url + ' against these:' + sbufStringsChecked);
+                //    throw  ('no match found for  item.url:' + item.url + ' against these:' + sbufStringsChecked);
+                //}
             });
-            //O.o ('reached res.json!!! ================================');
+
             res.json(tokens.join(' '));
-        }
+            //O.o ('reached res.json!!! ================================');
+
+        };
 
         asyncWrapperForTitle_levelOne(items, res2);
         //replace tokens in string
@@ -137,7 +140,8 @@ var asyncWrapperForTitle_levelOne = function(items, res2) {
 
 // 2
 var getUrlContent_levelOne = function(callback, item) {
-    try {
+    try
+    {
         var calledBack = false;
 
         //// http://stackoverflow.com/questions/12800357/including-timeout-in-nodejs-http-get-while-getting-large-number-of-image-downloa
@@ -175,7 +179,8 @@ var getUrlContent_levelOne = function(callback, item) {
         //O.o ('-------- in getUrlContent_levelOne trying url:' + item.url);
 
 
-        var fn = function (response) {
+        var fn = function (response)
+        {
 //request('http://ibm.com', function (error, response, html) {
             if (response.error && response.error.code === 'ETIMEDOUT') {
                 if (!calledBack) {
@@ -194,13 +199,15 @@ var getUrlContent_levelOne = function(callback, item) {
                     O.o ('body is null');
                 if (!calledBack) {
                     //O.o('calling back from getUrlContent_levelOne x1:' + item.url + '->' + title);
-                    if (title != null)
-                        item.title = 'L1a:' + title;
-                    calledBack = true;
-                    callback('dummy', item);
+                    if (title != null) {
+                        //item.title = 'L1a:' + title;
+                        item.title = title;
+                        calledBack = true;
+                        callback('dummy', item);
+                    }
                 }
 
-                O.o ('========================= title:' + title);
+                //O.o ('========================= title:' + title);
             }
 
             if(item.title === null)
@@ -227,6 +234,7 @@ var getUrlContent_levelOne = function(callback, item) {
 
 
         //var xxx = request(item.url, fn);
+        //O.o ('requesting item.url [' + item.url + ']');
         var unirequest = unirest.get(item.url);
         unirequest.timeout(1000);
         unirequest.end(fn);
@@ -246,7 +254,7 @@ var getUrlContent_levelOne = function(callback, item) {
 
 
 function whenDoneAsync_LevelOne(items, res2){
-    O.o("Everything is done level one.");
+    O.o('Everything is done level one for [' + items.length + '] items.');
     //var i = 0;
     var itemsWithoutTitlesAfter_levelOne = [];
     for (var i = items.length-1 ; i >= 0 ; i--) {
@@ -265,7 +273,7 @@ function whenDoneAsync_LevelOne(items, res2){
 // 4
 // 5
 var getUrlContent_levelTwo = function(callback, item) {
-    O.o ('000000000000000 in getUrlContent_levelTwo url:' + item.url);
+    //O.o ('000000000000000 in getUrlContent_levelTwo url:' + item.url);
     try {
         // XMLHttpRequest populate responseXML
         //xhr.open("POST", "http://www.service.org/myService.svc/Method", true);
@@ -300,7 +308,8 @@ var getUrlContent_levelTwo = function(callback, item) {
                 var html = xmlhttp.responseText;
                 var title = findTitle_htmlParse(html);
 
-                item.title = 'L2a:' + title;
+                //item.title = 'L2a:' + title;
+                item.title = title;
 
                 if (typeof callback === "function")
                     callback('DUMMY', item);
@@ -309,12 +318,12 @@ var getUrlContent_levelTwo = function(callback, item) {
                 //var xmlDoc = parser.parseFromString(xmlhttp.responseText, "application/xml");
             } else if (xmlhttp.readyState == 4 && xmlhttp.status == 503) {
                 if (typeof callback === "function") {
-                    item.title = '503 error';
+                    item.title = '<503 unavailable>';
                     callback('dummy', item);
                 }
             } else if (xmlhttp.readyState == 4 && xmlhttp.status == 404) {
                 if (typeof callback === "function") {
-                    item.title = '404 error';
+                    item.title = '<404 not found>';
                     callback('dummy', item);
                 }
 
@@ -405,9 +414,11 @@ if (!test) {
     //var x = '1111 ddfgdfgdfgdfgdfgf.com 22222 ';   // ok by itself at 40 seconds
     //var x = '1111 jpro.co 22222 '; // bad one still
     //var x = '1111 jpro.co 2222  ';
-    //var x = '1111 http://www.dell.com 2222  '; // ok by itself at 40 seconds
-    var x = '1 ibm.com 2 dell.com 3 apple.com 4 google.com 5 yahoo.com 6 www.tester.com 7 get.com 8 time.com 9 dell.com 10 jpro.co 11';
     //var x = '1 jpro.co 2 ';
+    //var x = '1111 http://www.dell.com 2222  '; // ok by itself at 40 seconds
+    //var x = '1111 dell.com 2222  '; // ok by itself at 40 seconds
+    var x = '1 ibm.com 2 dell.com 3 ddfgdfgdfgdfgdfgf.com 4 apple.com 4 google.com 5 yahoo.com 6 www.tester.com 7 get.com 8 time.com 9 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 ';
+
     var res = {};
 
     res.json = function(s) {
@@ -420,7 +431,7 @@ if (!test) {
     } catch (e) {
         O.e ('errrtta:' + e);
     } finally {
-        O.o ('finally done');
+        //O.o ('finally done');
     }
 
     //var regexp = new RegExp();

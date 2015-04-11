@@ -68,6 +68,7 @@ var buildHrefFromUrlString= function(urlstr)
 
 /**
  * make sure all urls (e.g., n  on whitespace string tokens ending in .net) strings have http preamble
+ * and href tag is inserted
  * @param textToBeHrefed original string with possible urls not yet IDd with http prefix
  * @param textToBeHrefed
  * @returns {string}
@@ -113,6 +114,9 @@ var splitTextToTokensWithHttpUrlState = function(textToBeTokenized)
             var replaceWith = null;
             if (tokens[i].toLowerCase().indexOf('http') !== 0)
                 tokens[i] = 'http://' + tokens[i]
+            //if (tokens[i].toLowerCase().indexOf('www') === -1)
+            //    tokens[i] = tokens[i].replace(/http:\/\//, "http://www.");
+
             //tokens[i] = buildHrefFromUrlString(tokens[i]);
             //O.o ('keeping tokens[i] [' + tokens[i] + ']');
             //tokens[i] = replaceWith;
