@@ -197,17 +197,22 @@
                     ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
                     class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
 
-                    <!-- DELETE BUTTON -->
+                    <!-- CHECK BOX -->
                     <td>
+
                         &nbsp;<input id="checkbox($index)" type="checkbox"/>
+
                     </td>
+
+
+                    <!-- DELETE BUTTON -->
                     <td>
 
 
                         <!-- trash garbage icon -->
                         &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
                              alt="{{image.name}}"  title='delete'
-                             ng-click="deleteDbUstotoById(ustodo)"
+                             ng-click="deleteDbUstotoById(ustodo, $index)"
                                 >
                         &nbsp
                         <!--ng-show="nowShowing==$index"-->

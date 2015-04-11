@@ -1183,6 +1183,55 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 });
             };
 
+
+
+
+            $scope.deleteDbUstotoById = function(ustodo, i)
+            {
+                try {
+                    var savOid = ustodo._id;
+                    //console.log ('in deleteDbUstotoById '  + savOid);
+                    console.log ('in deleteDbUstotoById html:'  + ustodo.html);
+                    //alert ('in deleteDbUstotoById ' + savOid);
+                    var indexToDelete = -1;
+                    for (var i = 0; i < $scope.ustodos.length; i++) {
+                        console.log ('check if to array to delete, index:' + i + '. id:' +  $scope.ustodos[i].html);
+
+                        if ($scope.ustodos[i]._id === savOid)
+                        {
+                            console.log ('found one local array to delete, index:' + i);
+                            console.log ('found one local array to delete, indexToDelete:' + indexToDelete);
+                            console.log ('@@@@deleting:' + $scope.ustodos[i].html);
+                            $scope.ustodos.splice(i, 1);
+                            console.log ('done local array delete, index:' + i);
+                        }
+                    }
+                    if (indexToDelete < 0)
+                        console.log ('found NONE to delete!!!');
+
+
+                    ustodo.$delete(function() {
+                        console.log ('$delete done !!! savOid:' + savOid);
+                        //$scope.ustodos.splice(index, 1));
+                        //alert ('delete done, now remove from array');
+                        //array.;
+                    }, function(errorResponse) {
+                        $scope.error = errorResponse.data.message;
+                        //console.log ('ERROR ON SAVE !!! '  + $scope.ustodos[i].html);
+                        console.log ('ERROR ON SAVE !!! $scope.error:'  + $scope.error);
+                    });
+                } catch (err) {
+                    console.log ('err:' + err);
+                }
+            };
+
+
+
+
+
+
+
+
             // has any row changed
             var callCnt_isDirty = 0;
             var time_last_save = 0;
@@ -1233,44 +1282,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //console.log (callCnt_isDirty + '. exiting isDirty returning with $scope.areThereChanges:'+ $scope.areThereChanges);
             };
 
-
-            $scope.deleteDbUstotoById = function(ustodo)
-            {
-                try {
-                    var savOid = ustodo._id;
-                    //console.log ('in deleteDbUstotoById '  + savOid);
-                    console.log ('in deleteDbUstotoById html:'  + ustodo.html);
-                    //alert ('in deleteDbUstotoById ' + savOid);
-                    var indexToDelete = -1;
-                    for (var i = 0; i < $scope.ustodos.length; i++) {
-                        console.log ('check if to array to delete, index:' + i + '. id:' +  $scope.ustodos[i].html);
-
-                        if ($scope.ustodos[i]._id === savOid)
-                        {
-                            console.log ('found one local array to delete, index:' + i);
-                            console.log ('found one local array to delete, indexToDelete:' + indexToDelete);
-                            console.log ('@@@@deleting:' + $scope.ustodos[i].html);
-                            $scope.ustodos.splice(i, 1);
-                            console.log ('done local array delete, index:' + i);
-                        }
-                    }
-                    if (indexToDelete < 0)
-                        console.log ('found NONE to delete!!!');
-
-
-                    ustodo.$delete(function() {
-                        console.log ('$delete done !!! savOid:' + savOid);
-                        //$scope.ustodos.splice(index, 1));
-                        //alert ('delete done, now remove from array');
-                        //array.;
-                    }, function(errorResponse) {
-                        $scope.error = errorResponse.data.message;
-                        console.log ('ERROR ON SAVE !!! '  + $scope.ustodos[i].html);
-                    });
-                } catch (err) {
-                    console.log ('err:' + err);
-                }
-            };
 
 
 

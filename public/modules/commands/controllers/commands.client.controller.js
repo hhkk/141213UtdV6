@@ -95,6 +95,7 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
 
         // Remove existing Command
         $scope.remove = function(command) {
+            console.log ('====================== in remove');
             if ( command ) {
                 command.$remove();
 
@@ -108,6 +109,7 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
                     $location.path('commands');
                 });
             }
+            console.log ('====================== done remove');
         };
 
         // Update existing Command

@@ -1,9 +1,10 @@
 'use strict';
 
 //console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\routes
-var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
+//var UtilUrl4 = require('C:/utd/141213UtdV6/public/util/UtilUrl4.js');
 
-module.exports = function(app) {
+module.exports = function(app)
+{
 
     var resturl = require('../../app/controllers/resturl.server.controller');
 
@@ -21,7 +22,7 @@ module.exports = function(app) {
         //var urlstruct = {};
         //urlstruct.test = 'hihk';
         //res.json(urlstruct);
-        console.log ('req.query.q:' + req.query.q)
+        //console.log ('req.query.q:' + req.query.q)
         //var itemsxxxxy = [];
         //itemsxxxxy.push(new Item(req.query.q)); // // no such domain
         //itemsxxxxy.push(new Item('http://www.dgsdfgdfgsdgsdfgsdgsdgsfdg.com')); // // no such domain
@@ -29,20 +30,19 @@ module.exports = function(app) {
         //itemsxxxx.push(new Item('http://www.tame.com')); // takes longer and fails
         //itemsxxxxy.push(new Item('http://www.apple.com')); // ok w/2
 
-        UtilUrl.expandUrlsToHrefsReturnPatchedStr(req.query.q, res);
+    //UtilUrl.expandUrlsToHrefsReturnPatchedStr(req.query.q, res);
 
-    });
-
+    // TEST TIMER
     //http://localhost:3000/resturltimer?q=30
-    app.get('/resturltimer', function(req, res) {
-        //var urlstruct = {};
-        //urlstruct.test = 'hihk';
-        //res.json(urlstruct);
-        console.log ('req.query.q:' + req.query.q)
-        //setTimeout(function(){ res.json('waited [' + req.query.q + '] seconds'); }, 1000);
-        setTimeout(function(){ res.json('waited [' + req.query.q + '] seconds'); }, 1000*req.query.q);
-
-    });
+    //app.get('/resturltimer', function(req, res) {
+    //    //var urlstruct = {};
+    //    //urlstruct.test = 'hihk';
+    //    //res.json(urlstruct);
+    //    console.log ('req.query.q:' + req.query.q)
+    //    //setTimeout(function(){ res.json('waited [' + req.query.q + '] seconds'); }, 1000);
+    //    setTimeout(function(){ res.json('waited [' + req.query.q + '] seconds'); }, 1000*req.query.q);
+    //
+    //});
 
     // http://localhost:3000/resturl2?q=ibm.com
     app.route('/resturl2')
