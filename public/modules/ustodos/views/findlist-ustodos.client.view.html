@@ -24,7 +24,7 @@
                />
         &nbsp;
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
-               ng-click="searchhk('*')"                src='/img/Asterisk.png'
+               ng-click="searchhk('*', '*', '*')"                src='/img/Asterisk.png'
                title="Search all"
                 />
         &nbsp;
@@ -83,6 +83,7 @@
             <!--</div>-->
         </span>
         <br>
+
         <span id="idFilterCount" >
             Filter: <span ng-bind=('('+this.searchedFor+')')></span >
             Count: <span ng-bind=('('+this.ustodos.length+')')></span >
@@ -189,8 +190,9 @@
                 <!--</tr>f-->
 
                 <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
+                xx
                 <button ng-click="alert ('ff')" ng-init="count=0">
-
+                yy
                 <tr
                     ng-repeat="ustodo in ustodos "
                     ng-mouseover="this.eventMouseoverRow2($index)"

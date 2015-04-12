@@ -47,7 +47,7 @@ exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, er
 
             }
             //console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod);
-            console.log('for query [' + req.query.q + '] countResult [' + countResult + '] req._passport.session.user id [' + req._passport.session.user + ']');
+            O.o ('for query [' + req.query.q + '] countResult [' + countResult + '] req._passport.session.user id [' + req._passport.session.user + ']');
             res.jsonp(x);
 
             //res.jsonp(ustodos);

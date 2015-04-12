@@ -1,5 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
+},{}],2:[function(require,module,exports){
+
 /**
  * Created by henryms on 3/2/2015.
  */
@@ -16,10 +18,45 @@ var alertHistory = [];
 // one and only console logger
 // private
 var callcount_o = 0;
+
+var passesFilters = function(s) {
+    var filters = [];
+    //  var filters = ['Two'];
+    var passes = false;
+    if (filters.length > 0) {
+        filters.forEach(function (f) {
+            if (s.indexOf(f) >= 0) {
+                passes = true;
+            }
+        });
+    }
+    else
+        passes = true;
+    return passes;
+}
+
+
 var o = function (s)
 {
-    console.log(callcount_o++ + '. olog:' + s );
-    //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+    if (passesFilters(s))
+    {
+        var t = callcount_o++ + '. olog:' + s
+        console.log(t);
+        if (appendFileSync)
+            appendFileSync('c:/tmp/t.txt', t);
+        //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+    }
+}
+
+// error
+var e = function (s)
+{
+    if (passesFilters(s)) {
+        var t = callcount_o++ + '. olog:' + s
+        console.error(t);
+        appendFileSync('c:/tmp/t.txt', t);
+        //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
+    }
 }
 /**
  * alert - implies output with alert history log
@@ -27,19 +64,50 @@ var o = function (s)
  */
 var a = function (s)
 {
-    //alert ('old len:' + alertHistory.length);
-    var s = '['+alertHistory.length + '.'+s + ';'+']';
-    alertHistory.push (s);
-    //alert ('new len:' + alertHistory.length);
-    o('a:' + s);
-    alert (s + ' hist:' + alertHistory);
+    if (passesFilters(s)) {
+        //alert ('old len:' + alertHistory.length);
+        var s = '[' + alertHistory.length + '.' + s + ';' + ']';
+        alertHistory.push(s);
+        //alert ('new len:' + alertHistory.length);
+        o('a:' + s);
+        alert(s + ' hist:' + alertHistory);
+    }
 }
 if (typeof exports !== 'undefined') {
     exports.o = o;
     exports.a = a;
+    exports.e = e;
 }
 
-},{}],2:[function(require,module,exports){
+var fs = require('fs');
+// erases existing content
+var writeFileSync = function (filefqname, s) {
+    fs.writeFileSync(filefqname, s + '\r\n');
+}
+
+// does not erase existing content
+var appendFileSync = null;
+try {
+    appendFileSync = function (filefqname, s) {
+        if (fs.appendFileSync)
+            fs.appendFileSync(filefqname, s + '\r\n');
+    }
+} catch (e) {
+    console.log ('error:' + e);
+}
+
+var test = false;
+if (test) {
+    writeFileSync('c:/tmp/t.txt', 'time in a bottle\r\n');
+    appendFileSync('c:/tmp/t.txt', 'time in a bottle2\r\n');
+    appendFileSync('c:/tmp/t.txt', 'time in a bottle3\r\n');
+    appendFileSync('c:/tmp/t.txt', 'time in a bottle4\r\n');
+    appendFileSync('c:/tmp/t.txt', 'time in a bottle5\r\n');
+}
+
+
+
+},{"fs":1}],3:[function(require,module,exports){
 'use strict';
 /**
  * // UtilNodeVsBrowser
@@ -211,7 +279,7 @@ if (typeof exports !== 'undefined') {
     exports.getProperties = getProperties;
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 
@@ -496,7 +564,7 @@ if (typeof exports !== 'undefined') {
 }
 
 
-},{"C:/utd/141213UtdV6/public/util/UtilClass.js":2}],4:[function(require,module,exports){
+},{"C:/utd/141213UtdV6/public/util/UtilClass.js":3}],5:[function(require,module,exports){
 'use strict';
 
 
@@ -525,7 +593,7 @@ if (typeof exports !== 'undefined') {
 }
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 /**
@@ -539,6 +607,9 @@ if (typeof exports !== 'undefined') {
  * @param onWayOIntoDB
  * @returns {boolean}
  */
+
+var O = require('C:/utd/141213UtdV6/public/util/O.js');
+
 var seeIfConnectedToThisClass = function (s) {
     return ('in seeIfConnectedToThisClass:' + s);
 };
@@ -575,6 +646,8 @@ var isUrl = function (s)
         return true;
     if (s.indexOf('.ly') > 0)
         return true;
+    if (s.indexOf('.co') > 0)
+        return true;
     if (s.indexOf('.net') > 0)
         return true;
 
@@ -591,6 +664,7 @@ var buildHrefFromUrlString= function(urlstr)
 
 /**
  * make sure all urls (e.g., n  on whitespace string tokens ending in .net) strings have http preamble
+ * and href tag is inserted
  * @param textToBeHrefed original string with possible urls not yet IDd with http prefix
  * @param textToBeHrefed
  * @returns {string}
@@ -610,7 +684,7 @@ var hrefThisText = function(textToBeHrefed)
             // replace old with new (has http expansion)
             //replaceWith = '<p color=\'red\'>' + buildHrefFromUrlString(tokens[i]) + '</p>';
             replaceWith = buildHrefFromUrlString(tokens[i]);
-            console.log ('convert url from [' + tokens[i] + '] to [' + replaceWith+']');
+            //console.log ('convert url from [' + tokens[i] + '] to [' + replaceWith+']');
             tokens[i] = replaceWith;
         }
         i++;
@@ -636,8 +710,11 @@ var splitTextToTokensWithHttpUrlState = function(textToBeTokenized)
             var replaceWith = null;
             if (tokens[i].toLowerCase().indexOf('http') !== 0)
                 tokens[i] = 'http://' + tokens[i]
+            //if (tokens[i].toLowerCase().indexOf('www') === -1)
+            //    tokens[i] = tokens[i].replace(/http:\/\//, "http://www.");
+
             //tokens[i] = buildHrefFromUrlString(tokens[i]);
-            console.log ('keeping tokens[i] [' + tokens[i] + ']');
+            //O.o ('keeping tokens[i] [' + tokens[i] + ']');
             //tokens[i] = replaceWith;
         }
         i++;
@@ -674,8 +751,12 @@ var splitTextToTokensWithHttpUrlState = function(textToBeTokenized)
 
 
 
-if (typeof exports !== 'undefined') {
-    exports.isUrl = isUrl;
+// converts HTML to text using Javascript
+var html2text = function (html) {
+    var tag = document.createElement('div');
+    tag.innerHTML = html;
+
+    return tag.innerText;
 }
 
 
@@ -683,9 +764,10 @@ if (typeof exports !== 'undefined') {
 if (typeof exports !== 'undefined') {
     exports.splitTextToTokensWithHttpUrlState = splitTextToTokensWithHttpUrlState;
     exports.hrefThisText = hrefThisText;
+    exports.html2text = html2text;
 }
 
-},{}],6:[function(require,module,exports){
+},{"C:/utd/141213UtdV6/public/util/O.js":2}],7:[function(require,module,exports){
 'use strict';
 
 /**
@@ -707,7 +789,7 @@ if (typeof exports !== 'undefined') {
 }
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 // var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 
 var endsWith = function (str, suffix) {
@@ -742,7 +824,7 @@ if (typeof exports !== 'undefined') {
 
 
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 //utd = [];   // ustodo utilities
 //utd[Date] = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 //utd[Class] = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
@@ -761,4 +843,4 @@ O = require('C:/utd/141213UtdV6/public/util/O.js');
 
 
 
-},{"C:/utd/141213UtdV6/public/util/O.js":1,"C:/utd/141213UtdV6/public/util/UtilClass.js":2,"C:/utd/141213UtdV6/public/util/UtilDate.js":3,"C:/utd/141213UtdV6/public/util/UtilExceptionStack.js":4,"C:/utd/141213UtdV6/public/util/UtilHrefThisText.js":5,"C:/utd/141213UtdV6/public/util/UtilJsTypeDetect.js":6,"C:/utd/141213UtdV6/public/util/UtilString.js":7}]},{},[8]);
+},{"C:/utd/141213UtdV6/public/util/O.js":2,"C:/utd/141213UtdV6/public/util/UtilClass.js":3,"C:/utd/141213UtdV6/public/util/UtilDate.js":4,"C:/utd/141213UtdV6/public/util/UtilExceptionStack.js":5,"C:/utd/141213UtdV6/public/util/UtilHrefThisText.js":6,"C:/utd/141213UtdV6/public/util/UtilJsTypeDetect.js":7,"C:/utd/141213UtdV6/public/util/UtilString.js":8}]},{},[9]);

@@ -39,7 +39,8 @@ var o = function (s)
     {
         var t = callcount_o++ + '. olog:' + s
         console.log(t);
-        appendFileSync('c:/tmp/t.txt', t);
+        if (appendFileSync)
+            appendFileSync('c:/tmp/t.txt', t);
         //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
     }
 }
@@ -82,8 +83,14 @@ var writeFileSync = function (filefqname, s) {
 }
 
 // does not erase existing content
-var appendFileSync = function (filefqname, s) {
-    fs.appendFileSync(filefqname, s + '\r\n');
+var appendFileSync = null;
+try {
+    appendFileSync = function (filefqname, s) {
+        if (fs.appendFileSync)
+            fs.appendFileSync(filefqname, s + '\r\n');
+    }
+} catch (e) {
+    console.log ('error:' + e);
 }
 
 var test = false;

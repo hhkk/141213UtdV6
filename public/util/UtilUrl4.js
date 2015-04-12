@@ -200,8 +200,8 @@ var getUrlContent_levelOne = function(callback, item) {
                 if (!calledBack) {
                     //O.o('calling back from getUrlContent_levelOne x1:' + item.url + '->' + title);
                     if (title != null) {
-                        //item.title = 'L1a:' + title;
-                        item.title = title;
+                        item.title = 'L1ax:' + title;
+                        //item.title = title;
                         calledBack = true;
                         callback('dummy', item);
                     }
@@ -236,7 +236,7 @@ var getUrlContent_levelOne = function(callback, item) {
         //var xxx = request(item.url, fn);
         //O.o ('requesting item.url [' + item.url + ']');
         var unirequest = unirest.get(item.url);
-        unirequest.timeout(1000);
+        unirequest.timeout(5000);
         unirequest.end(fn);
 
         //O.o ('xxx:' + xxx);
@@ -308,8 +308,8 @@ var getUrlContent_levelTwo = function(callback, item) {
                 var html = xmlhttp.responseText;
                 var title = findTitle_htmlParse(html);
 
-                //item.title = 'L2a:' + title;
-                item.title = title;
+                item.title = 'L2ax:' + title;
+                //item.title = title;
 
                 if (typeof callback === "function")
                     callback('DUMMY', item);
@@ -401,7 +401,7 @@ var findTitle_htmlParse = function(html) {
 
 
 
-var test = false;
+var test = true;
 if (!test) {
     O.o ('not testing');
 } else {
@@ -417,7 +417,8 @@ if (!test) {
     //var x = '1 jpro.co 2 ';
     //var x = '1111 http://www.dell.com 2222  '; // ok by itself at 40 seconds
     //var x = '1111 dell.com 2222  '; // ok by itself at 40 seconds
-    var x = '1 ibm.com 2 dell.com 3 ddfgdfgdfgdfgdfgf.com 4 apple.com 4 google.com 5 yahoo.com 6 www.tester.com 7 get.com 8 time.com 9 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 ';
+    //var x = '1 ibm.com 2 dell.com 3 ddfgdfgdfgdfgdfgf.com 4 apple.com 4 google.com 5 yahoo.com 6 www.tester.com 7 get.com 8 time.com 9 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 ';
+    var x = '1111 tester.com 2222  '; // ok by itself at 40 seconds
 
     var res = {};
 

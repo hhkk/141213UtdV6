@@ -3,10 +3,10 @@
 var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 var O = require('C:/utd/141213UtdV6/public/util/O.js');
-var UtilUrl = require('C:/utd/141213UtdV6/public/util/UtilUrl.js');
+var UtilUrl4 = require('C:/utd/141213UtdV6/public/util/UtilUrl4.js');
 
 //var UtilClass = require('.././UtilClass');
-// console.log ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
+// O.o ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
 // C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
 //var UtilClass = require('../../public/modules/ustodo/UtilClass');
 //var UtilNodeVsBrowser = require('../../public/modules/ustodo/UtilNodeVsBrowser');
@@ -29,7 +29,7 @@ var mongoose = require('mongoose'),
  * Create a Ustodo
  */
 exports.create = function(req, res) {
-	console.log ('in ustodos.server.controller.js: create');
+	O.o('in ustodos.server.controller.js: create');
 	var ustodo = new Ustodo(req.body);
 	ustodo.user = req.user;
 
@@ -48,7 +48,7 @@ exports.create = function(req, res) {
  * Show the current Ustodo
  */
 exports.read = function(req, res) {
-	console.log ('in ustodos.server.controller.js: read');
+	O.o ('in ustodos.server.controller.js: read');
 	res.jsonp(req.ustodo);
 };
 
@@ -57,29 +57,29 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
 	var ustodo = req.ustodo ;
-    console.log ('in ustodos.server.controller.js: update ' );
+    O.o('in ustodos.server.controller.js: update ' );
 
 	ustodo = _.extend(ustodo , req.body);
 	delete ustodo.jsonx; // remove property
     ustodo.datelastmod = new Date();
     ustodo.jsonx = JSON.stringify(ustodo); // string
 
-    console.log ('################# saving ustodo.jsonx:' + ustodo.jsonx);
+    O.o ('################# saving ustodo.jsonx:' + ustodo.jsonx);
 
     ustodo.save(function (err, ustodosaved, numberAffected) {
         if (err) {
-          console.log('era!!!!!!!!!');
+          O.o('era!!!!!!!!!');
         } else {
-            console.log('success1!!!!!!!!! ustodosaved.html' + ustodosaved.html);
-            console.log('success2!!!!!!!!! numberAffected' + numberAffected);
-            console.log('success3!!!!!!!!! req.body._id' + req.body._id);
+            O.o('success1!!!!!!!!! ustodosaved.html' + ustodosaved.html);
+            O.o('success2!!!!!!!!! numberAffected' + numberAffected);
+            O.o('success3!!!!!!!!! req.body._id' + req.body._id);
         }
     });
 
 
 	//ustodo.save(function(err) {
 	//	if (err) {
-     //       console.log ('err in save:' + err);
+     //       O.o ('err in save:' + err);
 	//		return res.status(400).send({
 	//			message: errorHandler.getErrorMessage(err)
     //
@@ -95,7 +95,7 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
 	var ustodo = req.ustodo ;
-	console.log ('in ustodos.server.controller.js: delete ' + ustodo.toString());
+    O.o('in ustodos.server.controller.js: delete ' + ustodo.toString());
 
 	ustodo.remove(function(err) {
 		if (err) {
@@ -113,42 +113,42 @@ exports.delete = function(req, res) {
  */
 exports.list2 = function(req, res) {
 
-	console.log (' *************** Top of exports.list ');
-	//console.log ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
+    O.o(' *************** Top of exports.list ');
+	//O.o ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
 
 	var query = req.query;
-	console.log ('in ustodos.server.controller.js: list query.querystring [' + query.q + ']');
+    O.o('in ustodos.server.controller.js: list query.querystring [' + query.q + ']');
     if (query.q !== null && query.q !== undefined)
         query.q = query.q.trim();
     else
         query.q = '';
 
     if (query.q === '*')   {
-        console.log ('resetting * star to blank');
+        O.o ('resetting * star to blank');
         query.q = '';
     }
 
-    //console.log ('query.querystring post trim [' + query.querystring+ ']');
+    //O.o ('query.querystring post trim [' + query.querystring+ ']');
 	//54b143dde898903429ce32b1
 
 	//try {
 	//	var d = JSON.parse(query.querystring);
-		//console.log ('q is json [' + query.querystring + ']');
+		//O.o ('q is json [' + query.querystring + ']');
 	//} catch (err) {
-		//console.log ('q is not json [' + query.querystring + ']');
+		//O.o ('q is not json [' + query.querystring + ']');
 	//}
 
-	//console.log ('in ustodos.server.controller.js: list, query: ' + query);
-	console.log ('in ustodos.server.controller.js: list, query.querystring: ' + query.q);
+	//O.o ('in ustodos.server.controller.js: list, query: ' + query);
+    O.o('in ustodos.server.controller.js: list, query.querystring: ' + query.q);
 
 
     //
     //
 	//try {
 	//	re = new RegExp(query.querystring);
-	//	//console.log ('************************** legal reg exp input query.querystring [' + query.querystring + ']');
+	//	//O.o ('************************** legal reg exp input query.querystring [' + query.querystring + ']');
 	//} catch (err) {
-	//	//console.log ('************************** illegal reg exp input query.querystring [' + query.querystring + ']');
+	//	//O.o ('************************** illegal reg exp input query.querystring [' + query.querystring + ']');
 	//	re = new RegExp('');
 	//}
 
@@ -176,7 +176,7 @@ exports.list2 = function(req, res) {
     if (UtilString.endsWith(commandTrimmed, ' w'))
     {
         var commandRemoved = commandTrimmed.slice(0, commandTrimmed.length-2)
-        console.log (' ========================================= in ustodos.server.controller.js: w save '
+        O.o(' ========================================= in ustodos.server.controller.js: w save '
             + ', commandTrimmed [' + commandTrimmed + '] ' +
             + ', commandRemoved [' + commandRemoved + '] '
         );
@@ -195,20 +195,20 @@ exports.list2 = function(req, res) {
 
                 ustodo.save(function(err) {
                     if (err) {
-                        console.log ('*** write fail commandTrimmed [' +commandTrimmed + ']');
-                        console.log ('*** write fail err [' +err + ']');
+                        O.o('*** write fail commandTrimmed [' +commandTrimmed + ']');
+                        O.o('*** write fail err [' +err + ']');
                         return res.status(400).send({
                             message: errorHandler.getErrorMessage(err)
                         });
                     } else {
                         //now process read aspect only of query
                         require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
-                        console.log ('*** write success commandTrimmed [' +commandTrimmed + ']');
+                        O.o('*** write success commandTrimmed [' +commandTrimmed + ']');
                     }
                 });
             };
 
-            UtilUrl.expandUrlsToHrefsReturnPatchedStr(commandRemoved, res2);
+            UtilUrl4.expandUrlsToHrefsReturnPatchedStr(commandRemoved, res2);
 
 
         } catch (e) {
@@ -237,7 +237,7 @@ exports.list2 = function(req, res) {
 
 /**   * Ustodo middleware  */
 exports.ustodoByID = function(req, res, next, id) {
-	console.log('in ustodoByID id:'+id);
+	O.o('in ustodoByID id:'+id);
 	//var s = Ustodo.findById(id);
 
 	// ORIGINAL A/B SPLIT HBKK
@@ -253,7 +253,7 @@ exports.ustodoByID = function(req, res, next, id) {
 
 /**  * Ustodo authorization middleware  */
 exports.hasAuthorization = function(req, res, next) {
-	console.log ('in ustodos.server.controller.js: hasAuthorization');
+    O.o('in ustodos.server.controller.js: hasAuthorization');
 	if (req.ustodo.user.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}

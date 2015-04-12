@@ -155,8 +155,12 @@ var splitTextToTokensWithHttpUrlState = function(textToBeTokenized)
 
 
 
-if (typeof exports !== 'undefined') {
-    exports.isUrl = isUrl;
+// converts HTML to text using Javascript
+var html2text = function (html) {
+    var tag = document.createElement('div');
+    tag.innerHTML = html;
+
+    return tag.innerText;
 }
 
 
@@ -164,4 +168,5 @@ if (typeof exports !== 'undefined') {
 if (typeof exports !== 'undefined') {
     exports.splitTextToTokensWithHttpUrlState = splitTextToTokensWithHttpUrlState;
     exports.hrefThisText = hrefThisText;
+    exports.html2text = html2text;
 }
