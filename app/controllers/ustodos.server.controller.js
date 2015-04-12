@@ -176,9 +176,9 @@ exports.list2 = function(req, res) {
     if (UtilString.endsWith(commandTrimmed, ' w'))
     {
         var commandRemoved = commandTrimmed.slice(0, commandTrimmed.length-2);
-        O.o(' ========================================= in ustodos.server.controller.js: w save ' +
-            ', commandTrimmed [' + commandTrimmed + '] ' + ', commandRemoved [' + commandRemoved + '] ' );
-        O.o ('in endswith w');
+        //O.o(' ========================================= in ustodos.server.controller.js: w save ' +
+            //', commandTrimmed [' + commandTrimmed + '] ' + ', commandRemoved [' + commandRemoved + '] ' );
+        O.o ('in endswith w commandTrimmed [' + commandTrimmed + ']');
         var ustodo = new Ustodo();
         ustodo.user = req.user;
 

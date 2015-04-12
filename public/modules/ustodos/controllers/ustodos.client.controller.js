@@ -604,7 +604,19 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //$scope.onKeyDown = function ($event) {
             //    $scope.onKeyDownResult = getKeyboardEventResult($event, 'Key down');
             //};
-            $scope.onKeyUp = function (keyEvent) {
+            $scope.onKeyUp = function (keyEvent) // https://docs.angularjs.org/api/ng/directive/ngKeyup
+            {
+                if (keyEvent.ctrlKey)
+                    return;
+                if (keyEvent.altKey)
+                    return;
+                if (keyEvent.keyCode >= 35 && keyEvent.keyCode <= 40) // home end and arrow keys
+                    return;
+                if (keyEvent.keyCode >= 16 && keyEvent.keyCode <= 18) // shift alt ctrl key up
+                    return;
+
+                O.o ('keyEvent.keyCode:' + keyEvent.keyCode);
+
                 var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
                 O.o('onKeyUp:' + keyCode);
                 //O.o('onKeyUp:' + getKeyboardEventResult($event, 'Key up')); // hbkhbk
@@ -1595,10 +1607,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     var commandUnTrimmed = xValue;
                     var commandTrimmed = xValue.trim();
                     var commandRemoved_toSearchFor = null;
-                    var wasAwrite = false;
                     if (UtilString.endsWith(commandTrimmed, ' w')) {
+                        //alert ('in endsWith w');
                         commandRemoved_toSearchFor = commandTrimmed.slice(0, commandTrimmed.length - 1);
-                        wasAwrite = true;
                         //alert  ('will search after write wasAwrite [' + wasAwrite +
                            //'] for commandRemoved_toSearchFor:' + commandRemoved_toSearchFor);
                     } else {
@@ -1609,7 +1620,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //alert ('commandRemoved_toSearchFor:'+ commandRemoved_toSearchFor);
                     $scope.setTextInShowingEditor(commandUnTrimmed);
                     var fn = function() {
-                        O.o ('got callback after query'); // in callback
+                        O.o ('$$$$$$$$$$$$$$$$$$$ done processCommand got callback after query $scope.ustodos.length [' + $scope.ustodos.length + ']');
+
                         //for (var ustodo in $scope.ustodos) {
                         //    // http://stackoverflow.com/questions/10179815/how-do-you-get-the-loop-counter-index-using-a-for-in-syntax-in-javascript
                         //    var i = Object.keys($scope.ustodos).indexOf(ustodo);
@@ -1629,9 +1641,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //    alert ('era - ids not same');
                         });
                     };
+                        O.o ('$$$$$$$$$$$$$$$$$$$ in processCommand commandTrimmed [' + commandTrimmed + ']');
                     $scope.ustodos = Ustodos.query ({q: commandTrimmed}, fn);
-
-                    O.o ('in processCommand:' + $scope.ustodos);
 
                     //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
                     //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));

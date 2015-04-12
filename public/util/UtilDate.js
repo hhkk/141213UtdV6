@@ -50,7 +50,13 @@ var padnum = function(n)
         return n.toString();
 };
 
+var getDateStringForLogsWithMillis = function() {
+    var d= new Date();
+    return ((d.getYear()+2100) + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' +
+        d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds());
+        //":" + d.getMilliseconds());
 
+}
 
 var dateStringYYYYetcFromDate = function(dt)
 {
@@ -268,7 +274,11 @@ if (test)
     //console.log ('rendered timeAgo:' + timeAgo (then));
 }
 
-
+// Return the number of milliseconds since 1970/01/01:
+var getTimeInMillis = function() {
+    var d = new Date();
+    return d.getTime();
+}
 
 // on getClassSub (desc, obj)
 
@@ -279,5 +289,7 @@ if (typeof exports !== 'undefined') {
     exports.browserifyTest = browserifyTest;
     exports.padnum = padnum;
     exports.dateObjFromMongoString = dateObjFromMongoString;
+    exports.getTimeInMillis = getTimeInMillis;
+    exports.getDateStringForLogsWithMillis = getDateStringForLogsWithMillis;
 }
 

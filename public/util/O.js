@@ -3,6 +3,7 @@
  * Created by henryms on 3/2/2015.
  */
 // var O = require('C:/utd/141213UtdV6/public/util/O.js');
+var UtilDate = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 
 
 //alert ('redefine alerthistory');
@@ -37,7 +38,7 @@ var o = function (s)
 {
     if (passesFilters(s))
     {
-        var t = callcount_o++ + '. olog:' + s
+        var t = addLineFeedsIfnSeconds() + callcount_o++ + '. ologx:' + s
         console.log(t);
         if (appendFileSync)
             appendFileSync('c:/tmp/t.txt', t);
@@ -46,10 +47,28 @@ var o = function (s)
 }
 
 // error
+var lastOutputTimeStamp = -1;
+var addLineFeedsIfnSeconds = function() {
+    returnStr = '';
+    var newTimeInMillis = UtilDate.getTimeInMillis();
+    if (lastOutputTimeStamp < 0){
+        lastOutputTimeStamp = newTimeInMillis;
+    } else {
+        if (newTimeInMillis - lastOutputTimeStamp > 3000) {
+            returnStr = '\r\n\r\n\r\nNEWSTR ' + UtilDate.getDateStringForLogsWithMillis();
+        }
+    }
+    lastOutputTimeStamp = newTimeInMillis;
+    return returnStr;
+}
+
+
+
 var e = function (s)
 {
+
     if (passesFilters(s)) {
-        var t = callcount_o++ + '. olog:' + s
+        var t = addLineFeedsIfnSeconds() + callcount_o++ + '. ology:' + s
         console.error(t);
         appendFileSync('c:/tmp/t.txt', t);
         //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);

@@ -93,9 +93,9 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
         asyncWrapperForTitle_levelOne(items, res2);
         //replace tokens in string
     }
-    //else{
-    //    res
-    //}
+    else{
+        res.json(tokens.join(' '));
+    }
     //if (hashUrlsToTitle.size() > 0) {
     //    }
 

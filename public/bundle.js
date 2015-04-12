@@ -6,6 +6,7 @@
  * Created by henryms on 3/2/2015.
  */
 // var O = require('C:/utd/141213UtdV6/public/util/O.js');
+var UtilDate = require('C:/utd/141213UtdV6/public/util/UtilDate.js');
 
 
 //alert ('redefine alerthistory');
@@ -40,7 +41,7 @@ var o = function (s)
 {
     if (passesFilters(s))
     {
-        var t = callcount_o++ + '. olog:' + s
+        var t = addLineFeedsIfnSeconds() + callcount_o++ + '. ologx:' + s
         console.log(t);
         if (appendFileSync)
             appendFileSync('c:/tmp/t.txt', t);
@@ -49,10 +50,28 @@ var o = function (s)
 }
 
 // error
+var lastOutputTimeStamp = -1;
+var addLineFeedsIfnSeconds = function() {
+    returnStr = '';
+    var newTimeInMillis = UtilDate.getTimeInMillis();
+    if (lastOutputTimeStamp < 0){
+        lastOutputTimeStamp = newTimeInMillis;
+    } else {
+        if (newTimeInMillis - lastOutputTimeStamp > 3000) {
+            returnStr = '\r\n\r\n\r\nNEWSTR ' + UtilDate.getDateStringForLogsWithMillis();
+        }
+    }
+    lastOutputTimeStamp = newTimeInMillis;
+    return returnStr;
+}
+
+
+
 var e = function (s)
 {
+
     if (passesFilters(s)) {
-        var t = callcount_o++ + '. olog:' + s
+        var t = addLineFeedsIfnSeconds() + callcount_o++ + '. ology:' + s
         console.error(t);
         appendFileSync('c:/tmp/t.txt', t);
         //console.log(callcount_o++ + '. olog:' + s + ' alertHistory:' + alertHistory);
@@ -107,7 +126,7 @@ if (test) {
 
 
 
-},{"fs":1}],3:[function(require,module,exports){
+},{"C:/utd/141213UtdV6/public/util/UtilDate.js":4,"fs":1}],3:[function(require,module,exports){
 'use strict';
 /**
  * // UtilNodeVsBrowser
@@ -332,7 +351,13 @@ var padnum = function(n)
         return n.toString();
 };
 
+var getDateStringForLogsWithMillis = function() {
+    var d= new Date();
+    return ((d.getYear()+2100) + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' +
+        d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds());
+        //":" + d.getMilliseconds());
 
+}
 
 var dateStringYYYYetcFromDate = function(dt)
 {
@@ -550,7 +575,11 @@ if (test)
     //console.log ('rendered timeAgo:' + timeAgo (then));
 }
 
-
+// Return the number of milliseconds since 1970/01/01:
+var getTimeInMillis = function() {
+    var d = new Date();
+    return d.getTime();
+}
 
 // on getClassSub (desc, obj)
 
@@ -561,6 +590,8 @@ if (typeof exports !== 'undefined') {
     exports.browserifyTest = browserifyTest;
     exports.padnum = padnum;
     exports.dateObjFromMongoString = dateObjFromMongoString;
+    exports.getTimeInMillis = getTimeInMillis;
+    exports.getDateStringForLogsWithMillis = getDateStringForLogsWithMillis;
 }
 
 
