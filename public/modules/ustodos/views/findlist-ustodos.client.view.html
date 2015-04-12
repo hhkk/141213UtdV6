@@ -1,4 +1,4 @@
-<div ng-app >
+<div id='topDivInFindUstodos' ng-app style="background-color:xxlightblue">
 
 
     <div ng-address-bar></div><br>
@@ -24,7 +24,7 @@
                />
         &nbsp;
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
-               ng-click="searchhk('*', '*', '*')"                src='/img/Asterisk.png'
+               ng-click="processCommand('*', '*', '*')"                src='/img/Asterisk.png'
                title="Search all"
                 />
         &nbsp;
@@ -56,7 +56,7 @@
                <!--style='height:32px;'-->
                 <!--/>-->
 
-            <!-- ================ INPUT#0 ======================== -->
+            <!-- ================ INPUT#0 ======================== maps to $scope.onKeyUp -->
             <input id="idInput0TypeText" type="text" ng-keyup="this.onKeyUp($event)"
                    class="input-textarea" placeholder="Search / Input / Command" ng-blur="eventBlur0InputText()" required>
                    <!--ng-model="inputbind"-->

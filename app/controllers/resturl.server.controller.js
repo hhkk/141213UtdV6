@@ -26,8 +26,8 @@ exports.get = function(req, res)
     //
     //
 
-    var title = UtilUrl.getUrlTitle(req.query.q, res)
+    var title = UtilUrl.getUrlTitle(req.query.q, res);
 
-}
+};
 
 

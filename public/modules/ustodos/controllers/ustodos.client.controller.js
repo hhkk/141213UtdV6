@@ -6,6 +6,17 @@
 //var UtilClass = null;
 //var UtilJsTypeDetect = require('C:/utd/141213UtdV6/public/util/UtilJsTypeDetect.js');
 
+
+var O = O;
+var CKEDITOR = CKEDITOR;
+var tinyMCE = tinyMCE;
+var UtilJsTypeDetect = UtilJsTypeDetect;
+var UtilHrefThisText = UtilHrefThisText;
+var UtilString = UtilString;
+var Medium = Medium;
+var UtilDate = UtilDate;
+
+
 var resolveFinalCommandBetweenUrlAndInputBox = function(commandFromInputBox, commandInputBox)
 {
     //alert ('in resolveFinalCommandBetweenUrlAndInputBox  SEARCH $location.search().q:' + commandFromInputBox +
@@ -114,6 +125,16 @@ var angularModule = null;
 //alert ('initing app');
 
 var app = angular.module('ustodos');
+
+
+
+
+
+
+
+var callbackCommand = function(callbackResult) {
+    O.o  ('in callbackCommand');
+};
 
 
 
@@ -251,7 +272,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     startupFocus : false,
                     uiColor: '#9AB8F3'
                 });
-                $scope.alreadyInitializedCKeditor = true
+                $scope.alreadyInitializedCKeditor = true;
             }
 
             $scope.ns = {};
@@ -355,12 +376,17 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //alert ('xText -2 [' + xText.charCodeAt(xText.length-2) + ']');
                 //alert ('xText -3 [' + xText.charCodeAt(xText.length-3) + ']');
                 //window.document.title = 'jp2 - '+xText; // not jpro:
+
+                //xText = xText.trim();
+                //xHtml = xHtml.trim();
+                //xValue = xValue.trim();
+
                 if (keyCode === 13 || bShouldIcommand)
                 {
-                    O.o ('===================== searchhk for xText [' + xText + ']');
-                    O.o ('===================== searchhk for xHtml [' + xHtml + ']');
-                    O.o ('===================== searchhk for xValue [' + xValue + ']');
-                    $scope.searchhk(xText, xHtml, xValue);
+                    O.o ('===================== processCommand for xText [' + xText + ']');
+                    O.o ('===================== processCommand for xHtml [' + xHtml + ']');
+                    O.o ('===================== processCommand for xValue [' + xValue + ']');
+                    $scope.processCommand(xText, xHtml, xValue, callbackCommand);
                 }
 
                 //alert ('document.activeElement.id:' + document.activeElement.id + ', parent:' + document.activeElement.parentElement.id);
@@ -580,7 +606,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //};
             $scope.onKeyUp = function (keyEvent) {
                 var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
-                //O.o('onKeyUp:' + keyCode);
+                O.o('onKeyUp:' + keyCode);
                 //O.o('onKeyUp:' + getKeyboardEventResult($event, 'Key up')); // hbkhbk
                 $scope.respondToChangeEvent(keyCode);
             };
@@ -790,24 +816,24 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             {
                 try {
                     $scope.count++;
-                    O.o('in propagateTextChanges:' + propagateTextChanges);
+                    //O.o('in propagateTextChanges');
                     //O.o('in onKeyUp1:'+$scope.count);
                     //O.o('in onKeyUp $scope.inputbind:'+$scope.inputbind);
 
                     // 0 input text
                     if ($scope.currentVisibleCounter % arrIds.length === 0)
                     {
-                        prop0Input();
+                        $scope.prop0Input();
                     }
                     // 1 medium mmmm
                     else if ($scope.currentVisibleCounter % arrIds.length === 1)
                     {
-                        prop1Medium();
+                        $scope.prop1Medium();
                     }
                     // 2 cke
                     else if ($scope.currentVisibleCounter % arrIds.length === 2)
                     {
-                        prop2Cke();
+                        $scope.prop2Cke();
                     } else{
                         alert ('fail!!');
                     }
@@ -835,7 +861,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //    if (inputText[inputText.length-1].charCodeAt(0) === 10)
                     //    {
                     //        //alert       ('enter detected');
-                    //        $scope.searchhk(inputText);
+                    //        $scope.processCommand(inputText);
                     //    }
                     //    //console.log('t-1:' + t[t.length-1])
                     //    //console.log('t-1:' + t[t.length-1].charCodeAt(0))
@@ -1018,7 +1044,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.buttonClickSearchStar = function() {
                 this.commandFromInputBox = '*';
-                this.searchhk(this.commandFromInputBox);
+                this.processCommand(this.commandFromInputBox);
             };
 
             $scope.eventMouseoverRow = function(i) {
@@ -1150,11 +1176,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //});
             //
             //
-            function confirmExit()
+            var confirmExit = function ()
             {
                 if (isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(false))
                     return 'Your changes will be lost.  Are you sure you want to exit this page?';
-            }
+            };
             window.onbeforeunload = confirmExit;
 
 
@@ -1201,7 +1227,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     if (false) // old way
                     {
                         ////console.log ('in deleteDbUstotoById '  + savOid);
-                        //console.log('in deleteDbUstotoById html:' + ustodo.html);
+                        console.log('in deleteDbUstotoById html:' + ustodo.html);
                         ////alert ('in deleteDbUstotoById ' + savOid);
                         //var indexToDelete = -1;
                         //for (var i = 0; i < $scope.ustodos.length; i++) {
@@ -1528,7 +1554,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 alert ('df');
             };
 
-            $scope.searchhk = function(xText, xHtml, xValue)
+            $scope.processCommand = function(xText, xHtml, xValue)
             {
                 try {
 
@@ -1552,64 +1578,60 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //        window.document.title = 'jp:'+xText; // not jpro:
                     //    }
                     //} else
-                    {
-                        O.o ('start search');
-                        //this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
-                        //    //( $location.search.q  , this.commandFromInputBox);
-                        //( $location.$$search.q, this.commandFromInputBox);
-                        //o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
+                    O.o ('start search');
+                    //this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
+                    //    //( $location.search.q  , this.commandFromInputBox);
+                    //( $location.$$search.q, this.commandFromInputBox);
+                    //o ('in search 1 $location.$$search.q:' +  $location.$$search.q);
 
-                        //o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
-                        //window.document.title = 'jps:'+$location.$$search.q; // not jpro:
-                        window.document.title = 'jps:'+xHtml; // not jpro:
-                        //alert ('$location.$$search.q:'+$location.$$search.q);
-                        //$location.path('/'+this.commandFromInputBox)
-                        //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
-                        //$scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
-                        //O.o  ('completed search');
-                        var commandUnTrimmed = xValue;
-                        var commandTrimmed = xValue.trim();
-                        var commandRemoved_toSearchFor = null;
-                        var wasAwrite = false;
-                        if (UtilString.endsWith(commandTrimmed, ' w')) {
-                            commandRemoved_toSearchFor = commandTrimmed.slice(0, commandTrimmed.length - 1)
-                            wasAwrite = true;
-                            //alert  ('will search after write wasAwrite [' + wasAwrite +
-                               //'] for commandRemoved_toSearchFor:' + commandRemoved_toSearchFor);
-                        } else {
-                            commandRemoved_toSearchFor = commandTrimmed;
-                        }
-
-                        $location.search('q', commandRemoved_toSearchFor);       // yoo bar foo bar baz
-                        //alert ('commandRemoved_toSearchFor:'+ commandRemoved_toSearchFor);
-                        $scope.setTextInShowingEditor(commandUnTrimmed);
-                        var fn = function() {
-                            O.o ('got the callback after query');
-                            //for (var ustodo in $scope.ustodos) {
-                            //    // http://stackoverflow.com/questions/10179815/how-do-you-get-the-loop-counter-index-using-a-for-in-syntax-in-javascript
-                            //    var i = Object.keys($scope.ustodos).indexOf(ustodo);
-                            //    O.o ('looping on index i:' + i);
-                            //    O.o ('looping on id:' + ustodo._id);
-                            //    if (ustodo._id !== ustodo[i]._id)
-                            //            alert ('era - ids not same');
-                            //}
-                            $scope.ustodos.forEach(function(ustodo, i) {
-                                //var i = Object.keys($scope.ustodos).indexOf(ustodo);
-                                //O.o ('looping on id:' + ustodo._id);
-                                //O.o ('looping on i:' + i);
-                                $scope.ustodos[i].arrayIndexInclient = i;
-                                if (ustodo._id !== $scope.ustodos[i]._id)
-                                    alert ('era - ids not same');
-                                //else
-                                //    alert ('era - ids not same');
-                            })
-                        }
-                        $scope.ustodos  = Ustodos.query ({q: commandTrimmed}, fn);
-
-                        O.o ('in searchhk:' + $scope.ustodos);
-
-
+                    //o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
+                    //window.document.title = 'jps:'+$location.$$search.q; // not jpro:
+                    window.document.title = 'jps:'+xHtml; // not jpro:
+                    //alert ('$location.$$search.q:'+$location.$$search.q);
+                    //$location.path('/'+this.commandFromInputBox)
+                    //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
+                    //$scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
+                    //O.o  ('completed search');
+                    var commandUnTrimmed = xValue;
+                    var commandTrimmed = xValue.trim();
+                    var commandRemoved_toSearchFor = null;
+                    var wasAwrite = false;
+                    if (UtilString.endsWith(commandTrimmed, ' w')) {
+                        commandRemoved_toSearchFor = commandTrimmed.slice(0, commandTrimmed.length - 1);
+                        wasAwrite = true;
+                        //alert  ('will search after write wasAwrite [' + wasAwrite +
+                           //'] for commandRemoved_toSearchFor:' + commandRemoved_toSearchFor);
+                    } else {
+                        commandRemoved_toSearchFor = commandTrimmed;
                     }
+
+                    $location.search('q', commandRemoved_toSearchFor);       // yoo bar foo bar baz
+                    //alert ('commandRemoved_toSearchFor:'+ commandRemoved_toSearchFor);
+                    $scope.setTextInShowingEditor(commandUnTrimmed);
+                    var fn = function() {
+                        O.o ('got callback after query'); // in callback
+                        //for (var ustodo in $scope.ustodos) {
+                        //    // http://stackoverflow.com/questions/10179815/how-do-you-get-the-loop-counter-index-using-a-for-in-syntax-in-javascript
+                        //    var i = Object.keys($scope.ustodos).indexOf(ustodo);
+                        //    O.o ('looping on index i:' + i);
+                        //    O.o ('looping on id:' + ustodo._id);
+                        //    if (ustodo._id !== ustodo[i]._id)
+                        //            alert ('era - ids not same');
+                        //}
+                        $scope.ustodos.forEach(function(ustodo, i) {
+                            //var i = Object.keys($scope.ustodos).indexOf(ustodo);
+                            //O.o ('looping on id:' + ustodo._id);
+                            //O.o ('looping on i:' + i);
+                            $scope.ustodos[i].arrayIndexInclient = i;
+                            if (ustodo._id !== $scope.ustodos[i]._id)
+                                alert ('era - ids not same');
+                            //else
+                            //    alert ('era - ids not same');
+                        });
+                    };
+                    $scope.ustodos = Ustodos.query ({q: commandTrimmed}, fn);
+
+                    O.o ('in processCommand:' + $scope.ustodos);
 
                     //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
                     //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));
@@ -1682,7 +1704,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     alert ('errta:' + e);
                     throw e;
                 }
-            };
+            };  // $scope.processCommand
 
             // Search for one hbkk existing Ustodo by string
             $scope.searchOne = function() {
@@ -1697,7 +1719,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 });
             };
 
-            $scope.searchhk('*', '*', '*');
+            $scope.processCommand('*', '*', '*');
             //O.a ('sssa2');
 
 

@@ -46,6 +46,12 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
             // Create new Command object
             try {
                 //alert ('in hkAddNewCommandData');
+                var fn =  function(response) {
+                    //$location.path('commands/' + response._id);
+                    // Clear form fields
+                    //$scope.name = '';
+                    console.log ('success:');
+                };
                 for (var i = 0; i < $scope.commandData.length; i++)
                 {
                     //alert ('in hkAddNewCommandData in for');
@@ -56,12 +62,7 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
                     });
                     //alert ('in hkAddNewCommandData in for data commandDescription: '+ command.commandDescription);
                     // Redirect after save
-                    command.$save( function(response) {
-                        //$location.path('commands/' + response._id);
-                        // Clear form fields
-                        //$scope.name = '';
-                        console.log ('success:');
-                    });
+                    command.$save(fn);
 
                 }
                 //alert ('in hkAddNewCommandData2');

@@ -156,16 +156,16 @@ exports.list2 = function(req, res) {
 
 
     var parseTitleTagFromHtml = function(html) {
-        var titletag = "<title>";
+        var titletag = '<title>';
         var iTitle = html.toLowerCase().indexOf(titletag);
-        var iTitleEnd = html.toLowerCase().indexOf("</title>");
+        var iTitleEnd = html.toLowerCase().indexOf('</title>');
         var title = null;
         if (iTitle === -1 || iTitleEnd === -1) {
-            title = "no title";
+            title = '   no title';
         } else {
             title = html.slice(iTitle+7,iTitleEnd).trim();
         }
-    }
+    };
 
 
     //if (query.querystring.endsWith())
@@ -175,11 +175,9 @@ exports.list2 = function(req, res) {
     // if write   in write
     if (UtilString.endsWith(commandTrimmed, ' w'))
     {
-        var commandRemoved = commandTrimmed.slice(0, commandTrimmed.length-2)
-        O.o(' ========================================= in ustodos.server.controller.js: w save '
-            + ', commandTrimmed [' + commandTrimmed + '] ' +
-            + ', commandRemoved [' + commandRemoved + '] '
-        );
+        var commandRemoved = commandTrimmed.slice(0, commandTrimmed.length-2);
+        O.o(' ========================================= in ustodos.server.controller.js: w save ' +
+            ', commandTrimmed [' + commandTrimmed + '] ' + ', commandRemoved [' + commandRemoved + '] ' );
         O.o ('in endswith w');
         var ustodo = new Ustodo();
         ustodo.user = req.user;
