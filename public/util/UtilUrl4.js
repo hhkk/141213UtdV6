@@ -401,11 +401,8 @@ var findTitle_htmlParse = function(html) {
 
 
 
-var test = true;
-if (!test) {
-    O.o ('not testing');
-} else {
-
+var test = false;
+if (test) {
     //var x = '1111 ibm.com 2222  apple.com 333333';
     //var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 ';
     //var x = '1111 jpro.co 2222';
