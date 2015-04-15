@@ -401,7 +401,7 @@ var findTitle_htmlParse = function(html) {
 
 
 
-var test = false;
+var test = true;
 if (test) {
     //var x = '1111 ibm.com 2222  apple.com 333333';
     //var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 ';
@@ -414,8 +414,8 @@ if (test) {
     //var x = '1 jpro.co 2 ';
     //var x = '1111 http://www.dell.com 2222  '; // ok by itself at 40 seconds
     //var x = '1111 dell.com 2222  '; // ok by itself at 40 seconds
-    //var x = '1 ibm.com 2 dell.com 3 ddfgdfgdfgdfgdfgf.com 4 apple.com 4 google.com 5 yahoo.com 6 www.tester.com 7 get.com 8 time.com 9 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 ';
-    var x = '1111 tester.com 2222  '; // ok by itself at 40 seconds
+    var x = '1 ibm.com 2 dell.com 3 ddfgdfgdfgdfgdfgf.com 4 apple.com 4 google.com 5 yahoo.com 6 www.tester.com 7 get.com 8 time.com 9 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 www.jpro.co 10 ';
+    //var x = '1111 tester.com 2222  '; // ok by itself at 40 seconds
 
     var res = {};
 

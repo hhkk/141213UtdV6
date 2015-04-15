@@ -75,23 +75,23 @@ angular.module('commands').controller('CommandsController', ['$scope', '$statePa
         // Create new Command
         $scope.create = function() {
             // Create new Command object
-            var command = new Commands ({
-                commandCode: this.commandCode,
-                commandUrl: this.commandUrl,
-                commandDescription: this.commandDescription
-            });
+                var command = new Commands ({
+                    commandCode: this.commandCode,
+                    commandUrl: this.commandUrl,
+                    commandDescription: this.commandDescription
+                });
 
-            // Redirect after save
-            command.$save(function(response) {
-                alert ('in create2a');
-                $location.path('commands/' + response._id);
+                // Redirect after save
+                command.$save(function(response) {
+                    alert ('in create2a');
+                    $location.path('commands/' + response._id);
 
-                // Clear form fields
-                $scope.name = '';
-            }, function(errorResponse) {
-                alert ('in create2b');
-                $scope.error = errorResponse.data.message;
-            });
+                    // Clear form fields
+                    $scope.name = '';
+                }, function(errorResponse) {
+                    alert ('in create2b');
+                    $scope.error = errorResponse.data.message;
+                });
         };
 
         // Remove existing Command

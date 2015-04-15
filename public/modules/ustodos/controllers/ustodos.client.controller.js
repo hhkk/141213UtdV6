@@ -1566,6 +1566,30 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 alert ('df');
             };
 
+
+
+
+
+
+
+
+
+
+
+
+
+//            http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=processCommand
+            //.----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .-----------------..----------------.
+            //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+            //| |   ______     | | |  _______     | | |     ____     | | |     ______   | | |  _________   | | |    _______   | | |    _______   | | |     ______   | | |     ____     | | | ____    ____ | | | ____    ____ | | |      __      | | | ____  _____  | | |  ________    | |
+            //| |  |_   __ \   | | | |_   __ \    | | |   .'    `.   | | |   .' ___  |  | | | |_   ___  |  | | |   /  ___  |  | | |   /  ___  |  | | |   .' ___  |  | | |   .'    `.   | | ||_   \  /   _|| | ||_   \  /   _|| | |     /  \     | | ||_   \|_   _| | | | |_   ___ `.  | |
+            //| |    | |__) |  | | |   | |__) |   | | |  /  .--.  \  | | |  / .'   \_|  | | |   | |_  \_|  | | |  |  (__ \_|  | | |  |  (__ \_|  | | |  / .'   \_|  | | |  /  .--.  \  | | |  |   \/   |  | | |  |   \/   |  | | |    / /\ \    | | |  |   \ | |   | | |   | |   `. \ | |
+            //| |    |  ___/   | | |   |  __ /    | | |  | |    | |  | | |  | |         | | |   |  _|  _   | | |   '.___`-.   | | |   '.___`-.   | | |  | |         | | |  | |    | |  | | |  | |\  /| |  | | |  | |\  /| |  | | |   / ____ \   | | |  | |\ \| |   | | |   | |    | | | |
+            //| |   _| |_      | | |  _| |  \ \_  | | |  \  `--'  /  | | |  \ `.___.'\  | | |  _| |___/ |  | | |  |`\____) |  | | |  |`\____) |  | | |  \ `.___.'\  | | |  \  `--'  /  | | | _| |_\/_| |_ | | | _| |_\/_| |_ | | | _/ /    \ \_ | | | _| |_\   |_  | | |  _| |___.' / | |
+            //| |  |_____|     | | | |____| |___| | | |   `.____.'   | | |   `._____.'  | | | |_________|  | | |  |_______.'  | | |  |_______.'  | | |   `._____.'  | | |   `.____.'   | | ||_____||_____|| | ||_____||_____|| | ||____|  |____|| | ||_____|\____| | | | |________.'  | |
+            //| |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
             $scope.processCommand = function(xText, xHtml, xValue)
             {
                 try {
@@ -1606,18 +1630,55 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //O.o  ('completed search');
                     var commandUnTrimmed = xValue;
                     var commandTrimmed = xValue.trim();
-                    var commandRemoved_toSearchFor = null;
+                    var commandRemoved_toSearchFor_trimmed = null;
+
+                    // TODO ADD A WRITE HERE
+                    //$scope.ustodos = Ustodos.WRITE????  ({q: commandTrimmed}, fn);      // this is a GET - see RESOURCE
+
+
+
+                    //.----------------. .----------------. .----------------. .----------------. .----------------.
+                    //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+                    //| | _____  _____ | | |  _______     | | |     _____    | | |  _________   | | |  _________   | |
+                    //| ||_   _||_   _|| | | |_   __ \    | | |    |_   _|   | | | |  _   _  |  | | | |_   ___  |  | |
+                    //| |  | | /\ | |  | | |   | |__) |   | | |      | |     | | | |_/ | | \_|  | | |   | |_  \_|  | |
+                    //| |  | |/  \| |  | | |   |  __ /    | | |      | |     | | |     | |      | | |   |  _|  _   | |
+                    //| |  |   /\   |  | | |  _| |  \ \_  | | |     _| |_    | | |    _| |_     | | |  _| |___/ |  | |
+                    //| |  |__/  \__|  | | | |____| |___| | | |    |_____|   | | |   |_____|    | | | |_________|  | |
+                    //| |              | | |              | | |              | | |              | | |              | |
+                    //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+                    //'----------------' '----------------' '----------------' '----------------' '----------------'
+                    //            http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=WRITE
                     if (UtilString.endsWith(commandTrimmed, ' w')) {
+                        alert ('in write');
                         //alert ('in endsWith w');
-                        commandRemoved_toSearchFor = commandTrimmed.slice(0, commandTrimmed.length - 1);
+                        commandRemoved_toSearchFor_trimmed = commandTrimmed.slice(0, commandTrimmed.length - 1);
+
+                        var ustodo = new Ustodos ({
+                            html: 'xxxx'+commandRemoved_toSearchFor_trimmed,// hbkk mystery
+                            text: 'xxxx'+commandRemoved_toSearchFor_trimmed// hbkk mystery
+                        });
+                        //getProperties('props ustodo:', ustodo);
+                        // Redirect after save
+                        ustodo.$save(function(response) {
+                            $location.path('ustodos/' + response._id);
+                        }, function(errorResponse) {
+                            $scope.error = errorResponse.data.message;
+                        });
+
+
+
+
                         //alert  ('will search after write wasAwrite [' + wasAwrite +
-                           //'] for commandRemoved_toSearchFor:' + commandRemoved_toSearchFor);
-                    } else {
-                        commandRemoved_toSearchFor = commandTrimmed;
+                           //'] for commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
+                    }
+                    else // not a
+                    {
+                        commandRemoved_toSearchFor_trimmed = commandTrimmed;
                     }
 
-                    $location.search('q', commandRemoved_toSearchFor);       // yoo bar foo bar baz
-                    //alert ('commandRemoved_toSearchFor:'+ commandRemoved_toSearchFor);
+                    $location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
+                    //alert ('commandRemoved_toSearchFor_trimmed:'+ commandRemoved_toSearchFor_trimmed);
                     $scope.setTextInShowingEditor(commandUnTrimmed);
                     var fn = function() {
                         O.o ('$$$$$$$$$$$$$$$$$$$ done processCommand got callback after query $scope.ustodos.length [' + $scope.ustodos.length + ']');
@@ -1630,6 +1691,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //    if (ustodo._id !== ustodo[i]._id)
                         //            alert ('era - ids not same');
                         //}
+
+                        // TEST that internal logic is not screwed up on indexing
                         $scope.ustodos.forEach(function(ustodo, i) {
                             //var i = Object.keys($scope.ustodos).indexOf(ustodo);
                             //O.o ('looping on id:' + ustodo._id);
@@ -1641,8 +1704,25 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //    alert ('era - ids not same');
                         });
                     };
-                        O.o ('$$$$$$$$$$$$$$$$$$$ in processCommand commandTrimmed [' + commandTrimmed + ']');
-                    $scope.ustodos = Ustodos.query ({q: commandTrimmed}, fn);
+
+
+
+
+
+                    // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=QUERY
+                    //.----------------. .----------------. .----------------. .----------------. .----------------.
+                    //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+                    //| |    ___       | | | _____  _____ | | |  _________   | | |  _______     | | |  ____  ____  | |
+                    //| |  .'   '.     | | ||_   _||_   _|| | | |_   ___  |  | | | |_   __ \    | | | |_  _||_  _| | |
+                    //| | /  .-.  \    | | |  | |    | |  | | |   | |_  \_|  | | |   | |__) |   | | |   \ \  / /   | |
+                    //| | | |   | |    | | |  | '    ' |  | | |   |  _|  _   | | |   |  __ /    | | |    \ \/ /    | |
+                    //| | \  `-'  \_   | | |   \ `--' /   | | |  _| |___/ |  | | |  _| |  \ \_  | | |    _|  |_    | |
+                    //| |  `.___.\__|  | | |    `.__.'    | | | |_________|  | | | |____| |___| | | |   |______|   | |
+                    //| |              | | |              | | |              | | |              | | |              | |
+                    //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+                    //'----------------' '----------------' '----------------' '----------------' '----------------'
+
+                    $scope.ustodos = Ustodos.query ({q: commandRemoved_toSearchFor_trimmed}, fn);      // this is a GET - see RESOURCE
 
                     //var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
                     //console.log ('%%%$$%%$$%%%%%%%%%%%%% UtilClassx.getClass(this):'+utd.Class.getClass(this));
