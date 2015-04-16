@@ -200,7 +200,7 @@ var getUrlContent_levelOne = function(callback, item) {
                 if (!calledBack) {
                     //O.o('calling back from getUrlContent_levelOne x1:' + item.url + '->' + title);
                     if (title != null) {
-                        item.title = 'L1ax:' + title;
+                        item.title = '1:' + title;
                         //item.title = title;
                         calledBack = true;
                         callback('dummy', item);
@@ -308,7 +308,7 @@ var getUrlContent_levelTwo = function(callback, item) {
                 var html = xmlhttp.responseText;
                 var title = findTitle_htmlParse(html);
 
-                item.title = 'L2ax:' + title;
+                item.title = '2a:' + title;
                 //item.title = title;
 
                 if (typeof callback === "function")
@@ -401,7 +401,7 @@ var findTitle_htmlParse = function(html) {
 
 
 
-var test = true;
+var test = false;
 if (test) {
     //var x = '1111 ibm.com 2222  apple.com 333333';
     //var x = '1111 ibm.com 2222  dell.com 333333 ddfgdfgdfgdfgdfgf.com 4444 ';

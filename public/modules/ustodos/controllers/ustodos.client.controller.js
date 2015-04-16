@@ -146,7 +146,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
     function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos, Commands)
     {
 
-        alert ('reiniting scope');
+        //alert ('reiniting scope');
         try {
 
             //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
@@ -268,7 +268,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert('setting editor');
             if (!$scope.alreadyInitializedCKeditor)
             {
-                alert ('initing CKEDITOR');
+                //alert ('initing CKEDITOR');
                 $scope.editor = CKEDITOR.replace( 'idCkeEditorTextarea', {
                     //language: 'fr',
                     customConfig: '/lib/ckeditor/config.js',
@@ -386,9 +386,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 if (keyCode === 13 || bShouldIcommand)
                 {
-                    O.o ('===================== processCommand for xText [' + xText + ']');
-                    O.o ('===================== processCommand for xHtml [' + xHtml + ']');
-                    O.o ('===================== processCommand for xValue [' + xValue + ']');
+                    //O.o ('===================== processCommand for xText [' + xText + ']');
+                    //O.o ('===================== processCommand for xHtml [' + xHtml + ']');
+                    //O.o ('===================== processCommand for xValue [' + xValue + ']');
                     $scope.processCommand(xText, xHtml, xValue, callbackCommand);
                 }
 
@@ -1595,13 +1595,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
             $scope.processCommand = function(xText, xHtml, xValue)
             {
-                alert ('in processcommand');
+                O.o (' =========================== in processcommand');
                 try {
 
 
                     $scope.searchedFor = xValue.trim();
-                    O.o ('============================= in xValue [' + xValue + ']');
-                    O.o ('============================= in html2text [' + UtilHrefThisText.html2text(xValue)+ ']');
+                    //O.o ('============================= in xValue [' + xValue + ']');
+                    //O.o ('============================= in html2text [' + UtilHrefThisText.html2text(xValue)+ ']');
                     // <a target="_blank" href="http://ibm.com">http://ibm.com</a>
 
                     $scope.callCountSearch++;
@@ -1678,16 +1678,20 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //'----------------' '----------------' '----------------' '----------------' '----------------'
                     //            http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=WRITE
                     if (UtilString.endsWith(commandTrimmed, ' w')) {
-                        alert ('in write');
+                        //alert ('in write');
                         //alert ('in endsWith w');
                         commandRemoved_toSearchFor_trimmed = commandTrimmed.slice(0, commandTrimmed.length - 1);
 
                         var ustodo = new Ustodos ({
-                            html: 'xxxx'+commandRemoved_toSearchFor_trimmed,// hbkk mystery
-                            text: 'xxxx'+commandRemoved_toSearchFor_trimmed// hbkk mystery
+                            html: commandRemoved_toSearchFor_trimmed,// hbkk mystery
+                            text: commandRemoved_toSearchFor_trimmed,// hbkk mystery
+                            datelastmod: (''+new Date()),
+                            datecreated: (''+new Date()),
+                            joey: 'and pete'
                         });
                         //getProperties('props ustodo:', ustodo);
                         // Redirect after save
+                        O.o ('$$$$$$$$$$$$$$$$$$ save commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
                         ustodo.$save(function(response) {
                             //$location.path('ustodos/' + response._id);
                             // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=QUERY
@@ -1703,7 +1707,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
                             //'----------------' '----------------' '----------------' '----------------' '----------------'
 
-                            alert ('in callback success after write search for [' + commandRemoved_toSearchFor_trimmed + ']');
+                            //alert ('in callback success after write search for [' + commandRemoved_toSearchFor_trimmed + ']');
                             $scope.ustodos = Ustodos.query ({q: commandRemoved_toSearchFor_trimmed}, callbackFromQuery);      // this is a GET - see RESOURCE
                             $location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
                             $scope.setTextInShowingEditor(commandRemoved_toSearchFor_trimmed);
@@ -1717,7 +1721,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     }
                     else // not a write
                     {
-                        alert ('not a write - search for [' + commandTrimmed.trim() + ']');
+                        //alert ('not a write - search for [' + commandTrimmed.trim() + ']');
                         $scope.ustodos = Ustodos.query ({q: commandTrimmed.trim()}, callbackFromQuery);      // this is a GET - see RESOURCE
                         //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
                     }

@@ -34,17 +34,37 @@ exports.create = function(req, res) {
 	ustodo.user = req.user;
 
 
-    ustodo.html = 'ggggggggggggg' + ustodo.html;
-    ustodo.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-            console.log ('@@@@@@@@@@@@@@@@@@@@@ saved a new USTODO ' + ustodo.html)
-			res.jsonp(ustodo);
-		}
-	});
+    ustodo.html = ustodo.html;
+
+    var res2 = {};
+    res2.json = function(s)
+    {
+        O.o ('--------> saving content as both text and html [' + s + ']');
+        ustodo.text = s;
+        ustodo.html = s;
+        ustodo.datelastmod = new Date();
+        ustodo.datecreated = new Date();
+
+        ustodo.save(function(err) {
+            if (err) {
+                O.o('*** write fail err [' +err + ']');
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                console.log ('@@@@@@@@@@@@@@@@@@@@@ saved a new USTODO ' + ustodo.html);
+                res.jsonp(ustodo);
+            }
+        });
+    };
+
+    UtilUrl4.expandUrlsToHrefsReturnPatchedStr(ustodo.html, res2);
+
+
+
+
+
+
 };
 
 /**
@@ -130,6 +150,9 @@ exports.list2 = function(req, res) {
         O.o ('resetting * star to blank');
         query.q = '';
     }
+    var require_ustodos_controller_helper = require('C:/utd/141213UtdV6/app/controllers/helpers/ustodos.controller.helper.js');
+    O.o('in ustodos.server.controller.js: list, query.querystring: ' + query.q);
+    require_ustodos_controller_helper.processCommandReadPortion(Ustodo, query.q.trim(), req, errorHandler, res);
 
     //O.o ('query.querystring post trim [' + query.querystring+ ']');
 	//54b143dde898903429ce32b1
@@ -142,7 +165,6 @@ exports.list2 = function(req, res) {
 	//}
 
 	//O.o ('in ustodos.server.controller.js: list, query: ' + query);
-    O.o('in ustodos.server.controller.js: list, query.querystring: ' + query.q);
 
 
     //
@@ -155,83 +177,83 @@ exports.list2 = function(req, res) {
 	//	re = new RegExp('');
 	//}
 
-    var require_ustodos_controller_helper = require('C:/utd/141213UtdV6/app/controllers/helpers/ustodos.controller.helper.js');
 
 
-    var parseTitleTagFromHtml = function(html) {
-        var titletag = '<title>';
-        var iTitle = html.toLowerCase().indexOf(titletag);
-        var iTitleEnd = html.toLowerCase().indexOf('</title>');
-        var title = null;
-        if (iTitle === -1 || iTitleEnd === -1) {
-            title = '   no title';
-        } else {
-            title = html.slice(iTitle+7,iTitleEnd).trim();
-        }
-    };
+    //var parseTitleTagFromHtml = function(html) {
+    //    var titletag = '<title>';
+    //    var iTitle = html.toLowerCase().indexOf(titletag);
+    //    var iTitleEnd = html.toLowerCase().indexOf('</title>');
+    //    var title = null;
+    //    if (iTitle === -1 || iTitleEnd === -1) {
+    //        title = '   no title';
+    //    } else {
+    //        title = html.slice(iTitle+7,iTitleEnd).trim();
+    //    }
+    //};
 
 
     //if (query.querystring.endsWith())
-    var commandTrimmed = query.q.trim();
+    //var commandTrimmed = ;
+    //O.o ('not endswith w');
 
 
-    // if write   in write
-    if (UtilString.endsWith(commandTrimmed, ' w'))
-    {
-        var commandRemoved = commandTrimmed.slice(0, commandTrimmed.length-2);
-        //O.o(' ========================================= in ustodos.server.controller.js: w save ' +
-            //', commandTrimmed [' + commandTrimmed + '] ' + ', commandRemoved [' + commandRemoved + '] ' );
-        O.o ('in endswith w commandTrimmed [' + commandTrimmed + ']');
-        var ustodo = new Ustodo();
-        ustodo.user = req.user;
-
-        try {
-            var res2 = {};
-            res2.json = function(s)
-            {
-                O.o ('--------> saving content as both text and html [' + s + ']');
-
-                ustodo.text = s;
-                ustodo.html = s;
-
-                ustodo.save(function(err) {
-                    if (err) {
-                        O.o('*** write fail commandTrimmed [' +commandTrimmed + ']');
-                        O.o('*** write fail err [' +err + ']');
-                        return res.status(400).send({
-                            message: errorHandler.getErrorMessage(err)
-                        });
-                    } else {
-                        //now process read aspect only of query
-                        require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
-                        O.o('*** write success commandTrimmed [' +commandTrimmed + ']');
-                    }
-                });
-            };
-
-            UtilUrl4.expandUrlsToHrefsReturnPatchedStr(commandRemoved, res2);
-
-
-        } catch (e) {
-            O.o('erra:' + e);
-            throw e;
-        }
-
-
-
-
-
-
-
-
-
-
-
-    }
-    else{
-        O.o ('not endswith w');
-        require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
-    }
+    //// if write   in write
+    //if (UtilString.endsWith(commandTrimmed, ' w'))
+    //{
+    //    var commandRemoved = commandTrimmed.slice(0, commandTrimmed.length-2);
+    //    //O.o(' ========================================= in ustodos.server.controller.js: w save ' +
+    //        //', commandTrimmed [' + commandTrimmed + '] ' + ', commandRemoved [' + commandRemoved + '] ' );
+    //    O.o ('in endswith w commandTrimmed [' + commandTrimmed + ']');
+    //    var ustodo = new Ustodo();
+    //    ustodo.user = req.user;
+    //
+    //    try {
+    //        var res2 = {};
+    //        res2.json = function(s)
+    //        {
+    //            O.o ('--------> saving content as both text and html [' + s + ']');
+    //
+    //            ustodo.text = s;
+    //            ustodo.html = s;
+    //
+    //            ustodo.save(function(err) {
+    //                if (err) {
+    //                    O.o('*** write fail commandTrimmed [' +commandTrimmed + ']');
+    //                    O.o('*** write fail err [' +err + ']');
+    //                    return res.status(400).send({
+    //                        message: errorHandler.getErrorMessage(err)
+    //                    });
+    //                } else {
+    //                    //now process read aspect only of query
+    //                    require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
+    //                    O.o('*** write success commandTrimmed [' +commandTrimmed + ']');
+    //                }
+    //            });
+    //        };
+    //
+    //        UtilUrl4.expandUrlsToHrefsReturnPatchedStr(commandRemoved, res2);
+    //
+    //
+    //    } catch (e) {
+    //        O.o('erra:' + e);
+    //        throw e;
+    //    }
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //}
+    //else{
+    //    O.o ('not endswith w');
+    //    require_ustodos_controller_helper.processCommandReadPortion(Ustodo, commandTrimmed, req, errorHandler, res);
+//    }
 
 
 };

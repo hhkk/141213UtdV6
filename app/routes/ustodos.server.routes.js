@@ -8,7 +8,7 @@ module.exports = function(app) {
 
 	// Ustodos Routes
     app.route('/ustodos')
-		.get(ustodos.list2)
+		.get(ustodos.list2)  // exports.list2 in C:\utd\141213UtdV6\app\controllers\ustodos.server.controller.js
 		.post(users.requiresLogin, ustodos.create);
 
 	app.route('/ustodos/:ustodoId')
