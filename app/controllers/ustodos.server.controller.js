@@ -33,12 +33,15 @@ exports.create = function(req, res) {
 	var ustodo = new Ustodo(req.body);
 	ustodo.user = req.user;
 
-	ustodo.save(function(err) {
+
+    ustodo.html = 'ggggggggggggg' + ustodo.html;
+    ustodo.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+            console.log ('@@@@@@@@@@@@@@@@@@@@@ saved a new USTODO ' + ustodo.html)
 			res.jsonp(ustodo);
 		}
 	});
