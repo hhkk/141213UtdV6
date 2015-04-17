@@ -1088,7 +1088,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                                 document.getElementById('idInput0TypeText').value = e.innerText;
                             break;
                         case $scope.ns.Input.INPUT_1_MEDIUM:
-                                alert ('in setTextInShowingEditor for input1medium');
+                                //alert ('in setTextInShowingEditor for input1medium');
                             if (UtilJsTypeDetect.isString(e))
                                 alert('logic error - setting Medium rich editor with string [' + e + '] leaving at prior value');
                             else
@@ -1567,6 +1567,40 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.sayhi = function() {
                 alert ('df');
+            };
+
+            $scope.checkBoxLastToggled = -1;
+            $scope.testButton = function(j) {
+                //alert ('in testButton:' + j);
+                var arrCheckBoxStates = [];
+                var countCheckBoxStatesTrue = 0;
+                for (var i = 0; ; i++ )
+                {
+                    var x = document.getElementById('idcheckbox'+i);
+                    if (x)
+                    {
+                        arrCheckBoxStates.push(x.checked);
+
+                        if (x.checked)
+                        {
+                            x.checked = false;
+                        } else {
+                            x.checked = true;
+                        }
+                    }
+                    else
+                        break;
+                }
+                O.o ('arrCheckBoxStates.length:' + arrCheckBoxStates.length);
+                O.o ('countCheckBoxStatesTrue:' + countCheckBoxStatesTrue);
+
+                //var x2 = x1.children;
+                    //for (var i = 0; i < x2.length; i++)
+                    //{
+                    //    O.o ('%%%%%%%% id:' + x2[i].id + ' classname:' + x2[i].classname);
+                    //}
+                    //
+
             };
 
 

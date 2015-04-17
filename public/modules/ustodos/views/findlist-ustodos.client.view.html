@@ -102,6 +102,15 @@
                 ng-mouseover="showSelectDropdown()"
                 ></select>
 
+            <button ng-click="testButton(-2)">TestButton</button>
+            testspan
+            <span id='testspan'>
+                <span id='testspaninner'>
+                    &nbsp;<input ng-click='testButton(-1)' id="checkboxTest" type="checkbox"/>
+                </span>
+            </span>
+            end testspan
+
             <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
         </span>
         <br>
@@ -191,72 +200,81 @@
 
                 <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
                 xx
-                <button ng-click="alert ('ff')" ng-init="count=0">
+                    <button ng-click="alert ('ff')" ng-init="count=0">
                 yy
-                <tr
-                    ng-repeat="ustodo in ustodos "
-                    ng-mouseover="this.eventMouseoverRow2($index)"
-                    ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
-                    class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
 
-                    <!-- CHECK BOX -->
-                    <td>
+                hktablespan
+                <span id="hktablespan">
 
-                        &nbsp;<input id="checkbox($index)" type="checkbox"/>
+                    <tr
+                        ng-repeat="ustodo in ustodos "
+                        ng-mouseover="this.eventMouseoverRow2($index)"
+                        ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
+                        class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
 
-                    </td>
+                        <!-- CHECK BOX -->
+                        <td>
 
+                            <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox{{ustodo.html}}"' type="checkbox"/>-->
+                            &nbsp;<input ng-click='testButton($index)' id='idcheckbox{{$index}}' type="checkbox"/>
+                            <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox"' type="checkbox"/>-->
 
-                    <!-- DELETE BUTTON -->
-                    <td>
-
-
-                        <!-- trash garbage icon -->
-                        &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
-                             alt="{{image.name}}"  title='delete'
-                             ng-click="deleteDbUstotoById(ustodo, $index)"
-                                >
-                        &nbsp
-                        <!--ng-show="nowShowing==$index"-->
-                        <!--ng-repeat="image in images"-->
-                        <!--class="gallery-image fade-animation"-->
-                    </td>
-
-                    <!-- SAVE BUTTON -->
-                    <td>
-                        <!--<button ng-click="count = count + 1" ng-init="count=0">-->
-                        <!--<button ng-click="alignAnUstodoWithUstodoHtmlByIndex($index)">SAV</button>-->
-
-                        <!--<img height=15 ng-src="/img/gnome_edit_save.jpg"-->
-
-                        <img class="per-row-icons" ng-src="/img/saveIcon.jpg" title='save'
-                             alt="{{image.name}}"
-                             ng-click="saveUstodoGiven(ustodo, $index)"
-                        >
-                        &nbsp;
-                    </td>
-
-                    <!-- COUNT -->
-                    <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
+                        </td>
 
 
-                    <!-- TIME AGO -->
-                    <!--<td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod) + ustodo.datelastmod+'.'+ustodo._id"-->
-                    <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
-                                    ng-click="event_click_timeAgo(ustodo._id)"
-                                    title={{ustodo.datelastmod+'.'+ustodo._id+'ClickForID'}}></span></td>
-                    <!--<td>{{ ustodo.text}}</td>f-->
+                        <!-- DELETE BUTTON -->
+                        <td>
 
 
-                    <!-- TEXT -->
-                    <td>
-                    <span id="ustodorow{{$index}}" contenteditable="true"
-                      ng-bind-html="ustodos[$index].html | linky:'_blank'"
-                       ></span>
-                    </td>
-                    <!--/onclick = "this.contentEditable = true;"-->
+                            <!-- trash garbage icon -->
+                            &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
+                                 alt="{{image.name}}"  title='delete'
+                                 ng-click="deleteDbUstotoById(ustodo, $index)"
+                                    >
+                            &nbsp
+                            <!--ng-show="nowShowing==$index"-->
+                            <!--ng-repeat="image in images"-->
+                            <!--class="gallery-image fade-animation"-->
+                        </td>
 
-                </tr>
+                        <!-- SAVE BUTTON -->
+                        <td>
+                            <!--<button ng-click="count = count + 1" ng-init="count=0">-->
+                            <!--<button ng-click="alignAnUstodoWithUstodoHtmlByIndex($index)">SAV</button>-->
+
+                            <!--<img height=15 ng-src="/img/gnome_edit_save.jpg"-->
+
+                            <img class="per-row-icons" ng-src="/img/saveIcon.jpg" title='save'
+                                 alt="{{image.name}}"
+                                 ng-click="saveUstodoGiven(ustodo, $index)"
+                            >
+                            &nbsp;
+                        </td>
+
+                        <!-- COUNT -->
+                        <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
+
+
+                        <!-- TIME AGO -->
+                        <!--<td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod) + ustodo.datelastmod+'.'+ustodo._id"-->
+                        <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
+                                        ng-click="event_click_timeAgo(ustodo._id)"
+                                        title={{ustodo.datelastmod+'.'+ustodo._id+'ClickForID'}}></span></td>
+                        <!--<td>{{ ustodo.text}}</td>f-->
+
+
+                        <!-- TEXT -->
+                        <td>
+                        <span id="ustodorow{{$index}}" contenteditable="true"
+                          ng-bind-html="ustodos[$index].html | linky:'_blank'"
+                           ></span>
+                        </td>
+                        <!--/onclick = "this.contentEditable = true;"-->
+
+                    </tr>
+
+                </span>
+
             </table>
 
             <!--<span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span>f-->
