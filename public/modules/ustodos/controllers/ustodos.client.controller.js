@@ -1569,6 +1569,42 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 alert ('df');
             };
 
+
+            //Shift - 16
+            //Ctrl - 17
+            //Alt - 18
+            window.keyStateShiftDown = false;
+            window.keyStateCtrlDown = false;
+            window.keyStateAltDown = false;
+            document.addEventListener('keydown', function(evt) {
+                var e = window.event || evt;
+                var key = e.which || e.keyCode;
+                //O.o ('keydown:' + key );
+                if (16 == key) {
+                    window.keyStateShiftDown = true;
+                } else if (17 == key) {
+                    window.keyStateCtrlDown = true;
+                } else if (18 == key) {
+                    window.keyStateAltDown = true;
+                }
+            }, false);
+
+            document.addEventListener('keyup', function(evt) {
+                var e = window.event || evt;
+                var key = e.which || e.keyCode;
+                if (16 == key) {
+                    window.keyStateShiftDown = false;
+                } else if (17 == key) {
+                    window.keyStateCtrlDown = false;
+                } else if (18 == key) {
+                    window.keyStateAltDown = false;
+                }
+            }, false);
+
+
+
+
+
             $scope.checkBoxLastToggled = -1;
             $scope.testButton = function(j) {
                 //alert ('in testButton:' + j);
@@ -1591,7 +1627,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     else
                         break;
                 }
+                O.o ('window.keyStateShiftDown:' + window.keyStateShiftDown);
+                O.o ('window.keyStateCtrlDown:' + window.keyStateCtrlDown);
+                O.o ('window.keyStateAltDown:' + window.keyStateAltDown);
                 O.o ('arrCheckBoxStates.length:' + arrCheckBoxStates.length);
+                O.o ('countCheckBoxStatesTrue:' + countCheckBoxStatesTrue);
                 O.o ('countCheckBoxStatesTrue:' + countCheckBoxStatesTrue);
 
                 //var x2 = x1.children;
