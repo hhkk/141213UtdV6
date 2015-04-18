@@ -102,15 +102,7 @@
                 ng-mouseover="showSelectDropdown()"
                 ></select>
 
-            <button ng-click="testButton(-2)">TestButton</button>
-            testspan
-            <span id='testspan'>
-                <span id='testspaninner'>
-                    &nbsp;<input ng-click='testButton(-1)' id="checkboxTest" type="checkbox"/>
-                </span>
-            </span>
-            end testspan
-
+            <!--<button ng-click="testButton(-2)">TestButton</button> // look for $scope.testButton-->
             <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
         </span>
         <br>
@@ -199,11 +191,12 @@
                 <!--</tr>f-->
 
                 <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
-                xx
-                    <button ng-click="alert ('ff')" ng-init="count=0">
-                yy
 
-                hktablespan
+                    <!--<button ng-click="alert ('ff')" ng-init="count=0">-->
+
+
+
+                &nbsp;<input ng-click='checkBoxClicked(-1)' id='checkBoxAll' type="checkbox"/> All
                 <span id="hktablespan">
 
                     <tr
@@ -216,7 +209,7 @@
                         <td>
 
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox{{ustodo.html}}"' type="checkbox"/>-->
-                            &nbsp;<input ng-click='testButton($index)' id='idcheckbox{{$index}}' type="checkbox"/>
+                            &nbsp;<input ng-click='checkBoxClicked($index)' id='idcheckbox{{$index}}' class='chkbox' type="checkbox"/>
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox"' type="checkbox"/>-->
 
                         </td>

@@ -71,9 +71,9 @@ module.exports.getJavaScriptAssets = function(includeTests) {
 	if (includeTests) {
 		output = _.union(output, this.getGlobbedFiles(this.assets.tests));
 	}
-    console.log ('done getJavaScriptAssets output.length:' + output.length);
+    console.log ('hbk done getJavaScriptAssets output.length:' + output.length);
     for (var i = 0; i < output.length; i++) {
-        console.log ('got getJavaScriptAssets output :' + i + '. ' + output[i]);
+        console.log ('hbk got getJavaScriptAssets output :' + i + '. ' + output[i]);
     }
 
     //alert ('done getJavaScriptAssets output.length:' + output.length);

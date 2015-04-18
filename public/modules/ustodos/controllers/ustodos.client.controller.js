@@ -147,7 +147,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
     {
 
         //alert ('reiniting scope');
-        try {
+        try
+        {
 
             //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
             //    'Authentication', 'Ustodos',
@@ -317,84 +318,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
 
-            $scope.respondToChangeEvent = function(keyCode)
-            {
-                //alert ('in $scope.respondToChangeEvent()');
-                // 0 idInput0TypeText
-                // 1 idMediumEditor
-                // 2 parent like CKE
-
-                // 0 text input
-                var xText = null;
-                var xHtml = null;
-                var xValue = null;
-                var bShouldIcommand = false;
-
-                // decide for each input type whether to search
-                var xHtmlStripped = null;
-                switch($scope.whichInputIsInFocus())
-                {
-                    case $scope.ns.Input.INPUT_0_TEXT:
-                        xText = document.getElementById('idInput0TypeText').innerText;
-                        xHtml = document.getElementById('idInput0TypeText').innerHTML;
-                        xValue = document.getElementById('idInput0TypeText').value;
-                        if (xValue.charCodeAt(xValue.length-1) === 32)
-                            bShouldIcommand = true;
-                        break;
-                    case $scope.ns.Input.INPUT_1_MEDIUM:
-                        xText = $scope.mmmm.element.innerText;
-                        xHtml = $scope.mmmm.element.innerHTML;
-                        xValue = $scope.mmmm.element.innerText;
-                        xHtmlStripped = xHtml.replace('<p>','');
-                        xHtmlStripped = xHtmlStripped.replace('</p>','');
-                        xHtmlStripped = xHtmlStripped.trim();
-                        if (xHtmlStripped.endsWith('&nbsp;')) {
-                            bShouldIcommand = true;
-                            //alert ('yes search');
-                        }
-                        //else
-                        ///alert ('no search');
-
-                        break;
-                    case $scope.ns.Input.INPUT_2_CKE:
-                        xText= CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
-                        xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
-                        xValue = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
-                        xHtmlStripped = xHtml.replace('<p>','');
-                        xHtmlStripped = xHtmlStripped.replace('</p>','');
-                        xHtmlStripped = xHtmlStripped.trim();
-                        if (xHtmlStripped.endsWith('&nbsp;')) {
-                            bShouldIcommand = true;
-                            //alert ('yes search');
-                        }
-                        break;
-                    default:
-                        alert ('era - bad input resolution');
-                }
-                //alert ('xText [' + xText + ']');
-                //alert ('xHtml [' + xHtml + ']');
-                //alert ('xHtmlStripped [' + xHtmlStripped + ']');
-                //alert ('xText [' + xText[xText.length-1] + ']')
-                //alert ('xText -1 [' + xText.charCodeAt(xText.length-1) + ']');
-                //alert ('xText -2 [' + xText.charCodeAt(xText.length-2) + ']');
-                //alert ('xText -3 [' + xText.charCodeAt(xText.length-3) + ']');
-                //window.document.title = 'jp2 - '+xText; // not jpro:
-
-                //xText = xText.trim();
-                //xHtml = xHtml.trim();
-                //xValue = xValue.trim();
-
-                if (keyCode === 13 || bShouldIcommand)
-                {
-                    //O.o ('===================== processCommand for xText [' + xText + ']');
-                    //O.o ('===================== processCommand for xHtml [' + xHtml + ']');
-                    //O.o ('===================== processCommand for xValue [' + xValue + ']');
-                    $scope.processCommand(xText, xHtml, xValue, callbackCommand);
-                }
-
-                //alert ('document.activeElement.id:' + document.activeElement.id + ', parent:' + document.activeElement.parentElement.id);
-                //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.id);
-            };
 
             $scope.editor = CKEDITOR.instances.idCkeEditorTextarea;
             $scope.editor.on( 'contentDom', function() {
@@ -728,7 +651,18 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
 
-
+            // section_visible
+            //.----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.
+            //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+            //| | ____   ____  | | |     _____    | | |    _______   | | |     _____    | | |   ______     | | |   _____      | | |  _________   | |
+            //| ||_  _| |_  _| | | |    |_   _|   | | |   /  ___  |  | | |    |_   _|   | | |  |_   _ \    | | |  |_   _|     | | | |_   ___  |  | |
+            //| |  \ \   / /   | | |      | |     | | |  |  (__ \_|  | | |      | |     | | |    | |_) |   | | |    | |       | | |   | |_  \_|  | |
+            //| |   \ \ / /    | | |      | |     | | |   '.___`-.   | | |      | |     | | |    |  __'.   | | |    | |   _   | | |   |  _|  _   | |
+            //| |    \ ' /     | | |     _| |_    | | |  |`\____) |  | | |     _| |_    | | |   _| |__) |  | | |   _| |__/ |  | | |  _| |___/ |  | |
+            //| |     \_/      | | |    |_____|   | | |  |_______.'  | | |    |_____|   | | |  |_______/   | | |  |________|  | | | |_________|  | |
+            //| |              | | |              | | |              | | |              | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
             $scope.toggleVisibilityToNext = function() {
 
                 try {
@@ -827,7 +761,66 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 alert ('in alerthk:' );
             };
 
-            $scope.propagateTextChanges = function()
+
+
+            //alert ('defining medium');
+            $scope.mmmm = new Medium({
+                element: document.getElementById('idMediumEditor'),
+                modifier: 'auto',
+                placeholder: '',
+                autofocus: false,
+                autoHR: true,
+                mode: Medium.richMode,
+                maxLength: -1,
+                modifiers: {
+                    'b': 'bold',
+                    'i': 'italicize',
+                    'u': 'underline',
+                    'v': 'paste'
+                },
+                tags: {
+                    'break': 'br',
+                    'horizontalRule': 'hr',
+                    'paragraph': 'p',
+                    'outerLevel': ['pre', 'blockquote', 'figure'],
+                    'innerLevel': ['a', 'b', 'u', 'i', 'img', 'strong']
+                },
+                cssClasses: {
+                    editor: 'Medium',
+                    pasteHook: 'Medium-paste-hook',
+                    placeholder: 'Medium-placeholder',
+                    clear: 'Medium-clear'
+                },
+                attributes: {
+                    remove: ['style', 'class']
+                },
+                pasteAsText: true,
+                beforeInvokeElement: function () {
+                    //this = Medium.Element
+                },
+                beforeInsertHtml: function () {
+                    //this = Medium.Html
+                },
+                beforeAddTag: function (tag, shouldFocus, isEditable, afterElement) {
+                },
+                keyContext: null,
+                pasteEventHandler: function(e) {
+                    /*default paste event handler*/
+                }
+            });
+
+            // section_propagate
+            //.----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.
+            //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+            //| |   ______     | | |  _______     | | |     ____     | | |   ______     | | |      __      | | |    ______    | | |      __      | | |  _________   | | |  _________   | |
+            //| |  |_   __ \   | | | |_   __ \    | | |   .'    `.   | | |  |_   __ \   | | |     /  \     | | |  .' ___  |   | | |     /  \     | | | |  _   _  |  | | | |_   ___  |  | |
+            //| |    | |__) |  | | |   | |__) |   | | |  /  .--.  \  | | |    | |__) |  | | |    / /\ \    | | | / .'   \_|   | | |    / /\ \    | | | |_/ | | \_|  | | |   | |_  \_|  | |
+            //| |    |  ___/   | | |   |  __ /    | | |  | |    | |  | | |    |  ___/   | | |   / ____ \   | | | | |    ____  | | |   / ____ \   | | |     | |      | | |   |  _|  _   | |
+            //| |   _| |_      | | |  _| |  \ \_  | | |  \  `--'  /  | | |   _| |_      | | | _/ /    \ \_ | | | \ `.___]  _| | | | _/ /    \ \_ | | |    _| |_     | | |  _| |___/ |  | |
+            //| |  |_____|     | | | |____| |___| | | |   `.____.'   | | |  |_____|     | | ||____|  |____|| | |  `._____.'   | | ||____|  |____|| | |   |_____|    | | | |_________|  | |
+            //| |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'             $scope.propagateTextChanges = function()
             {
                 try {
                     $scope.count++;
@@ -903,6 +896,44 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             };
 
+
+            // MAJOR COMMON FUNCTION - SET ACTIVE EDITOR CONTENT
+            // set text shown for mouseover
+
+            $scope.setTextInShowingEditor = function(e) {
+                try {
+                    switch($scope.whichInputIsInFocus())
+                    {
+                        case $scope.ns.Input.INPUT_0_TEXT:
+                            if (UtilJsTypeDetect.isString(e)) {
+                                //alert('set inp in setTextInShowingEditor for input0text [' + e + ']');
+                                document.getElementById('idInput0TypeText').value = e;
+                            }
+                            else
+                                document.getElementById('idInput0TypeText').value = e.innerText;
+                            break;
+                        case $scope.ns.Input.INPUT_1_MEDIUM:
+                            //alert ('in setTextInShowingEditor for input1medium');
+                            if (UtilJsTypeDetect.isString(e))
+                                alert('logic error - setting Medium rich editor with string [' + e + '] leaving at prior value');
+                            else
+                                $scope.mmmm.element.innerHTML = e.innerHTML;
+                            break;
+                        case $scope.ns.Input.INPUT_2_CKE:
+                            //alert ('in setTextInShowingEditor for input2cke');
+                            if (UtilJsTypeDetect.isString(e))
+                                alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
+                            else
+                                CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
+                            break;
+                        default:
+                            alert ('era - bad input resolution');
+                    }
+                } catch (e) {
+                    alert ('era:' + e);
+                    throw e;
+                }
+            };
 
 
 
@@ -1011,7 +1042,18 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 return $sce.trustAsHtml(value);
             };
 
-            $scope.event = null;
+            // section_handlers sectionevents
+            //.----------------. .----------------. .-----------------..----------------. .----------------. .----------------. .----------------. .----------------.
+            //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+            //| |  ____  ____  | | |      __      | | | ____  _____  | | |  ________    | | |   _____      | | |  _________   | | |  _______     | | |    _______   | |
+            //| | |_   ||   _| | | |     /  \     | | ||_   \|_   _| | | | |_   ___ `.  | | |  |_   _|     | | | |_   ___  |  | | | |_   __ \    | | |   /  ___  |  | |
+            //| |   | |__| |   | | |    / /\ \    | | |  |   \ | |   | | |   | |   `. \ | | |    | |       | | |   | |_  \_|  | | |   | |__) |   | | |  |  (__ \_|  | |
+            //| |   |  __  |   | | |   / ____ \   | | |  | |\ \| |   | | |   | |    | | | | |    | |   _   | | |   |  _|  _   | | |   |  __ /    | | |   '.___`-.   | |
+            //| |  _| |  | |_  | | | _/ /    \ \_ | | | _| |_\   |_  | | |  _| |___.' / | | |   _| |__/ |  | | |  _| |___/ |  | | |  _| |  \ \_  | | |  |`\____) |  | |
+            //| | |____||____| | | ||____|  |____|| | ||_____|\____| | | | |________.'  | | |  |________|  | | | |_________|  | | | |____| |___| | | |  |_______.'  | |
+            //| |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'             $scope.event = null;
 
             //jQuery('#edit').on('keyup', function() {
             //    alert ('hi');
@@ -1070,44 +1112,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 $scope.commandFromInputBox = x.innerText;
                 //elem.contentEditable = false;
                 //console.log ('in eventMouseoverRow set this.commandFromInputBox :' + x.innerText);
-            };
-
-            // MAJOR COMMON FUNCTION - SET ACTIVE EDITOR CONTENT
-            // set text shown for mouseover
-
-            $scope.setTextInShowingEditor = function(e) {
-                try {
-                    switch($scope.whichInputIsInFocus())
-                    {
-                        case $scope.ns.Input.INPUT_0_TEXT:
-                            if (UtilJsTypeDetect.isString(e)) {
-                                //alert('set inp in setTextInShowingEditor for input0text [' + e + ']');
-                                document.getElementById('idInput0TypeText').value = e;
-                            }
-                            else
-                                document.getElementById('idInput0TypeText').value = e.innerText;
-                            break;
-                        case $scope.ns.Input.INPUT_1_MEDIUM:
-                                //alert ('in setTextInShowingEditor for input1medium');
-                            if (UtilJsTypeDetect.isString(e))
-                                alert('logic error - setting Medium rich editor with string [' + e + '] leaving at prior value');
-                            else
-                                $scope.mmmm.element.innerHTML = e.innerHTML;
-                            break;
-                        case $scope.ns.Input.INPUT_2_CKE:
-                            alert ('in setTextInShowingEditor for input2cke');
-                            if (UtilJsTypeDetect.isString(e))
-                                alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
-                            else
-                                CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
-                            break;
-                        default:
-                            alert ('era - bad input resolution');
-                    }
-                } catch (e) {
-                    alert ('era:' + e);
-                    throw e;
-                }
             };
 
             $scope.eventMouseoverRow2 = function(i) {
@@ -1176,6 +1180,84 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
             };
+            $scope.respondToChangeEvent = function(keyCode)
+            {
+                //alert ('in $scope.respondToChangeEvent()');
+                // 0 idInput0TypeText
+                // 1 idMediumEditor
+                // 2 parent like CKE
+
+                // 0 text input
+                var xText = null;
+                var xHtml = null;
+                var xValue = null;
+                var bShouldIcommand = false;
+
+                // decide for each input type whether to search
+                var xHtmlStripped = null;
+                switch($scope.whichInputIsInFocus())
+                {
+                    case $scope.ns.Input.INPUT_0_TEXT:
+                        xText = document.getElementById('idInput0TypeText').innerText;
+                        xHtml = document.getElementById('idInput0TypeText').innerHTML;
+                        xValue = document.getElementById('idInput0TypeText').value;
+                        if (xValue.charCodeAt(xValue.length-1) === 32)
+                            bShouldIcommand = true;
+                        break;
+                    case $scope.ns.Input.INPUT_1_MEDIUM:
+                        xText = $scope.mmmm.element.innerText;
+                        xHtml = $scope.mmmm.element.innerHTML;
+                        xValue = $scope.mmmm.element.innerText;
+                        xHtmlStripped = xHtml.replace('<p>','');
+                        xHtmlStripped = xHtmlStripped.replace('</p>','');
+                        xHtmlStripped = xHtmlStripped.trim();
+                        if (xHtmlStripped.endsWith('&nbsp;')) {
+                            bShouldIcommand = true;
+                            //alert ('yes search');
+                        }
+                        //else
+                        ///alert ('no search');
+
+                        break;
+                    case $scope.ns.Input.INPUT_2_CKE:
+                        xText= CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
+                        xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
+                        xValue = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
+                        xHtmlStripped = xHtml.replace('<p>','');
+                        xHtmlStripped = xHtmlStripped.replace('</p>','');
+                        xHtmlStripped = xHtmlStripped.trim();
+                        if (xHtmlStripped.endsWith('&nbsp;')) {
+                            bShouldIcommand = true;
+                            //alert ('yes search');
+                        }
+                        break;
+                    default:
+                        alert ('era - bad input resolution');
+                }
+                //alert ('xText [' + xText + ']');
+                //alert ('xHtml [' + xHtml + ']');
+                //alert ('xHtmlStripped [' + xHtmlStripped + ']');
+                //alert ('xText [' + xText[xText.length-1] + ']')
+                //alert ('xText -1 [' + xText.charCodeAt(xText.length-1) + ']');
+                //alert ('xText -2 [' + xText.charCodeAt(xText.length-2) + ']');
+                //alert ('xText -3 [' + xText.charCodeAt(xText.length-3) + ']');
+                //window.document.title = 'jp2 - '+xText; // not jpro:
+
+                //xText = xText.trim();
+                //xHtml = xHtml.trim();
+                //xValue = xValue.trim();
+
+                if (keyCode === 13 || bShouldIcommand)
+                {
+                    //O.o ('===================== processCommand for xText [' + xText + ']');
+                    //O.o ('===================== processCommand for xHtml [' + xHtml + ']');
+                    //O.o ('===================== processCommand for xValue [' + xValue + ']');
+                    $scope.processCommand(xText, xHtml, xValue, callbackCommand);
+                }
+
+                //alert ('document.activeElement.id:' + document.activeElement.id + ', parent:' + document.activeElement.parentElement.id);
+                //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.id);
+            };
 
             $scope.name = 'Whirled';
 
@@ -1213,25 +1295,77 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 });
             };
 
+            {
+                //Shift - 16
+                //Ctrl - 17
+                //Alt - 18
+                O.o ('reinit window.keyStates.keyStateShiftDown');
+                window.keyStates = {};
+                window.keyStates.keyStateShiftDown = false;
+                window.keyStates.keyStateCtrlDown = false;
+                window.keyStates.keyStateAltDown = false;
+                document.addEventListener('keydown', function(evt) {
+                    var e = window.event || evt;
+                    var key = e.which || e.keyCode;
+                    //O.o ('keydown:' + key );
+                    O.o ('turn on shift');
+                    if (16 == key) {
+                        window.keyStates.keyStateShiftDown = true;
+                    } else if (17 == key) {
+                        window.keyStates.keyStateCtrlDown = true;
+                    } else if (18 == key) {
+                        window.keyStates.keyStateAltDown = true;
+                    }
+                }, false);
+
+                document.addEventListener('keyup', function(evt) {
+                    var e = window.event || evt;
+                    var key = e.which || e.keyCode;
+                    O.o ('turn off shift');
+                    if (16 == key) {
+                        window.keyStates.keyStateShiftDown = false;
+                    } else if (17 == key) {
+                        window.keyStates.keyStateCtrlDown = false;
+                    } else if (18 == key) {
+                        window.keyStates.keyStateAltDown = false;
+                    }
+                }, false);
+
+                    O.o ('reinit window.keyStates.keyStateShiftDown:' + window.keyStates.keyStateShiftDown);
+
+            }
+
+
+            // section_svrcalls
+            //.----------------. .----------------. .----------------.   .----------------. .----------------. .----------------. .----------------. .----------------.
+            //| .--------------. | .--------------. | .--------------. | | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+            //| |    _______   | | | ____   ____  | | |  _______     | | | |     ______   | | |      __      | | |   _____      | | |   _____      | | |    _______   | |
+            //| |   /  ___  |  | | ||_  _| |_  _| | | | |_   __ \    | | | |   .' ___  |  | | |     /  \     | | |  |_   _|     | | |  |_   _|     | | |   /  ___  |  | |
+            //| |  |  (__ \_|  | | |  \ \   / /   | | |   | |__) |   | | | |  / .'   \_|  | | |    / /\ \    | | |    | |       | | |    | |       | | |  |  (__ \_|  | |
+            //| |   '.___`-.   | | |   \ \ / /    | | |   |  __ /    | | | |  | |         | | |   / ____ \   | | |    | |   _   | | |    | |   _   | | |   '.___`-.   | |
+            //| |  |`\____) |  | | |    \ ' /     | | |  _| |  \ \_  | | | |  \ `.___.'\  | | | _/ /    \ \_ | | |   _| |__/ |  | | |   _| |__/ |  | | |  |`\____) |  | |
+            //| |  |_______.'  | | |     \_/      | | | |____| |___| | | | |   `._____.'  | | ||____|  |____|| | |  |________|  | | |  |________|  | | |  |_______.'  | |
+            //| |              | | |              | | |              | | | |              | | |              | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------'   '----------------' '----------------' '----------------' '----------------' '----------------'
             $scope.saveUstodoGiven = function(ustodo, i) {
-                var myEl = angular.element( document.querySelector( '#ustodorow' + i ) );
+                var myEl = angular.element(document.querySelector('#ustodorow' + i));
                 ustodo.html = myEl[0].innerHTML;
                 ustodo.text = myEl[0].innerText;
-                ustodo.datelastmod= new Date();
+                ustodo.datelastmod = new Date();
 
 
-                console.log ('SAVED1 !!! ustodo.html [' + ustodo.html);
-                console.log ('SAVED2 !!! ustodo.text [' + ustodo.text);
-                console.log ('SAVED3 !!! ustodo.json [' + ustodo.json);
-                console.log ('SAVED4 !!! ustodo.jsonx [' + ustodo.jsonx);
-                ustodo.$update(function() {
-                    console.log ('SAVED OK !!! ' );
-                }, function(errorResponse) {
+                console.log('SAVED1 !!! ustodo.html [' + ustodo.html);
+                console.log('SAVED2 !!! ustodo.text [' + ustodo.text);
+                console.log('SAVED3 !!! ustodo.json [' + ustodo.json);
+                console.log('SAVED4 !!! ustodo.jsonx [' + ustodo.jsonx);
+                ustodo.$update(function () {
+                    console.log('SAVED OK !!! ');
+                }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
-                    console.log ('ERROR ON SAVE !!! '  + ustodo.html);
+                    console.log('ERROR ON SAVE !!! ' + ustodo.html);
                 });
             };
-
 
 
 
@@ -1243,21 +1377,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     {
                         ////console.log ('in deleteDbUstotoById '  + savOid);
                         console.log('in deleteDbUstotoById html:' + ustodo.html);
-                        ////alert ('in deleteDbUstotoById ' + savOid);
-                        //var indexToDelete = -1;
-                        //for (var i = 0; i < $scope.ustodos.length; i++) {
-                        //    console.log('check if to array to delete, index:' + i + '. id:' + $scope.ustodos[i].html);
-                        //
-                        //    if ($scope.ustodos[i]._id === savOid) {
-                        //        console.log('found one local array to delete, index:' + i);
-                        //        console.log('found one local array to delete, indexToDelete:' + indexToDelete);
-                        //        console.log('@@@@deleting:' + $scope.ustodos[i].html);
-                        //        $scope.ustodos.splice(i, 1);
-                        //        console.log('done local array delete, index:' + i);
-                        //    }
-                        //}
-                        //if (indexToDelete < 0)
-                        //    console.log('found NONE to delete!!!');
                     } else {
                         O.o('splicing: i' + i );
                         $scope.ustodos.splice(i, 1);
@@ -1338,34 +1457,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
 
-
-
-            //var hktimeout = function () {
-            //    setTimeout(function () {
-            //        //alert ('hi dad');
-            //        //console.log ('checking dirty and saving');
-            //        isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption();
-            //        $scope.$apply();
-            //        // Then recall the parent function to
-            //        // create a recursive loop.
-            //        hktimeout();
-            //    }, 30000); // for non keyboa in ms so eg 5000 is 5 seconds
-            //}
-            //hktimeout();
-
-
-            //setTimeout(function(){
-            //    //var item = items.shift();
-            //    //process.call(context, item);
-            //
-            //    //if (items.length > 0){
-            //        alert ('hi mommy');
-            //        setTimeout(arguments.callee, 100);
-            //    //}
-            //}, 100);
-
-
-
+            // every x minutes timer - might be needed for
             //self.addEventListener('message', function(evt) {
             //    var gateway = new XMLHttpRequest();
             //    var intie = setInterval(function() {
@@ -1531,9 +1623,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 O.o ('ustodos:' + $scope.ustodos);
 
-
-
-
                 //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
                 //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
                 //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
@@ -1570,44 +1659,121 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
 
-            //Shift - 16
-            //Ctrl - 17
-            //Alt - 18
-            window.keyStateShiftDown = false;
-            window.keyStateCtrlDown = false;
-            window.keyStateAltDown = false;
-            document.addEventListener('keydown', function(evt) {
-                var e = window.event || evt;
-                var key = e.which || e.keyCode;
-                //O.o ('keydown:' + key );
-                if (16 == key) {
-                    window.keyStateShiftDown = true;
-                } else if (17 == key) {
-                    window.keyStateCtrlDown = true;
-                } else if (18 == key) {
-                    window.keyStateAltDown = true;
+            // section_checkbox
+            //.----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.
+            //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+            //| |     ______   | | |  ____  ____  | | |  _________   | | |     ______   | | |  ___  ____   | | |   ______     | | |     ____     | | |  ____  ____  | |
+            //| |   .' ___  |  | | | |_   ||   _| | | | |_   ___  |  | | |   .' ___  |  | | | |_  ||_  _|  | | |  |_   _ \    | | |   .'    `.   | | | |_  _||_  _| | |
+            //| |  / .'   \_|  | | |   | |__| |   | | |   | |_  \_|  | | |  / .'   \_|  | | |   | |_/ /    | | |    | |_) |   | | |  /  .--.  \  | | |   \ \  / /   | |
+            //| |  | |         | | |   |  __  |   | | |   |  _|  _   | | |  | |         | | |   |  __'.    | | |    |  __'.   | | |  | |    | |  | | |    > `' <    | |
+            //| |  \ `.___.'\  | | |  _| |  | |_  | | |  _| |___/ |  | | |  \ `.___.'\  | | |  _| |  \ \_  | | |   _| |__) |  | | |  \  `--'  /  | | |  _/ /'`\ \_  | |
+            //| |   `._____.'  | | | |____||____| | | | |_________|  | | |   `._____.'  | | | |____||____| | | |  |_______/   | | |   `.____.'   | | | |____||____| | |
+            //| |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
+
+            $scope.lastChecked = null;
+            $scope.checkBoxClicked = function(j)
+            {
+                var checkboxFirst = document.getElementById('idcheckbox0');
+                if (!checkboxFirst) //if no
+                    return;
+                if (j == -1) // just a toggle
+                {
+                    var areAllCbStatesSame = true;
+                    var checkboxFirstState = checkboxFirst.checked;
+                    var x = $('.chkbox');
+                    O.o ('x.length:' + x.length);
+                    // check if all are checked so it's just a toggle
+                    for (var i = 0; i < x.length; i++ )
+                    {
+                        O.o ('testing for cb index :' + 'idcheckbox'+i);
+                        if (document.getElementById('idcheckbox'+i).checked !== checkboxFirstState) {
+                            areAllCbStatesSame = false;
+                            break;
+                        }
+                    }
+                    if (areAllCbStatesSame)
+                    {
+                        for (var i = 0; i < x.length; i++ )
+                        {
+                            document.getElementById('idcheckbox'+i).checked = !checkboxFirstState;
+                        }
+                        return;
+                    }
+                    else // not all same, set all to T
+                    {
+                        for (var i = 0; i < x.length; i++ )
+                        {
+                            document.getElementById('idcheckbox'+i).checked = true;
+                        }
+                        return;
+                    }
+
+                    //checkboxFirst.checked
+                    //document.getElementById('idcheckbox'+i);
+                    //
+                    //var x = $('.chkbox');
+                    //if (x.checked)
+                    //{
+                    //    x.checked = false;
+                    //} else {
+                    //    x.checked = true;
+                    //}
+                    //
+                    //for (var i = 0; i < x.length; i++ )
+                    //{
+                    //    document.getElementById('idcheckbox'+i);
+                    //
+                    //}
                 }
-            }, false);
+                //var elem = angular.element(document.querySelector('#hktablespan'));
 
-            document.addEventListener('keyup', function(evt) {
-                var e = window.event || evt;
-                var key = e.which || e.keyCode;
-                if (16 == key) {
-                    window.keyStateShiftDown = false;
-                } else if (17 == key) {
-                    window.keyStateCtrlDown = false;
-                } else if (18 == key) {
-                    window.keyStateAltDown = false;
+                //find('.classname'), assumes you already have the starting elem to search from
+                    //var checkboxes = angular.element(elem.querySelector('.chkbox'));
+
+                //var checkboxes = angular.element('chkbox');
+                //var checkboxes = angular.element.find('input');
+                //var checkboxes = document.querySelector('input')
+                //var checkboxes = angular.find('input');
+                //$( "p" ).find( "span" )
+                // http://stackoverflow.com/questions/659508/how-can-i-shift-select-multiple-checkboxes-like-gmail
+                // http://www.informit.com/articles/article.aspx?p=2271482&seqNum=10
+                //var checkboxes = jQuery('input');  // WORKS! as long as all.js has jquery line
+                //var checkboxes = $('.chkbox');  // WORKS! as long as all.js has jquery line
+
+                //alert ('checkboxes:' + checkboxes);
+
+                //var $chkboxes = $('.chkbox');
+                var thisCheckBox = document.getElementById('idcheckbox'+j);
+
+                var $chkboxes = $('.chkbox');
+
+                if(!$scope.lastChecked) {
+                    $scope.lastChecked = thisCheckBox;
+                    O.o ('set $scope.lastChecked to:' + $scope.lastChecked.id);
                 }
-            }, false);
+
+                if( window.keyStates.keyStateShiftDown === true) {
+
+                    O.o ('yes window.keyStates.keyStateShiftDown');
+                    var start = $chkboxes.index(thisCheckBox);
+                    var end = $chkboxes.index($scope.lastChecked);
+                    $chkboxes.slice(Math.min(start,end), Math.max(start,end)+ 1).prop('checked', $scope.lastChecked.checked);
+                    $scope.lastChecked = thisCheckBox;
+                    O.o ('set $scope.lastChecked to:' + $scope.lastChecked.id);
+                }
+
+
+            }
 
 
 
 
-
-            $scope.checkBoxLastToggled = -1;
-            $scope.testButton = function(j) {
-                //alert ('in testButton:' + j);
+            $scope.checkBoxClickedLast = -1;
+            $scope.checkBoxClicked1 = function(j) {
+                $scope.checkBoxClickedLast = j;
+                //alert ('in testButton $scope.checkBoxClickedLast:' + $scope.checkBoxClickedLast );
                 var arrCheckBoxStates = [];
                 var countCheckBoxStatesTrue = 0;
                 for (var i = 0; ; i++ )
@@ -1627,12 +1793,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     else
                         break;
                 }
-                O.o ('window.keyStateShiftDown:' + window.keyStateShiftDown);
-                O.o ('window.keyStateCtrlDown:' + window.keyStateCtrlDown);
-                O.o ('window.keyStateAltDown:' + window.keyStateAltDown);
-                O.o ('arrCheckBoxStates.length:' + arrCheckBoxStates.length);
-                O.o ('countCheckBoxStatesTrue:' + countCheckBoxStatesTrue);
-                O.o ('countCheckBoxStatesTrue:' + countCheckBoxStatesTrue);
+                //O.o ('window.keyStateShiftDown:' + window.keyStateShiftDown);
+                //O.o ('window.keyStateCtrlDown:' + window.keyStateCtrlDown);
+                //O.o ('window.keyStateAltDown:' + window.keyStateAltDown);
+                //O.o ('arrCheckBoxStates.length:' + arrCheckBoxStates.length);
+                //O.o ('countCheckBoxStatesTrue:' + countCheckBoxStatesTrue);
+                //O.o ('countCheckBoxStatesTrue:' + countCheckBoxStatesTrue);
 
                 //var x2 = x1.children;
                     //for (var i = 0; i < x2.length; i++)
@@ -1655,7 +1821,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-//            http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=processCommand
+            // section_processcommand
+            // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=processCommand
             //.----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .-----------------..----------------.
             //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
             //| |   ______     | | |  _______     | | |     ____     | | |     ______   | | |  _________   | | |    _______   | | |    _______   | | |     ______   | | |     ____     | | | ____    ____ | | | ____    ____ | | |      __      | | | ____  _____  | | |  ________    | |
@@ -1739,6 +1906,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     // TODO ADD A WRITE HERE
                     //$scope.ustodos = Ustodos.WRITE????  ({q: commandTrimmed}, fn);      // this is a GET - see RESOURCE
 
+                    // section_write
                     //.----------------. .----------------. .----------------. .----------------. .----------------.
                     //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
                     //| | _____  _____ | | |  _______     | | |     _____    | | |  _________   | | |  _________   | |
@@ -1767,6 +1935,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         // Redirect after save
                         O.o ('$$$$$$$$$$$$$$$$$$ save commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
                         ustodo.$save(function(response) {
+                            // section_query // section_read
                             //$location.path('ustodos/' + response._id);
                             // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=QUERY
                             //.----------------. .----------------. .----------------. .----------------. .----------------.
@@ -1894,11 +2063,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.processCommand('*', '*', '*');
             //O.a ('sssa2');
 
-
-
-
-
-
             // <select> element displays its options on mousedown, not click.
             //        $scope.showSelectDropdown = function () { // WORKS
             //            var event;
@@ -1914,53 +2078,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-
-
-            //alert ('defining medium');
-            $scope.mmmm = new Medium({
-                element: document.getElementById('idMediumEditor'),
-                modifier: 'auto',
-                placeholder: '',
-                autofocus: false,
-                autoHR: true,
-                mode: Medium.richMode,
-                maxLength: -1,
-                modifiers: {
-                    'b': 'bold',
-                    'i': 'italicize',
-                    'u': 'underline',
-                    'v': 'paste'
-                },
-                tags: {
-                    'break': 'br',
-                    'horizontalRule': 'hr',
-                    'paragraph': 'p',
-                    'outerLevel': ['pre', 'blockquote', 'figure'],
-                    'innerLevel': ['a', 'b', 'u', 'i', 'img', 'strong']
-                },
-                cssClasses: {
-                    editor: 'Medium',
-                    pasteHook: 'Medium-paste-hook',
-                    placeholder: 'Medium-placeholder',
-                    clear: 'Medium-clear'
-                },
-                attributes: {
-                    remove: ['style', 'class']
-                },
-                pasteAsText: true,
-                beforeInvokeElement: function () {
-                    //this = Medium.Element
-                },
-                beforeInsertHtml: function () {
-                    //this = Medium.Html
-                },
-                beforeAddTag: function (tag, shouldFocus, isEditable, afterElement) {
-                },
-                keyContext: null,
-                pasteEventHandler: function(e) {
-                    /*default paste event handler*/
-                }
-            });
             //alert ('done defining medium');
 
             //
@@ -1968,37 +2085,37 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    tinyMCE.get('idTinyMceTextArea').setContent('<span>some1</span> html');
             //}
             //
-
         } catch (e) {
             alert ('e:' + e);
             throw e;
         }
     }
-]).directive('myCustomer', function() {
+])
+.directive('myCustomer', function() {
+return {
+    //templateUrl: function(elem, attr){
+    //    return 'customer-'+attr.type+'.html';
+    template: function(elem, attr){
+
+        console.log ('in mycustomer directive ==================================');
+        //return 'ggggggggggghhhhhhhhhhhhhh';
+        return 'ustodo text: <a href=>';
+        //http:\/\/applex.com' target='_blank'>http:\/\/applex.com<\/a>';
+
+    }
+};})
+
+.directive('autoFocus', function($timeout) {
+    console.log('fffffffffffffffffffffffffff');
     return {
-        //templateUrl: function(elem, attr){
-        //    return 'customer-'+attr.type+'.html';
-        template: function(elem, attr){
-
-            console.log ('in mycustomer directive ==================================');
-            //return 'ggggggggggghhhhhhhhhhhhhh';
-            return 'ustodo text: <a href=>';
-            //http:\/\/applex.com' target='_blank'>http:\/\/applex.com<\/a>';
-
+        restrict: 'AC',
+        link: function(_scope, _element) {
+            $timeout(function(){
+                _element[0].focus();
+            }, 0);
         }
-    };})
-
-    .directive('autoFocus', function($timeout) {
-        console.log('fffffffffffffffffffffffffff');
-        return {
-            restrict: 'AC',
-            link: function(_scope, _element) {
-                $timeout(function(){
-                    _element[0].focus();
-                }, 0);
-            }
-        };
-    });
+    };
+});
 
 
 
@@ -2051,17 +2168,16 @@ angular.module('ustodos')
         };
     });
 
-//window.onload = function()
-//{
-//alert ('onload ');
-//CKEDITOR.replace( 'editor1' );
-//CKEDITOR.instances.editor1.on('blur', function() {
-//    alert('onblur fired');
-//});
-//};
+    //window.onload = function()
+    //{
+    //alert ('onload ');
+    //CKEDITOR.replace( 'editor1' );
+    //CKEDITOR.instances.editor1.on('blur', function() {
+    //    alert('onblur fired');
+    //});
+    //};
 
-
-//alert ('done onload');
+    //alert ('done onload');
 
 
 

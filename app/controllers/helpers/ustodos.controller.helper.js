@@ -48,7 +48,7 @@ exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, er
 
     O.o ('@@@@@@@@@@@@@ JSON.stringify(querymongo) [' + JSON.stringify(querymongo) + ']');
 
-    var hklimit = 100; // 50 100 200 500 1000
+    var hklimit = 10; // 50 100 200 500 1000
     var countResult = 0;
     var x = [];
 
