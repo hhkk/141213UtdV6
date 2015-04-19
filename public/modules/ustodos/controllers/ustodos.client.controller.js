@@ -16,6 +16,16 @@ var UtilString = UtilString;
 var Medium = Medium;
 var UtilDate = UtilDate;
 
+//var unirest = require('unirest');
+//var fn = function()
+//{
+//    O.o ('got callback from unirequest get');
+//}
+//var unirequest = unirest.get('/ustodos');
+//unirequest.timeout(5000);
+//unirequest.end(fn);
+
+
 // alert ('reiniting class');
 
 var resolveFinalCommandBetweenUrlAndInputBox = function(commandFromInputBox, commandInputBox)
@@ -141,9 +151,9 @@ var callbackCommand = function(callbackResult) {
 
 
 //O.a ('oneOfSeveral controller with array - first?');
-app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce',
+app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce', '$http',
     'Authentication', 'Ustodos', 'Commands',
-    function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, Authentication, Ustodos, Commands)
+    function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, $http, Authentication, Ustodos, Commands)
     {
 
         //alert ('reiniting scope');
@@ -1180,6 +1190,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
             };
+
             $scope.respondToChangeEvent = function(keyCode)
             {
                 //alert ('in $scope.respondToChangeEvent()');
@@ -1247,7 +1258,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //xHtml = xHtml.trim();
                 //xValue = xValue.trim();
 
-                if (keyCode === 13 || bShouldIcommand)
+                if (document.getElementById('idcheckbox_dynammicSearch').checked && (keyCode === 13 || bShouldIcommand))
                 {
                     //O.o ('===================== processCommand for xText [' + xText + ']');
                     //O.o ('===================== processCommand for xHtml [' + xHtml + ']');
@@ -1308,7 +1319,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     var e = window.event || evt;
                     var key = e.which || e.keyCode;
                     //O.o ('keydown:' + key );
-                    O.o ('turn on shift');
+                    //O.o ('turn on shift');
                     if (16 == key) {
                         window.keyStates.keyStateShiftDown = true;
                     } else if (17 == key) {
@@ -1321,7 +1332,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 document.addEventListener('keyup', function(evt) {
                     var e = window.event || evt;
                     var key = e.which || e.keyCode;
-                    O.o ('turn off shift');
+                    //O.o ('turn off shift');
                     if (16 == key) {
                         window.keyStates.keyStateShiftDown = false;
                     } else if (17 == key) {
@@ -1368,34 +1379,86 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
 
-
-            $scope.deleteDbUstotoById = function(ustodo, i)
-            {
+            $scope.httpcalltest = function(i) {
                 try {
-                    var savOid = ustodo._id;
-                    if (false) // old way
+                    // http://stackoverflow.com/questions/5643321/how-to-make-remote-rest-call-inside-node-js-any-curl
+                    //$http.delete('/ustodobulkdel', {form:{key:'hkvalue'}}).
+                    //    success(function(data) {
+                    //        O.o ('data:' + data.toString());
+                    //    });
+
+                    //$http.({
+                    //    url: 'ustodobulkdel',
+                    //        method: 'GET',
+                    //    params: {hk: 'hihk!'}
+                    //}).success(function(data) {
+                    //    O.o ('data:' + data.toString());
+                    //});;
+
+
+                    $http.delete('/ustodobulkdel', {
+                        params: { user_id: user.id }
+                    }).success(function(data) {
+                            O.o ('data:' + data.toString());
+                    });
+                } catch (e) {
+                    O.e ('errrra:' + e);
+                }
+            };
+
+            $scope.deleteDbUstotoByIdArr = function(arrIntIndexesToDelete)
+            {
+                // if a bulk delete call
+                if (!arrIntIndexesToDelete || arrIntIndexesToDelete.length > 1)
+                {
+                    if (!arrIntIndexesToDelete)
+                        arrIntIndexesToDelete = [];
+
+                    O.assert (!ustodo, 'no ustodo if no ');
+                    var arrCheckBoxes = $('.chkbox');
+                    O.o ('arrCheckBoxes.length:' + arrCheckBoxes.length);
+                    // check if all are checked so it's just a toggle
+                    for (var i = 0; i < arrCheckBoxes.length; i++ )
                     {
-                        ////console.log ('in deleteDbUstotoById '  + savOid);
-                        console.log('in deleteDbUstotoById html:' + ustodo.html);
-                    } else {
-                        O.o('splicing: i' + i );
-                        $scope.ustodos.splice(i, 1);
+                        if (document.getElementById('idcheckbox'+i).checked)
+                        {
+                            arrIntIndexesToDelete.push(i);
+                        }
+                    }
+                }
+                else // usual old single delete at a time
+                {
+
+                    //O.assert (false, "asdasd");
+                    O.assert ((arrIntIndexesToDelete.length === 1), 'support only delete one right now, not:' + arrIntIndexesToDelete.length);
+
+                    // Still support only one delete at a time!!!!!!!!!!!!!!
+
+                    var intIndexToDelete = arrIntIndexesToDelete[0];
+                    //return;
+                    //alert ('deleting i:' + i);
+                    try {
+                        var ustodo = $scope.ustodos[intIndexToDelete];
+
+                        var savOid = ustodo._id;
+                        //O.o('splicing: i' + intIndexToDelete );
+                        $scope.ustodos.splice(intIndexToDelete, 1);
+
+                        ustodo.$delete(function() {
+                            console.log ('$delete done !!! savOid:' + savOid);
+                            //$scope.ustodos.splice(index, 1));
+                            //alert ('delete done, now remove from array');
+                            //array.;
+                        }, function(errorResponse) {
+                            $scope.error = errorResponse.data.message;
+                            //console.log ('ERROR ON SAVE !!! '  + $scope.ustodos[i].html);
+                            console.log ('ERROR ON SAVE !!! $scope.error:'  + $scope.error);
+                        });
+                        console.log ('done remove/delete');
+                    } catch (err) {
+                        console.log ('err:' + err);
                     }
 
-
-                    ustodo.$delete(function() {
-                        console.log ('$delete done !!! savOid:' + savOid);
-                        //$scope.ustodos.splice(index, 1));
-                        //alert ('delete done, now remove from array');
-                        //array.;
-                    }, function(errorResponse) {
-                        $scope.error = errorResponse.data.message;
-                        //console.log ('ERROR ON SAVE !!! '  + $scope.ustodos[i].html);
-                        console.log ('ERROR ON SAVE !!! $scope.error:'  + $scope.error);
-                    });
-                    console.log ('done remove/delete');
-                } catch (err) {
-                    console.log ('err:' + err);
                 }
             };
 

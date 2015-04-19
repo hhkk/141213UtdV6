@@ -116,20 +116,61 @@ exports.update = function(req, res) {
 /**
  * Delete an Ustodo
  */
-exports.delete = function(req, res) {
-	var ustodo = req.ustodo ;
-    O.o('in ustodos.server.controller.js: delete ' + ustodo.toString());
+exports.delete2 = function(req, res) {
+    O.o('_______________________ in ustodos.server.controller.js exports.delete ');
+    // http://docs.mongodb.org/manual/reference/method/db.collection.remove/
+    /**
+     The db.collection.remove() method can have one of two syntaxes. The remove() method can take a query document and an optional justOne boolean:
 
-	ustodo.remove(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(ustodo);
-		}
-	});
-};
+     db.collection.remove(
+     <query>,
+     <justOne>
+     )
+     Or the method can take a query document and an optional remove options document:
+
+     New in version 2.6.
+
+     db.collection.remove(
+     <query>,
+     {
+       justOne: <boolean>,
+       writeConcern: <document>
+     }
+     )*
+     */
+
+    var ustodo = req.ustodo;
+    //if (!req.ustodo.isArray)
+    {
+        O.o('in ustodos.server.controller.js: delete ' + ustodo.toString());
+
+        ustodo.remove(function (err) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                res.jsonp(ustodo);
+            }
+        });
+        //} else {
+//        O.e ('***************** success at least in getting an array in!');
+//    }
+    }
+    ;
+
+
+}
+
+
+
+exports.ustodobulkdel = function(req, res) {
+    O.o('_______________________ in exports.ustodobulkdel  req:'+req);
+
+    res.json({i:'ou'});
+
+}
+
 
 /**
  * List of Ustodos

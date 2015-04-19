@@ -43,6 +43,14 @@
                title="Rich Editor"
                 />
 
+        &nbsp;<input  id='idcheckbox_dynammicSearch' type="checkbox" title="Dynamic Search (as you type)" />
+
+        &nbsp;<button ng-click="httpcalltest(1)">TST</button>
+
+
+
+
+
         <br>
         <br>
 
@@ -197,6 +205,10 @@
 
 
                 &nbsp;<input ng-click='checkBoxClicked(-1)' id='checkBoxAll' type="checkbox"/> All
+                &nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
+                                 alt="{{image.name}}"  title='Delete Selected'
+                                 ng-click="deleteDbUstotoByIdArr(ustodo)"
+                           >
                 <span id="hktablespan">
 
                     <tr
@@ -222,7 +234,7 @@
                             <!-- trash garbage icon -->
                             &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
                                  alt="{{image.name}}"  title='delete'
-                                 ng-click="deleteDbUstotoById(ustodo, $index)"
+                                 ng-click="deleteDbUstotoByIdArr([$index])"
                                     >
                             &nbsp
                             <!--ng-show="nowShowing==$index"-->

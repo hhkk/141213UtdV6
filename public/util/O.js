@@ -46,6 +46,26 @@ var o = function (s)
     }
 }
 
+
+// http://stackoverflow.com/questions/15313418/javascript-assert
+var assert = function (condition, message) {
+    if (!condition) {
+
+        if (typeof Error === "undefined") {
+            Error = function(message) {
+                this.message = message;
+            };
+            Error.prototype.message = "";
+        }
+
+        message = message || "Assertion failed";
+        if (typeof Error !== "undefined") {
+            throw new Error(message);
+        }
+        throw message; // Fallback
+    }
+};
+
 // error
 var lastOutputTimeStamp = -1;
 var addLineFeedsIfnSeconds = function() {
@@ -91,6 +111,7 @@ var a = function (s)
 }
 if (typeof exports !== 'undefined') {
     exports.o = o;
+    exports.assert = assert;
     exports.a = a;
     exports.e = e;
 }
