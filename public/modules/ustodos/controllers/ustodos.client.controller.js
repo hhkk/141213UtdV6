@@ -1381,26 +1381,61 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.httpcalltest = function(i) {
                 try {
+
+                    // 11111111 works kinda - in url tho not in body
+                    // pairs with this and params seem to be only in URL
+                    //app.route('/ustodobulkdel')
+                    //    .delete(users.requiresLogin, ustodos.ustodobulkdel);
+                    //var jsnval = {inner:'value'};
+                    //$http({
+                    //    url: '/ustodobulkdel',
+                    //        method: 'delete',
+                    //    params: {jsnkey: jsnval}
+                    //}).success(function(data) {
+                    //    O.o ('data:' + data.toString());
+                    //});
+
+
+                    // 22222  works in that it makes it to themethod, but can't find req data anywhere not in URL or body or params or query
                     // http://stackoverflow.com/questions/5643321/how-to-make-remote-rest-call-inside-node-js-any-curl
+                    //app.route('/ustodobulkdel')
+                    //    .delete(users.requiresLogin, ustodos.ustodobulkdel);
                     //$http.delete('/ustodobulkdel', {form:{key:'hkvalue'}}).
                     //    success(function(data) {
                     //        O.o ('data:' + data.toString());
                     //    });
 
-                    //$http.({
-                    //    url: 'ustodobulkdel',
-                    //        method: 'GET',
-                    //    params: {hk: 'hihk!'}
-                    //}).success(function(data) {
-                    //    O.o ('data:' + data.toString());
-                    //});;
 
-
-                    $http.delete('/ustodobulkdel', {
-                        params: { user_id: user.id }
-                    }).success(function(data) {
+                    // 3333 works great in that it makes it to the method, and req data is not in the URL but in the
+                    var data = [];
+                    data.push (4);
+                    data.push (45);
+                    data.push (456);
+                    $http.post('/ustodobulkdel', {form:{key:'hkvalue', data:data}}).
+                        success(function(data) {
                             O.o ('data:' + data.toString());
-                    });
+                        }). error(function(data, status, headers, config) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            O.o ('data:' + data);
+                            O.o ('status:' + status);
+                            O.o ('headers:' + headers);
+                            O.o ('config:' + config);
+                        });
+
+
+                    //$http.delete('/ustodobulkdel', {
+                    //    params: { user_id: user.id }
+                    //}).success(function(data) {
+                    //        O.o ('data:' + data.toString());
+                    //});
+
+                    // http://stackoverflow.com/questions/12190166/angularjs-any-way-for-http-post-to-send-request-parameters-instead-of-json
+                    //$http.post('/ustodobulkdel', {
+                    //    params: { user_id: user.id }
+                    //}).success(function(data) {
+                    //        O.o ('data:' + data.toString());
+                    //});
                 } catch (e) {
                     O.e ('errrra:' + e);
                 }

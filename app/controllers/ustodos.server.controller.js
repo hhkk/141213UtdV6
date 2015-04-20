@@ -165,9 +165,18 @@ exports.delete2 = function(req, res) {
 
 
 exports.ustodobulkdel = function(req, res) {
+    O.o('_______________________ in exports.ustodobulkdel  req.body.form:'+req.body.form);
     O.o('_______________________ in exports.ustodobulkdel  req:'+req);
 
-    res.json({i:'ou'});
+
+
+
+    res.status(403).send('User is not authorized');
+    //res.json({i:'ou'});
+
+
+
+
 
 }
 

@@ -14,8 +14,8 @@ module.exports = function(app) {
 	//app.route('/ustodosremove')
 //		.post(users.requiresLogin, ustodos.create);
 
-		app.route('/ustodobulkdel')
-		.delete(users.requiresLogin, ustodos.ustodobulkdel);
+	app.route('/ustodobulkdel')
+		.post(users.requiresLogin, ustodos.ustodobulkdel);
 
 	app.route('/ustodos/:ustodoId')
 		.get(ustodos.read)
