@@ -141,44 +141,31 @@ exports.delete2 = function(req, res) {
 
     var ustodo = req.ustodo;
     //if (!req.ustodo.isArray)
-    {
-        O.o('in ustodos.server.controller.js: delete ' + ustodo.toString());
+    O.o('in ustodos.server.controller.js: delete ' + ustodo.toString());
 
-        ustodo.remove(function (err) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                res.jsonp(ustodo);
-            }
-        });
-        //} else {
-//        O.e ('***************** success at least in getting an array in!');
-//    }
-    }
-    ;
+    ustodo.remove(function (err) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(ustodo);
+        }
+    });
 
 
-}
+};
+
 
 
 
 exports.ustodobulkdel = function(req, res) {
     O.o('_______________________ in exports.ustodobulkdel  req.body.form:'+req.body.form);
     O.o('_______________________ in exports.ustodobulkdel  req:'+req);
-
-
-
-
     res.status(403).send('User is not authorized');
     //res.json({i:'ou'});
 
-
-
-
-
-}
+};
 
 
 /**

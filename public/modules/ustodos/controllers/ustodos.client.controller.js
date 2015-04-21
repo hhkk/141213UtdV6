@@ -904,7 +904,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     alert ('e:' + e);
                 }
 
-            };
+            } // structuring block
 
 
             // MAJOR COMMON FUNCTION - SET ACTIVE EDITOR CONTENT
@@ -1320,11 +1320,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     var key = e.which || e.keyCode;
                     //O.o ('keydown:' + key );
                     //O.o ('turn on shift');
-                    if (16 == key) {
+                    if (16 === key) {
                         window.keyStates.keyStateShiftDown = true;
-                    } else if (17 == key) {
+                    } else if (17 === key) {
                         window.keyStates.keyStateCtrlDown = true;
-                    } else if (18 == key) {
+                    } else if (18 === key) {
                         window.keyStates.keyStateAltDown = true;
                     }
                 }, false);
@@ -1333,11 +1333,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     var e = window.event || evt;
                     var key = e.which || e.keyCode;
                     //O.o ('turn off shift');
-                    if (16 == key) {
+                    if (16 === key) {
                         window.keyStates.keyStateShiftDown = false;
-                    } else if (17 == key) {
+                    } else if (17 === key) {
                         window.keyStates.keyStateCtrlDown = false;
-                    } else if (18 == key) {
+                    } else if (18 === key) {
                         window.keyStates.keyStateAltDown = false;
                     }
                 }, false);
@@ -1377,127 +1377,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     console.log('ERROR ON SAVE !!! ' + ustodo.html);
                 });
             };
-
-
-            $scope.httpcalltest = function(i) {
-                try {
-
-                    // 11111111 works kinda - in url tho not in body
-                    // pairs with this and params seem to be only in URL
-                    //app.route('/ustodobulkdel')
-                    //    .delete(users.requiresLogin, ustodos.ustodobulkdel);
-                    //var jsnval = {inner:'value'};
-                    //$http({
-                    //    url: '/ustodobulkdel',
-                    //        method: 'delete',
-                    //    params: {jsnkey: jsnval}
-                    //}).success(function(data) {
-                    //    O.o ('data:' + data.toString());
-                    //});
-
-
-                    // 22222  works in that it makes it to themethod, but can't find req data anywhere not in URL or body or params or query
-                    // http://stackoverflow.com/questions/5643321/how-to-make-remote-rest-call-inside-node-js-any-curl
-                    //app.route('/ustodobulkdel')
-                    //    .delete(users.requiresLogin, ustodos.ustodobulkdel);
-                    //$http.delete('/ustodobulkdel', {form:{key:'hkvalue'}}).
-                    //    success(function(data) {
-                    //        O.o ('data:' + data.toString());
-                    //    });
-
-
-                    // 3333 works great in that it makes it to the method, and req data is not in the URL but in the
-                    var data = [];
-                    data.push (4);
-                    data.push (45);
-                    data.push (456);
-                    $http.post('/ustodobulkdel', {form:{key:'hkvalue', data:data}}).
-                        success(function(data) {
-                            O.o ('data:' + data.toString());
-                        }). error(function(data, status, headers, config) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            O.o ('data:' + data);
-                            O.o ('status:' + status);
-                            O.o ('headers:' + headers);
-                            O.o ('config:' + config);
-                        });
-
-
-                    //$http.delete('/ustodobulkdel', {
-                    //    params: { user_id: user.id }
-                    //}).success(function(data) {
-                    //        O.o ('data:' + data.toString());
-                    //});
-
-                    // http://stackoverflow.com/questions/12190166/angularjs-any-way-for-http-post-to-send-request-parameters-instead-of-json
-                    //$http.post('/ustodobulkdel', {
-                    //    params: { user_id: user.id }
-                    //}).success(function(data) {
-                    //        O.o ('data:' + data.toString());
-                    //});
-                } catch (e) {
-                    O.e ('errrra:' + e);
-                }
-            };
-
-            $scope.deleteDbUstotoByIdArr = function(arrIntIndexesToDelete)
-            {
-                // if a bulk delete call
-                if (!arrIntIndexesToDelete || arrIntIndexesToDelete.length > 1)
-                {
-                    if (!arrIntIndexesToDelete)
-                        arrIntIndexesToDelete = [];
-
-                    O.assert (!ustodo, 'no ustodo if no ');
-                    var arrCheckBoxes = $('.chkbox');
-                    O.o ('arrCheckBoxes.length:' + arrCheckBoxes.length);
-                    // check if all are checked so it's just a toggle
-                    for (var i = 0; i < arrCheckBoxes.length; i++ )
-                    {
-                        if (document.getElementById('idcheckbox'+i).checked)
-                        {
-                            arrIntIndexesToDelete.push(i);
-                        }
-                    }
-                }
-                else // usual old single delete at a time
-                {
-
-                    //O.assert (false, "asdasd");
-                    O.assert ((arrIntIndexesToDelete.length === 1), 'support only delete one right now, not:' + arrIntIndexesToDelete.length);
-
-                    // Still support only one delete at a time!!!!!!!!!!!!!!
-
-                    var intIndexToDelete = arrIntIndexesToDelete[0];
-                    //return;
-                    //alert ('deleting i:' + i);
-                    try {
-                        var ustodo = $scope.ustodos[intIndexToDelete];
-
-                        var savOid = ustodo._id;
-                        //O.o('splicing: i' + intIndexToDelete );
-                        $scope.ustodos.splice(intIndexToDelete, 1);
-
-                        ustodo.$delete(function() {
-                            console.log ('$delete done !!! savOid:' + savOid);
-                            //$scope.ustodos.splice(index, 1));
-                            //alert ('delete done, now remove from array');
-                            //array.;
-                        }, function(errorResponse) {
-                            $scope.error = errorResponse.data.message;
-                            //console.log ('ERROR ON SAVE !!! '  + $scope.ustodos[i].html);
-                            console.log ('ERROR ON SAVE !!! $scope.error:'  + $scope.error);
-                        });
-                        console.log ('done remove/delete');
-                    } catch (err) {
-                        console.log ('err:' + err);
-                    }
-
-                }
-            };
-
-
 
 
 
@@ -1770,61 +1649,49 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
             //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
 
+
+
             $scope.lastChecked = null;
-            $scope.checkBoxClicked = function(j)
+            $scope.checkBoxClickedToggleAll = function()
             {
                 var checkboxFirst = document.getElementById('idcheckbox0');
-                if (!checkboxFirst) //if no
-                    return;
-                if (j == -1) // just a toggle
+                O.assert (checkboxFirst);
+                var areAllCbStatesSame = true;
+                var checkboxFirstState = checkboxFirst.checked;
+                var x = $('.chkbox');
+                O.o ('x.length:' + x.length);
+                // check if all are checked so it's just a toggle
+                for (var i = 0; i < x.length; i++ )
                 {
-                    var areAllCbStatesSame = true;
-                    var checkboxFirstState = checkboxFirst.checked;
-                    var x = $('.chkbox');
-                    O.o ('x.length:' + x.length);
-                    // check if all are checked so it's just a toggle
-                    for (var i = 0; i < x.length; i++ )
-                    {
-                        O.o ('testing for cb index :' + 'idcheckbox'+i);
-                        if (document.getElementById('idcheckbox'+i).checked !== checkboxFirstState) {
-                            areAllCbStatesSame = false;
-                            break;
-                        }
+                    //O.o ('testing for cb index :' + 'idcheckbox'+i);
+                    if (document.getElementById('idcheckbox'+i).checked !== checkboxFirstState) {
+                        areAllCbStatesSame = false;
+                        break;
                     }
-                    if (areAllCbStatesSame)
-                    {
-                        for (var i = 0; i < x.length; i++ )
-                        {
-                            document.getElementById('idcheckbox'+i).checked = !checkboxFirstState;
-                        }
-                        return;
-                    }
-                    else // not all same, set all to T
-                    {
-                        for (var i = 0; i < x.length; i++ )
-                        {
-                            document.getElementById('idcheckbox'+i).checked = true;
-                        }
-                        return;
-                    }
-
-                    //checkboxFirst.checked
-                    //document.getElementById('idcheckbox'+i);
-                    //
-                    //var x = $('.chkbox');
-                    //if (x.checked)
-                    //{
-                    //    x.checked = false;
-                    //} else {
-                    //    x.checked = true;
-                    //}
-                    //
-                    //for (var i = 0; i < x.length; i++ )
-                    //{
-                    //    document.getElementById('idcheckbox'+i);
-                    //
-                    //}
                 }
+                if (areAllCbStatesSame)
+                {
+                    for (var j = 0; j < x.length; j++ )
+                    {
+                        document.getElementById('idcheckbox'+j).checked = !checkboxFirstState;
+                    }
+                    return;
+                }
+                else // not all same, set all to T
+                {
+                    for (var k = 0; k < x.length; k++ )
+                    {
+                        document.getElementById('idcheckbox'+k).checked = true;
+                    }
+                    return;
+                }
+
+            }; // checkboxclickedToggleAll
+
+
+            $scope.checkBoxClickedSingle = function(j)
+            {
+                //O.o ('in checkBoxClickedSingle')  ;
                 //var elem = angular.element(document.querySelector('#hktablespan'));
 
                 //find('.classname'), assumes you already have the starting elem to search from
@@ -1847,65 +1714,136 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 var $chkboxes = $('.chkbox');
 
-                if(!$scope.lastChecked) {
-                    $scope.lastChecked = thisCheckBox;
-                    O.o ('set $scope.lastChecked to:' + $scope.lastChecked.id);
-                }
+                //if(!$scope.lastChecked) {
+                    //O.o ('set $scope.lastChecked to:' + $scope.lastChecked.id);
+                //}
 
-                if( window.keyStates.keyStateShiftDown === true) {
-
-                    O.o ('yes window.keyStates.keyStateShiftDown');
+                if( window.keyStates.keyStateShiftDown === true)
+                {
+                    //O.o ('yes window.keyStates.keyStateShiftDown');
                     var start = $chkboxes.index(thisCheckBox);
                     var end = $chkboxes.index($scope.lastChecked);
                     $chkboxes.slice(Math.min(start,end), Math.max(start,end)+ 1).prop('checked', $scope.lastChecked.checked);
-                    $scope.lastChecked = thisCheckBox;
-                    O.o ('set $scope.lastChecked to:' + $scope.lastChecked.id);
+                    //O.o ('set $scope.lastChecked to:' + $scope.lastChecked.id);
                 }
 
+                $scope.lastChecked = thisCheckBox;
 
-            }
+            }; // checkBoxClickedSingle
 
 
 
-
-            $scope.checkBoxClickedLast = -1;
-            $scope.checkBoxClicked1 = function(j) {
-                $scope.checkBoxClickedLast = j;
-                //alert ('in testButton $scope.checkBoxClickedLast:' + $scope.checkBoxClickedLast );
-                var arrCheckBoxStates = [];
-                var countCheckBoxStatesTrue = 0;
-                for (var i = 0; ; i++ )
+            $scope.operationOnChecked_Delete = function()
+            {
+                var x = $('.chkbox');
+                // check if all are checked so it's just a toggle
+                var arrOidsToDelete = [];
+                for (var i = 0; i < x.length; i++)
                 {
-                    var x = document.getElementById('idcheckbox'+i);
-                    if (x)
+                    if (document.getElementById('idcheckbox'+i).checked)
                     {
-                        arrCheckBoxStates.push(x.checked);
-
-                        if (x.checked)
-                        {
-                            x.checked = false;
-                        } else {
-                            x.checked = true;
-                        }
+                        arrOidsToDelete.push($scope.ustodos[i]._id);
                     }
-                    else
-                        break;
                 }
-                //O.o ('window.keyStateShiftDown:' + window.keyStateShiftDown);
-                //O.o ('window.keyStateCtrlDown:' + window.keyStateCtrlDown);
-                //O.o ('window.keyStateAltDown:' + window.keyStateAltDown);
-                //O.o ('arrCheckBoxStates.length:' + arrCheckBoxStates.length);
-                //O.o ('countCheckBoxStatesTrue:' + countCheckBoxStatesTrue);
-                //O.o ('countCheckBoxStatesTrue:' + countCheckBoxStatesTrue);
+                O.o ('delete all:' + arrOidsToDelete);
 
-                //var x2 = x1.children;
-                    //for (var i = 0; i < x2.length; i++)
-                    //{
-                    //    O.o ('%%%%%%%% id:' + x2[i].id + ' classname:' + x2[i].classname);
-                    //}
-                    //
+                // now make web service call
 
+                try {
+
+                    // 11111111 works kinda - in url tho not in body
+                    // pairs with this and params seem to be only in URL
+                    //app.route('/ustodobulkdel')
+                    //    .delete(users.requiresLogin, ustodos.ustodobulkdel);
+                    //var jsnval = {inner:'value'};
+                    //$http({
+                    //    url: '/ustodobulkdel',
+                    //        method: 'delete',
+                    //    params: {jsnkey: jsnval}
+                    //}).success(function(data) {
+                    //    O.o ('data:' + data.toString());
+                    //});
+
+
+                    // 22222  works in that it makes it to themethod, but can't find req data anywhere not in URL or body or params or query
+                    // http://stackoverflow.com/questions/5643321/how-to-make-remote-rest-call-inside-node-js-any-curl
+                    //app.route('/ustodobulkdel')
+                    //    .delete(users.requiresLogin, ustodos.ustodobulkdel);
+                    //$http.delete('/ustodobulkdel', {form:{key:'hkvalue'}}).
+                    //    success(function(data) {
+                    //        O.o ('data:' + data.toString());
+                    //    });
+
+
+                    // 3333 works great in that it makes it to the method, and req data is not in the URL but in the
+                    $http.post('/ustodobulkdel', {form:{key:'hkvalue', arrOidsToDelete:arrOidsToDelete}}).
+                        success(function(data) {
+                            O.o ('data:' + data.toString());
+                        }). error(function(data, status, headers, config) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            O.o ('data:' + data);
+                            O.o ('status:' + status);
+                            O.o ('headers:' + headers);
+                            O.o ('config:' + config);
+                        });
+
+                    //$http.delete('/ustodobulkdel', {
+                    //    params: { user_id: user.id }
+                    //}).success(function(data) {
+                    //        O.o ('data:' + data.toString());
+                    //});
+
+                    // http://stackoverflow.com/questions/12190166/angularjs-any-way-for-http-post-to-send-request-parameters-instead-of-json
+                    //$http.post('/ustodobulkdel', {
+                    //    params: { user_id: user.id }
+                    //}).success(function(data) {
+                    //        O.o ('data:' + data.toString());
+                    //});
+                } catch (e) {
+                    O.e ('errrra:' + e);
+                }
             };
+
+
+
+            $scope.deleteDbUstotoOneByIndex = function(arrIntIndexesToDelete_or_oneUsToDo)
+            {
+                //O.assert (false, "asdasd");
+                O.assert ((arrIntIndexesToDelete_or_oneUsToDo.length === 1), 'support only delete one right now, not:' + arrIntIndexesToDelete_or_oneUsToDo.length);
+
+                // Still support only one delete at a time!!!!!!!!!!!!!!
+
+                var intIndexToDelete = arrIntIndexesToDelete_or_oneUsToDo[0];
+                //return;
+                //alert ('deleting i:' + i);
+                try {
+                    var ustodo = $scope.ustodos[intIndexToDelete];
+
+                    var savOid = ustodo._id;
+                    //O.o('splicing: i' + intIndexToDelete );
+                    $scope.ustodos.splice(intIndexToDelete, 1);
+
+                    ustodo.$delete(function() {
+                        console.log ('$delete done !!! savOid:' + savOid);
+                        //$scope.ustodos.splice(index, 1));
+                        //alert ('delete done, now remove from array');
+                        //array.;
+                    }, function(errorResponse) {
+                        $scope.error = errorResponse.data.message;
+                        //console.log ('ERROR ON SAVE !!! '  + $scope.ustodos[i].html);
+                        console.log ('ERROR ON SAVE !!! $scope.error:'  + $scope.error);
+                    });
+                    console.log ('done remove/delete');
+                } catch (err) {
+                    console.log ('err:' + err);
+                }
+            };
+
+
+
+
+
 
 
 

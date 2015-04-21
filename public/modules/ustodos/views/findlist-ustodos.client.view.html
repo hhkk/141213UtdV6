@@ -1,4 +1,5 @@
 <div id='topDivInFindUstodos' ng-app style="background-color:xxlightblue">
+<div id='topDivInFindUstodos' ng-app style="background-color:xxlightblue">
 
 
     <div ng-address-bar></div><br>
@@ -45,10 +46,7 @@
 
         &nbsp;<input  id='idcheckbox_dynammicSearch' type="checkbox" title="Dynamic Search (as you type)" />
 
-        &nbsp;<button ng-click="httpcalltest(1)">TST</button>
-
-
-
+        &nbsp;<button ng-click="operationOnChecked_Delete()">DeleteChecked</button>
 
 
         <br>
@@ -204,10 +202,10 @@
 
 
 
-                &nbsp;<input ng-click='checkBoxClicked(-1)' id='checkBoxAll' type="checkbox"/> All
+                &nbsp;<input ng-click='checkBoxClickedToggleAll()' id='checkBoxAll' type="checkbox"/> All
                 &nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
                                  alt="{{image.name}}"  title='Delete Selected'
-                                 ng-click="deleteDbUstotoByIdArr(ustodo)"
+                                 ng-click="operationOnChecked_Delete()"
                            >
                 <span id="hktablespan">
 
@@ -221,7 +219,7 @@
                         <td>
 
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox{{ustodo.html}}"' type="checkbox"/>-->
-                            &nbsp;<input ng-click='checkBoxClicked($index)' id='idcheckbox{{$index}}' class='chkbox' type="checkbox"/>
+                            &nbsp;<input ng-click='checkBoxClickedSingle($index)' id='idcheckbox{{$index}}' class='chkbox' type="checkbox"/>
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox"' type="checkbox"/>-->
 
                         </td>
@@ -234,7 +232,7 @@
                             <!-- trash garbage icon -->
                             &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
                                  alt="{{image.name}}"  title='delete'
-                                 ng-click="deleteDbUstotoByIdArr([$index])"
+                                 ng-click="deleteDbUstotoOneByIndex([$index])"
                                     >
                             &nbsp
                             <!--ng-show="nowShowing==$index"-->
