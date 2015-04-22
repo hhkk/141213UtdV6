@@ -551,10 +551,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 if (keyEvent.keyCode >= 16 && keyEvent.keyCode <= 18) // shift alt ctrl key up
                     return;
 
-                O.o ('keyEvent.keyCode:' + keyEvent.keyCode);
+                //O.o ('keyEvent.keyCode:' + keyEvent.keyCode);
 
                 var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
-                O.o('onKeyUp:' + keyCode);
+                //O.o('onKeyUp:' + keyCode);
                 //O.o('onKeyUp:' + getKeyboardEventResult($event, 'Key up')); // hbkhbk
                 $scope.respondToChangeEvent(keyCode);
             };
@@ -1260,10 +1260,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 if (document.getElementById('idcheckbox_dynammicSearch').checked && (keyCode === 13 || bShouldIcommand))
                 {
+                    //alert ('yes need to process command');
                     //O.o ('===================== processCommand for xText [' + xText + ']');
                     //O.o ('===================== processCommand for xHtml [' + xHtml + ']');
                     //O.o ('===================== processCommand for xValue [' + xValue + ']');
                     $scope.processCommand(xText, xHtml, xValue, callbackCommand);
+                }  else {
+                    //alert ('no need to process command');
                 }
 
                 //alert ('document.activeElement.id:' + document.activeElement.id + ', parent:' + document.activeElement.parentElement.id);
@@ -1955,7 +1958,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
                     //'----------------' '----------------' '----------------' '----------------' '----------------'
                     //            http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=WRITE
-                    if (UtilString.endsWith(commandTrimmed, ' w')) {
+                    if (UtilString.endsWith(commandTrimmed, ' w'))
+                    {
                         //alert ('in write');
                         //alert ('in endsWith w');
                         commandRemoved_toSearchFor_trimmed = commandTrimmed.slice(0, commandTrimmed.length - 1);

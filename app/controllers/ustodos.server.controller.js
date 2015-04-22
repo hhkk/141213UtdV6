@@ -4,6 +4,9 @@ var UtilClass = require('C:/utd/141213UtdV6/public/util/UtilClass.js');
 var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 var O = require('C:/utd/141213UtdV6/public/util/O.js');
 var UtilUrl4 = require('C:/utd/141213UtdV6/public/util/UtilUrl4.js');
+var Db = require('mongodb').Db;
+var Server = require('mongodb').Server;
+var ObjectID = require('mongodb').ObjectID;
 
 //var UtilClass = require('.././UtilClass');
 // O.o ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
@@ -118,26 +121,6 @@ exports.update = function(req, res) {
  */
 exports.delete2 = function(req, res) {
     O.o('_______________________ in ustodos.server.controller.js exports.delete ');
-    // http://docs.mongodb.org/manual/reference/method/db.collection.remove/
-    /**
-     The db.collection.remove() method can have one of two syntaxes. The remove() method can take a query document and an optional justOne boolean:
-
-     db.collection.remove(
-     <query>,
-     <justOne>
-     )
-     Or the method can take a query document and an optional remove options document:
-
-     New in version 2.6.
-
-     db.collection.remove(
-     <query>,
-     {
-       justOne: <boolean>,
-       writeConcern: <document>
-     }
-     )*
-     */
 
     var ustodo = req.ustodo;
     //if (!req.ustodo.isArray)
@@ -160,11 +143,72 @@ exports.delete2 = function(req, res) {
 
 
 exports.ustodobulkdel = function(req, res) {
-    O.o('_______________________ in exports.ustodobulkdel  req.body.form:'+req.body.form);
-    O.o('_______________________ in exports.ustodobulkdel  req:'+req);
-    res.status(403).send('User is not authorized');
-    //res.json({i:'ou'});
+    try
+    {
+        O.o('_______________________ in exports.ustodobulkdel  req.body.form:'+req.body.form);
+        O.o('_______________________ in exports.ustodobulkdel  req.body.form.arrOidsToDelete:'+req.body.form.arrOidsToDelete);
 
+        var arrOidsToDelete = req.body.form.arrOidsToDelete;
+        O.o('_______________________ in exports.ustodobulkdel arrOidsToDelete:'+arrOidsToDelete);
+
+
+        // http://docs.mongodb.org/manual/reference/method/db.collection.remove/
+        /**
+         The db.collection.remove() method can have one of two syntaxes. The remove() method can take a query document and an optional justOne boolean:
+
+         db.collection.remove(
+         <query>,
+         <justOne>
+         )
+         Or the method can take a query document and an optional remove options document:
+
+         New in version 2.6.
+
+         db.collection.remove(
+         <query>,
+         {
+           justOne: <boolean>,
+           writeConcern: <document>
+         }
+         )*
+         */
+
+
+
+
+
+        var dbWrite = new Db('ustodo-dev', new Server('localhost', 27017), {safe: false});
+        dbWrite.open(function (err, dbWrite)
+        {
+            dbWrite.collection('ustodos', function (err, collRemove_ustodos)
+            {
+                try
+                {
+                    collRemove_ustodos.remove({_id:new ObjectID(arrOidsToDelete[0])});
+                    O.o('removed to dbWrite.collRemove_ustodos:' + dbWrite.databaseName+'.'+collRemove_ustodos.collectionName);
+                    O.o('ID removed arrOidsToDelete[0]:' + arrOidsToDelete[0]);
+                } catch (err) {
+                    //console.log(UtilClass.UtilClass('err', err));
+                    O.e("err:" + err);
+                }
+
+
+                if (true)
+                {
+                    collRemove_ustodos.ensureIndex({ lastmoddate: -1 } );
+                    console.log("collRemove_ustodos.ensureIndex({ lastmoddate: ok");
+                }
+
+                O.o ("done with remote")
+                var x = {result:'success'};
+                res.json(x);
+            });
+        });
+
+    } catch (e) {
+        O.e('fail in bulk delete:' + e);
+        res.status(403).send('Failure in bulk delete.  e:'+e);
+    }
 };
 
 
