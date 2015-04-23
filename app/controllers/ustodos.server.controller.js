@@ -146,10 +146,10 @@ exports.ustodobulkdel = function(req, res) {
     try
     {
         O.o('_______________________ in exports.ustodobulkdel  req.body.form:'+req.body.form);
-        O.o('_______________________ in exports.ustodobulkdel  req.body.form.arrOidsToDelete:'+req.body.form.arrOidsToDelete);
+        O.o('_______________________ in exports.ustodobulkdel  req.body.form.arrIdsToDelete:'+req.body.form.arrOidsToDelete);
 
-        var arrOidsToDelete = req.body.form.arrOidsToDelete;
-        O.o('_______________________ in exports.ustodobulkdel arrOidsToDelete:'+arrOidsToDelete);
+        var arrIdsToDelete = req.body.form.arrOidsToDelete;
+        O.o('_______________________ in exports.ustodobulkdel arrIdsToDelete:'+arrIdsToDelete);
 
 
         // http://docs.mongodb.org/manual/reference/method/db.collection.remove/
@@ -184,9 +184,17 @@ exports.ustodobulkdel = function(req, res) {
             {
                 try
                 {
-                    collRemove_ustodos.remove({_id:new ObjectID(arrOidsToDelete[0])});
+                    // works collRemove_ustodos.remove({_id:new ObjectID(arrIdsToDelete[0])});
+                    var arrOidsToDelete = [];
+                    for (var j = 0; j < arrIdsToDelete.length; j++ )
+                    {
+                        arrOidsToDelete.push (new ObjectID(arrIdsToDelete[j]));
+                        O.o ('deleting id:' + arrIdsToDelete[j]);
+                    }
+                    collRemove_ustodos.remove({_id: {$in:arrOidsToDelete}} );
+
                     O.o('removed to dbWrite.collRemove_ustodos:' + dbWrite.databaseName+'.'+collRemove_ustodos.collectionName);
-                    O.o('ID removed arrOidsToDelete[0]:' + arrOidsToDelete[0]);
+                    O.o('removed this many:' + arrOidsToDelete.length);
                 } catch (err) {
                     //console.log(UtilClass.UtilClass('err', err));
                     O.e("err:" + err);
