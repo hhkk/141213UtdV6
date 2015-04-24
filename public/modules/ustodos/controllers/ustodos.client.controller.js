@@ -342,7 +342,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         O.o ( '1 in contentdom ' + $scope.editor.getData() );
                         O.o ( '2 in contentdom ' + event.data.$.keyCode);
                         O.o ( '3 in contentdom ' + !event.data.$.ctrlKey && !event.data.$.metaKey);
-                        $scope.respondToChangeEvent(event.data.$.keyCode);
+                        $scope.respondToKeyboardEvent(event.data.$.keyCode);
                     }
 
 
@@ -351,7 +351,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //O.o ( '2 in contentdom ' + keyCode);
                     //O.o ( '2 in contentdom ' + !event.data.$.ctrlKey && !event.data.$.metaKey);
                     //O.o ( $scope.editor.getData() );
-                    //$scope.respondToChangeEvent();
+                    //$scope.respondToKeyboardEvent();
                 } );
             } );
 
@@ -389,7 +389,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //        var x = CKEDITOR.instances.idCkeEditorTextarea.getData();
             //        //var xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText()
             //        //o('raw key x:' + x); // hbkhbk
-            //        $scope.respondToChangeEvent();
+            //        $scope.respondToKeyboardEvent();
             //        //console.log('raw key xText:' + xText); // hbkhbk
             //        //$scope.showFocus();
             //
@@ -556,14 +556,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
                 //O.o('onKeyUp:' + keyCode);
                 //O.o('onKeyUp:' + getKeyboardEventResult($event, 'Key up')); // hbkhbk
-                $scope.respondToChangeEvent(keyCode);
+                $scope.respondToKeyboardEvent(keyCode);
             };
             //$scope.onKeyUp = function(ev) {
             //    ////alert('onKeyUp:' + ev); // hbkhbk
             //    //console.log('onKeyUp:' + getKeyboardEventResult); // hbkhbk
             //    ////console.log ('onKeyUp'); // hbkhbk
             //    ////$scope.showFocus();
-            //    //$scope.respondToChangeEvent()
+            //    //$scope.respondToKeyboardEvent()
             //    ////$scope.propagateTextChanges();
             //};
             var getKeyboardEventResult = function (keyEvent, keyEventDesc)
@@ -1140,6 +1140,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //console.log('C in eventMouseoverRow2 i:' + i);
             };
 
+            $scope.eventMouseoverRow3 = function(s) {
+                //alert ('in eventMouseoverRow3 s:' + s);
+                $scope.setTextInShowingEditor(s);
+            };
+
             //$scope.buttonClickSearchClear = function() {
             //    this.commandFromInputBox = '';
             //}
@@ -1191,9 +1196,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             };
 
-            $scope.respondToChangeEvent = function(keyCode)
+            $scope.respondToKeyboardEvent = function(keyCode)
             {
-                //alert ('in $scope.respondToChangeEvent()');
+                //alert ('in $scope.respondToKeyboardEvent()');
                 // 0 idInput0TypeText
                 // 1 idMediumEditor
                 // 2 parent like CKE
@@ -1212,9 +1217,34 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         xText = document.getElementById('idInput0TypeText').innerText;
                         xHtml = document.getElementById('idInput0TypeText').innerHTML;
                         xValue = document.getElementById('idInput0TypeText').value;
-                        if (xValue.charCodeAt(xValue.length-1) === 32)
+
+                        if (keyCode === 13)
+                        {
+                            O.o ('bShouldIcommand based on keyCode === 13 enter key ');
                             bShouldIcommand = true;
+                        }
+                        else if (xValue.charCodeAt(xValue.length-1) === 32)
+                        {
+                            if (xValue.trim().charCodeAt(xValue.trim().length-1) === 87)
+                            {
+                                O.o ('bShouldIcommand based on space and lastchar 87 big w');
+                                bShouldIcommand = true;
+                            }
+                            else if (xValue.trim().charCodeAt(xValue.trim().length-1) === 119)
+                            {
+                                O.o ('bShouldIcommand based on space and lastchar 119 little w');
+                                bShouldIcommand = true;
+                            }
+                            else if (document.getElementById('idcheckbox_dynammicSearch').checked)
+                            {
+                                O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
+                                bShouldIcommand = true;
+                            }
+
+
+                        }
                         break;
+
                     case $scope.ns.Input.INPUT_1_MEDIUM:
                         xText = $scope.mmmm.element.innerText;
                         xHtml = $scope.mmmm.element.innerHTML;
@@ -1228,8 +1258,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         }
                         //else
                         ///alert ('no search');
-
                         break;
+
                     case $scope.ns.Input.INPUT_2_CKE:
                         xText= CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
                         xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
@@ -1242,6 +1272,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //alert ('yes search');
                         }
                         break;
+
                     default:
                         alert ('era - bad input resolution');
                 }
@@ -1258,7 +1289,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //xHtml = xHtml.trim();
                 //xValue = xValue.trim();
 
-                if (document.getElementById('idcheckbox_dynammicSearch').checked && (keyCode === 13 || bShouldIcommand))
+                if (bShouldIcommand)
                 {
                     //alert ('yes need to process command');
                     //O.o ('===================== processCommand for xText [' + xText + ']');
@@ -1736,7 +1767,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-            $scope.operationOnChecked_Delete = function()
+            $scope.operationOnChecked_Delete = function()       // Delete Selected
             {
                 var x = $('.chkbox');
                 // check if all are checked so it's just a toggle
@@ -1880,6 +1911,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
                     $scope.searchedFor = xValue.trim();
+                    //$scope.searchedForAsLink = '<a ng-href=\'jpro.com\'> search</a>';
+                    $scope.searchedForAsLink = 'http://ibm.com/test';
                     //O.o ('============================= in xValue [' + xValue + ']');
                     //O.o ('============================= in html2text [' + UtilHrefThisText.html2text(xValue)+ ']');
                     // <a target="_blank" href="http://ibm.com">http://ibm.com</a>
@@ -1957,8 +1990,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //| |              | | |              | | |              | | |              | | |              | |
                     //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
                     //'----------------' '----------------' '----------------' '----------------' '----------------'
-                    //            http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=WRITE
-                    if (UtilString.endsWith(commandTrimmed, ' w'))
+                    // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=WRITE
+                    if (UtilString.endsWith(commandTrimmed, ' w') || UtilString.endsWith(commandTrimmed, ' W'))
                     {
                         //alert ('in write');
                         //alert ('in endsWith w');

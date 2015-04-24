@@ -70,7 +70,7 @@ exports.create = function(req, res) {
 
 };
 
-/**
+ /**
  * Show the current Ustodo
  */
 exports.read = function(req, res) {

@@ -15,7 +15,8 @@ exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, er
     //var regexp = new RegExp(querystringTrimmed.toLowerCase(), 'i');
     //var querymongo = {text:regexp};
 
-    var queryTokens = (querystringTrimmed.toLowerCase()).split(' ');
+    //var queryTokens = (querystringTrimmed.toLowerCase()).split(' '); //
+    var queryTokens = (querystringTrimmed.toLowerCase()).split(/\s+/); //input.split(/(\s*,?\s*)+/)
     O.o ('########## queryTokens.length:' + queryTokens.length);
 
     var querymongo = null;

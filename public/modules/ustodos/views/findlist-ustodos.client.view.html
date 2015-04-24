@@ -46,8 +46,6 @@
 
         &nbsp;<input  id='idcheckbox_dynammicSearch' type="checkbox" title="Dynamic Search (as you type)" />
 
-        &nbsp;<button ng-click="operationOnChecked_Delete()">DeleteChecked</button>
-
 
         <br>
         <br>
@@ -90,8 +88,13 @@
         </span>
         <br>
 
-        <span id="idFilterCount" >
-            Filter: <span ng-bind=('('+this.searchedFor+')')></span >
+        <a id="idFilterCount" >
+            Filter: <span ng-bind=('('+this.searchedFor+')')  ng-mouseover="this.eventMouseoverRow3(this.searchedFor)"
+                ></span >
+
+            <br><a ng-href="http://google.com/search?q={{this.searchedFor}}">http://google.com/search?q={{this.searchedFor}}</a>
+            <br><a ng-href="{{this.searchedForAsLink}}">{{this.searchedForAsLink}}</a>
+
             Count: <span ng-bind=('('+this.ustodos.length+')')></span >
             &nbsp;
             <!--<button ng-click="this.buttonClickSearchStar()">*</button>-->
@@ -203,6 +206,7 @@
 
 
                 &nbsp;<input ng-click='checkBoxClickedToggleAll()' id='checkBoxAll' type="checkbox"/> All
+
                 &nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
                                  alt="{{image.name}}"  title='Delete Selected'
                                  ng-click="operationOnChecked_Delete()"
@@ -219,7 +223,7 @@
                         <td>
 
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox{{ustodo.html}}"' type="checkbox"/>-->
-                            &nbsp;<input ng-click='checkBoxClickedSingle($index)' id='idcheckbox{{$index}}' class='chkbox' type="checkbox"/>
+                            &nbsp;<input ng-click='checkBoxClickedSingle($index)' id='idcheckbox{{$index}}' class='chkbox' title='Select for bulk operation' type="checkbox"/>
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox"' type="checkbox"/>-->
 
                         </td>
@@ -231,7 +235,7 @@
 
                             <!-- trash garbage icon -->
                             &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
-                                 alt="{{image.name}}"  title='delete'
+                                 alt="{{image.name}}"  title='Delete immediately'
                                  ng-click="deleteDbUstotoOneByIndex([$index])"
                                     >
                             &nbsp
@@ -247,7 +251,7 @@
 
                             <!--<img height=15 ng-src="/img/gnome_edit_save.jpg"-->
 
-                            <img class="per-row-icons" ng-src="/img/saveIcon.jpg" title='save'
+                            <img class="per-row-icons" ng-src="/img/saveIcon.jpg" title='Save changes (if any)'
                                  alt="{{image.name}}"
                                  ng-click="saveUstodoGiven(ustodo, $index)"
                             >
