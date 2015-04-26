@@ -2234,20 +2234,21 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         }
     }
 ])
-.directive('myCustomer', function() {
-return {
-    //templateUrl: function(elem, attr){
-    //    return 'customer-'+attr.type+'.html';
-    template: function(elem, attr){
+.directive('myCustomer', function()  // section_ tail defined against app (e.g., myApp or userApp)
+{
+    return {
+        //templateUrl: function(elem, attr){
+        //    return 'customer-'+attr.type+'.html';
+        template: function(elem, attr){
 
-        console.log ('in mycustomer directive ==================================');
-        //return 'ggggggggggghhhhhhhhhhhhhh';
-        return 'ustodo text: <a href=>';
-        //http:\/\/applex.com' target='_blank'>http:\/\/applex.com<\/a>';
+            console.log ('in mycustomer directive ==================================');
+            //return 'ggggggggggghhhhhhhhhhhhhh';
+            return 'ustodo text: <a href=>';
+            //http:\/\/applex.com' target='_blank'>http:\/\/applex.com<\/a>';
 
-    }
-};})
-
+        }
+    };
+})
 .directive('autoFocus', function($timeout) {
     console.log('fffffffffffffffffffffffffff');
     return {
@@ -2257,6 +2258,18 @@ return {
                 _element[0].focus();
             }, 0);
         }
+    };
+})
+.filter('filterUstodos', function()
+{
+    return function( ustodos, s) {
+        var ustodosFiltered = [];
+        angular.forEach(ustodos, function(ustodo) {
+            if(ustodo.html.indexOf(s) >= 0) {
+                ustodosFiltered.push(ustodo);
+            }
+        });
+        return ustodosFiltered;
     };
 });
 

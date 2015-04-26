@@ -1,9 +1,7 @@
 <div id='topDivInFindUstodos' ng-app style="background-color:xxlightblue">
 <div id='topDivInFindUstodos' ng-app style="background-color:xxlightblue">
 
-
     <div ng-address-bar></div><br>
-
 
     <section data-ng-controller="UstodosController" ng-init="keyCount=0;ngInitTopLevel()">
         <!--<section data-ng-controller="UstodosController" ng-keydown="count = count + 4;" ng-init="count=0">-->
@@ -46,10 +44,8 @@
 
         &nbsp;<input  id='idcheckbox_dynammicSearch' ng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
 
-
         <br>
         <br>
-
 
         <span ng-keyup="xxonKeyUponKeyUp($event)">
 
@@ -203,8 +199,7 @@
 
                     <!--<button ng-click="alert ('ff')" ng-init="count=0">-->
 
-
-
+                <!-- SECTION_ HEADER ROW ICONS SELECT ALL -->
                 &nbsp;<input ng-click='checkBoxClickedToggleAll()' id='checkBoxAll' type="checkbox"/> All
 
                 &nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
@@ -220,10 +215,7 @@
 
 
 
-
-
-
-
+                <!-- SECTION_ TEXT FILTER -->
                 <input type="text" name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
                        ng-pattern="example.word" required ng-trim="false">
 
@@ -232,12 +224,11 @@
 
 
 
-
-
-
-
-                    <tr  xxxxxng-if='this.filterMatches($index)'
-                        ng-repeat="ustodo in ustodosFiltered"
+                    <!-- SECTION_ NG-REPEAT NG-IF FILTER PER ROW EXPERIMENTAL -->
+                    <!--<tr  ng-repeat="ustodo in ustodosFiltered"-->
+                    <!--<tr  ng-repeat="ustodo in ustodosFiltered"-->
+                    <tr  ng-repeat="ustodo in ustodosFiltered | filterUstodos:filterText"
+                        xxxxxng-if='this.filterMatches($index)'
                         ng-mouseover="this.eventMouseoverRow2($index)"
                         ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
                         class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
@@ -287,6 +278,20 @@
                                         ng-click="event_click_timeAgo(ustodo._id)"
                                         title={{ustodo.datelastmod+'.'+ustodo._id+'ClickForID'}}></span></td>
                         <!--<td>{{ ustodo.text}}</td>f-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                         <!-- TEXT -->
