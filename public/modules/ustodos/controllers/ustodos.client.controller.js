@@ -1145,6 +1145,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 $scope.setTextInShowingEditor(s);
             };
 
+            $scope.toggleDynamicSearchCheckbox = function(s) {
+                //alert ('in eventMouseoverRow3 s:' + s);
+                document.getElementById('idcheckbox_dynammicSearch').checked =
+                    !document.getElementById('idcheckbox_dynammicSearch').checked;
+            };
+
             //$scope.buttonClickSearchClear = function() {
             //    this.commandFromInputBox = '';
             //}
@@ -1628,11 +1634,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //$scope.ustodos = Ustodos.query({name: 'ggggg'}); // Works!
 
 
-
-
                 $scope.ustodos = Ustodos.query({text: ''});
+                $scope.ustodosFiltered = $scope.ustodos;
+                alert ('done query ')
 
-                O.o ('ustodos:' + $scope.ustodos);
+
+                O.o ('____ ustodos:' + $scope.ustodos);
 
                 //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
                 //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
@@ -1950,6 +1957,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     var commandRemoved_toSearchFor_trimmed = null;
 
                     var callbackFromQuery = function() {
+                        $scope.ustodosFiltered = $scope.ustodos;
                         //alert ('in callback from query')
                         //O.o ('$$$$$$$$$$$$$$$$$$$ done processCommand got callback after query $scope.ustodos.length [' + $scope.ustodos.length + ']');
                         //
@@ -2024,6 +2032,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //'----------------' '----------------' '----------------' '----------------' '----------------'
 
                             //alert ('in callback success after write search for [' + commandRemoved_toSearchFor_trimmed + ']');
+                            O.o ('=============== in section QUERY1');
                             $scope.ustodos = Ustodos.query ({q: commandRemoved_toSearchFor_trimmed}, callbackFromQuery);      // this is a GET - see RESOURCE
                             $location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
                             $scope.setTextInShowingEditor(commandRemoved_toSearchFor_trimmed);
@@ -2038,6 +2047,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     else // not a write
                     {
                         //alert ('not a write - search for [' + commandTrimmed.trim() + ']');
+                        O.o ('=============== in section QUERY2');
                         $scope.ustodos = Ustodos.query ({q: commandTrimmed.trim()}, callbackFromQuery);      // this is a GET - see RESOURCE
                         //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
                     }
@@ -2150,6 +2160,66 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
 
+
+
+
+            $scope.filterDoesThisRowHtmlMatch = function(s, filterText) {
+                var s2 = "";
+                var arrTokens = s.split(/\s/);
+                for (var i = 0; i < arrTokens.length; i++)
+                {
+                    //O.o ('testing for filterText [' + filterText + '] :' + arrTokens[i]);
+                    if (arrTokens[i].indexOf(filterText) > 0)
+                    {
+                        //O.o ('found:');
+                        s2 = s2 + ' ' + arrTokens[i];
+                    }
+                }
+                return s2;
+            }
+
+            $scope.filterText = null;
+
+            $scope.onTrueOffFalse = false;
+            $scope.updateUstodosFiltered = function (s) {
+
+                $scope.ustodosFiltered = [];
+                O.o ('in updateUstodosFiltered() s  [' + s + ']');
+                for (var i = 0; i < $scope.ustodos.length; i++)
+                {
+                    if (!s || $scope.ustodos[i].html.indexOf(s) >= 0) {
+                        $scope.ustodosFiltered.push($scope.ustodos[i]);
+                        O.o ('MATCH in updateUstodosFiltered matching [' + $scope.ustodos[i].html + '] vs [' + $scope.filterText +
+                        '] index [' + i + ']');
+                    }
+                    //if (i % 2 == 0)
+                }
+                O.o ('---------------updateUstodosFiltered done len [' + $scope.ustodosFiltered.length + '] ');
+                //O.o ('in filterMatches() matching [' + $scope.ustodos[i].html + '] vs [' + $scope.filterText +
+                //    '] index [' + i + '] result [' + ret + ']');
+                // this was for string altering:
+                //if (!$scope.onTrueOffFalse)
+                //{
+                //    for (var i = 0; i < $scope.ustodos.length; i++)
+                //    {
+                //        $scope.ustodos[i].htmlsave = $scope.ustodos[i].html ;
+                //        $scope.ustodos[i].html = $scope.filterDoesThisRowHtmlMatch($scope.ustodos[i].html, filterText);
+                //    }
+                //} else {
+                //    for (var i = 0; i < $scope.ustodos.length; i++)
+                //    {
+                //        $scope.ustodos[i].html = $scope.ustodos[i].htmlsave ;
+                //        $scope.ustodos[i].htmlsave = null;
+                //    }
+                //}
+                //$scope.onTrueOffFalse = !$scope.onTrueOffFalse;
+                //$scope.$apply();
+            };
+
+            $scope.filterMatches = function () {
+                $scope.$apply();
+                return ret;
+            }
 
             //alert ('done defining medium');
 

@@ -30,21 +30,21 @@
                 />
         &nbsp;
         <input class="hkToolbarElement" type='image' style="height:8px;"
-               ng-click='toggleVisibilityTo0()'                src='/img/input0OneLine.png'
+               ng-mouseover='toggleVisibilityTo0()'      ng-click='toggleVisibilityTo0()'                src='/img/input0OneLine.png'
                title="One Line Editor"
                 />
         &nbsp;
         <input class="hkToolbarElement" type='image' style="height:14px;width:20px;"
-               ng-click='toggleVisibilityTo1()'                src='/img/input1MultiLine.png'
+               ng-mouseover='toggleVisibilityTo1()'       ng-click='toggleVisibilityTo1()'                src='/img/input1MultiLine.png'
                title="Multi-Line Editor"
                 />
         &nbsp;
         <input class="hkToolbarElement" type='image'  style='height:25px;'
-               ng-click='toggleVisibilityTo2()'                src='/img/input2.png'
+               ng-mouseover='toggleVisibilityTo2()'        ng-click='toggleVisibilityTo2()'                src='/img/input2.png'
                title="Rich Editor"
                 />
 
-        &nbsp;<input  id='idcheckbox_dynammicSearch' type="checkbox" title="Dynamic Search (as you type)" />
+        &nbsp;<input  id='idcheckbox_dynammicSearch' ng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
 
 
         <br>
@@ -88,7 +88,7 @@
         </span>
         <br>
 
-        <a id="idFilterCount" >
+        <span id="idFilterCount" >
             Filter: <span ng-bind=('('+this.searchedFor+')')  ng-mouseover="this.eventMouseoverRow3(this.searchedFor)"
                 ></span >
 
@@ -211,28 +211,47 @@
                                  alt="{{image.name}}"  title='Delete Selected'
                                  ng-click="operationOnChecked_Delete()"
                            >
+                &nbsp;<img class="per-row-icons-trashimage" ng-src="/img/filterIcon2.jpg"
+                                 alt="{{image.name}}"  title='Links Only View'
+                                xxxxng-mouseover="this.filterToLinksOnly ()"
+                                xxng-click="this.filterToLinksOnly ()"
+                           >
+
+
+
+
+
+
+
+
+                <input type="text" name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
+                       ng-pattern="example.word" required ng-trim="false">
+
                 <span id="hktablespan">
 
-                    <tr
-                        ng-repeat="ustodo in ustodos "
+
+
+
+
+
+
+
+                    <tr  xxxxxng-if='this.filterMatches($index)'
+                        ng-repeat="ustodo in ustodosFiltered"
                         ng-mouseover="this.eventMouseoverRow2($index)"
                         ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
                         class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
-
                         <!-- CHECK BOX -->
                         <td>
-
+                            {{$index}}
+                            <!--ustodo[$index].html.indexOf("http"):{{this.ustodos[$index].html.indexOf("http")}}-->
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox{{ustodo.html}}"' type="checkbox"/>-->
                             &nbsp;<input ng-click='checkBoxClickedSingle($index)' id='idcheckbox{{$index}}' class='chkbox' title='Select for bulk operation' type="checkbox"/>
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox"' type="checkbox"/>-->
-
                         </td>
-
 
                         <!-- DELETE BUTTON -->
                         <td>
-
-
                             <!-- trash garbage icon -->
                             &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
                                  alt="{{image.name}}"  title='Delete immediately'
@@ -272,9 +291,9 @@
 
                         <!-- TEXT -->
                         <td>
-                        <span id="ustodorow{{$index}}" contenteditable="true"
-                          ng-bind-html="ustodos[$index].html | linky:'_blank'"
-                           ></span>
+                            <span id="ustodorow{{$index}}" contenteditable="true"
+                                  ng-bind-html="ustodosFiltered[$index].html | linky:'_blank'"
+                               ></span>
                         </td>
                         <!--/onclick = "this.contentEditable = true;"-->
 
