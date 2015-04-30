@@ -47,7 +47,7 @@
         <br>
         <br>
 
-        <span ng-keyup="xxonKeyUponKeyUp($event)">
+        <span xxxng-keyup="onKeyUp($event, this.ENUM_KEYEVENTCALLER_KEYUPSPAN)">
 
             <!--<input class="hkToolbarElement" type='image'-->
                <!--ng-click='toggleVisibilityToNext()'-->
@@ -57,7 +57,7 @@
                 <!--/>-->
 
             <!-- ================ INPUT#0 ======================== maps to $scope.onKeyUp -->
-            <input id="idInput0TypeText" type="text" ng-keyup="this.onKeyUp($event)"
+            <input id="idInput0TypeText" type="text" ng-keyup="this.onKeyUp($event, this.ENUM_KEYEVENTCALLER_INPUT0)"
                    class="input-textarea" placeholder="Search / Input / Command" ng-blur="eventBlur0InputText()" required>
                    <!--ng-model="inputbind"-->
 
@@ -81,10 +81,8 @@
             <!--<div id='idDivForTinyMceEditorTextarea'>-->
                 <!--<textarea id="idTinyMceTextArea">Search/Input</textarea>-->
             <!--</div>-->
-        </span>
-        <br>
+            <br>
 
-        <span id="idFilterCount" >
             Filter: <span ng-bind=('('+this.searchedFor+')')  ng-mouseover="this.eventMouseoverRow3(this.searchedFor)"
                 ></span >
 
@@ -195,9 +193,7 @@
                 <!--</td>f-->
                 <!--</tr>f-->
 
-                <!--<tr ng-repeat="ustodo in ustodos | filter:commandUrlQ" ng-keyup="onKeyUp($index)" class='hkcssContentedit'  ng-class-odd="'odd'" ng-class-even="'even'">-->
-
-                    <!--<button ng-click="alert ('ff')" ng-init="count=0">-->
+                <!--<button ng-click="alert ('ff')" ng-init="count=0">-->
 
                 <!-- SECTION_ HEADER ROW ICONS SELECT ALL -->
                 &nbsp;<input ng-click='checkBoxClickedToggleAll()' id='checkBoxAll' type="checkbox"/> All
@@ -207,7 +203,7 @@
                                  ng-click="operationOnChecked_Delete()"
                            >
                 &nbsp;<img class="per-row-icons-trashimage" ng-src="/img/filterIcon2.jpg"
-                                 alt="{{image.name}}"  title='Links Only View'
+                                 alt="{{image.name}}"  title='Restrict within search result'
                                 xxxxng-mouseover="this.filterToLinksOnly ()"
                                 xxng-click="this.filterToLinksOnly ()"
                            >
@@ -216,7 +212,7 @@
 
 
                 <!-- SECTION_ TEXT FILTER -->
-                <input type="text" name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
+                <input type="text" title='Restrict within search result' name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
                        ng-pattern="example.word" required ng-trim="false">
 
                 <span id="hktablespan">
@@ -224,9 +220,10 @@
 
 
 
-                    <!-- SECTION_ NG-REPEAT NG-IF FILTER PER ROW EXPERIMENTAL -->
+                    <!-- SECTION__ NG-REPEAT NG-IF FILTER PER ROW EXPERIMENTAL -->
                     <!--<tr  ng-repeat="ustodo in ustodosFiltered"-->
                     <!--<tr  ng-repeat="ustodo in ustodosFiltered"-->
+                    <!--<tr  ng-repeat="ustodo in ustodosFiltered | filterUstodos:filterText"-->
                     <tr  ng-repeat="ustodo in ustodosFiltered | filterUstodos:filterText"
                         xxxxxng-if='this.filterMatches($index)'
                         ng-mouseover="this.eventMouseoverRow2($index)"
@@ -237,7 +234,7 @@
                             {{$index}}
                             <!--ustodo[$index].html.indexOf("http"):{{this.ustodos[$index].html.indexOf("http")}}-->
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox{{ustodo.html}}"' type="checkbox"/>-->
-                            &nbsp;<input ng-click='checkBoxClickedSingle($index)' id='idcheckbox{{$index}}' class='chkbox' title='Select for bulk operation' type="checkbox"/>
+                            &nbsp;<input ng-click='checkBoxClickedSingle(ustodos[$index]._id)' id='idcheckbox{{$index}}' class='chkbox' title='Select for bulk operation' type="checkbox"/>
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox"' type="checkbox"/>-->
                         </td>
 

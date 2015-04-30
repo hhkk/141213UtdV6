@@ -160,6 +160,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         try
         {
 
+            $scope.ENUM_KEYEVENTCALLER_INPUT0 = "ENUM_KEYEVENTCALLER_INPUT0";
+            $scope.ENUM_KEYEVENTCALLER_KEYUPSPAN = "ENUM_KEYEVENTCALLER_KEYUPSPAN";
+
             //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
             //    'Authentication', 'Ustodos',
             //    function($scope, $stateParams, $locationProvider, $rootScope, $sce, Authentication, Ustodos) {
@@ -540,8 +543,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //$scope.onKeyDown = function ($event) {
             //    $scope.onKeyDownResult = getKeyboardEventResult($event, 'Key down');
             //};
-            $scope.onKeyUp = function (keyEvent) // https://docs.angularjs.org/api/ng/directive/ngKeyup
+            $scope.onKeyUp = function (keyEvent, ENUM_KEYEVENTcaller) // https://docs.angularjs.org/api/ng/directive/ngKeyup
             {
+                alert ('in onkeyup ENUM_KEYEVENTcaller:' + ENUM_KEYEVENTcaller);
                 if (keyEvent.ctrlKey)
                     return;
                 if (keyEvent.altKey)
@@ -1215,6 +1219,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 var xValue = null;
                 var bShouldIcommand = false;
 
+
                 // decide for each input type whether to search
                 var xHtmlStripped = null;
                 switch($scope.whichInputIsInFocus())
@@ -1297,7 +1302,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 if (bShouldIcommand)
                 {
-                    //alert ('yes need to process command');
+                        //alert ('yes need to process command');
                     //O.o ('===================== processCommand for xText [' + xText + ']');
                     //O.o ('===================== processCommand for xHtml [' + xHtml + ']');
                     //O.o ('===================== processCommand for xValue [' + xValue + ']');
@@ -1628,22 +1633,21 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 console.log ('4 in ustodos.client.controller FIND');
                 //getProperties('props Ustodos:', Ustodos);
 
-                //$scope.ustodos = Ustodos.query(); //original
-                //returns a single not array, causing a fail $scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
-                // seems to work but returns all? $scope.ustodos = Ustodos.query({name: 'ggggg'});
-                //$scope.ustodos = Ustodos.query({name: 'ggggg'}); // Works!
+                //$scope.ustodos = Ustodos. query(); //original
+                //returns a single not array, causing a fail $scope.ustodos = Ustodos. query({ustodoId: '54929d5d1d3df384165f4fa2'});
+                // seems to work but returns all? $scope.ustodos = Ustodos. query({name: 'ggggg'});
+                //$scope.ustodos = Ustodos. query({name: 'ggggg'}); // Works!
 
 
-                $scope.ustodos = Ustodos.query({text: ''});
-                $scope.ustodosFiltered = $scope.ustodos;
-                alert ('done query ')
+                var ustodosLocal = Ustodos.query({text: ''});
+                $scope.setUstodosFiltered("caller1", ustodosLocal);
 
 
                 O.o ('____ ustodos:' + $scope.ustodos);
 
-                //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
-                //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
-                //$scope.ustodos = Ustodos.query({ustodoId: '54929d5d1d3df384165f4fa2'});
+                //$scope.ustodos = Ustodos. query({ustodoId: '54929d5d1d3df384165f4fa2'});
+                //$scope.ustodos = Ustodos. query({ustodoId: '54929d5d1d3df384165f4fa2'});
+                //$scope.ustodos = Ustodos. query({ustodoId: '54929d5d1d3df384165f4fa2'});
                 //console.log ('in ustodos.client.controller FIND2 $scope.ustodos.length:' + $scope.ustodos.length);
                 //console.log ('in ustodos.client.controller FIND2');
 
@@ -1732,7 +1736,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.checkBoxClickedSingle = function(j)
             {
-                //O.o ('in checkBoxClickedSingle')  ;
+                alert ('in checkBoxClickedSingle j:' + j)  ;
                 //var elem = angular.element(document.querySelector('#hktablespan'));
 
                 //find('.classname'), assumes you already have the starting elem to search from
@@ -1885,16 +1889,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-
-
-
-
-
-
-
-
-
-
+            $scope.setUstodosFiltered = function(caller, ustodosUnfiltered) {
+                $scope.ustodosFiltered = ustodosUnfiltered;
+                document.ustodosFilterCacheDirty = true;
+                //alert('caller [' + caller + '] dirtying $scope.ustodosFiltered $scope.ustodosFiltered.length' + $scope.ustodosFiltered.length);
+            }
 
 
 
@@ -1913,7 +1912,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
             $scope.processCommand = function(xText, xHtml, xValue)
             {
-                O.o (' =========================== in processcommand');
+                //alert (' =========================== in processcommand cache');
                 try {
 
 
@@ -1933,7 +1932,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //        //var t =  tinyMCE.get('idTinyMceTextArea').getContent({format : 'text'});
                     //        var xText = document.getElementById('idInput0TypeText').value;
                     //        //  alert ('search for :' + t)
-                    //        $scope.ustodos  = Ustodos.query ({q: xText});
+                    //        $scope.ustodos  = Ustodos. query ({q: xText});
                     //        $location.search('q', xText);       // yoo bar foo bar baz
                     //        window.document.title = 'jp:'+xText; // not jpro:
                     //    }
@@ -1950,14 +1949,16 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //alert ('$location.$$search.q:'+$location.$$search.q);
                     //$location.path('/'+this.commandFromInputBox)
                     //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
-                    //$scope.ustodos  = Ustodos.query ({q: this.commandFromInputBox});
+                    //$scope.ustodos  = Ustodos. query ({q: this.commandFromInputBox});
                     //O.o  ('completed search');
                     var commandUnTrimmed = xValue;
                     var commandTrimmed = xValue.trim();
                     var commandRemoved_toSearchFor_trimmed = null;
 
                     var callbackFromQuery = function() {
-                        $scope.ustodosFiltered = $scope.ustodos;
+                        $scope.setUstodosFiltered("caller2", $scope.ustodos);
+
+
                         //alert ('in callback from query')
                         //O.o ('$$$$$$$$$$$$$$$$$$$ done processCommand got callback after query $scope.ustodos.length [' + $scope.ustodos.length + ']');
                         //
@@ -2034,6 +2035,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //alert ('in callback success after write search for [' + commandRemoved_toSearchFor_trimmed + ']');
                             O.o ('=============== in section QUERY1');
                             $scope.ustodos = Ustodos.query ({q: commandRemoved_toSearchFor_trimmed}, callbackFromQuery);      // this is a GET - see RESOURCE
+
                             $location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
                             $scope.setTextInShowingEditor(commandRemoved_toSearchFor_trimmed);
 
@@ -2049,6 +2051,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //alert ('not a write - search for [' + commandTrimmed.trim() + ']');
                         O.o ('=============== in section QUERY2');
                         $scope.ustodos = Ustodos.query ({q: commandTrimmed.trim()}, callbackFromQuery);      // this is a GET - see RESOURCE
+
                         //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
                     }
 
@@ -2102,7 +2105,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                     //console.log (getClass('ssdfsdfdsf', this.commandFromInputBox));
 
-                    //$scope.ustodos = Ustodos.query ({name: /141229/});
+                    //$scope.ustodos = Ustodos. query ({name: /141229/});
                     //setTimeout(function(){console.log ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
                     //setTimeout(function(){alert ('in ustodos.client.controller SEARCH2 $scope.ustodos.length:' + $scope.ustodos.length);}, 1000);
                     //$scope.$apply();
@@ -2182,6 +2185,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.onTrueOffFalse = false;
             $scope.updateUstodosFiltered = function (s) {
+
+                if (document.ustodosFilterCacheDirty === false)
+                {
+                    //alert('setting cache dirty');
+                    document.ustodosFilterCacheDirty = true;
+                }
 
                 $scope.ustodosFiltered = [];
                 O.o ('in updateUstodosFiltered() s  [' + s + ']');
@@ -2263,15 +2272,36 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 .filter('filterUstodos', function()
 {
     return function( ustodos, s) {
+        if ( document.ustodosFilterCacheDirty !== true )
+        {
+            //O.o ('returning cached ustodos filtered s [' + s + '] TimeSynched [' + document.ustodosLastCommitTimeSynched + ']');
+            return document.ustodosFilterCache;
+        }
+        else
+        {
+            // alert ('getting new filter');
+        }
+
         var ustodosFiltered = [];
-        angular.forEach(ustodos, function(ustodo) {
-            if(ustodo.html.indexOf(s) >= 0) {
+        angular.forEach(ustodos, function(ustodo)
+        {
+            if(!s || ustodo.html.indexOf(s) >= 0) {
+                O.o ("======  filter do keep");
                 ustodosFiltered.push(ustodo);
+            } else {
+                O.o ("======  filter do not keep");
+
             }
         });
-        return ustodosFiltered;
+        document.ustodosFilterCache = ustodosFiltered;
+        document.ustodosFilterCacheDirty = false;
+
+        O.o ('@@@@@@@@@ filter done ustodosFiltered.length:'+ustodosFiltered.length);
+
+        return document.ustodosFilterCache;
     };
 });
+
 
 
 
