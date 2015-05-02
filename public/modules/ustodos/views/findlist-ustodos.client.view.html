@@ -1,5 +1,4 @@
 <div id='topDivInFindUstodos' ng-app style="background-color:xxlightblue">
-<div id='topDivInFindUstodos' ng-app style="background-color:xxlightblue">
 
     <div ng-address-bar></div><br>
 
@@ -47,7 +46,7 @@
         <br>
         <br>
 
-        <span xxxng-keyup="onKeyUp($event, this.ENUM_KEYEVENTCALLER_KEYUPSPAN)">
+        <span xxng-keyup="onKeyUp($event, this.ENUM_KEYEVENTCALLER_KEYUPSPAN)">
 
             <!--<input class="hkToolbarElement" type='image'-->
                <!--ng-click='toggleVisibilityToNext()'-->
@@ -55,7 +54,19 @@
                <!--title="toggleVisibilityToNext"-->
                <!--style='height:32px;'-->
                 <!--/>-->
-
+                <!-- section_3_inputs
+                 .----------------. .----------------. .----------------. .-----------------..----------------. .----------------. .----------------. .----------------.
+                | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+                | |    ______    | | |              | | |     _____    | | | ____  _____  | | |   ______     | | | _____  _____ | | |  _________   | | |    _______   | |
+                | |   / ____ `.  | | |              | | |    |_   _|   | | ||_   \|_   _| | | |  |_   __ \   | | ||_   _||_   _|| | | |  _   _  |  | | |   /  ___  |  | |
+                | |   `'  __) |  | | |              | | |      | |     | | |  |   \ | |   | | |    | |__) |  | | |  | |    | |  | | | |_/ | | \_|  | | |  |  (__ \_|  | |
+                | |   _  |__ '.  | | |              | | |      | |     | | |  | |\ \| |   | | |    |  ___/   | | |  | '    ' |  | | |     | |      | | |   '.___`-.   | |
+                | |  | \____) |  | | |              | | |     _| |_    | | | _| |_\   |_  | | |   _| |_      | | |   \ `--' /   | | |    _| |_     | | |  |`\____) |  | |
+                | |   \______.'  | | |   _______    | | |    |_____|   | | ||_____|\____| | | |  |_____|     | | |    `.__.'    | | |   |_____|    | | |  |_______.'  | |
+                | |              | | |  |_______|   | | |              | | |              | | |              | | |              | | |              | | |              | |
+                | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+                 '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
+                -->
             <!-- ================ INPUT#0 ======================== maps to $scope.onKeyUp -->
             <input id="idInput0TypeText" type="text" ng-keyup="this.onKeyUp($event, this.ENUM_KEYEVENTCALLER_INPUT0)"
                    class="input-textarea" placeholder="Search / Input / Command" ng-blur="eventBlur0InputText()" required>
@@ -106,80 +117,12 @@
                 ></select>
 
             <!--<button ng-click="testButton(-2)">TestButton</button> // look for $scope.testButton-->
+            <button ng-click="testButton(-2)">TestButton</button> //
             <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
         </span>
         <br>
         <br>
 
-        <!--<div class="hkcssPosFixed">-->
-
-            <!--<span class="col-md-12">-->
-
-                <!--&lt;!&ndash; HKACTION - HIT ENTER IN TEXT BOX &ndash;&gt;-->
-                    <!--<form class="form-horizontal" data-ng-submit="searchhk('s')" novalidate>-->
-                    <!--<fieldset>-->
-                        <!--<div class="form-group">-->
-                            <!--<br>-->
-                            <!--<div class="controls">-->
-
-
-                                <!--&lt;!&ndash; Place this in the body of the page content &ndash;&gt;-->
-
-                                <!--&lt;!&ndash;<div>this.commands.length: <span ng-bind="this.commands.length"></span ></div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<input type="submit" value="Do" class="btn btn-sm" style="padding:2px;font-size:10px; display:inline">&ndash;&gt;-->
-                                <!--&lt;!&ndash; HKACTION - KEY UP IN TEXT BOX &ndash;&gt;-->
-
-
-                                <!--&lt;!&ndash; HKACTION - CLICK ACT &ndash;&gt;-->
-                                <!--&lt;!&ndash;<span class="dev-notes">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<button ng-click="yyutdact()" ng-init="count=0">Do</button>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;operators.length:{{operators.length}}&ndash;&gt;-->
-                                    <!--&lt;!&ndash;&nbsp;&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<span>Operator is: {{filterCondition.operator}}</span>&ndash;&gt;-->
-
-                                        <!--&lt;!&ndash;value="this.selectModel"&ndash;&gt;-->
-                                        <!--&nbsp;-->
-                                        <!--&lt;!&ndash;<span>Operator is: {{filterCondition.operator}}</span>&ndash;&gt;-->
-
-                                        <!--&lt;!&ndash;WORKS!! http://jsfiddle.net/aBccw/&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<select ng-change="this.selectChangeEvenHandler()"&ndash;&gt;-->
-                                        <!--&lt;!&ndash;id='selectId'&ndash;&gt;-->
-                                        <!--&lt;!&ndash;class="xxform-control"&ndash;&gt;-->
-                                        <!--&lt;!&ndash;ng-model="filterCondition"&ndash;&gt;-->
-                                        <!--&lt;!&ndash;ng-options="operator.value as operator.displayName for operator in operators | orderBy: 'displayName'">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;&nbsp;&ndash;&gt;-->
-                                        <!--&lt;!&ndash;Dirty: <span ng-bind ='areThereChanges'></span>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;areThereChanges2<span ng-bind = {{areThereChanges}}></span>yy&ndash;&gt;-->
-
-                                        <!--&lt;!&ndash;<span ng-bind=('('+this.ustodos.length+')')></span >&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<div id="idFilterCount">&ndash;&gt;-->
-                                            <!--&lt;!&ndash;filter: <span ng-bind=('('+this.searchedFor+')')></span >&ndash;&gt;-->
-                                            <!--&lt;!&ndash;count: <span ng-bind=('('+this.ustodos.length+')')></span >&ndash;&gt;-->
-                                            <!--&lt;!&ndash;<button ng-click="this.buttonClickSearchStar()">*</button>&ndash;&gt;-->
-                                            <!--&lt;!&ndash;&lt;!&ndash;<button ng-click="this.buttonClickSearchClear()">Clear</button>&ndash;&gt;&ndash;&gt;-->
-                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
-
-                                <!--&lt;!&ndash;</span>&ndash;&gt;-->
-
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div data-ng-show="error" class="text-danger">-->
-                            <!--<strong data-ng-bind="error"></strong>-->
-                        <!--</div>-->
-                    <!--</fieldset>-->
-                <!--</form>-->
-
-                <!--&lt;!&ndash;<a ng-href="http://u2d.co" target="_blank">UsToDo</a>f&ndash;&gt;-->
-
-                <!--<a ng-href="{{ $scope.post[0]}}">{{ $scope.post[0] }}</a>-->
-
-                <!--&lt;!&ndash;<div ng-bind-html-unsafe='htmlString'></div>f&ndash;&gt;-->
-
-                <!--&lt;!&ndash;<button ng-click="count = count + 1" ng-init="count=0">&ndash;&gt;-->
-            <!--</span>-->
-        <!--</div>-->
         <div class="hkcssPosTable">
             <table>
                 <!--<tr ng-repeat="ustodo in ustodos ">f-->
@@ -217,8 +160,19 @@
 
                 <span id="hktablespan">
 
-
-
+                     <!--  SECTION_PER_ROW
+                     .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.
+                    | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+                    | |   ______     | | |  _________   | | |  _______     | | |              | | |  _______     | | |     ____     | | | _____  _____ | |
+                    | |  |_   __ \   | | | |_   ___  |  | | | |_   __ \    | | |              | | | |_   __ \    | | |   .'    `.   | | ||_   _||_   _|| |
+                    | |    | |__) |  | | |   | |_  \_|  | | |   | |__) |   | | |              | | |   | |__) |   | | |  /  .--.  \  | | |  | | /\ | |  | |
+                    | |    |  ___/   | | |   |  _|  _   | | |   |  __ /    | | |              | | |   |  __ /    | | |  | |    | |  | | |  | |/  \| |  | |
+                    | |   _| |_      | | |  _| |___/ |  | | |  _| |  \ \_  | | |              | | |  _| |  \ \_  | | |  \  `--'  /  | | |  |   /\   |  | |
+                    | |  |_____|     | | | |_________|  | | | |____| |___| | | |   _______    | | | |____| |___| | | |   `.____.'   | | |  |__/  \__|  | |
+                    | |              | | |              | | |              | | |  |_______|   | | |              | | |              | | |              | |
+                    | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+                     '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
+                    -->
 
                     <!-- SECTION__ NG-REPEAT NG-IF FILTER PER ROW EXPERIMENTAL -->
                     <!--<tr  ng-repeat="ustodo in ustodosFiltered"-->
@@ -229,7 +183,7 @@
                         ng-mouseover="this.eventMouseoverRow2($index)"
                         ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
                         class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
-                        <!-- CHECK BOX -->
+                        <!-- PER ROW CHECK BOX -->
                         <td>
                             {{$index}}
                             <!--ustodo[$index].html.indexOf("http"):{{this.ustodos[$index].html.indexOf("http")}}-->
@@ -238,7 +192,7 @@
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox"' type="checkbox"/>-->
                         </td>
 
-                        <!-- DELETE BUTTON -->
+                        <!-- PER ROW DELETE BUTTON -->
                         <td>
                             <!-- trash garbage icon -->
                             &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
@@ -251,7 +205,7 @@
                             <!--class="gallery-image fade-animation"-->
                         </td>
 
-                        <!-- SAVE BUTTON -->
+                        <!-- PER ROW SAVE BUTTON -->
                         <td>
                             <!--<button ng-click="count = count + 1" ng-init="count=0">-->
                             <!--<button ng-click="alignAnUstodoWithUstodoHtmlByIndex($index)">SAV</button>-->
@@ -265,37 +219,31 @@
                             &nbsp;
                         </td>
 
-                        <!-- COUNT -->
+                        <!-- PER ROW COUNT -->
                         <!--<td>{{$index+1}} <span data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)" title={{UtilDate.dateObjFromMongoString(ustodo.datelastmod).toString()}}></span></td>-->
 
 
-                        <!-- TIME AGO -->
+                        <!-- PER ROW TIME AGO -->
                         <!--<td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod) + ustodo.datelastmod+'.'+ustodo._id"-->
                         <td>&nbsp;<span class="per-row-count" data-ng-bind="UtilDate.timeAgo(ustodo.datelastmod)"
                                         ng-click="event_click_timeAgo(ustodo._id)"
                                         title={{ustodo.datelastmod+'.'+ustodo._id+'ClickForID'}}></span></td>
                         <!--<td>{{ ustodo.text}}</td>f-->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <!-- TEXT -->
+                        <!-- PER ROW TEXT CONTENTEDITABLE ROW -->
                         <td>
+
+
+
+
                             <span id="ustodorow{{$index}}" contenteditable="true"
+                                  ng-focus='hkngfocustest("hi dad2")'
+                                  ng-keyup="onKeyUp_perrow_text($event, $index, ustodosFiltered[$index]._id)"
+
                                   ng-bind-html="ustodosFiltered[$index].html | linky:'_blank'"
-                               ></span>
+                            ></span>
+
+
                         </td>
                         <!--/onclick = "this.contentEditable = true;"-->
 

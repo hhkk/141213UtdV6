@@ -162,6 +162,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.ENUM_KEYEVENTCALLER_INPUT0 = "ENUM_KEYEVENTCALLER_INPUT0";
             $scope.ENUM_KEYEVENTCALLER_KEYUPSPAN = "ENUM_KEYEVENTCALLER_KEYUPSPAN";
+            $scope.ENUM_KEYEVENTCALLER_PERROW_TEXT = "ENUM_KEYEVENTCALLER_PERROW_TEXT";
+
 
             //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
             //    'Authentication', 'Ustodos',
@@ -543,19 +545,30 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //$scope.onKeyDown = function ($event) {
             //    $scope.onKeyDownResult = getKeyboardEventResult($event, 'Key down');
             //};
+
+
+            $scope.onKeyUp_perrow_text = function (keyEvent, index, _id) // https://docs.angularjs.org/api/ng/directive/ngKeyup
+            {
+                if (keyEvent.keyCode === 27 ) // escape key
+                    alert ('time to save!');
+
+
+            }
+
             $scope.onKeyUp = function (keyEvent, ENUM_KEYEVENTcaller) // https://docs.angularjs.org/api/ng/directive/ngKeyup
             {
-                alert ('in onkeyup ENUM_KEYEVENTcaller:' + ENUM_KEYEVENTcaller);
+                O.o ('in onkeyup ENUM_KEYEVENTcaller [' + ENUM_KEYEVENTcaller + 'keyEvent.keyCode:' + keyEvent.keyCode);
                 if (keyEvent.ctrlKey)
                     return;
                 if (keyEvent.altKey)
                     return;
+                //if (keyEvent.keyCode === 27 ) // escape key
+//                    return;
                 if (keyEvent.keyCode >= 35 && keyEvent.keyCode <= 40) // home end and arrow keys
                     return;
                 if (keyEvent.keyCode >= 16 && keyEvent.keyCode <= 18) // shift alt ctrl key up
                     return;
 
-                //O.o ('keyEvent.keyCode:' + keyEvent.keyCode);
 
                 var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
                 //O.o('onKeyUp:' + keyCode);
@@ -1500,6 +1513,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    return UtilDate.dateFromMongoString(dateStrFromMongo);
             //}
 
+            $scope.testButton= function(s)
+            {
+                O.o('in testbutton');
+            document.getElementById('ustodorow0').blur();
+
+            }
+
             $scope.authentication = Authentication;
 
             $scope.caption = 'My Caption';
@@ -2226,9 +2246,16 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.filterMatches = function () {
-                $scope.$apply();
+                //$scope.$apply();
                 return ret;
             }
+
+
+
+            $scope.hkngfocustest = function(s) {
+                O.o('from hkngfocustest:' + s);
+            }
+
 
             //alert ('done defining medium');
 
