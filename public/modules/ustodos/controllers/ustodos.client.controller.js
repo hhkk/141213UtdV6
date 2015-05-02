@@ -549,8 +549,37 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.onKeyUp_perrow_text = function (keyEvent, index, _id) // https://docs.angularjs.org/api/ng/directive/ngKeyup
             {
-                if (keyEvent.keyCode === 27 ) // escape key
-                    alert ('time to save!');
+                if (keyEvent.keyCode !== 27 ) // escape key
+                    return;
+//                    alert ('time to save!');
+
+                var newHtml = document.getElementById('ustodorow'+index).innerHTML;
+                //alert ('save newHtml:' + newHtml);
+
+                var found = false;
+                for (var i = 0; i < $scope.ustodos.length; i++)
+                {
+                    if ($scope.ustodos[i]._id === _id)
+                    {
+                        found = true;
+                        //alert ('found match at index:' + i + ' with original text :' + $scope.ustodos[i]);
+                        $scope.ustodos[i].html = newHtml;
+
+                        $scope.ustodos[i].$update(function () {
+                            alert ('SAVED utd OK !!! ');
+                        }, function (errorResponse) {
+                            $scope.error = errorResponse.data.message;
+                            alert ('ERROR ON SAVE !!! ' + $scope.ustodos[i].html);
+                        });
+
+                    }
+
+                }
+
+                if (!found) {
+                    alert ('not found!');
+                }
+
 
 
             }
