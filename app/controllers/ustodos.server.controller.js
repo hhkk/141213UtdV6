@@ -7,6 +7,7 @@ var UtilUrl4 = require('C:/utd/141213UtdV6/public/util/UtilUrl4.js');
 var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
 var ObjectID = require('mongodb').ObjectID;
+var require_Development = require('C:/utd/141213UtdV6/config/env/development.js');
 
 //var UtilClass = require('.././UtilClass');
 // O.o ('__dirname:' + __dirname);  // __dirname:c:\utd\141213UtdV6\app\controllers
@@ -55,7 +56,7 @@ exports.create = function(req, res) {
                     message: errorHandler.getErrorMessage(err)
                 });
             } else {
-                console.log ('@@@@@@@@@@@@@@@@@@@@@ saved a new USTODO ' + ustodo.html);
+                console.log ('@@@@@@@@@@@@@@@@@@@@@ saved a new USTODO [' + ustodo.html + ']');
                 res.jsonp(ustodo);
             }
         });
@@ -96,9 +97,9 @@ exports.update = function(req, res) {
         if (err) {
           O.o('era!!!!!!!!!');
         } else {
-            O.o('success1!!!!!!!!! ustodosaved.html' + ustodosaved.html);
-            O.o('success2!!!!!!!!! numberAffected' + numberAffected);
-            O.o('success3!!!!!!!!! req.body._id' + req.body._id);
+            O.o('success1!!!!!!!!! ustodosaved.html [' + ustodosaved.html + ']');
+            O.o('success2!!!!!!!!! numberAffected [' + numberAffected + ']');
+            O.o('success3!!!!!!!!! req.body._id [' + req.body._id + ']');
         }
     });
 
@@ -177,7 +178,7 @@ exports.ustodobulkdel = function(req, res) {
 
 
 
-        var dbWrite = new Db('ustodo-dev', new Server('localhost', 27017), {safe: false});
+        var dbWrite = new Db(require_Development.dbname_ustodo, new Server('localhost', 27017), {safe: false});
         dbWrite.open(function (err, dbWrite)
         {
             dbWrite.collection('ustodos', function (err, collRemove_ustodos)

@@ -16,6 +16,19 @@
                <!--title="Next Editor"-->
                <!--style='height:32px;'-->
                 <!--/>-->
+        <!-- section_toolbar
+        .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.
+        | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+        | |  _________   | | |     ____     | | |     ____     | | |   _____      | | |   ______     | | |      __      | | |  _______     | |
+        | | |  _   _  |  | | |   .'    `.   | | |   .'    `.   | | |  |_   _|     | | |  |_   _ \    | | |     /  \     | | | |_   __ \    | |
+        | | |_/ | | \_|  | | |  /  .--.  \  | | |  /  .--.  \  | | |    | |       | | |    | |_) |   | | |    / /\ \    | | |   | |__) |   | |
+        | |     | |      | | |  | |    | |  | | |  | |    | |  | | |    | |   _   | | |    |  __'.   | | |   / ____ \   | | |   |  __ /    | |
+        | |    _| |_     | | |  \  `--'  /  | | |  \  `--'  /  | | |   _| |__/ |  | | |   _| |__) |  | | | _/ /    \ \_ | | |  _| |  \ \_  | |
+        | |   |_____|    | | |   `.____.'   | | |   `.____.'   | | |  |________|  | | |  |_______/   | | ||____|  |____|| | | |____| |___| | |
+        | |              | | |              | | |              | | |              | | |              | | |              | | |              | |
+        | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+        '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
+        -->
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
                ng-click="clearText()"                src='/img/ClearText.png'
                title="Clear Text"
@@ -69,14 +82,17 @@
                 -->
             <!-- ================ INPUT#0 ======================== maps to $scope.onKeyUp -->
             <input id="idInput0TypeText" type="text" ng-keyup="this.onKeyUp($event, this.ENUM_KEYEVENTCALLER_INPUT0)"
-                   class="input-textarea" placeholder="Search / Input / Command" ng-blur="eventBlur0InputText()" required>
+                   class="input-textarea" placeholder="Search / Input / Command" 
+				   title='Search (case insensitive, order insensitive) / Save / Command '
+				   ng-blur="eventBlur0InputText()" required>
                    <!--ng-model="inputbind"-->
 
             <!--ng-bind='inputbind'-->
             <!--data-ng-model="commandFromInputBox"-->
 
             <!-- ================ INPUT#1 ======================== -->
-            <div id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" ng-keyup='this.onKeyUp($event)' ></div>
+            <div id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" ng-keyup='this.onKeyUp($event)' 
+			title='search (case insensitive, order insensitive)'></div>
 
             <!-- ================ INPUT#2 ======================== -->
             <div id='idDivForCkeEditorTextarea' ng-keyup='this.onKeyUp()'  ng-blur="xxpropagateTextChanges()">
@@ -92,8 +108,23 @@
             <!--<div id='idDivForTinyMceEditorTextarea'>-->
                 <!--<textarea id="idTinyMceTextArea">Search/Input</textarea>-->
             <!--</div>-->
+
+
+            <!-- SECTION_FILTER ICON AND TEXTBOX -->
+            <BR>
+			<img ng-src="/img/filterIcon2.jpg" class="per-row-icons-trashimage"
+                             alt="{{image.name}}"  title='Restrict within search result'
+                             xxxxng-mouseover="this.filterToLinksOnly ()"
+                             xxng-click="this.filterToLinksOnly ()"
+            >
+            &nbsp;
+            <input type="text" title='Restrict within search result' name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
+                   ng-pattern="example.word" required ng-trim="false">
+            <br>
             <br>
 
+
+            <!-- RESEARCH SECTION_FILTER ICON AND TEXTBOX -->
             Filter: <span ng-bind=('('+this.searchedFor+')')  ng-mouseover="this.eventMouseoverRow3(this.searchedFor)"
                 ></span >
 
@@ -138,25 +169,18 @@
 
                 <!--<button ng-click="alert ('ff')" ng-init="count=0">-->
 
-                <!-- SECTION_ HEADER ROW ICONS SELECT ALL -->
+                <!-- SECTION_ HEADER ROW SELECT ALL CHECKBOX AND TRASH ICON -->
                 &nbsp;<input ng-click='checkBoxClickedToggleAll()' id='checkBoxAll' type="checkbox"/> All
 
                 &nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
                                  alt="{{image.name}}"  title='Delete Selected'
                                  ng-click="operationOnChecked_Delete()"
                            >
-                &nbsp;<img class="per-row-icons-trashimage" ng-src="/img/filterIcon2.jpg"
-                                 alt="{{image.name}}"  title='Restrict within search result'
-                                xxxxng-mouseover="this.filterToLinksOnly ()"
-                                xxng-click="this.filterToLinksOnly ()"
-                           >
+                &nbsp;
 
-
-
-
-                <!-- SECTION_ TEXT FILTER -->
-                <input type="text" title='Restrict within search result' name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
-                       ng-pattern="example.word" required ng-trim="false">
+                <!-- SECTION_ TEXT FILTER ICON AND DYNAMIC SEARCH BOX -->
+                <p>
+                <p>
 
                 <span id="hktablespan">
 
@@ -188,7 +212,8 @@
                             {{$index}}
                             <!--ustodo[$index].html.indexOf("http"):{{this.ustodos[$index].html.indexOf("http")}}-->
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox{{ustodo.html}}"' type="checkbox"/>-->
-                            &nbsp;<input ng-click='checkBoxClickedSingle(ustodos[$index]._id)' id='idcheckbox{{$index}}' class='chkbox' title='Select for bulk operation' type="checkbox"/>
+                            <!--&nbsp;<input ng-click='checkBoxClickedSingle(ustodos[$index]._id)' id='idcheckbox{{$index}}' class='chkbox' title='Select for bulk operation' type="checkbox"/>-->
+                            &nbsp;<input ng-click='checkBoxClickedSingle($index)' id='idcheckbox{{$index}}' class='chkbox' title='Select for bulk operation' type="checkbox"/>
                             <!--&nbsp;<input ng-click='testButton($index)' id='idcheckbox"' type="checkbox"/>-->
                         </td>
 

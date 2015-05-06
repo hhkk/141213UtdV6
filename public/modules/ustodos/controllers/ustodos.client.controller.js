@@ -160,9 +160,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         try
         {
 
-            $scope.ENUM_KEYEVENTCALLER_INPUT0 = "ENUM_KEYEVENTCALLER_INPUT0";
-            $scope.ENUM_KEYEVENTCALLER_KEYUPSPAN = "ENUM_KEYEVENTCALLER_KEYUPSPAN";
-            $scope.ENUM_KEYEVENTCALLER_PERROW_TEXT = "ENUM_KEYEVENTCALLER_PERROW_TEXT";
+            $scope.ENUM_KEYEVENTCALLER_INPUT0 = 'ENUM_KEYEVENTCALLER_INPUT0';
+            $scope.ENUM_KEYEVENTCALLER_KEYUPSPAN = 'ENUM_KEYEVENTCALLER_KEYUPSPAN';
+            $scope.ENUM_KEYEVENTCALLER_PERROW_TEXT = 'ENUM_KEYEVENTCALLER_PERROW_TEXT';
 
 
             //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
@@ -554,7 +554,15 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 //                    alert ('time to save!');
 
                 var newHtml = document.getElementById('ustodorow'+index).innerHTML;
-                //alert ('save newHtml:' + newHtml);
+                //alert ('newHtml:' + newHtml);
+                //<a target="_blank" href="http://ibm.com">http://ibm.com</a>
+
+                var fnCallbackFromUpdate = function (errorResponse) {
+                    alert ('ERROR ON SAVE !!! errorResponse:' + errorResponse);
+                    //
+                    //$scope.error = errorResponse.data.message;
+                    //alert ('ERROR ON SAVE !!! ' + $scope.ustodos[i].html);
+                };
 
                 var found = false;
                 for (var i = 0; i < $scope.ustodos.length; i++)
@@ -563,14 +571,20 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     {
                         found = true;
                         //alert ('found match at index:' + i + ' with original text :' + $scope.ustodos[i]);
+
                         $scope.ustodos[i].html = newHtml;
 
-                        $scope.ustodos[i].$update(function () {
-                            alert ('SAVED utd OK !!! ');
-                        }, function (errorResponse) {
-                            $scope.error = errorResponse.data.message;
-                            alert ('ERROR ON SAVE !!! ' + $scope.ustodos[i].html);
+                        // maps to exports.update
+                        //$scope.ustodos[i].$update(function () {
+                        //    alert ('---------------------------- SAVED utd OK !!! ');
+                        //}, fnCallbackFromUpdate);
+
+                        $scope.ustodos[i].$update(function() {
+                            alert('success save newHtml [' + newHtml + ']');
+                        }, function(errorResponse) {
+                            alert('error on save errorResponse.data.message [' + errorResponse.data.message + ']');
                         });
+                        alert ('done update submit [' + $scope.ustodos[i].html + ']');
 
                     }
 
@@ -582,7 +596,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-            }
+            };
 
             $scope.onKeyUp = function (keyEvent, ENUM_KEYEVENTcaller) // https://docs.angularjs.org/api/ng/directive/ngKeyup
             {
@@ -1349,9 +1363,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //O.o ('===================== processCommand for xHtml [' + xHtml + ']');
                     //O.o ('===================== processCommand for xValue [' + xValue + ']');
                     $scope.processCommand(xText, xHtml, xValue, callbackCommand);
-                }  else {
-                    //alert ('no need to process command');
                 }
+                //else {
+                //    //alert ('no need to process command');
+                //}
 
                 //alert ('document.activeElement.id:' + document.activeElement.id + ', parent:' + document.activeElement.parentElement.id);
                 //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.id);
@@ -1547,7 +1562,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 O.o('in testbutton');
             document.getElementById('ustodorow0').blur();
 
-            }
+            };
 
             $scope.authentication = Authentication;
 
@@ -1677,9 +1692,16 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 });
             };
 
+
+            var callbackhkhk_find = function()
+            {
+                //alert ('in callbackhkhk_find');
+                $scope.setUstodosFiltered('caller1_find', $scope.ustodos);
+            }
+
             // Find a list of Ustodos
             $scope.find = function() {
-                console.log ('4 in ustodos.client.controller FIND');
+                //alert ('4 in ustodos.client.controller FIND');
                 //getProperties('props Ustodos:', Ustodos);
 
                 //$scope.ustodos = Ustodos. query(); //original
@@ -1688,11 +1710,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //$scope.ustodos = Ustodos. query({name: 'ggggg'}); // Works!
 
 
-                var ustodosLocal = Ustodos.query({text: ''});
-                $scope.setUstodosFiltered("caller1", ustodosLocal);
+                $scope.ustodos = Ustodos.query({text: ''}, callbackhkhk_find);
 
-
-                O.o ('____ ustodos:' + $scope.ustodos);
+                //alert ('____ $scope.ustodos.length:' + $scope.ustodos.length);
 
                 //$scope.ustodos = Ustodos. query({ustodoId: '54929d5d1d3df384165f4fa2'});
                 //$scope.ustodos = Ustodos. query({ustodoId: '54929d5d1d3df384165f4fa2'});
@@ -1752,7 +1772,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 O.assert (checkboxFirst);
                 var areAllCbStatesSame = true;
                 var checkboxFirstState = checkboxFirst.checked;
-                var x = $('.chkbox');
+
+                    var x = $('.chkbox');
                 O.o ('x.length:' + x.length);
                 // check if all are checked so it's just a toggle
                 for (var i = 0; i < x.length; i++ )
@@ -1785,7 +1806,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.checkBoxClickedSingle = function(j)
             {
-                alert ('in checkBoxClickedSingle j:' + j)  ;
+                //alert ('in checkBoxClickedSingle j:' + j)  ;
                 //var elem = angular.element(document.querySelector('#hktablespan'));
 
                 //find('.classname'), assumes you already have the starting elem to search from
@@ -1814,13 +1835,16 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 if( window.keyStates.keyStateShiftDown === true)
                 {
-                    //O.o ('yes window.keyStates.keyStateShiftDown');
+                    //alert ('yes window.keyStates.keyStateShiftDown');
                     var start = $chkboxes.index(thisCheckBox);
                     var end = $chkboxes.index($scope.lastChecked);
+                    //alert('using lastchecked start [' + start + '] end [' + end + '] ');
                     $chkboxes.slice(Math.min(start,end), Math.max(start,end)+ 1).prop('checked', $scope.lastChecked.checked);
+                    //alert('used lastchecked successfully');
                     //O.o ('set $scope.lastChecked to:' + $scope.lastChecked.id);
                 }
 
+                //alert('setting lastchecked');
                 $scope.lastChecked = thisCheckBox;
 
             }; // checkBoxClickedSingle
@@ -1839,7 +1863,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         arrOidsToDelete.push($scope.ustodos[i]._id);
                     }
                 }
-                O.o ('delete all:' + arrOidsToDelete);
+                //alert ('delete all:' + arrOidsToDelete);
 
                 // now make web service call
 
@@ -1873,6 +1897,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     $http.post('/ustodobulkdel', {form:{key:'hkvalue', arrOidsToDelete:arrOidsToDelete}}).
                         success(function(data) {
                             O.o ('data:' + data.toString());
+                            $scope.find();
+
                         }). error(function(data, status, headers, config) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
@@ -1939,10 +1965,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
             $scope.setUstodosFiltered = function(caller, ustodosUnfiltered) {
+                //alert('in setUstodosFiltered caller [' + caller + '] dirtying $scope.ustodosFiltered ustodosUnfiltered.length' + ustodosUnfiltered.length);
                 $scope.ustodosFiltered = ustodosUnfiltered;
                 document.ustodosFilterCacheDirty = true;
-                //alert('caller [' + caller + '] dirtying $scope.ustodosFiltered $scope.ustodosFiltered.length' + $scope.ustodosFiltered.length);
-            }
+            };
 
 
 
@@ -2005,7 +2031,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     var commandRemoved_toSearchFor_trimmed = null;
 
                     var callbackFromQuery = function() {
-                        $scope.setUstodosFiltered("caller2", $scope.ustodos);
+                        $scope.setUstodosFiltered('caller2', $scope.ustodos);
 
 
                         //alert ('in callback from query')
@@ -2216,7 +2242,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
             $scope.filterDoesThisRowHtmlMatch = function(s, filterText) {
-                var s2 = "";
+                var s2 = '';
                 var arrTokens = s.split(/\s/);
                 for (var i = 0; i < arrTokens.length; i++)
                 {
@@ -2228,7 +2254,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     }
                 }
                 return s2;
-            }
+            };
 
             $scope.filterText = null;
 
@@ -2277,13 +2303,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.filterMatches = function () {
                 //$scope.$apply();
                 return ret;
-            }
+            };
 
 
 
             $scope.hkngfocustest = function(s) {
                 O.o('from hkngfocustest:' + s);
-            }
+            };
 
 
             //alert ('done defining medium');
@@ -2333,19 +2359,19 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //O.o ('returning cached ustodos filtered s [' + s + '] TimeSynched [' + document.ustodosLastCommitTimeSynched + ']');
             return document.ustodosFilterCache;
         }
-        else
-        {
-            // alert ('getting new filter');
-        }
+        //else
+        //{
+        //    // alert ('getting new filter');
+        //}
 
         var ustodosFiltered = [];
         angular.forEach(ustodos, function(ustodo)
         {
             if(!s || ustodo.html.indexOf(s) >= 0) {
-                O.o ("======  filter do keep");
+                O.o ('======  filter do keep');
                 ustodosFiltered.push(ustodo);
             } else {
-                O.o ("======  filter do not keep");
+                O.o ('======  filter do not keep');
 
             }
         });

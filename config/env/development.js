@@ -1,8 +1,14 @@
 'use strict';
 
+
+var dbname_ustodo = 'ustodo-dev2';
+
+// var require_Development = require('C:/utd/141213UtdV6/config/env/development.js');
+
 module.exports = {
+	dbname_ustodo: dbname_ustodo,
 		//db: 'mongodb://localhost/141213UtdV6', // ustodo-dev not mongo port but mongo db name
-		db: 'mongodb://localhost/ustodo-dev', // ustodo-dev not mongo port but mongo db name
+    db: 'mongodb://localhost/' + dbname_ustodo, // ustodo-dev not mongo port but mongo db name
 	app: {
 		title: 'UsToDo - Development Environment'
 	},
