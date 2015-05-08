@@ -7,6 +7,7 @@
         <!--<input type="text" ng-model="currentVisibleCounter"/>-->
 
         <!--<button ng-click="yyutdact()">Do</button>-->
+
         <!--<button ng-init='ngInitTinyMceButton()' ng-click="testTinyMce()">testTinyMce()</button>-->
         <!--<button xxng-init='xxtoggleReadOnly()' ng-click="toggleReadOnly()">toggleReadOnly CK EDIT()</button>-->
         <!--<input focus-on="focusMe"/>-->
@@ -89,6 +90,13 @@
 
             <!--ng-bind='inputbind'-->
             <!--data-ng-model="commandFromInputBox"-->
+    <div id='div1hk'>
+    hi hk
+    </div>
+    <button ng-click="testNLBfadeBg()">Fade Div</button>
+
+    <!--<a href="javascript:NLBfadeBg('div1hk','#FF0000','#FFFFFF','1000');">Fade DIV-->
+
 
             <!-- ================ INPUT#1 ======================== -->
             <div id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" ng-keyup='this.onKeyUp($event)' 
@@ -110,7 +118,7 @@
             <!--</div>-->
 
 
-            <!-- SECTION_FILTER ICON AND TEXTBOX -->
+            <!-- ========================= SECTION_FILTER ICON AND TEXTBOX ===================== -->
             <BR>
 			<img ng-src="/img/filterIcon2.jpg" class="per-row-icons-trashimage"
                              alt="{{image.name}}"  title='Restrict within search result'
@@ -120,6 +128,7 @@
             &nbsp;
             <input type="text" title='Restrict within search result' name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
                    ng-pattern="example.word" required ng-trim="false">
+
             <br>
             <br>
 
@@ -184,7 +193,7 @@
 
                 <span id="hktablespan">
 
-                     <!--  SECTION_PER_ROW
+                     <!--  SECTION_PER_ROW PERROW
                      .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.
                     | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
                     | |   ______     | | |  _________   | | |  _______     | | |              | | |  _______     | | |     ____     | | | _____  _____ | |
@@ -262,7 +271,7 @@
 
 
                             <span id="ustodorow{{$index}}" contenteditable="true"
-                                  ng-focus='hkngfocustest("hi dad2")'
+                                  ng-focus='hkngfocustest($index)'
                                   ng-keyup="onKeyUp_perrow_text($event, $index, ustodosFiltered[$index]._id)"
 
                                   ng-bind-html="ustodosFiltered[$index].html | linky:'_blank'"

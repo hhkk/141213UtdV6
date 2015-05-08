@@ -1,7 +1,8 @@
 'use strict';
 
 
-var dbname_ustodo = 'ustodo-dev2';
+var dbname_ustodo = 'ustodo-dev';
+//var dbname_ustodo = 'ustodo-dev2';
 
 // var require_Development = require('C:/utd/141213UtdV6/config/env/development.js');
 
