@@ -219,9 +219,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.testNLBfadeBg = function() {
-                alert('in testNLBfadeBg')      ;
-                UtilNLB_bgFade.NLBfadeBg('div1hk','#FF0000','#FFFFFF','1000');
-            }
+                //alert('in testNLBfadeBg')      ;
+                UtilNLB_bgFade.NLBfadeBg('div1hk','green', '#FFFFFF','1500');
+            };
 
 
             $scope.ngInitTinyMceButton = function()
@@ -566,6 +566,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //alert ('time to save!');
 
                 var newHtml = document.getElementById('ustodorow'+index).innerHTML;
+
+                UtilNLB_bgFade.NLBfadeBg('ustodorow'+index,'green', '#FFFFFF','1500');
+
                 //alert ('newHtml:' + newHtml);
                 //<a target="_blank" href="http://ibm.com">http://ibm.com</a>
 
@@ -615,7 +618,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.onKeyUp = function (keyEvent, ENUM_KEYEVENTcaller) // https://docs.angularjs.org/api/ng/directive/ngKeyup
             {
-                O.o ('in onkeyup ENUM_KEYEVENTcaller [' + ENUM_KEYEVENTcaller + 'keyEvent.keyCode:' + keyEvent.keyCode);
+                //O.o ('in onkeyup ENUM_KEYEVENTcaller [' + ENUM_KEYEVENTcaller + 'keyEvent.keyCode:' + keyEvent.keyCode);
                 if (keyEvent.ctrlKey)
                     return;
                 if (keyEvent.altKey)
@@ -1714,13 +1717,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             {
                 //alert ('in callbackhkhk_find');
                 $scope.setUstodosFiltered('caller1_find', $scope.ustodos);
-            }
+            };
 
-            $scope.ustodosQueryCommon = function (jsonquery, callback) {
+            $scope.ustodosQueryCommon = function (caller, jsonquery, callback) {
                 // corresponds to exports.list2 in ustodos.server.controller.js
                 // see also app.route('/ustodos').get in ustodos.server.routes.js
+                //alert ('caller:' + caller);
                 return Ustodos.query(jsonquery, callback);
-            }
+            } ;
 
             // Find a list of Ustodos
             $scope.find = function() {
@@ -1733,7 +1737,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //$scope.ustodos = Ustodos. query({name: 'ggggg'}); // Works!
 
                 // corresponds to exports.list2 in ustodos.server.controller.js
-                $scope.ustodos = $scope.ustodosQueryCommon({text: ''}, callbackhkhk_find);
+                $scope.ustodos = $scope.ustodosQueryCommon('caller$scope.find', {text: ''}, callbackhkhk_find);
 
 
                 //alert ('____ $scope.ustodos.length:' + $scope.ustodos.length);
@@ -2139,10 +2143,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                             //alert ('in callback success after write search for [' + commandRemoved_toSearchFor_trimmed + ']');
                             //O.o ('=============== in section QUERY1');
-                            $scope.ustodos = $scope.ustodosQueryCommon({q: commandRemoved_toSearchFor_trimmed}, callbackFromQuery);
+                            $scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_Write', {q: commandRemoved_toSearchFor_trimmed}, callbackFromQuery);
 
                             $location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
                             $scope.setTextInShowingEditor(commandRemoved_toSearchFor_trimmed);
+                            UtilNLB_bgFade.NLBfadeBg('idInput0TypeText','green', '#FFFFFF','1500');
+
 
                         }, function(errorResponse) {
                             $scope.error = errorResponse.data.message;
@@ -2155,8 +2161,33 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     {
                         //alert ('not a write - search for [' + commandTrimmed.trim() + ']');
                         //O.o ('=============== in section QUERY2')
+                        //var t = new RegExp(commandTrimmed.trim(), 'i');
 
-                        $scope.ustodos = $scope.ustodosQueryCommon({q: commandTrimmed.trim()}, callbackFromQuery);      // this is a GET - see RESOURCE
+
+                        var t = commandTrimmed.trim();
+                        //alert ('in not a write commandTrimmed.trim [' + commandTrimmed.trim() + ']');
+                        $scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_NotWrite',
+                            {q:
+                                commandTrimmed.trim()
+                                //new RegExp(t, 'i')
+                                    //{ $regex: new RegExp(commandTrimmed.trim(), "i") }
+                        //{$regex:commandTrimmed.trim(), $options:'i'}
+                                //{ $regex: /thort/, $options: 'i' } // { $regex: /acme.*corp/, $options: 'i' }
+                            },
+                            callbackFromQuery);      // this is a GET - see RESOURCE
+
+                        //$scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_NotWrite',
+//                           {q:commandTrimmed.trim()});      // this is a GET - see RESOURCE
+                           //{q:{$regex:commandTrimmed.trim()}});      // this is a GET - see RESOURCE
+                           //{q:{$regex:commandTrimmed.trim(), $options:'i'}});      // this is a GET - see RESOURCE
+                           //{q:commandTrimmed.trim() }, callbackFromQuery);      // this is a GET - see RESOURCE
+                            // {key:{$regex:value, $options:‘i’}}
+
+                            //{q:new RegExp(commandTrimmed.trim(), 'i') }, callbackFromQuery);      // this is a GET - see RESOURCE
+                           // {q:{ "$regex" : commandTrimmed.trim(), "$options" : "-i" }}, callbackFromQuery);      // this is a GET - see RESOURCE
+
+                        // http://stackoverflow.com/questions/5499451/case-insensitive-query-on-mongodb
+                        //{ "$regex" : "C#", "$options" : "-i" }
 
 
                         //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
@@ -2291,7 +2322,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.filterText = null;
 
             $scope.onTrueOffFalse = false;
-            $scope.updateUstodosFiltered = function (s) {
+            $scope.updateUstodosFiltered = function (s)
+            {
 
                 if (document.ustodosFilterCacheDirty === false)
                 {
@@ -2332,10 +2364,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //$scope.$apply();
             };
 
-            $scope.filterMatches = function () {
-                //$scope.$apply();
-                return ret;
-            };
+            //$scope.filterMatches = function () {
+            //    //$scope.$apply();
+            //    return ret;
+            //};
 
 
 
@@ -2403,10 +2435,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             if(!s || ustodo.html.indexOf(s) >= 0) {
                 //O.o ('======  filter do keep');
                 ustodosFiltered.push(ustodo);
-            } else {
+            }
+            //else {
                 //O.o ('======  filter do not keep');
 
-            }
+            //}
         });
         document.ustodosFilterCache = ustodosFiltered;
         document.ustodosFilterCacheDirty = false;

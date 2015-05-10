@@ -198,17 +198,17 @@ exports.ustodobulkdel = function(req, res) {
                     O.o('removed this many:' + arrOidsToDelete.length);
                 } catch (err) {
                     //console.log(UtilClass.UtilClass('err', err));
-                    O.e("err:" + err);
+                    O.e('err:' + err);
                 }
 
 
                 if (true)
                 {
                     collRemove_ustodos.ensureIndex({ lastmoddate: -1 } );
-                    console.log("collRemove_ustodos.ensureIndex({ lastmoddate: ok");
+                    console.log('collRemove_ustodos.ensureIndex({ lastmoddate: ok');
                 }
 
-                O.o ("done with remote")
+                O.o ('done with remote');
                 var x = {result:'success'};
                 res.json(x);
             });
