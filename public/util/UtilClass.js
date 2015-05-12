@@ -19,7 +19,7 @@ function getClassSub (desc, obj)
 
     try {
         ++icallcnt_getClassSub;
-        s = '\r\n' + icallcnt_getClassSub + '. +++++++++++++++++++++++++++++++++++++++++++++++++++';
+        s = '\r\nBEGIN GETCLASS ON DESC [' + desc + '] getclass callcnt:' + icallcnt_getClassSub + '. +++++++++++++++++++++++++++++++++++++++++++++++++++';
         s = s + '\r\n exports.getClassSub:' + desc + ' [' + desc + ']\r\n\r\n';
         if (obj === null)
             s = s + '\r\n  getClassSub a says desc [' + desc + '] obj passed in is null. ';
@@ -82,6 +82,8 @@ function getClassSub (desc, obj)
             }
 
             s = ' getclass desc [' + desc + '] ' + s + '(\r\n PROPERTIES found [' + properties.length + '] keys in object keys are <<' + properties.join(', ') + '>>, ';
+            s = s + '\r\nEND GETCLASS ON DESC [' + desc + '] +++++++++++++++++++++++++++++++++++++++++++++++++++';
+
         }
 
 

@@ -39,7 +39,33 @@ var parseUserInputStringCreateMongoQuery = function(querystringTrimmed)
         //var sClassrex = UtilClass.getClass(rex);
         //O.o ('sClassHK rex :' + sClassrex);
 
-        querymongo = {text:new RegExp(queryTokens[0], 'i')};    // works but not case ins
+        // 1
+        //var  yhk = new RegExp(queryTokens[0], 'i');
+        //querymongo = {text:yhk};    // works but not case ins
+
+        //var y = new RegExp(queryTokens[0], 'i');
+
+        var t = 'thorx';
+        var v = 'thorx';
+        if (t === v) {
+            console.log ('11&&&&&&&&&&&&&&&&&& same hk u:' + u);
+        }  else {
+            console.log ('11&&&&&&&&&&&&&&&&&& not same hku:' + u);
+        }
+        var u = queryTokens[0];
+        if (t === u) {
+            console.log ('22&&&&&&&&&&&&&&&&&& same hk u:' + u);
+        }  else {
+            console.log ('22&&&&&&&&&&&&&&&&&& not same hku:' + u);
+        }
+
+        var y = new RegExp(u, 'i');
+
+
+        // 2 etc
+        querymongo = {text:y};    // works but not case ins
+
+        // 3 etc
         //querymongo = {text:queryTokens[0]}; // no work as case or substring
         //querymongo = {text:/queryTokens[0]/}; // no work at all
         //querymongo = {text:/queryTokens[0]/}; // no work
@@ -78,14 +104,14 @@ exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, er
     var queryTokens = (querystringTrimmed.toLowerCase()).split(/\s+/); //input.split(/(\s*,?\s*)+/)
     var querymongo = parseUserInputStringCreateMongoQuery(querystringTrimmed);
 
-    var hklimit = 100; // 50 100 200 500 1000
+    var hklimit = 500; // 50 100 200 500 1000
     var countResult = 0;
     var x = [];
 
     O.o('step: querymongo:' + querymongo) ;
     //Ustodo.find().exec(function(err, ustodos) {
-    var sClass = UtilClass.getClass(Ustodo);
-    O.o ('sClassHK ustodo:' + sClass);
+    //var sClass = UtilClass.getClass('Ustodo', Ustodo);
+    //O.o ('sClassHK ustodo:' + sClass);
     Ustodo.find(querymongo).sort('-datelastmod').limit(hklimit).populate('user', 'displayName').exec(function(err, ustodos) {
         //Ustodo.find(querymongo).populate('user', 'displayName').exec(function(err, ustodos) {
         if (err) {

@@ -68,7 +68,7 @@ var collNameWrite = 'ustodos';
 // QUERY 20 years of records
 //var queryRegExp = {text : new RegExp('hopper')};  // <=========================
 //var queryRegExp = {text : /hopper/};  // <=========================
-var queryRegExp = {text:/byte.com/i};  // <=========================
+var queryRegExp = {text:/zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz/i};  // <=========================
 var countLimit = -1;
 
 // 222222222222222222222222222222222222222222222222
