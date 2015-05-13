@@ -299,7 +299,7 @@ function getClassSub (desc, obj)
 
     try {
         ++icallcnt_getClassSub;
-        s = '\r\n' + icallcnt_getClassSub + '. +++++++++++++++++++++++++++++++++++++++++++++++++++';
+        s = '\r\nBEGIN GETCLASS ON DESC [' + desc + '] getclass callcnt:' + icallcnt_getClassSub + '. +++++++++++++++++++++++++++++++++++++++++++++++++++';
         s = s + '\r\n exports.getClassSub:' + desc + ' [' + desc + ']\r\n\r\n';
         if (obj === null)
             s = s + '\r\n  getClassSub a says desc [' + desc + '] obj passed in is null. ';
@@ -362,6 +362,8 @@ function getClassSub (desc, obj)
             }
 
             s = ' getclass desc [' + desc + '] ' + s + '(\r\n PROPERTIES found [' + properties.length + '] keys in object keys are <<' + properties.join(', ') + '>>, ';
+            s = s + '\r\nEND GETCLASS ON DESC [' + desc + '] +++++++++++++++++++++++++++++++++++++++++++++++++++';
+
         }
 
 
@@ -989,6 +991,24 @@ String.prototype.replaceAll = function (find, replace) {
     var str = this;
     return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
 };
+
+// http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript
+// console.log ('111111111111111111111 defining function');
+String.prototype.hasUpperCase = function () {
+    var str = this;
+    var arr = str.split('');
+    //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@@@ in fn str [' + str + ']');
+    for (var c in arr) {
+        //console.log ('testing case of [' + c + ']');
+        var cc = arr[c];
+        if (cc >= 'A' && cc <= 'Z') {
+            //console.log ('mixed case return true');
+            return true;
+        }
+    }
+    return false;
+};
+
 
 
 

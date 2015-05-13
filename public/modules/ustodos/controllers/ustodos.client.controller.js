@@ -2322,6 +2322,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.filterText = null;
 
             $scope.onTrueOffFalse = false;
+            // commented 150513
             $scope.updateUstodosFiltered = function (s)
             {
 
@@ -2333,16 +2334,33 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 $scope.ustodosFiltered = [];
                 O.o ('in updateUstodosFiltered() s  [' + s + ']');
+                var useCaseSensitiveRestrict = false;
+                if (s && s.hasUpperCase()) {
+                    O.o ('USE CASE SENS');
+                    useCaseSensitiveRestrict = true;
+                }    else {
+                    O.o ('DO NOT USE CASE SENS');
+                }
+
+
                 for (var i = 0; i < $scope.ustodos.length; i++)
                 {
-                    if (!s || $scope.ustodos[i].html.indexOf(s) >= 0) {
+                    var strOneOfManyIterThru = $scope.ustodos[i].html;
+                    if (!useCaseSensitiveRestrict) {
+                        strOneOfManyIterThru = strOneOfManyIterThru.toLowerCase();
+                        if (s)
+                            s = s.toLowerCase();
+                    }
+
+                    if (!s || strOneOfManyIterThru.indexOf(s) >= 0) {
                         $scope.ustodosFiltered.push($scope.ustodos[i]);
-                        O.o ('MATCH in updateUstodosFiltered matching [' + $scope.ustodos[i].html + '] vs [' + $scope.filterText +
-                        '] index [' + i + ']');
+                        O.o ('MATCH in dyamic client-only filter updateUstodosFiltered matching s [' + s + '] vs strOneOfManyIterThru [' + strOneOfManyIterThru +  '] index [' + i + ']');
+                    } else {
+                        O.o ('NO MATCH in dyamic client-only filter updateUstodosFiltered matching s [' + s + '] vs strOneOfManyIterThru [' + strOneOfManyIterThru + '] index [' + i + ']');
                     }
                     //if (i % 2 == 0)
                 }
-                O.o ('---------------updateUstodosFiltered done len [' + $scope.ustodosFiltered.length + '] ');
+                O.o ('---------------updateUstodosFiltered done from len [' + $scope.ustodos.length + '] len [' + $scope.ustodosFiltered.length + '] ');
                 //O.o ('in filterMatches() matching [' + $scope.ustodos[i].html + '] vs [' + $scope.filterText +
                 //    '] index [' + i + '] result [' + ret + ']');
                 // this was for string altering:
@@ -2418,7 +2436,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 })
 .filter('filterUstodos', function()
 {
-    return function( ustodos, s) {
+
+    // see also
+    return function( ustodos, s)
+    {
         if ( document.ustodosFilterCacheDirty !== true )
         {
             //O.o ('returning cached ustodos filtered s [' + s + '] TimeSynched [' + document.ustodosLastCommitTimeSynched + ']');
@@ -2429,17 +2450,70 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         //    // alert ('getting new filter');
         //}
 
+
+
+
+
+
+//
+//$scope.ustodosFiltered = [];
+//O.o ('in updateUstodosFiltered() s  [' + s + ']');
+//var useCaseSensitiveRestrict = false;
+//if (s && s.hasUpperCase())
+//    useCaseSensitiveRestrict = true;
+//
+//for (var i = 0; i < $scope.ustodos.length; i++)
+//{
+//    var strOneOfManyIterThru = $scope.ustodos[i].html;
+//    if (!useCaseSensitiveRestrict)
+//        strOneOfManyIterThru = strOneOfManyIterThru.toLowerCase();
+//
+//    if (!s || strOneOfManyIterThru.indexOf(s) >= 0) {
+//        $scope.ustodosFiltered.push($scope.ustodos[i]);
+//        //O.o ('MATCH in dyamic client-only filter updateUstodosFiltered matching [' + $scope.ustodos[i].html + '] vs [' + $scope.filterText +  '] index [' + i + ']');
+//    } else {
+//        O.o ('NO MATCH in dyamic client-only filter updateUstodosFiltered matching [' + $scope.ustodos[i].html + '] vs [' + $scope.filterText + '] index [' + i + ']');
+//    }
+//    //if (i % 2 == 0)
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        var useCaseSensitiveRestrict = false;
+        if (s && s.hasUpperCase())
+            useCaseSensitiveRestrict = true;
+
         var ustodosFiltered = [];
         angular.forEach(ustodos, function(ustodo)
         {
-            if(!s || ustodo.html.indexOf(s) >= 0) {
-                //O.o ('======  filter do keep');
-                ustodosFiltered.push(ustodo);
-            }
-            //else {
-                //O.o ('======  filter do not keep');
 
+            //var strOneOfManyIterThru = ustodo.html;
+            //if (!useCaseSensitiveRestrict)
+            //    strOneOfManyIterThru = strOneOfManyIterThru.toLowerCase();
+            //
+            //if(!s || strOneOfManyIterThru.indexOf(s) >= 0) {
+            ////if(true) {
+            //    //O.o ('======  filter do keep');
+            //    ustodosFiltered.push(ustodo);
             //}
+            //else {
+            //    O.o ('======  filter do not keep');
+            //}
+
+            ustodosFiltered.push(ustodo);
+
         });
         document.ustodosFilterCache = ustodosFiltered;
         document.ustodosFilterCacheDirty = false;
@@ -2448,7 +2522,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
         return document.ustodosFilterCache;
     };
-});
+}
+)
+;
 
 
 

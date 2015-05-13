@@ -59,11 +59,25 @@ var parseUserInputStringCreateMongoQuery = function(querystringTrimmed)
             console.log ('22&&&&&&&&&&&&&&&&&& not same hku:' + u);
         }
 
-        var y = new RegExp(u, 'i');
+        var y = new RegExp(t, 'i');
 
 
         // 2 etc
         querymongo = {text:y};    // works but not case ins
+
+
+
+        //var w = 'thorx'
+        var w = queryTokens[0];
+        var wp = new RegExp(w, 'i');
+        var queryw = {text:wp}; // works
+
+
+
+
+
+
+
 
         // 3 etc
         //querymongo = {text:queryTokens[0]}; // no work as case or substring
@@ -81,7 +95,8 @@ var parseUserInputStringCreateMongoQuery = function(querystringTrimmed)
     //{ "$regex": '/europe/', "$options": 'i'}
 
     O.o ('@@@@@@@@@@@@@ JSON.stringify(querymongo) querystringTrimmed [' + querystringTrimmed + '] [' + JSON.stringify(querymongo) + ']');
-    return querymongo;
+    //return querymongo;
+    return queryw;
 
 }
 
@@ -123,23 +138,29 @@ exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, er
         } else {
             //if (query.querystring === '')
             //var x = ustodos.slice[0,20]
+            // console.log ('&&&&&&&&&&&&&&&&&&& pre result loop');
             for (var k = 0; k < (ustodos.length) && x.length < hklimit; k++)
             {
-                //console.log ('in result loop');
+                console.log ('&&&&&&&&&&&&&&&&&&& in result loop');
                 countResult = countResult + 1;
                 //ustodos[k].text = 'svr2,' + ustodos[k].text;
                 var tt = UtilHrefThisText.hrefThisText(ustodos[k].text);
                 var keeper = true;
                 for (var i = 0; i < queryTokens.length; i++) {
-                    if (tt.indexOf(queryTokens[i]) < 0) {
+                    console.log ('&&&&&&&&&&&&&&&&&&& in result loop tt [' + tt + '] queryTokens[i] [' + queryTokens[i] + ']');
+                    if (tt.toLowerCase().indexOf(queryTokens[i]) < 0) {
                         keeper = false;
                         break;
                     }
                 }
                 if (keeper) {
+                    //O.o ('&&&&&&&&&&&&&&&&&&& in result loop a keeper' );
                     // convert to HREFs
                     ustodos[k].text = UtilHrefThisText.hrefThisText(ustodos[k].text);
                         x.push(ustodos[k]);
+                } else {
+                    O.o ('&&&&&&&&&&&&&&&&&&& in result loop NOT a keeper' );
+
                 }
             }
             //console.log('pushed:'+ustodos[k]._doc.datelastmod + "." + +ustodos[k]._doc.datelastmod);

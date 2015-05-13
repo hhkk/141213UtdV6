@@ -16,6 +16,24 @@ String.prototype.replaceAll = function (find, replace) {
     return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
 };
 
+// http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript
+// console.log ('111111111111111111111 defining function');
+String.prototype.hasUpperCase = function () {
+    var str = this;
+    var arr = str.split('');
+    //console.log ('@@@@@@@@@@@@@@@@@@@@@@@@@@ in fn str [' + str + ']');
+    for (var c in arr) {
+        //console.log ('testing case of [' + c + ']');
+        var cc = arr[c];
+        if (cc >= 'A' && cc <= 'Z') {
+            //console.log ('mixed case return true');
+            return true;
+        }
+    }
+    return false;
+};
+
+
 
 
 

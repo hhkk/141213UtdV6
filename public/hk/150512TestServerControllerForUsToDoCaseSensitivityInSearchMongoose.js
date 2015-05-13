@@ -58,14 +58,19 @@ var callback = function(a, b) {
 
 
 var x = /goddy/i;
-var t = 'goddy'
-var y = new RegExp(t, 'i');
-//var y = new RegExp(t);
-console.log ('x:' + x);
-console.log ('y:' + y);
-var queryd = {name:y};
+var xp = new RegExp(x);
+var queryx = {name:xp}; // works
+
+var y = 'goddy'
+var yp = new RegExp(y, 'i');
+var queryy = {name:yp}; // works
+
+console.log ('xp' + xp);
+console.log ('yp:' + yp);
+
 //Kitten.find({ name: /Fluff/i }, callback)
-Kitten.find(queryd, callback);
+Kitten.find(queryy, callback);
+//Kitten.find(queryy, callback);
 
 
 //
