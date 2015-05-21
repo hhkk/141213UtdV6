@@ -25,6 +25,8 @@ var request = require('request');
 var callCount_expandUrlsToHrefsReturnPatchedStr =0
 var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
 {
+    O.o ('#################2 in expandUrlsToHrefsReturnPatchedStr get titles [' + initialTextWithPreHrefs + ']');
+
     //O.o ('in expandUrlsToHrefsReturnPatchedStr call count:' + callCount_expandUrlsToHrefsReturnPatchedStr);
     var Item = function(url) {
         this.url = url;

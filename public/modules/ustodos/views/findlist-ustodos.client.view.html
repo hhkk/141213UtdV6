@@ -36,7 +36,7 @@
                />
         &nbsp;
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
-               ng-click="processCommand('*', '*', '*')"                src='/img/Asterisk.png'
+               ng-click="processCommand('CLIENT HTML findlist-ustodos line 39', '*', '*', '*')"                src='/img/Asterisk.png'
                title="Search all"
                 />
         &nbsp;
@@ -60,7 +60,7 @@
         <br>
         <br>
 
-        <span xxng-keyup="onKeyUp($event, this.ENUM_KEYEVENTCALLER_KEYUPSPAN)">
+        <span xxng-keyup='onKeyUp("line 63", $event, this.ENUM_KEYEVENTCALLER_KEYUPSPAN)'>
 
             <!--<input class="hkToolbarElement" type='image'-->
                <!--ng-click='toggleVisibilityToNext()'-->
@@ -82,7 +82,7 @@
                  '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
                 -->
             <!-- ================ INPUT#0 ======================== maps to $scope.onKeyUp -->
-            <input id="idInput0TypeText" type="text" ng-keyup="this.onKeyUp($event, this.ENUM_KEYEVENTCALLER_INPUT0)"
+            <input id="idInput0TypeText" type="text" ng-keyup='this.onKeyUp("line 85", $event, this.ENUM_KEYEVENTCALLER_INPUT0)'
                    class="input-textarea" placeholder="Search / Input / Command" 
 				   title='Search (case insensitive, order insensitive) / Save / Command '
 				   ng-blur="eventBlur0InputText()" required>
@@ -95,18 +95,18 @@
 
 
             <!-- ================ INPUT#1 ======================== -->
-            <div id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" ng-keyup='this.onKeyUp($event)' 
-			title='search (case insensitive, order insensitive)'></div>
+            <span id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" ng-keyup='this.onKeyUp("line 98", $event)'
+			title='search (case insensitive, order insensitive)'></span >
 
             <!-- ================ INPUT#2 ======================== -->
-            <div id='idDivForCkeEditorTextarea' ng-keyup='this.onKeyUp()'  ng-blur="xxpropagateTextChanges()">
+            <span id='idDivForCkeEditorTextarea' ng-keyup='this.onKeyUp("line 102")'  ng-blur="xxpropagateTextChanges()">
                 <textarea id="idCkeEditorTextarea"
-                      ng-blur="this.alerthk()"   xxng-keyup='this.onKeyUp($event)'
+                      ng-blur="this.alerthk()"   xxng-keyup='this.onKeyUp("line 104", $event)'
                       name="idCkeEditorTextarea"
                       idxx="xxeditor1" rows="10" cols="80">
 
                 </textarea>
-            </div>
+            </span>
 
             <!-- ================ INPUT#3 ======================== -->
             <!--<div id='idDivForTinyMceEditorTextarea'>-->
@@ -114,8 +114,17 @@
             <!--</div>-->
 
 
+            <select
+                    id='selectId'
+                    ng-change="this.utdEventSelectedEngine()"
+                    ng-model="this.commands[0]"
+                    title='select command to apply to the entered text'
+                    ng-options="command as command.commandDescription2 for
+                        command in commands | orderBy:'commandDescription2'"
+                    ng-mouseover="showSelectDropdown()"
+                    ></select>
+
             <!-- ========================= SECTION_FILTER ICON AND TEXTBOX ===================== -->
-            <BR>
 			<img ng-src="/img/filterIcon2.jpg" class="per-row-icons-trashimage"
                              alt="{{image.name}}"  title='Restrict within search result'
                              xxxxng-mouseover="this.filterToLinksOnly ()"
@@ -125,35 +134,23 @@
             <input type="text" title='Restrict within search result' name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
                    ng-pattern="example.word" required ng-trim="false">
 
-            <br>
-            <br>
-
-
             <!-- RESEARCH SECTION_FILTER ICON AND TEXTBOX -->
             Filter: <span ng-bind=('('+this.searchedFor+')')  ng-mouseover="this.eventMouseoverRow3(this.searchedFor)"
                 ></span >
 
-            <br><a ng-href="http://google.com/search?q={{this.searchedFor}}">http://google.com/search?q={{this.searchedFor}}</a>
-            <br><a ng-href="{{this.searchedForAsLink}}">{{this.searchedForAsLink}}</a>
+            <!--<br><a ng-href="http://google.com/search?q={{this.searchedFor}}">http://google.com/search?q={{this.searchedFor}}</a>-->
+            <!--<br><a ng-href="{{this.searchedForAsLink}}">{{this.searchedForAsLink}}</a>-->
 
-            Count: <span ng-bind=('('+this.ustodos.length+')')></span >
+            Count <span ng-bind=(this.ustodos.length)></span >
+            of <span ng-bind=(this.ustodosFiltered.length)></span >
             &nbsp;
             <!--<button ng-click="this.buttonClickSearchStar()">*</button>-->
             <!--<button ng-click="this.buttonClickSearchClear()">Clear</button>-->
 
             <!--<WORKS p ng-repeat="command in commands">{{command}}</p>-->
 
-            Do: <select
-                id='selectId'
-                ng-change="this.utdEventSelectedEngine()"
-                ng-model="this.commands[0]"
-                ng-options="command as command.commandDescription2 for
-                    command in commands | orderBy:'commandDescription2'"
-                ng-mouseover="showSelectDropdown()"
-                ></select>
-
-            <!--<button ng-click="testButton(-2)">TestButton</button> // look for $scope.testButton-->
-            <button ng-click="testButton(-2)">TestButton</button> //
+            <button ng-click="testButton(-2)">TestButton</button> // look for $scope.testButton
+            <!--<button ng-click="testButton(-2)">TestButton</button>-->
             <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
         </span>
         <br>

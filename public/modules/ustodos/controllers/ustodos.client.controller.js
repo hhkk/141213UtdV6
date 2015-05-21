@@ -357,7 +357,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         O.o ( '1 in contentdom ' + $scope.editor.getData() );
                         O.o ( '2 in contentdom ' + event.data.$.keyCode);
                         O.o ( '3 in contentdom ' + !event.data.$.ctrlKey && !event.data.$.metaKey);
-                        $scope.respondToKeyboardEvent(event.data.$.keyCode);
+                        $scope.respondToKeyboardEvent('line360', event.data.$.keyCode);
                     }
 
 
@@ -539,7 +539,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.eventClickedTheAnimals = function() {
-                //alert ('in eventClickedTheAnimals');
+                alert ('in eventClickedTheAnimals line 542');
                 $window.location.href = 'http://jpro.co?q=*';
                 //  $window.location.href = 'http://www.google.com/search?q=' + GLOBAL_commandFromInputBox;
                 //$location.search('hk', this.commandFromInputBox);
@@ -562,7 +562,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 if (keyEvent.keyCode !== 27 ) // escape key
                     return;
 
-
                 //alert ('time to save!');
 
                 var newHtml = document.getElementById('ustodorow'+index).innerHTML;
@@ -580,6 +579,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 };
 
                 var found = false;
+                //find the element in memory matching the id passed from the UI on the click
                 for (var i = 0; i < $scope.ustodos.length; i++)
                 {
                     if ($scope.ustodos[i]._id === _id)
@@ -594,7 +594,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //    alert ('---------------------------- SAVED utd OK !!! ');
                         //}, fnCallbackFromUpdate);
 
-                        $scope.ustodos[i].$update(function() {
+                        $scope.ustodos[i].$update(function() { // bridge maps to exports.update = function(req, res) { in server controller
                             alert('success save newHtml [' + newHtml + ']');
                         }, function(errorResponse) {
                             alert('error on save errorResponse.data.message [' + errorResponse.data.message + ']');
@@ -611,14 +611,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 if (!found) {
                     alert ('not found!');
                 }
-
-
-
             };
 
-            $scope.onKeyUp = function (keyEvent, ENUM_KEYEVENTcaller) // https://docs.angularjs.org/api/ng/directive/ngKeyup
+            $scope.onKeyUp = function (desc, keyEvent, ENUM_KEYEVENTcaller) // https://docs.angularjs.org/api/ng/directive/ngKeyup
             {
-                //O.o ('in onkeyup ENUM_KEYEVENTcaller [' + ENUM_KEYEVENTcaller + 'keyEvent.keyCode:' + keyEvent.keyCode);
+                //O.o ('in onkeyup desc ['+ desc +'] ENUM_KEYEVENTcaller [' + ENUM_KEYEVENTcaller + 'keyEvent.keyCode:' + keyEvent.keyCode);
                 if (keyEvent.ctrlKey)
                     return;
                 if (keyEvent.altKey)
@@ -634,7 +631,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
                 //O.o('onKeyUp:' + keyCode);
                 //O.o('onKeyUp:' + getKeyboardEventResult($event, 'Key up')); // hbkhbk
-                $scope.respondToKeyboardEvent(keyCode);
+                $scope.respondToKeyboardEvent('line634', keyCode);
             };
             //$scope.onKeyUp = function(ev) {
             //    ////alert('onKeyUp:' + ev); // hbkhbk
@@ -933,7 +930,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     } else{
                         alert ('fail!!');
                     }
-                    window.document.title = 'jp:'+$scope.mmmm.element.innerText; // not jpro:
+                    //alert ('in window.document.title 1 $scope.mmmm.element.innerText:' + $scope.mmmm.element.innerText);
+                    //window.document.title = 'jp:'+$scope.mmmm.element.innerText; // not jpro:
 
                     //tinyMCE.activeEditor.setContent($scope.inputbind);
 
@@ -1189,7 +1187,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.buttonClickSearchStar = function() {
                 this.commandFromInputBox = '*';
-                this.processCommand(this.commandFromInputBox);
+                this.processCommand('SERVER line 1189', this.commandFromInputBox);
             };
 
             $scope.eventMouseoverRow = function(i) {
@@ -1265,6 +1263,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //alert('going for ['+finalUrl + ']');
 
                     //finalUrl = finalUrl.replace(/^.*\)/, ''); // get rid of parens
+                    alert ('setting line 1266 finalUrl:' + finalUrl);
                     $window.location.href = finalUrl;
 
                     //$location.path('/')
@@ -1283,9 +1282,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             };
 
-            $scope.respondToKeyboardEvent = function(keyCode)
+
+            var commandLastProcessedHash = {};
+            $scope.respondToKeyboardEvent = function(desc, keyCode)
             {
-                //alert ('in $scope.respondToKeyboardEvent()');
+                //O.o ('in $scope.respondToKeyboardEvent() desc ['+ desc + ']');
                 // 0 idInput0TypeText
                 // 1 idMediumEditor
                 // 2 parent like CKE
@@ -1305,27 +1306,28 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         xText = document.getElementById('idInput0TypeText').innerText;
                         xHtml = document.getElementById('idInput0TypeText').innerHTML;
                         xValue = document.getElementById('idInput0TypeText').value;
+                        //O.o ('keyCode:' + keyCode);
 
                         if (keyCode === 13)
                         {
-                            O.o ('bShouldIcommand based on keyCode === 13 enter key ');
+                            //alert ('bShouldIcommand based on keyCode === 13 enter key ');
                             bShouldIcommand = true;
                         }
                         else if (xValue.charCodeAt(xValue.length-1) === 32)
                         {
                             if (xValue.trim().charCodeAt(xValue.trim().length-1) === 87)
                             {
-                                O.o ('bShouldIcommand based on space and lastchar 87 big w');
+                                //O.o ('bShouldIcommand based on space and lastchar 87 big w');
                                 bShouldIcommand = true;
                             }
                             else if (xValue.trim().charCodeAt(xValue.trim().length-1) === 119)
                             {
-                                O.o ('bShouldIcommand based on space and lastchar 119 little w');
+                                //O.o ('bShouldIcommand based on space and lastchar 119 little w');
                                 bShouldIcommand = true;
                             }
                             else if (document.getElementById('idcheckbox_dynammicSearch').checked)
                             {
-                                O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
+                                //O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
                                 bShouldIcommand = true;
                             }
 
@@ -1377,13 +1379,32 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //xHtml = xHtml.trim();
                 //xValue = xValue.trim();
 
+                // was this same command last processed within the last 1/x second
+
+
                 if (bShouldIcommand)
                 {
-                        //alert ('yes need to process command');
+                    // if not a sup command
+                    O.o ('1 set search xValue:'+ xValue);
+                    $location.search('q', xValue);
+                    O.o ('2 set search xValue:'+ xValue);
+                    O.o ('######## in bShouldIcommand');
+                    var skipThisCommandAlreadProcessed = false;
+                    var timeLastEncountered = commandLastProcessedHash[xText];
+                    if (timeLastEncountered && (UtilDate.getTimeInMillis()-timeLastEncountered) < 200) {
+                        O.o ('############ skipping');
+                        skipThisCommandAlreadProcessed = true;
+                        //O.o ('skipping command too quick');
+                    }
+                    commandLastProcessedHash[xText] = UtilDate.getTimeInMillis();
+
+                    //alert ('yes need to process command');
                     //O.o ('===================== processCommand for xText [' + xText + ']');
                     //O.o ('===================== processCommand for xHtml [' + xHtml + ']');
                     //O.o ('===================== processCommand for xValue [' + xValue + ']');
-                    $scope.processCommand(xText, xHtml, xValue, callbackCommand);
+                    if (!skipThisCommandAlreadProcessed) {
+                        $scope.processCommand('CLIENT JS line 1383', xText, xHtml, xValue, callbackCommand);
+                    }
                 }
                 //else {
                 //    //alert ('no need to process command');
@@ -1433,7 +1454,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //Shift - 16
                 //Ctrl - 17
                 //Alt - 18
-                O.o ('reinit window.keyStates.keyStateShiftDown');
+                //O.o ('reinit window.keyStates.keyStateShiftDown');
                 window.keyStates = {};
                 window.keyStates.keyStateShiftDown = false;
                 window.keyStates.keyStateCtrlDown = false;
@@ -1465,7 +1486,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     }
                 }, false);
 
-                    O.o ('reinit window.keyStates.keyStateShiftDown:' + window.keyStates.keyStateShiftDown);
+                    //O.o ('reinit window.keyStates.keyStateShiftDown:' + window.keyStates.keyStateShiftDown);
 
             }
 
@@ -1580,8 +1601,27 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.testButton= function(s)
             {
-                O.o('in testbutton');
-            document.getElementById('ustodorow0').blur();
+                //alert('in testbutton');
+                //document.getElementById('ustodorow0').blur();
+                //$window.location.href = 'http://www.google.com/search?q=';
+                //alert ('in eventClickedTheAnimals line 542');
+                //$window.location.href = 'http://jpro.co?q=*';
+                //$window.location.href = 'http://www.google.com/search?q=';
+                //window.location.href = 'sdsdf';
+                //$location.path('/sdsdf').replace();
+
+                //$location.path('/')
+                //$location.url('http://www.yahoo.com')
+                //$window.location.href = '#/tab/category/1';
+                //var target = angular.element('#textHKKH');
+                //$scope.commandUrl = $scope.commands[idxSelected].commandUrl;
+                //var idxSelected = parseInt(document.getElementById('selectId').value);
+                //var selectedCommandUrl = $scope.commands[idxSelected].commandUrl;
+                //isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(true);
+
+
+                $location.search('hk', 'sdfsdf');
+
 
             };
 
@@ -1642,8 +1682,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             // test
             $scope.showClient = function(client) {
-                alert ('in showclient');
-                console.log ('in showclient');
+                alert('in showclient line 1664');
+
                 $location.path('#/user/' + client.tagid);
             };
 
@@ -1672,8 +1712,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 });
                 //getProperties('props ustodo:', ustodo);
 
-                // Redirect after save
-                ustodo.$save(function(response) {
+                // section_save new ustodo Redirect after save
+                alert('pre save 1');
+                ustodo.$save(function(response) {   // maps to exports.create
+                    alert ('in 1 line 1696');
                     $location.path('ustodos/' + response._id);
 
                     // Clear form fields
@@ -1696,6 +1738,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     }
                 } else {
                     $scope.ustodo.$remove(function() {
+                        alert ('in 2line 1719');
                         $location.path('ustodos');
                     });
                 }
@@ -1707,6 +1750,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 var ustodo = $scope.ustodo;
 
                 ustodo.$update(function() {
+                    alert ('in 3 line 1731');
                     $location.path('ustodos/' + ustodo._id);
                 }, function(errorResponse) {
                     $scope.error = errorResponse.data.message;
@@ -1802,7 +1846,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 var checkboxFirstState = checkboxFirst.checked;
 
                     var x = $('.chkbox');
-                O.o ('x.length:' + x.length);
+                //O.o ('x.length:' + x.length);
                 // check if all are checked so it's just a toggle
                 for (var i = 0; i < x.length; i++ )
                 {
@@ -1928,7 +1972,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     // 3333 works great in that it makes it to the method, and req data is not in the URL but in the
                     $http.post('/ustodobulkdel', {form:{key:'hkvalue', arrOidsToDelete:arrOidsToDelete}}).
                         success(function(data) {
-                            O.o ('data:' + data.toString());
+                            //O.o ('data:' + data.toString());
                             $scope.find();
 
                         }). error(function(data, status, headers, config) {
@@ -1973,7 +2017,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     var ustodo = $scope.ustodos[intIndexToDelete];
 
                     var savOid = ustodo._id;
-                    //O.o('splicing: i' + intIndexToDelete );
+                    O.o('33333333333333333333333333333 splicing: i' + intIndexToDelete );
                     $scope.ustodos.splice(intIndexToDelete, 1);
 
                     ustodo.$delete(function() {
@@ -2017,9 +2061,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //| |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | |
             //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
             //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
-            $scope.processCommand = function(xText, xHtml, xValue)
+            $scope.processCommand = function(desc, xText, xHtml, xValue)
             {
-                //alert (' =========================== in processcommand cache');
+
+                //alert (' =========================== in processcommand desc [' +
+                // desc + '] xValue' + '[' + xValue + ']' );
                 try {
 
 
@@ -2044,7 +2090,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //        window.document.title = 'jp:'+xText; // not jpro:
                     //    }
                     //} else
-                    O.o ('start search');
+                    //O.o ('start search');
                     //this.commandFromInputBox = resolveFinalCommandBetweenUrlAndInputBox
                     //    //( $location.search.q  , this.commandFromInputBox);
                     //( $location.$$search.q, this.commandFromInputBox);
@@ -2052,9 +2098,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                     //o ('in search 2 this.commandFromInputBox:' + this.commandFromInputBox);
                     //window.document.title = 'jps:'+$location.$$search.q; // not jpro:
-                    window.document.title = 'jps:'+xHtml; // not jpro:
+                    //alert ('in joe $scope.searchedFor line2079' + $scope.searchedFor);
+                    //window.document.title = 'jps:'+$scope.searchedFor; // not jpro:
                     //alert ('$location.$$search.q:'+$location.$$search.q);
                     //$location.path('/'+this.commandFromInputBox)
+                    //$location.path('/'+$scope.searchedFor)
                     //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
                     //$scope.ustodos  = Ustodos. query ({q: this.commandFromInputBox});
                     //O.o  ('completed search');
@@ -2124,7 +2172,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         });
                         //getProperties('props ustodo:', ustodo);
                         // Redirect after save
-                        O.o ('$$$$$$$$$$$$$$$$$$ save commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
+                        O.o ('333$$$$$$$$$$$$$$$$$$ save desc [' + desc + '] commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
+                        //alert('pre save 2');
                         ustodo.$save(function(response) {
                             // section_query // section_read
                             //$location.path('ustodos/' + response._id);
@@ -2284,7 +2333,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 });
             };
 
-            $scope.processCommand('*', '*', '*');
+            $scope.processCommand('CLIENT JS line 2286', '*', '*', '*');
             //O.a ('sssa2');
 
             // <select> element displays its options on mousedown, not click.
@@ -2354,9 +2403,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                     if (!s || strOneOfManyIterThru.indexOf(s) >= 0) {
                         $scope.ustodosFiltered.push($scope.ustodos[i]);
-                        O.o ('MATCH in dyamic client-only filter updateUstodosFiltered matching s [' + s + '] vs strOneOfManyIterThru [' + strOneOfManyIterThru +  '] index [' + i + ']');
+                        //O.o ('MATCH in dyamic client-only filter updateUstodosFiltered matching s [' + s + '] vs strOneOfManyIterThru [' + strOneOfManyIterThru +  '] index [' + i + ']');
                     } else {
-                        O.o ('NO MATCH in dyamic client-only filter updateUstodosFiltered matching s [' + s + '] vs strOneOfManyIterThru [' + strOneOfManyIterThru + '] index [' + i + ']');
+                        //O.o ('NO MATCH in dyamic client-only filter updateUstodosFiltered matching s [' + s + '] vs strOneOfManyIterThru [' + strOneOfManyIterThru + '] index [' + i + ']');
                     }
                     //if (i % 2 == 0)
                 }
@@ -2518,7 +2567,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         document.ustodosFilterCache = ustodosFiltered;
         document.ustodosFilterCacheDirty = false;
 
-        O.o ('@@@@@@@@@ filter done ustodosFiltered.length:'+ustodosFiltered.length);
+        //O.o ('@@@@@@@@@ filter done ustodosFiltered.length:'+ustodosFiltered.length);
 
         return document.ustodosFilterCache;
     };

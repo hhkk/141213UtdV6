@@ -68,6 +68,7 @@ var assert = function (condition, message) {
 
 // error
 var lastOutputTimeStamp = -1;
+var callCountaddLineFeedsIfnSeconds = -1;
 var addLineFeedsIfnSeconds = function() {
     returnStr = '';
     var newTimeInMillis = UtilDate.getTimeInMillis();
@@ -75,7 +76,7 @@ var addLineFeedsIfnSeconds = function() {
         lastOutputTimeStamp = newTimeInMillis;
     } else {
         if (newTimeInMillis - lastOutputTimeStamp > 3000) {
-            returnStr = '\r\n\r\n\r\nNEWSTR ' + UtilDate.getDateStringForLogsWithMillis();
+            returnStr = '\r\n\r\n\r\nNEWSTR #' + callCountaddLineFeedsIfnSeconds++ +': ' + UtilDate.getDateStringForLogsWithMillis() +'\r\n';
         }
     }
     lastOutputTimeStamp = newTimeInMillis;

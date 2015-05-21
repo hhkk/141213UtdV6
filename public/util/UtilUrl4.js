@@ -29,7 +29,7 @@ var unirest = require('unirest');
 var callCount_expandUrlsToHrefsReturnPatchedStr =0
 var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
 {
-    O.o ('in get titles [' + initialTextWithPreHrefs + ']');
+    //O.o ('################# in expandUrlsToHrefsReturnPatchedStr get titles [' + initialTextWithPreHrefs + ']');
     var Item = function(url) {
         this.url = url;
         this.urlori = url;
@@ -254,7 +254,7 @@ var getUrlContent_levelOne = function(callback, item) {
 
 
 function whenDoneAsync_LevelOne(items, res2){
-    O.o('Everything is done level one for [' + items.length + '] items.');
+    //O.o('Everything is done level one for [' + items.length + '] items.');
     //var i = 0;
     var itemsWithoutTitlesAfter_levelOne = [];
     for (var i = items.length-1 ; i >= 0 ; i--) {

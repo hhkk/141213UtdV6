@@ -13,81 +13,73 @@ var parseUserInputStringCreateMongoQuery = function(querystringTrimmed)
 {
     var queryTokens = (querystringTrimmed.toLowerCase()).split(/\s+/); //input.split(/(\s*,?\s*)+/)
 
-    O.o ('########## queryTokens.length:' + queryTokens.length);
+    //O.o ('########## queryTokens.length:' + queryTokens.length);
 
     var querymongo = null;
-    if (queryTokens.length > 2) {
-        O.o ('########## queryTokens threeup [0]:' + queryTokens[0]);
-        O.o ('########## queryTokens threeup [1]:' + queryTokens[1]);
-        O.o ('########## queryTokens threeup [2]:' + queryTokens[2]);
-        var re0 = new RegExp(queryTokens[0], 'i');
-        var re1 = new RegExp(queryTokens[1], 'i');
-        var re2 = new RegExp(queryTokens[2], 'i');
-        querymongo = {$or: [{text:re0}, {text:re1}, {text:re2}]};
-    }
-    else if (queryTokens.length > 1) {
-        O.o ('########## queryTokens two case [0]:' + queryTokens[0]);
-        O.o ('########## queryTokens two case [1]:' + queryTokens[1]);
-        var rea = new RegExp(queryTokens[0], 'i');
-        var reb = new RegExp(queryTokens[1], 'i');
-        querymongo = {$or: [{text:rea}, {text:reb}]};
-    }
-    else {
-        O.o ('########## queryTokens one case [0]:' + queryTokens[0]);
-        //var rex = new RegExp(queryTokens[0], "i");
-        //querymongo = {text:rex};
-        //var sClassrex = UtilClass.getClass(rex);
-        //O.o ('sClassHK rex :' + sClassrex);
 
-        // 1
-        //var  yhk = new RegExp(queryTokens[0], 'i');
-        //querymongo = {text:yhk};    // works but not case ins
+    var arrRegExpsToOr = [];
+    for (var i = 0; i < queryTokens.length; i++)
+    {
 
-        //var y = new RegExp(queryTokens[0], 'i');
+        try {
+            var re = new RegExp(queryTokens[0], 'i')
+            arrRegExpsToOr.push ({text:re});
+            //[{text:rea}, {text:reb}]
+        } catch (e) {
 
-        var t = 'thorx';
-        var v = 'thorx';
-        if (t === v) {
-            console.log ('11&&&&&&&&&&&&&&&&&& same hk u:' + u);
-        }  else {
-            console.log ('11&&&&&&&&&&&&&&&&&& not same hku:' + u);
         }
-        var u = queryTokens[0];
-        if (t === u) {
-            console.log ('22&&&&&&&&&&&&&&&&&& same hk u:' + u);
-        }  else {
-            console.log ('22&&&&&&&&&&&&&&&&&& not same hku:' + u);
-        }
-
-        var y = new RegExp(t, 'i');
-
-
-        // 2 etc
-        querymongo = {text:y};    // works but not case ins
-
-
-
-        //var w = 'thorx'
-        var w = queryTokens[0];
-        var wp = new RegExp(w, 'i');
-        var queryw = {text:wp}; // works
-
-
-
-
-
-
-
-
-        // 3 etc
-        //querymongo = {text:queryTokens[0]}; // no work as case or substring
-        //querymongo = {text:/queryTokens[0]/}; // no work at all
-        //querymongo = {text:/queryTokens[0]/}; // no work
-        //querymongo = {text:/queryTokens[0]/i}; // no work
-
-        // {$regex: new RegExp('^' + username.toLowerCase(), 'i')}
-
+        if (arrRegExpsToOr.length > 4) // keep only n for the mongo query, the rest we will constrain for
+            break;
     }
+
+    querymongo = {$or: arrRegExpsToOr};
+
+    //var rex = new RegExp(queryTokens[0], "i");
+    //querymongo = {text:rex};
+    //var sClassrex = UtilClass.getClass(rex);
+    //O.o ('sClassHK rex :' + sClassrex);
+
+    // 1
+    //var  yhk = new RegExp(queryTokens[0], 'i');
+    //querymongo = {text:yhk};    // works but not case ins
+
+    //var y = new RegExp(queryTokens[0], 'i');
+
+    //var t = 'thorx';
+    //var v = 'thorx';
+    //if (t === v) {
+    //    console.log ('11&&&&&&&&&&&&&&&&&& same hk u:' + u);
+    //}  else {
+    //    console.log ('11&&&&&&&&&&&&&&&&&& not same hku:' + u);
+    //}
+    //var u = queryTokens[0];
+    //if (t === u) {
+    //    console.log ('22&&&&&&&&&&&&&&&&&& same hk u:' + u);
+    //}  else {
+    //    console.log ('22&&&&&&&&&&&&&&&&&& not same hku:' + u);
+    //}
+    //
+    //var y = new RegExp(t, 'i');
+
+
+    // 2 etc
+    //querymongo = {text:y};    // works but not case ins
+
+
+
+    //var w = 'thorx'
+    //var w = queryTokens[0];
+    //var wp = new RegExp(w, 'i');
+    //var queryw = {text:wp}; // works
+
+
+    // 3 etc
+    //querymongo = {text:queryTokens[0]}; // no work as case or substring
+    //querymongo = {text:/queryTokens[0]/}; // no work at all
+    //querymongo = {text:/queryTokens[0]/}; // no work
+    //querymongo = {text:/queryTokens[0]/i}; // no work
+
+    // {$regex: new RegExp('^' + username.toLowerCase(), 'i')}
 
     //console.log ('UtilClass.getClass(regexp):'+ UtilClass.getClass(regexp));
 
@@ -96,7 +88,7 @@ var parseUserInputStringCreateMongoQuery = function(querystringTrimmed)
 
     O.o ('@@@@@@@@@@@@@ JSON.stringify(querymongo) querystringTrimmed [' + querystringTrimmed + '] [' + JSON.stringify(querymongo) + ']');
     //return querymongo;
-    return queryw;
+    return querymongo ;
 
 }
 
@@ -123,7 +115,7 @@ exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, er
     var countResult = 0;
     var x = [];
 
-    O.o('step: querymongo:' + querymongo) ;
+    //O.o('step: querymongo:' + querymongo) ;
     //Ustodo.find().exec(function(err, ustodos) {
     //var sClass = UtilClass.getClass('Ustodo', Ustodo);
     //O.o ('sClassHK ustodo:' + sClass);
@@ -141,13 +133,13 @@ exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, er
             // console.log ('&&&&&&&&&&&&&&&&&&& pre result loop');
             for (var k = 0; k < (ustodos.length) && x.length < hklimit; k++)
             {
-                console.log ('&&&&&&&&&&&&&&&&&&& in result loop');
+                //console.log ('&&&&&&&&&&&&&&&&&&& in result loop');
                 countResult = countResult + 1;
                 //ustodos[k].text = 'svr2,' + ustodos[k].text;
                 var tt = UtilHrefThisText.hrefThisText(ustodos[k].text);
                 var keeper = true;
                 for (var i = 0; i < queryTokens.length; i++) {
-                    console.log ('&&&&&&&&&&&&&&&&&&& in result loop tt [' + tt + '] queryTokens[i] [' + queryTokens[i] + ']');
+                    //console.log ('&&&&&&&&&&&&&&&&&&& in result loop tt [' + tt + '] queryTokens[i] [' + queryTokens[i] + ']');
                     if (tt.toLowerCase().indexOf(queryTokens[i]) < 0) {
                         keeper = false;
                         break;

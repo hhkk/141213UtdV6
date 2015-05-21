@@ -32,8 +32,10 @@ var mongoose = require('mongoose'),
 /**
  * Create a Ustodo
  */
+O.o ('&&&&&&&&&&000 init var callcountSaved = 0');
+var callcountSaved = 0;
 exports.create = function(req, res) {
-	O.o('in ustodos.server.controller.js: create');
+	//O.o('33333333333333333333 in ustodos.server.controller.js: create');
 	var ustodo = new Ustodo(req.body);
 	ustodo.user = req.user;
 
@@ -41,14 +43,17 @@ exports.create = function(req, res) {
     ustodo.html = ustodo.html;
 
     var res2 = {};
+    // section_exports.create
+    O.o ('^^^^^^^^^^^^^^^^^^^^^^^^ in server.controller exports.create');
     res2.json = function(s)
     {
-        O.o ('--------> saving content as both text and html [' + s + ']');
+        //O.o ('--------> saving content as both text and html [' + s + ']');
         ustodo.text = s;
         ustodo.html = s;
         ustodo.datelastmod = new Date();
         ustodo.datecreated = new Date();
 
+        O.o ('^^^^^^^^^^^^^^^^^^^^^^^^ in server.controller exports.create callback');
         ustodo.save(function(err) {
             if (err) {
                 O.o('*** write fail err [' +err + ']');
@@ -56,7 +61,7 @@ exports.create = function(req, res) {
                     message: errorHandler.getErrorMessage(err)
                 });
             } else {
-                console.log ('@@@@@@@@@@@@@@@@@@@@@ saved a new USTODO [' + ustodo.html + ']');
+                console.log ('@@@@@@@@@@@@@@@@@@@@@ completed save # [' + callcountSaved++ + '] of a created USTODO [' + ustodo.html + ']');
                 res.jsonp(ustodo);
             }
         });
@@ -75,7 +80,7 @@ exports.create = function(req, res) {
  * Show the current Ustodo
  */
 exports.read = function(req, res) {
-	O.o ('in ustodos.server.controller.js: read');
+	//O.o ('in ustodos.server.controller.js: read');
 	res.jsonp(req.ustodo);
 };
 
@@ -190,7 +195,7 @@ exports.ustodobulkdel = function(req, res) {
                     for (var j = 0; j < arrIdsToDelete.length; j++ )
                     {
                         arrOidsToDelete.push (new ObjectID(arrIdsToDelete[j]));
-                        O.o ('deleting id:' + arrIdsToDelete[j]);
+                        //O.o ('deleting id:' + arrIdsToDelete[j]);
                     }
                     collRemove_ustodos.remove({_id: {$in:arrOidsToDelete}} );
 
@@ -226,22 +231,22 @@ exports.ustodobulkdel = function(req, res) {
  */
 exports.list2 = function(req, res) {
 
-    O.o(' *************** Top of exports.list ');
+    //O.o(' *************** Top of exports.list ');
 	//O.o ('utilclass.getclass of s:' + UtilClass.getClass('hbkk res:', res))
 
 	var query = req.query;
-    O.o('in ustodos.server.controller.js: list query.querystring [' + query.q + ']');
+    //O.o('in ustodos.server.controller.js: list query.querystring [' + query.q + ']');
     if (query.q !== null && query.q !== undefined)
         query.q = query.q.trim();
     else
         query.q = '';
 
     if (query.q === '*')   {
-        O.o ('resetting * star to blank');
+        //O.o ('resetting * star to blank');
         query.q = '';
     }
     var require_ustodos_controller_helper = require('C:/utd/141213UtdV6/app/controllers/helpers/ustodos.controller.helper.js');
-    O.o('in ustodos.server.controller.js: list, query.querystring: ' + query.q);
+    //O.o('in ustodos.server.controller.js: list, query.querystring: ' + query.q);
     require_ustodos_controller_helper.processCommandReadPortion(Ustodo, query.q.trim(), req, errorHandler, res);
 
     //O.o ('query.querystring post trim [' + query.querystring+ ']');

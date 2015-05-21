@@ -24,6 +24,8 @@ var UtilHrefThisText = require('C:/utd/141213UtdV6/public/util/UtilHrefThisText.
 var callCount_expandUrlsToHrefsReturnPatchedStr =0
 var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
 {
+    O.o ('#################3 in expandUrlsToHrefsReturnPatchedStr get titles [' + initialTextWithPreHrefs + ']');
+
     O.o ('in expandUrlsToHrefsReturnPatchedStr call count:' + callCount_expandUrlsToHrefsReturnPatchedStr);
     var Item = function(url) {
         this.url = url;
