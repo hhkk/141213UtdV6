@@ -986,7 +986,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // MAJOR COMMON FUNCTION - SET ACTIVE EDITOR CONTENT
             // set text shown for mouseover
 
-            $scope.setTextInShowingEditor = function(e) {
+            $scope.setTextInShowingEditor = function(e)
+            {
                 try {
                     switch($scope.whichInputIsInFocus())
                     {
@@ -1163,7 +1164,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    //$('#edit_container').scrollTop(0);
             //});
 
-            var o = O.o;
+            //var o = O.o;
 
             $scope.keyCount = 0;
 
@@ -1186,6 +1187,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.buttonClickSearchStar = function() {
+                alert ('asdsad');
                 this.commandFromInputBox = '*';
                 this.processCommand('SERVER line 1189', this.commandFromInputBox);
             };
@@ -1386,7 +1388,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 {
                     // if not a sup command
                     O.o ('1 set search xValue:'+ xValue);
-                    $location.search('q', xValue);
+                    // hbk 1505
+                    $location.search('q', xValue.trim());
                     O.o ('2 set search xValue:'+ xValue);
                     O.o ('######## in bShouldIcommand');
                     var skipThisCommandAlreadProcessed = false;
@@ -1486,7 +1489,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     }
                 }, false);
 
-                    //O.o ('reinit window.keyStates.keyStateShiftDown:' + window.keyStates.keyStateShiftDown);
+                //O.o ('reinit window.keyStates.keyStateShiftDown:' + window.keyStates.keyStateShiftDown);
 
             }
 
@@ -1620,7 +1623,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //isDirtySetFlag_updateScopeStateFlag_SaveDiffsOption(true);
 
 
-                $location.search('hk', 'sdfsdf');
+                //$location.search('hk', 'sdfsdf');
 
 
             };
@@ -1759,7 +1762,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             var callbackhkhk_find = function()
             {
-                //alert ('in callbackhkhk_find');
+                alert ('in callbackhkhk_find');
                 $scope.setUstodosFiltered('caller1_find', $scope.ustodos);
             };
 
@@ -1845,7 +1848,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 var areAllCbStatesSame = true;
                 var checkboxFirstState = checkboxFirst.checked;
 
-                    var x = $('.chkbox');
+                var x = $('.chkbox');
                 //O.o ('x.length:' + x.length);
                 // check if all are checked so it's just a toggle
                 for (var i = 0; i < x.length; i++ )
@@ -1886,7 +1889,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //var elem = angular.element(document.querySelector('#hktablespan'));
 
                 //find('.classname'), assumes you already have the starting elem to search from
-                    //var checkboxes = angular.element(elem.querySelector('.chkbox'));
+                //var checkboxes = angular.element(elem.querySelector('.chkbox'));
 
                 //var checkboxes = angular.element('chkbox');
                 //var checkboxes = angular.element.find('input');
@@ -1906,7 +1909,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 var $chkboxes = $('.chkbox');
 
                 //if(!$scope.lastChecked) {
-                    //O.o ('set $scope.lastChecked to:' + $scope.lastChecked.id);
+                //O.o ('set $scope.lastChecked to:' + $scope.lastChecked.id);
                 //}
 
                 if( window.keyStates.keyStateShiftDown === true)
@@ -2040,7 +2043,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
+            //alert ('setting setUstodosFiltered');
             $scope.setUstodosFiltered = function(caller, ustodosUnfiltered) {
+                // hbk 1505
                 //alert('in setUstodosFiltered caller [' + caller + '] dirtying $scope.ustodosFiltered ustodosUnfiltered.length' + ustodosUnfiltered.length);
                 $scope.ustodosFiltered = ustodosUnfiltered;
                 document.ustodosFilterCacheDirty = true;
@@ -2065,11 +2070,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             {
 
                 //alert (' =========================== in processcommand desc [' +
-                // desc + '] xValue' + '[' + xValue + ']' );
+                 //desc + '] xValue' + '[' + xValue + ']' );
                 try {
 
 
                     $scope.searchedFor = xValue.trim();
+                    //alert ('$scope.searchedFor[' + $scope.searchedFor + ']');
+
                     //$scope.searchedForAsLink = '<a ng-href=\'jpro.com\'> search</a>';
                     $scope.searchedForAsLink = 'http://ibm.com/test';
                     //O.o ('============================= in xValue [' + xValue + ']');
@@ -2194,7 +2201,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //O.o ('=============== in section QUERY1');
                             $scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_Write', {q: commandRemoved_toSearchFor_trimmed}, callbackFromQuery);
 
-                            $location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
+                            // hbk 1505
+                            //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
                             $scope.setTextInShowingEditor(commandRemoved_toSearchFor_trimmed);
                             UtilNLB_bgFade.NLBfadeBg('idInput0TypeText','green', '#FFFFFF','1500');
 
@@ -2204,7 +2212,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             alert ('fail callback from save $scope.error:' + $scope.error);
                         });
                         //alert  ('will search after write wasAwrite [' + wasAwrite +
-                           //'] for commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
+                        //'] for commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
                     }
                     else // not a write
                     {
@@ -2219,21 +2227,21 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             {q:
                                 commandTrimmed.trim()
                                 //new RegExp(t, 'i')
-                                    //{ $regex: new RegExp(commandTrimmed.trim(), "i") }
-                        //{$regex:commandTrimmed.trim(), $options:'i'}
+                                //{ $regex: new RegExp(commandTrimmed.trim(), "i") }
+                                //{$regex:commandTrimmed.trim(), $options:'i'}
                                 //{ $regex: /thort/, $options: 'i' } // { $regex: /acme.*corp/, $options: 'i' }
                             },
                             callbackFromQuery);      // this is a GET - see RESOURCE
 
                         //$scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_NotWrite',
 //                           {q:commandTrimmed.trim()});      // this is a GET - see RESOURCE
-                           //{q:{$regex:commandTrimmed.trim()}});      // this is a GET - see RESOURCE
-                           //{q:{$regex:commandTrimmed.trim(), $options:'i'}});      // this is a GET - see RESOURCE
-                           //{q:commandTrimmed.trim() }, callbackFromQuery);      // this is a GET - see RESOURCE
-                            // {key:{$regex:value, $options:‘i’}}
+                        //{q:{$regex:commandTrimmed.trim()}});      // this is a GET - see RESOURCE
+                        //{q:{$regex:commandTrimmed.trim(), $options:'i'}});      // this is a GET - see RESOURCE
+                        //{q:commandTrimmed.trim() }, callbackFromQuery);      // this is a GET - see RESOURCE
+                        // {key:{$regex:value, $options:‘i’}}
 
-                            //{q:new RegExp(commandTrimmed.trim(), 'i') }, callbackFromQuery);      // this is a GET - see RESOURCE
-                           // {q:{ "$regex" : commandTrimmed.trim(), "$options" : "-i" }}, callbackFromQuery);      // this is a GET - see RESOURCE
+                        //{q:new RegExp(commandTrimmed.trim(), 'i') }, callbackFromQuery);      // this is a GET - see RESOURCE
+                        // {q:{ "$regex" : commandTrimmed.trim(), "$options" : "-i" }}, callbackFromQuery);      // this is a GET - see RESOURCE
 
                         // http://stackoverflow.com/questions/5499451/case-insensitive-query-on-mongodb
                         //{ "$regex" : "C#", "$options" : "-i" }
@@ -2333,7 +2341,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 });
             };
 
-            $scope.processCommand('CLIENT JS line 2286', '*', '*', '*');
+            // request parameter read
+            //alert ('$location.$$search.q:' + $location.$$search.q);
+
+            var q = $location.$$search.q;
+            if (q)
+                $scope.processCommand('CLIENT JS line 2344', q, q, q);
+            else
+                $scope.processCommand('CLIENT JS line 2344', '*', '*', '*');
             //O.a ('sssa2');
 
             // <select> element displays its options on mousedown, not click.
@@ -2375,6 +2390,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.updateUstodosFiltered = function (s)
             {
 
+                O.o ('========================= in updateUstodosFiltered');
                 if (document.ustodosFilterCacheDirty === false)
                 {
                     //alert('setting cache dirty');
@@ -2457,47 +2473,50 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         }
     }
 ])
-.directive('myCustomer', function()  // section_ tail defined against app (e.g., myApp or userApp)
-{
-    return {
-        //templateUrl: function(elem, attr){
-        //    return 'customer-'+attr.type+'.html';
-        template: function(elem, attr){
-
-            console.log ('in mycustomer directive ==================================');
-            //return 'ggggggggggghhhhhhhhhhhhhh';
-            return 'ustodo text: <a href=>';
-            //http:\/\/applex.com' target='_blank'>http:\/\/applex.com<\/a>';
-
-        }
-    };
-})
-.directive('autoFocus', function($timeout) {
-    console.log('fffffffffffffffffffffffffff');
-    return {
-        restrict: 'AC',
-        link: function(_scope, _element) {
-            $timeout(function(){
-                _element[0].focus();
-            }, 0);
-        }
-    };
-})
-.filter('filterUstodos', function()
-{
-
-    // see also
-    return function( ustodos, s)
+    .directive('myCustomer', function()  // section_ tail defined against app (e.g., myApp or userApp)
     {
-        if ( document.ustodosFilterCacheDirty !== true )
+        O.o ('========================= in directive 1');
+        return {
+            //templateUrl: function(elem, attr){
+            //    return 'customer-'+attr.type+'.html';
+            template: function(elem, attr){
+
+                console.log ('in mycustomer directive ==================================');
+                //return 'ggggggggggghhhhhhhhhhhhhh';
+                return 'ustodo text: <a href=>';
+                //http:\/\/applex.com' target='_blank'>http:\/\/applex.com<\/a>';
+
+            }
+        };
+    })
+    .directive('autoFocus', function($timeout) {
+        O.o ('========================= in directive 2');
+        return {
+            restrict: 'AC',
+            link: function(_scope, _element) {
+                $timeout(function(){
+                    _element[0].focus();
+                }, 0);
+            }
+        };
+    })
+    .filter('filterUstodos', function()
+    {
+
+        O.o ('========================= in filter 1');
+        // see also
+        return function( ustodos, s)
         {
-            //O.o ('returning cached ustodos filtered s [' + s + '] TimeSynched [' + document.ustodosLastCommitTimeSynched + ']');
-            return document.ustodosFilterCache;
-        }
-        //else
-        //{
-        //    // alert ('getting new filter');
-        //}
+            O.o ('========================= in filter 1b');
+            if ( document.ustodosFilterCacheDirty !== true )
+            {
+                //O.o ('returning cached ustodos filtered s [' + s + '] TimeSynched [' + document.ustodosLastCommitTimeSynched + ']');
+                return document.ustodosFilterCache;
+            }
+            //else
+            //{
+            //    // alert ('getting new filter');
+            //}
 
 
 
@@ -2540,38 +2559,38 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-        var useCaseSensitiveRestrict = false;
-        if (s && s.hasUpperCase())
-            useCaseSensitiveRestrict = true;
+            var useCaseSensitiveRestrict = false;
+            if (s && s.hasUpperCase())
+                useCaseSensitiveRestrict = true;
 
-        var ustodosFiltered = [];
-        angular.forEach(ustodos, function(ustodo)
-        {
+            var ustodosFiltered = [];
+            angular.forEach(ustodos, function(ustodo)
+            {
 
-            //var strOneOfManyIterThru = ustodo.html;
-            //if (!useCaseSensitiveRestrict)
-            //    strOneOfManyIterThru = strOneOfManyIterThru.toLowerCase();
-            //
-            //if(!s || strOneOfManyIterThru.indexOf(s) >= 0) {
-            ////if(true) {
-            //    //O.o ('======  filter do keep');
-            //    ustodosFiltered.push(ustodo);
-            //}
-            //else {
-            //    O.o ('======  filter do not keep');
-            //}
+                //var strOneOfManyIterThru = ustodo.html;
+                //if (!useCaseSensitiveRestrict)
+                //    strOneOfManyIterThru = strOneOfManyIterThru.toLowerCase();
+                //
+                //if(!s || strOneOfManyIterThru.indexOf(s) >= 0) {
+                ////if(true) {
+                //    //O.o ('======  filter do keep');
+                //    ustodosFiltered.push(ustodo);
+                //}
+                //else {
+                //    O.o ('======  filter do not keep');
+                //}
 
-            ustodosFiltered.push(ustodo);
+                ustodosFiltered.push(ustodo);
 
-        });
-        document.ustodosFilterCache = ustodosFiltered;
-        document.ustodosFilterCacheDirty = false;
+            });
+            document.ustodosFilterCache = ustodosFiltered;
+            document.ustodosFilterCacheDirty = false;
 
-        //O.o ('@@@@@@@@@ filter done ustodosFiltered.length:'+ustodosFiltered.length);
+            //O.o ('@@@@@@@@@ filter done ustodosFiltered.length:'+ustodosFiltered.length);
 
-        return document.ustodosFilterCache;
-    };
-}
+            return document.ustodosFilterCache;
+        };
+    }
 )
 ;
 
@@ -2627,16 +2646,16 @@ angular.module('ustodos')
         };
     });
 
-    //window.onload = function()
-    //{
-    //alert ('onload ');
-    //CKEDITOR.replace( 'editor1' );
-    //CKEDITOR.instances.editor1.on('blur', function() {
-    //    alert('onblur fired');
-    //});
-    //};
+//window.onload = function()
+//{
+//alert ('onload ');
+//CKEDITOR.replace( 'editor1' );
+//CKEDITOR.instances.editor1.on('blur', function() {
+//    alert('onblur fired');
+//});
+//};
 
-    //alert ('done onload');
+//alert ('done onload');
 
 
 
