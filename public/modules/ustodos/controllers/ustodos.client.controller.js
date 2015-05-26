@@ -2199,7 +2199,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                             //alert ('in callback success after write search for [' + commandRemoved_toSearchFor_trimmed + ']');
                             //O.o ('=============== in section QUERY1');
-                            $scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_Write', {q: commandRemoved_toSearchFor_trimmed}, callbackFromQuery);
+                            $scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_Write', {q: '*'}, callbackFromQuery);
 
                             // hbk 1505
                             //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
