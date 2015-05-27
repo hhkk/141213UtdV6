@@ -1302,6 +1302,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 // decide for each input type whether to search
                 var xHtmlStripped = null;
+                //alert('in switchscope.whichInputIsInFocus');
                 switch($scope.whichInputIsInFocus())
                 {
                     case $scope.ns.Input.INPUT_0_TEXT:
@@ -2069,8 +2070,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.processCommand = function(desc, xText, xHtml, xValue)
             {
 
-                //alert (' =========================== in processcommand desc [' +
-                 //desc + '] xValue' + '[' + xValue + ']' );
+                alert (' =========================== in processcommand desc [' +
+                 desc + '] xValue' + '[' + xValue + ']' );
                 try {
 
 
@@ -2342,13 +2343,17 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             // request parameter read
-            //alert ('$location.$$search.q:' + $location.$$search.q);
+            alert ('$location.$$search.q:' + $location.$$search.q);
 
             var q = $location.$$search.q;
-            if (q)
-                $scope.processCommand('CLIENT JS line 2344', q, q, q);
-            else
-                $scope.processCommand('CLIENT JS line 2344', '*', '*', '*');
+
+            if (q) {
+                $scope.processCommand('CLIENT JS line 2351', q, q, q);
+                $scope.setTextInShowingEditor(q);
+
+            } else {
+                $scope.processCommand('CLIENT JS line 2355', '*', '*', '*');
+            }
             //O.a ('sssa2');
 
             // <select> element displays its options on mousedown, not click.
@@ -2507,7 +2512,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         // see also
         return function( ustodos, s)
         {
-            O.o ('========================= in filter 1b');
+            //O.o ('========================= in filter 1b');
             if ( document.ustodosFilterCacheDirty !== true )
             {
                 //O.o ('returning cached ustodos filtered s [' + s + '] TimeSynched [' + document.ustodosLastCommitTimeSynched + ']');
