@@ -141,15 +141,9 @@ var app = angular.module('ustodos');
 
 
 
-
-
-
-
 var callbackCommand = function(callbackResult) {
     O.o  ('in callbackCommand');
 };
-
-
 
 
 //O.a ('oneOfSeveral controller with array - first?');
@@ -219,7 +213,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.testNLBfadeBg = function() {
-                //alert('in testNLBfadeBg')      ;
+                alert('in testNLBfadeBg')      ;
                 UtilNLB_bgFade.NLBfadeBg('div1hk','green', '#FFFFFF','1500');
             };
 
@@ -562,8 +556,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 if (keyEvent.keyCode !== 27 ) // escape key
                     return;
 
-                //alert ('time to save!');
-
                 var newHtml = document.getElementById('ustodorow'+index).innerHTML;
 
                 UtilNLB_bgFade.NLBfadeBg('ustodorow'+index,'green', '#FFFFFF','1500');
@@ -594,6 +586,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //    alert ('---------------------------- SAVED utd OK !!! ');
                         //}, fnCallbackFromUpdate);
 
+                        // section_ save per row on update with escape key
                         $scope.ustodos[i].$update(function() { // bridge maps to exports.update = function(req, res) { in server controller
                             alert('success save newHtml [' + newHtml + ']');
                         }, function(errorResponse) {
@@ -615,6 +608,18 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.onKeyUp = function (desc, keyEvent, ENUM_KEYEVENTcaller) // https://docs.angularjs.org/api/ng/directive/ngKeyup
             {
+                //alert ('in onkeyup');
+
+
+
+
+
+                if ($scope.getTextInShowingEditor().xValue === '')
+                    $scope.mouseoverlock = "off";
+                else
+                    $scope.mouseoverlock = "on";
+
+
                 //O.o ('in onkeyup desc ['+ desc +'] ENUM_KEYEVENTcaller [' + ENUM_KEYEVENTcaller + 'keyEvent.keyCode:' + keyEvent.keyCode);
                 if (keyEvent.ctrlKey)
                     return;
@@ -633,6 +638,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //O.o('onKeyUp:' + getKeyboardEventResult($event, 'Key up')); // hbkhbk
                 $scope.respondToKeyboardEvent('line634', keyCode);
             };
+
             //$scope.onKeyUp = function(ev) {
             //    ////alert('onKeyUp:' + ev); // hbkhbk
             //    //console.log('onKeyUp:' + getKeyboardEventResult); // hbkhbk
@@ -641,6 +647,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    //$scope.respondToKeyboardEvent()
             //    ////$scope.propagateTextChanges();
             //};
+
             var getKeyboardEventResult = function (keyEvent, keyEventDesc)
             {
                 return keyEventDesc + ' (keyCode: ' + (window.event ? keyEvent.keyCode : keyEvent.which) + ')';
@@ -988,6 +995,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.setTextInShowingEditor = function(e)
             {
+                //O.o ('in setTextInShowingEditor');
                 try {
                     switch($scope.whichInputIsInFocus())
                     {
@@ -1022,6 +1030,51 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 }
             };
 
+            $scope.getTextInShowingEditor = function()
+            {
+                var xText = null;
+                var xHtml = null;
+                var xValue = null;
+                var xHtmlStripped = null;
+                try {
+                    switch($scope.whichInputIsInFocus())
+                    {
+                        case $scope.ns.Input.INPUT_0_TEXT:
+                            xText = document.getElementById('idInput0TypeText').innerText;
+                            xHtml = document.getElementById('idInput0TypeText').innerHTML;
+                            xValue = document.getElementById('idInput0TypeText').value;
+                            //alert ('in getTextInShowingEditor decided case $scope.ns.Input.INPUT_0_TEXT:'+xValue);
+                            break;
+                        case $scope.ns.Input.INPUT_1_MEDIUM:
+                            xText = $scope.mmmm.element.innerText;
+                            xHtml = $scope.mmmm.element.innerHTML;
+                            xValue = $scope.mmmm.element.innerText;
+                            xHtmlStripped = xHtml.replace('<p>','');
+                            xHtmlStripped = xHtmlStripped.replace('</p>','');
+                            xHtmlStripped = xHtmlStripped.trim();
+                            break;
+                        case $scope.ns.Input.INPUT_2_CKE:
+                            //alert ('in setTextInShowingEditor for input2cke');
+                            if (UtilJsTypeDetect.isString(e))
+                                alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
+                            else
+                                CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
+                            break;
+                        default:
+                            alert ('era - bad input resolution');
+                    }
+                } catch (e) {
+                    alert ('era:' + e);
+                    throw e;
+                }
+
+                var rtn = {};
+                rtn.xText = xText;
+                rtn.xHtml = xHtml;
+                rtn.xValue = xValue;
+                rtn.xHtmlStripped = xHtmlStripped;
+                return rtn;
+            };
 
 
 
@@ -1192,25 +1245,23 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 this.processCommand('SERVER line 1189', this.commandFromInputBox);
             };
 
-            $scope.eventMouseoverRow = function(i) {
-                //console.log ('in eventMouseoverRow ' + i);
-                var x = document.getElementById('ustodorow'+i);
-                //var x = angular.element('ustodorow'+i);
-                //console.log ('in eventMouseoverRow x.innerText:' + x.innerText);
-                $scope.commandFromInputBox = x.innerText;
-                //elem.contentEditable = false;
-                //console.log ('in eventMouseoverRow set this.commandFromInputBox :' + x.innerText);
-            };
-
+            //$scope.eventMouseoverRow = function(i) {
+            //    //console.log ('in eventMouseoverRow ' + i);
+            //    var x = document.getElementById('ustodorow'+i);
+            //    //var x = angular.element('ustodorow'+i);
+            //    //console.log ('in eventMouseoverRow x.innerText:' + x.innerText);
+            //    $scope.commandFromInputBox = x.innerText;
+            //    //elem.contentEditable = false;
+            //    //console.log ('in eventMouseoverRow set this.commandFromInputBox :' + x.innerText);
+            //};
+            //
             $scope.eventMouseoverRow2 = function(i) {
                 //console.log('A in eventMouseoverRow2 i:' + i);
-
-                //O.o ('========== $scope.state_inSelectedMode [' + $scope.state_inSelectedMode + "]");
                 if ($scope.state_inSelectedMode === -1) {
-                    var x = document.getElementById('ustodorow'+i);
-                    $scope.setTextInShowingEditor(x);
+                    if ($scope.mouseoverlock !== 'on') {
+                        $scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
+                    }
                 }
-
 
 
                 //console.log ('B in eventMouseoverRow x.innerText:' + x.innerText);
@@ -1383,7 +1434,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //xValue = xValue.trim();
 
                 // was this same command last processed within the last 1/x second
-
 
                 if (bShouldIcommand)
                 {
@@ -1605,6 +1655,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.testButton= function(s)
             {
+                alert ('in keyup $scope.getTextInShowingEditor()'+$scope.getTextInShowingEditor());
+
                 //alert('in testbutton');
                 //document.getElementById('ustodorow0').blur();
                 //$window.location.href = 'http://www.google.com/search?q=';
@@ -2067,13 +2119,18 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //| |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | |
             //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
             //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
+            $scope.mouseoverlock = 'off'; // mouselock mouseoverlock
+            //alert ('reinit mouseoverlock');
+
             $scope.processCommand = function(desc, xText, xHtml, xValue)
             {
 
-                alert (' =========================== in processcommand desc [' +
-                 desc + '] xValue' + '[' + xValue + ']' );
-                try {
+                $scope.state_inSelectedMode = -1;
+                $scope.setTextInShowingEditor(xText);
 
+                //alert (' =========================== in processcommand desc [' +
+                 //desc + '] xValue' + '[' + xValue + ']' );
+                try {
 
                     $scope.searchedFor = xValue.trim();
                     //alert ('$scope.searchedFor[' + $scope.searchedFor + ']');
@@ -2342,18 +2399,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 });
             };
 
-            // request parameter read
-            alert ('$location.$$search.q:' + $location.$$search.q);
-
-            var q = $location.$$search.q;
-
-            if (q) {
-                $scope.processCommand('CLIENT JS line 2351', q, q, q);
-                $scope.setTextInShowingEditor(q);
-
-            } else {
-                $scope.processCommand('CLIENT JS line 2355', '*', '*', '*');
-            }
             //O.a ('sssa2');
 
             // <select> element displays its options on mousedown, not click.
@@ -2472,6 +2517,37 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    tinyMCE.get('idTinyMceTextArea').setContent('<span>some1</span> html');
             //}
             //
+
+
+
+            /**
+             .----------------. .----------------. .----------------. .-----------------.
+             | .--------------. | .--------------. | .--------------. | .--------------. |
+             | | ____    ____ | | |      __      | | |     _____    | | | ____  _____  | |
+             | ||_   \  /   _|| | |     /  \     | | |    |_   _|   | | ||_   \|_   _| | |
+             | |  |   \/   |  | | |    / /\ \    | | |      | |     | | |  |   \ | |   | |
+             | |  | |\  /| |  | | |   / ____ \   | | |      | |     | | |  | |\ \| |   | |
+             | | _| |_\/_| |_ | | | _/ /    \ \_ | | |     _| |_    | | | _| |_\   |_  | |
+             | ||_____||_____|| | ||____|  |____|| | |    |_____|   | | ||_____|\____| | |
+             | |              | | |              | | |              | | |              | |
+             | '--------------' | '--------------' | '--------------' | '--------------' |
+             '----------------' '----------------' '----------------' '----------------'             //section_main - executes on load - not a function ded
+             */
+            // request parameter read
+            //alert ('$location.$$search.q:' + $location.$$search.q);
+
+            var q = $location.$$search.q;
+
+            if (q) {
+                $scope.processCommand('CLIENT JS line 2351', q, q, q);
+                $scope.setTextInShowingEditor(q);
+
+            } else {
+                $scope.processCommand('CLIENT JS line 2355', '*', '*', '*');
+            }
+
+
+
         } catch (e) {
             alert ('e:' + e);
             throw e;

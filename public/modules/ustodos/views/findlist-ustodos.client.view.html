@@ -57,6 +57,14 @@
 
         &nbsp;<input  id='idcheckbox_dynammicSearch' ng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
 
+        xx&nbsp;<span ng-model=$scope.lockMouseover> </span>yy
+
+        <!--<span ng-bind-html='$scope.lockMouseover'></span>-->
+
+        <span ng-bind="'lock:'+mouseoverlock"></span>
+        <span ng-bind="'state_inSelectedMode:'+state_inSelectedMode"></span>
+
+
         <br>
         <br>
 
@@ -135,21 +143,21 @@
                    ng-pattern="example.word" required ng-trim="false">
 
             <!-- RESEARCH SECTION_FILTER ICON AND TEXTBOX -->
-            Filter: <span ng-bind=('('+this.searchedFor+')')  ng-mouseover="this.eventMouseoverRow3(this.searchedFor)"
-                ></span >
+            <!--Filter: <span ng-bind=('('+this.searchedFor+'+'+this.filterText+')')  ng-mouseover="this.eventMouseoverRow3(this.searchedFor)"-->
+                <!--></span >-->
 
             <!--<br><a ng-href="http://google.com/search?q={{this.searchedFor}}">http://google.com/search?q={{this.searchedFor}}</a>-->
             <!--<br><a ng-href="{{this.searchedForAsLink}}">{{this.searchedForAsLink}}</a>-->
 
-            Count <span ng-bind=(this.ustodos.length)></span >
-            of <span ng-bind=(this.ustodosFiltered.length)></span >
+            Count <span ng-bind=(this.ustodosFiltered.length)></span >
+            of <span ng-bind=(this.ustodos.length)></span >
             &nbsp;
             <!--<button ng-click="this.buttonClickSearchStar()">*</button>-->
             <!--<button ng-click="this.buttonClickSearchClear()">Clear</button>-->
 
             <!--<WORKS p ng-repeat="command in commands">{{command}}</p>-->
 
-            <button ng-click="testButton(-2)">TestButton</button> // look for $scope.testButton
+            <button ng-click="testButton(-2)" title="testButton">TestButton</button>
             <!--<button ng-click="testButton(-2)">TestButton</button>-->
             <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
         </span>
