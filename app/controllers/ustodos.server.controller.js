@@ -34,11 +34,13 @@ var mongoose = require('mongoose'),
  */
 O.o ('&&&&&&&&&&000 init var callcountSaved = 0');
 var callcountSaved = 0;
-exports.create = function(req, res) {
+
+// section_create_new not section_write
+exports.create = function(req, res)
+{
 	//O.o('33333333333333333333 in ustodos.server.controller.js: create');
 	var ustodo = new Ustodo(req.body);
 	ustodo.user = req.user;
-
 
     ustodo.html = ustodo.html;
 
@@ -53,7 +55,10 @@ exports.create = function(req, res) {
         ustodo.datelastmod = new Date();
         ustodo.datecreated = new Date();
 
-        O.o ('^^^^^^^^^^^^^^^^^^^^^^^^ in server.controller exports.create callback');
+        O.o ('^^^^^^^^^^^^^^^^^^^^^^^^ save new ustodo.text:' + ustodo.html);
+        O.o ('^^^^^^^^^^^^^^^^^^^^^^^^ save new ustodo.html:' + ustodo.html);
+        O.o ('^^^^^^^^^^^^^^^^^^^^^^^^ save new ustodo.jsonx:' + ustodo.jsonx);
+        //O.o ('^^^^^^^^^^^^^^^^^^^^^^^^ save new ustodo.jsony:' + ustodo.jsony);
         ustodo.save(function(err) {
             if (err) {
                 O.o('*** write fail err [' +err + ']');
@@ -87,24 +92,32 @@ exports.read = function(req, res) {
 /**
  * Update a Ustodo        hbkk
  */
-exports.update = function(req, res) {
+// section_update_existing section_save_Existing
+exports.update = function(req, res)
+{
 	var ustodo = req.ustodo ;
     O.o('in ustodos.server.controller.js: update ' );
 
 	ustodo = _.extend(ustodo , req.body);
+    O.o ('ustodo.jsonx pre delete:' + ustodo.jsonx);
 	delete ustodo.jsonx; // remove property
+    O.o ('ustodo.jsonx post delete:' + ustodo.jsonx);
     ustodo.datelastmod = new Date();
     ustodo.jsonx = JSON.stringify(ustodo); // string
 
-    O.o ('################# saving ustodo.jsonx:' + ustodo.jsonx);
+    O.o ('xx################# saving ustodo.jsonx:' + ustodo.jsonx);
 
     ustodo.save(function (err, ustodosaved, numberAffected) {
         if (err) {
           O.o('era!!!!!!!!!');
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
         } else {
             O.o('success1!!!!!!!!! ustodosaved.html [' + ustodosaved.html + ']');
             O.o('success2!!!!!!!!! numberAffected [' + numberAffected + ']');
             O.o('success3!!!!!!!!! req.body._id [' + req.body._id + ']');
+            res.jsonp(ustodo);
         }
     });
 
@@ -151,11 +164,11 @@ exports.delete2 = function(req, res) {
 exports.ustodobulkdel = function(req, res) {
     try
     {
-        O.o('_______________________ in exports.ustodobulkdel  req.body.form:'+req.body.form);
-        O.o('_______________________ in exports.ustodobulkdel  req.body.form.arrIdsToDelete:'+req.body.form.arrOidsToDelete);
+        //O.o('_______________________ in exports.ustodobulkdel  req.body.form:'+req.body.form);
+        //O.o('_______________________ in exports.ustodobulkdel  req.body.form.arrIdsToDelete:'+req.body.form.arrOidsToDelete);
 
         var arrIdsToDelete = req.body.form.arrOidsToDelete;
-        O.o('_______________________ in exports.ustodobulkdel arrIdsToDelete:'+arrIdsToDelete);
+        //O.o('_______________________ in exports.ustodobulkdel arrIdsToDelete:'+arrIdsToDelete);
 
 
         // http://docs.mongodb.org/manual/reference/method/db.collection.remove/

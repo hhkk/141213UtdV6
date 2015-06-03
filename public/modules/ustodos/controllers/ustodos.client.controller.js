@@ -572,6 +572,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 var found = false;
                 //find the element in memory matching the id passed from the UI on the click
+                // might have this passed in OK - check it and maybe can remove this loop
                 for (var i = 0; i < $scope.ustodos.length; i++)
                 {
                     if ($scope.ustodos[i]._id === _id)
@@ -586,9 +587,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //    alert ('---------------------------- SAVED utd OK !!! ');
                         //}, fnCallbackFromUpdate);
 
-                        // section_ save per row on update with escape key
-                        $scope.ustodos[i].$update(function() { // bridge maps to exports.update = function(req, res) { in server controller
-                            alert('success save newHtml [' + newHtml + ']');
+                        // section_update per row on update with escape key
+                        $scope.ustodos[i].$update(function() { // bridge maps to ustodos.server.controller.js exports.update = function(req, res) { in server controller
+                            //alert('success save newHtml [' + newHtml + ']');
+
                         }, function(errorResponse) {
                             alert('error on save errorResponse.data.message [' + errorResponse.data.message + ']');
                         });
@@ -618,6 +620,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     $scope.mouseoverlock = "off";
                 else
                     $scope.mouseoverlock = "on";
+                O.o ('========== set mouseoverlock:' + $scope.mouseoverlock);
 
 
                 //O.o ('in onkeyup desc ['+ desc +'] ENUM_KEYEVENTcaller [' + ENUM_KEYEVENTcaller + 'keyEvent.keyCode:' + keyEvent.keyCode);
@@ -995,7 +998,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.setTextInShowingEditor = function(e)
             {
-                //O.o ('in setTextInShowingEditor');
+                O.o ('+++++++++ in setTextInShowingEditor e:' + e);
                 try {
                     switch($scope.whichInputIsInFocus())
                     {
@@ -1361,6 +1364,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         xHtml = document.getElementById('idInput0TypeText').innerHTML;
                         xValue = document.getElementById('idInput0TypeText').value;
                         //O.o ('keyCode:' + keyCode);
+                        O.o ('in 1 respondToKeyboardEventkey 1 xText:' + xText);
+                        O.o ('in 2 respondToKeyboardEventkey 2 xHtml:' + xHtml);
+                        O.o ('in 3 respondToKeyboardEventkey 3 xValue:' + xValue);
+                        //O.o ('keyCode:' + keyCode);
+                        //O.o ('keyCode:' + keyCode);
 
                         if (keyCode === 13)
                         {
@@ -1453,9 +1461,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     commandLastProcessedHash[xText] = UtilDate.getTimeInMillis();
 
                     //alert ('yes need to process command');
-                    //O.o ('===================== processCommand for xText [' + xText + ']');
-                    //O.o ('===================== processCommand for xHtml [' + xHtml + ']');
-                    //O.o ('===================== processCommand for xValue [' + xValue + ']');
                     if (!skipThisCommandAlreadProcessed) {
                         $scope.processCommand('CLIENT JS line 1383', xText, xHtml, xValue, callbackCommand);
                     }
@@ -1758,28 +1763,28 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             //alert ('angularModule.controller(UstodosController)');
             // Create new Ustodo
-            $scope.create = function() {
-                console.log ('1 in ustodos.client.controller CREATE');
-                // Create new Ustodo object
-                //getProperties('props this:', this);
-                //getProperties('props Ustodos:', Ustodos);
-                var ustodo = new Ustodos ({
-                    html: this.html// hbkk mystery
-                });
-                //getProperties('props ustodo:', ustodo);
-
-                // section_save new ustodo Redirect after save
-                alert('pre save 1');
-                ustodo.$save(function(response) {   // maps to exports.create
-                    alert ('in 1 line 1696');
-                    $location.path('ustodos/' + response._id);
-
-                    // Clear form fields
-                    $scope.name = '';
-                }, function(errorResponse) {
-                    $scope.error = errorResponse.data.message;
-                });
-            };
+            //$scope.create = function() {
+            //    console.log ('1 in ustodos.client.controller CREATE');
+            //    // Create new Ustodo object
+            //    //getProperties('props this:', this);
+            //    //getProperties('props Ustodos:', Ustodos);
+            //    var ustodo = new Ustodos ({
+            //        html: this.html// hbkk mystery
+            //    });
+            //    //getProperties('props ustodo:', ustodo);
+            //
+            //    // section_save secstion_create_new new ustodo Redirect after save
+            //    alert('pre save 1');
+            //    ustodo.$save(function(response) {   // maps to exports.create
+            //        alert ('in 1 line 1696');
+            //        $location.path('ustodos/' + response._id);
+            //
+            //        // Clear form fields
+            //        $scope.name = '';
+            //    }, function(errorResponse) {
+            //        $scope.error = errorResponse.data.message;
+            //    });
+            //};
 
             // Remove existing Ustodo
             $scope.remove = function(ustodo) {
@@ -1815,7 +1820,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             var callbackhkhk_find = function()
             {
-                alert ('in callbackhkhk_find');
+                //alert ('in callbackhkhk_find');
                 $scope.setUstodosFiltered('caller1_find', $scope.ustodos);
             };
 
@@ -2124,9 +2129,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.processCommand = function(desc, xText, xHtml, xValue)
             {
+                O.o ('1 ===================== in processCommand for 1 xText [' + xText + ']');
+                O.o ('2 ===================== in processCommand for 2 xHtml [' + xHtml + ']');
+                O.o ('3 ===================== in processCommand for 3 xValue [' + xValue + ']');
 
                 $scope.state_inSelectedMode = -1;
-                $scope.setTextInShowingEditor(xText);
+                $scope.setTextInShowingEditor(xValue);
 
                 //alert (' =========================== in processcommand desc [' +
                  //desc + '] xValue' + '[' + xValue + ']' );
@@ -2237,9 +2245,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         });
                         //getProperties('props ustodo:', ustodo);
                         // Redirect after save
-                        O.o ('333$$$$$$$$$$$$$$$$$$ save desc [' + desc + '] commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
+                        O.o ('1 $$$$$$$$$$$$$$$$$$ save desc 1 [' + desc + '] ustodo.html [' + ustodo.html+ ']');
+                        O.o ('2 $$$$$$$$$$$$$$$$$$ save desc 2 [' + desc + '] ustodo.text [' + ustodo.text + ']');
+                        O.o ('3 $$$$$$$$$$$$$$$$$$ save desc 3 [' + desc + '] ustodo.value [' + ustodo.value + ']');
+                        O.o ('4 $$$$$$$$$$$$$$$$$$ save desc 4 [' + desc + '] ustodo.jsonx [' + ustodo.jsonx + ']');
+                        O.o ('5 $$$$$$$$$$$$$$$$$$ save desc 5 [' + desc + '] commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
                         //alert('pre save 2');
-                        ustodo.$save(function(response) {
+                        ustodo.$save(function(response) // ustodos.server.controller.js exports.create
+                        {
                             // section_query // section_read
                             //$location.path('ustodos/' + response._id);
                             // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=QUERY
@@ -2384,6 +2397,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     alert ('errta:' + e);
                     throw e;
                 }
+                $scope.mouseoverlock = "off";
+
             };  // $scope.processCommand
 
             // Search for one hbkk existing Ustodo by string
@@ -2546,7 +2561,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 $scope.processCommand('CLIENT JS line 2355', '*', '*', '*');
             }
 
-
+        //alert ('runs on reload?');
 
         } catch (e) {
             alert ('e:' + e);
@@ -2556,7 +2571,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 ])
     .directive('myCustomer', function()  // section_ tail defined against app (e.g., myApp or userApp)
     {
-        O.o ('========================= in directive 1');
+        alert ('========================= in directive 1');
         return {
             //templateUrl: function(elem, attr){
             //    return 'customer-'+attr.type+'.html';
@@ -2571,7 +2586,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
         };
     })
     .directive('autoFocus', function($timeout) {
-        O.o ('========================= in directive 2');
+        alert ('========================= in directive 2');
         return {
             restrict: 'AC',
             link: function(_scope, _element) {
@@ -2584,7 +2599,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
     .filter('filterUstodos', function()
     {
 
-        O.o ('========================= in filter 1');
+        O.o('runs on reload only ========================= in filter 1');
         // see also
         return function( ustodos, s)
         {

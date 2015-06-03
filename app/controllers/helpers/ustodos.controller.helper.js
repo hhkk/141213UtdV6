@@ -86,7 +86,7 @@ var parseUserInputStringCreateMongoQuery = function(querystringTrimmed)
     //var querymongo = {text:'/'+query.querystring+'/'};
     //{ "$regex": '/europe/', "$options": 'i'}
 
-    O.o ('@@@@@@@@@@@@@ JSON.stringify(querymongo) querystringTrimmed [' + querystringTrimmed + '] [' + JSON.stringify(querymongo) + ']');
+    //O.o ('@@@@@@@@@@@@@ JSON.stringify(querymongo) querystringTrimmed [' + querystringTrimmed + '] [' + JSON.stringify(querymongo) + ']');
     //return querymongo;
     return querymongo ;
 
@@ -100,7 +100,7 @@ var parseUserInputStringCreateMongoQuery = function(querystringTrimmed)
 
 exports.processCommandReadPortion = function(Ustodo, querystringTrimmed, req, errorHandler, res) {
 
-    O.o (' in processCommandReadPortion ');
+    //O.o (' in processCommandReadPortion ');
 
     //var regexp = new RegExp(query.querystring);
     //var regexp = new RegExp(querystringTrimmed.toLowerCase(), 'i');
