@@ -52,7 +52,13 @@
         &nbsp;
         <input class="hkToolbarElement" type='image'  style='height:25px;'
                ng-mouseover='toggleVisibilityTo2()'        ng-click='toggleVisibilityTo2()'                src='/img/input2.png'
-               title="Rich Editor"
+               title="Rich Editor (CKEditor)"
+                />
+
+        &nbsp;
+        <input class="hkToolbarElement" type='image'  style='height:25px;'
+               ng-mouseover='toggleVisibilityTo3()'        ng-click='toggleVisibilityTo3()'                src='/img/input2.png'
+               title="Rich Editor (TinyMCE)"
                 />
 
         &nbsp;<input  id='idcheckbox_dynammicSearch' ng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
@@ -103,6 +109,7 @@
 
 
             <!-- ================ INPUT#1 ======================== -->
+            <!--section_per_editor 0-->
             <span id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" ng-keyup='this.onKeyUp("line 98", $event)'
 			title='search (case insensitive, order insensitive)'></span >
 
@@ -117,9 +124,9 @@
             </span>
 
             <!-- ================ INPUT#3 ======================== -->
-            <!--<div id='idDivForTinyMceEditorTextarea'>-->
-                <!--<textarea id="idTinyMceTextArea">Search/Input</textarea>-->
-            <!--</div>-->
+            <div id='idDivForTinyMceEditorTextarea'>
+                <textarea ng-blur="eventBlur3mce()" id="idTinyMceTextArea">Search/Input</textarea>
+            </div>
 
 
             <select
@@ -275,7 +282,7 @@
                                   ng-focus='hkngfocustest($index)'
                                   ng-keyup="onKeyUp_perrow_text($event, $index, ustodosFiltered[$index]._id)"
 
-                                  ng-bind-html="ustodosFiltered[$index].html | linky:'_blank'"
+                                  ng-bind-html="ustodosFiltered[$index].html"
                             ></span>
 
 

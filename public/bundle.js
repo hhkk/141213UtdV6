@@ -800,6 +800,7 @@ var seeIfConnectedToThisClass = function (s) {
 };
 
 
+// section_find .com .edu etc and add href
 var isUrl = function (s)
 {
     //console.log ('---------- testing isUrl :' + s);
@@ -889,6 +890,7 @@ var splitTextToTokensWithHttpUrlState = function(textToBeTokenized)
     var tokens = textToBeTokenized.split(/\s+/);
     //console.log ('y.length:' + y.length);
     var i = 0;
+    // section_adds http to .coms .edu etc
     tokens.forEach(function(token) {
         if (isUrl(token)) {
             //console.log ('is a url:' + token);

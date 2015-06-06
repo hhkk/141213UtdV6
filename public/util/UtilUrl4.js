@@ -40,6 +40,7 @@ var expandUrlsToHrefsReturnPatchedStr = function (initialTextWithPreHrefs, res)
 
     // ARE THERE ANY URLS
     // get tokens with urls as "http..." in their own array element
+    // section_expand_ eg com to include http
     var tokens = UtilHrefThisText.splitTextToTokensWithHttpUrlState (initialTextWithPreHrefs);
 
     tokens.forEach(function(token)

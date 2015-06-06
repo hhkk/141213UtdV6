@@ -50,8 +50,8 @@ exports.create = function(req, res)
     res2.json = function(s)
     {
         //O.o ('--------> saving content as both text and html [' + s + ']');
-        ustodo.text = s;
-        ustodo.html = s;
+        ustodo.text = 't1.' + s;
+        ustodo.html = 'h1.' + s;
         ustodo.datelastmod = new Date();
         ustodo.datecreated = new Date();
 
@@ -96,16 +96,21 @@ exports.read = function(req, res) {
 exports.update = function(req, res)
 {
 	var ustodo = req.ustodo ;
-    O.o('in ustodos.server.controller.js: update ' );
 
 	ustodo = _.extend(ustodo , req.body);
+    ustodo.text = 't2.' + ustodo.text;
+    ustodo.html = 'h2.' + ustodo.html;
+    ustodo.jsonx = 'j2.' + ustodo.jsonx;
+    O.o('in ustodos.server.controller.js: update ' );
     O.o ('ustodo.jsonx pre delete:' + ustodo.jsonx);
 	delete ustodo.jsonx; // remove property
     O.o ('ustodo.jsonx post delete:' + ustodo.jsonx);
     ustodo.datelastmod = new Date();
     ustodo.jsonx = JSON.stringify(ustodo); // string
 
-    O.o ('xx################# saving ustodo.jsonx:' + ustodo.jsonx);
+    O.o ('xx################# saving 1 ustodo.text:' + ustodo.text);
+    O.o ('xx################# saving 2 ustodo.html:' + ustodo.html);
+    O.o ('xx################# saving 3 ustodo.jsonx:' + ustodo.jsonx);
 
     ustodo.save(function (err, ustodosaved, numberAffected) {
         if (err) {

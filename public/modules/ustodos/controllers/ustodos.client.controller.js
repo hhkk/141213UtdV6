@@ -147,9 +147,10 @@ var callbackCommand = function(callbackResult) {
 
 
 //O.a ('oneOfSeveral controller with array - first?');
-app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce', '$http',
+app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce', '$http','$filter',
     'Authentication', 'Ustodos', 'Commands',
-    function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, $http, Authentication, Ustodos, Commands)
+    //function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, $http, Authentication, Ustodos, Commands)
+    function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, $http, $filter, Authentication, Ustodos, Commands)
     {
 
         //alert ('reiniting scope');
@@ -189,12 +190,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //editor.focusManager.focus( editor.editable() );
 
                 CKEDITOR.instances.idCkeEditorTextarea.on('blur', function() {
-                    //alert('cke blur fired');
+                    alert('cke blur fired');
                     $scope.prop2Cke();
                     //$scope.propagateTextChanges();
                 });
 
-                $scope.toggleVisibilityTo0();
+                $scope.toggleVisibilityTo1();
                 //ng-blur="propagateTextChanges()"
 
             });
@@ -277,10 +278,61 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //});
 
             //tinymce3 works
+            //alert ('in tinymce init');
             tinyMCE.init({
                 mode : 'exact',
-                elements : 'idTinyMceTextArea, idTinyMceTextArea'
+                width: '100%',
+                height: '100%',
+                resize: 'both',
+                elements : 'idTinyMceTextArea'
+
+                //setup : function(ed) {
+                //    ed.onDeactivate.add(function(ed) {
+                //        alert ('in special function');
+                //        ed.save();  // or whatever you want to do to save the editor content
+                //        ed.remove(); // removes tinymce instance
+                //    });
+                //    //ed.onInit.add(function(ed, evt) {
+                //    //
+                //    //    var dom = ed.dom;
+                //    //    var doc = ed.getDoc();
+                //    //
+                //    //    tinymce.dom.Event.add(doc, 'blur', function(e) {
+                //    //        alert('blur!!!');
+                //    //    });
+                //    //});
+                //}
+                ////setup: function(editor) {
+                ////    editor.on('blur', function(e) {
+                ////        console.log('blur event', e);
+                ////    });
+                ////}
+                ////setup : function(ed) {
+                ////    ed.on('blur', function(e) {
+                ////        alert('blur');
+                ////    });
+                ////}
+                ////,
+                ////setup : function(ed) {
+                ////    ed.onInit.add(function(ed, evt) {
+                ////
+                ////        var dom = ed.dom;
+                ////        var doc = ed.getDoc();
+                ////
+                ////        tinymce.dom.Event.add(doc, 'blur', function(e) {
+                ////            // Do something when the editor window is blured.
+                ////            alert('blur!!!');
+                ////        });
+                ////    });
+                ////},
+                //
+                ////setup: function(editor) {
+                ////    editor.on('blur', function(e) {
+                ////        console.log('blur event', e);
+                ////    });
+                ////}
             });
+
 
 
             // ckeditor test
@@ -305,7 +357,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 INPUT_NONE_IS_IN_FOCUS: -1,
                 INPUT_0_TEXT: 0,
                 INPUT_1_MEDIUM: 1,
-                INPUT_2_CKE: 2
+                INPUT_2_CKE:  2,
+                INPUT_3_MCE:  3
             };
 
             //$scope.whichInputIsInFocus = function() {
@@ -321,17 +374,22 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //        alert ('errra');
             //}
 
+            // section_per_editor -1
             $scope.whichInputIsInFocus = function() {
                 var currentlyInFocus = $scope.currentVisibleCounter % arrIds.length;
                 // 0 input text box
                 if ($scope.ns.Input.INPUT_0_TEXT === currentlyInFocus)
                     return $scope.ns.Input.INPUT_0_TEXT;
                 // 1 medium
-                if ($scope.ns.Input.INPUT_1_MEDIUM === currentlyInFocus)
+                else if ($scope.ns.Input.INPUT_1_MEDIUM === currentlyInFocus)
                     return $scope.ns.Input.INPUT_1_MEDIUM;
                 // 2 cke
-                if ($scope.ns.Input.INPUT_2_CKE === currentlyInFocus)
+                else if ($scope.ns.Input.INPUT_2_CKE === currentlyInFocus)
                     return $scope.ns.Input.INPUT_2_CKE;
+
+                else if ($scope.ns.Input.INPUT_3_MCE === currentlyInFocus)
+                    return $scope.ns.Input.INPUT_3_MCE;
+
                 else
                     return $scope.ns.Input.INPUT_NONE_IS_IN_FOCUS;
             };
@@ -467,10 +525,29 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //$scope.testTinyMce();
             //tinyMCE.get('idTinyMceTextArea').setContent('<span>some2</span> html');
 
-            $scope.focusOnId  = function (id) {
+
+            // section_per_editor 0
+            $scope.focusOnId = function (id) {
                 //alert ('in setcaret');
                 try {
-                    if (id !== 'idDivForCkeEditorTextarea')
+
+                    if (id !== 'idDivForCkeEditorTextarea' && id !== 'idDivForTinyMCEditorTextarea')
+                    {
+                        //alert ('in focusOnId 1:'+ id);
+                        var el = document.getElementById(id);
+                        var range = document.createRange();
+                        var sel = window.getSelection();
+                        //range.setStart(el.childNodes[0], 5);
+                        //range.collapse(true);
+                        //sel.removeAllRanges();
+                        //sel.addRange(range);
+                        el.focus();
+                    }
+                    else if (id !== 'idDivForCkeEditorTextarea')
+                    {
+                        CKEDITOR.instances.idCkeEditorTextarea.focus();
+                    }
+                    else if (id !== 'idDivForTinyMCEditorTextarea')
                     {
                         //alert ('in focusOnId 1:'+ id);
                         var el = document.getElementById(id);
@@ -484,11 +561,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     }
                     else
                     {
-                        //alert ('focusManager.focus 2');
+                        alert ('focusManager.focus 2');
                         //var editor = CKEDITOR.instances.idCkeEditorTextarea;
                         //editor.focusManager.focus( editor.editable() );
 
-                        CKEDITOR.instances.idCkeEditorTextarea.focus();
 
                     }
 
@@ -556,7 +632,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 if (keyEvent.keyCode !== 27 ) // escape key
                     return;
 
+
                 var newHtml = document.getElementById('ustodorow'+index).innerHTML;
+                alert ('newHtml:' + newHtml);
 
                 UtilNLB_bgFade.NLBfadeBg('ustodorow'+index,'green', '#FFFFFF','1500');
 
@@ -612,15 +690,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             {
                 //alert ('in onkeyup');
 
-
-
-
-
                 if ($scope.getTextInShowingEditor().xValue === '')
                     $scope.mouseoverlock = "off";
                 else
                     $scope.mouseoverlock = "on";
-                O.o ('========== set mouseoverlock:' + $scope.mouseoverlock);
+                //O.o ('========== set mouseoverlock:' + $scope.mouseoverlock);
 
 
                 //O.o ('in onkeyup desc ['+ desc +'] ENUM_KEYEVENTcaller [' + ENUM_KEYEVENTcaller + 'keyEvent.keyCode:' + keyEvent.keyCode);
@@ -659,10 +733,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.currentTextValueAfterBlur = null;
             $scope.currentHtmlValueAfterBlur = null;
 
+            // section_per_editor 1
             $scope.prop0Input = function () {
                 try {
 
-                    //O.o('start case 0')
+                    //alert ('in prop0');
                     var x = document.getElementById('idInput0TypeText').value;
 
                     $scope.currentValueAfterBlurText = x;
@@ -677,6 +752,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                     // 2 CKE
                     CKEDITOR.instances.idCkeEditorTextarea.setData(x);
+
+                    // 3 mce
+                    tinyMCE.getInstanceById('idTinyMceTextArea').setContent(x);
+
+
                     //O.o('done case 0')
                 }  catch (e) {
                     alert ('error in prop0Input:' + e);
@@ -685,6 +765,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.prop1Medium = function () {
                 try {
+                    //alert ('in prop1');
 
                     var x = $scope.mmmm.element.innerText;
                     var xHtml = $scope.mmmm.element.innerHTML;
@@ -701,6 +782,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                     // 2 CKE
                     CKEDITOR.instances.idCkeEditorTextarea.setData(xHtml);
+
+                    // 3 mce
+                    tinyMCE.getInstanceById('idTinyMceTextArea').setContent(xHtml);
+
                     O.o('done case 1');
                 }  catch (e) {
                     alert ('error in prop1Medium:' + e);
@@ -708,7 +793,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.prop2Cke = function () {
-                //alert ('start prop2Cke ')
+                //alert ('in prop2Cke ')
                 try {
                     //alert ('start case 2')
                     var xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
@@ -725,14 +810,52 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                     // 2 CKE
                     //CKEDITOR.instances.idCkeEditorTextarea.setData($scope.inputbind)
+
+                    // 3 mce
+                    tinyMCE.getInstanceById('idTinyMceTextArea').setContent(xHtml);
+
+
                 }  catch (e) {
                     alert ('error in prop2Cke:' + e);
                 }
             };
 
+            $scope.prop3mce = function () {
+                //alert ('start prop3mce ')
+                try {
+                    //alert ('start case 2')
+                    var xText = tinyMCE.getInstanceById('idTinyMceTextArea').getContent({format: 'text'});
+                    var xHtml= tinyMCE.getInstanceById('idTinyMceTextArea').getContent();
+                    //alert ('got mce content xText:' + xText)
+                    //alert ('got mce content xHtml:' + xHtml)
+                    //alert(tinymce.activeEditor.selection.getContent({format: 'text'}));
+                    //var xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
+                    //alert('start case 2 x [' + xText + ']')
+                    $scope.currentValueAfterBlurText = xText;
+                    $scope.currentValueAfterBlurHtml = xHtml;
+
+                    // 0 text input
+                    document.getElementById('idInput0TypeText').value = xText;
+
+                    // 1 medium
+                    $scope.mmmm.element.innerHTML = xHtml;
+
+                    // 2 CKE
+                    CKEDITOR.instances.idCkeEditorTextarea.setData(xHtml);
+
+                    // 3 mce
+                    //tinyMCE.getInstanceById('idTinyMceTextArea').setContent(xHtml);
 
 
-            var arrIds = ['idInput0TypeText', 'idMediumEditor', 'idDivForCkeEditorTextarea'];
+
+                }  catch (e) {
+                    alert ('error in prop3mce:' + e);
+                }
+            };
+
+
+
+            var arrIds = ['idInput0TypeText', 'idMediumEditor', 'idDivForCkeEditorTextarea', 'idDivForTinyMceEditorTextarea', ];
             //var arrIds = ['idInput0TypeText', 'idMediumEditor', 'idDivForCkeEditorTextarea', 'idDivForTinyMceEditorTextarea'];
             $scope.currentVisibleCounter = $scope.ns.Input.INPUT_0_TEXT; // arrIds.length-1;
 
@@ -758,77 +881,102 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //| |              | | |              | | |              | | |              | | |              | | |              | | |              | |
             //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
             //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
-            $scope.toggleVisibilityToNext = function() {
+            //$scope.toggleVisibilityToNext = function() {
+            //
+            //    try {
+            //        alert ('in toggleVisibilityToNext');
+            //
+            //        $scope.currentVisibleCounter++;
+            //        //idInput0TypeText
+            //        //idMediumEditor
+            //        //idDivForCkeEditorTextarea
+            //        //idTinyMceTextArea
+            //        ////idInput4TypeSpan
+            //
+            //        for (var i = 0; i < arrIds.length; i++)
+            //        {
+            //            try {
+            //                var e = document.getElementById(arrIds[i]);
+            //                if (i === $scope.currentVisibleCounter % arrIds.length) {
+            //                    e.style.display = 'block';
+            //                    $scope.focusOnId(arrIds[i]);
+            //
+            //                    //alert ('in toggleVisibility 1 for id ' + id + ', e.style.display:' + e.style.display);
+            //                    //O.o ('in toggleVisibility for id ' + arrIds[i] + ', setting display to:' + e.style.display);
+            //                    //O.o ('in toggleVisibility $scope.currentVisibleCounter:' + $scope.currentVisibleCounter);
+            //                    //O.o ('in toggleVisibility arrIds.length:' + arrIds.length);
+            //                    //O.o ('in toggleVisibility $scope.currentVisibleCounter % arrIds.length:' + ($scope.currentVisibleCounter % arrIds.length));
+            //                }
+            //                else
+            //                    e.style.display = 'none';
+            //
+            //            } catch (e) {
+            //                alert ('erra in toggleVisibilityToNext loop on id [' + arrIds[i] + '] e:' + e );
+            //            }
+            //        }
+            //    } catch (e) {
+            //        alert ('era in toggleVisibilityToNext:' + e);
+            //    }
+            //
+            //    //alert ('in toggleVisibilityToNext');
+            //
+            //    //this.toggleVisibility('idInput0TypeText');
+            //    //this.toggleVisibility('idMediumEditor');
+            //    //this.toggleVisibility('idDivForCkeEditorTextarea');
+            //};
 
-                try {
-                    //alert ('in toggleVisibilityToNext');
-
-                    $scope.currentVisibleCounter++;
-                    //idInput0TypeText
-                    //idMediumEditor
-                    //idDivForCkeEditorTextarea
-                    //idTinyMceTextArea
-                    ////idInput4TypeSpan
-
-                    for (var i = 0; i < arrIds.length; i++)
-                    {
-                        try {
-                            var e = document.getElementById(arrIds[i]);
-                            if (i === $scope.currentVisibleCounter % arrIds.length) {
-                                e.style.display = 'block';
-                                $scope.focusOnId(arrIds[i]);
-
-                                //alert ('in toggleVisibility 1 for id ' + id + ', e.style.display:' + e.style.display);
-                                //O.o ('in toggleVisibility for id ' + arrIds[i] + ', setting display to:' + e.style.display);
-                                //O.o ('in toggleVisibility $scope.currentVisibleCounter:' + $scope.currentVisibleCounter);
-                                //O.o ('in toggleVisibility arrIds.length:' + arrIds.length);
-                                //O.o ('in toggleVisibility $scope.currentVisibleCounter % arrIds.length:' + ($scope.currentVisibleCounter % arrIds.length));
-                            }
-                            else
-                                e.style.display = 'none';
-
-                        } catch (e) {
-                            alert ('erra in toggleVisibilityToNext loop on id [' + arrIds[i] + '] e:' + e );
-                        }
-                    }
-                } catch (e) {
-                    alert ('era in toggleVisibilityToNext:' + e);
-                }
-
-                //alert ('in toggleVisibilityToNext');
-
-                //this.toggleVisibility('idInput0TypeText');
-                //this.toggleVisibility('idMediumEditor');
-                //this.toggleVisibility('idDivForCkeEditorTextarea');
-            };
-
-            $scope.focusOnIt = function(i) {
-                $scope.focusOnId(arrIds[i]);
-            };
-
+            // section_per_editor 2
             $scope.toggleVisibilityTo0 = function() {
+                // couldn't figure out mce blur so use this
+                if ($scope.whichInputIsInFocus == $scope.ns.Input.INPUT_3_MCE)
+                    $scope.prop3mce();
                 document.getElementById(arrIds[1]).style.display = 'none';
                 document.getElementById(arrIds[2]).style.display = 'none';
+                document.getElementById(arrIds[3]).style.display = 'none';
                 document.getElementById(arrIds[0]).style.display = 'block';
                 $scope.focusOnId(arrIds[0]);
                 $scope.currentVisibleCounter = $scope.ns.Input.INPUT_0_TEXT;
+
             };
 
             $scope.toggleVisibilityTo1 = function() {
+                // couldn't figure out mce blur so use this
+                if ($scope.whichInputIsInFocus == $scope.ns.Input.INPUT_3_MCE)
+                    $scope.prop3mce();
                 document.getElementById(arrIds[0]).style.display = 'none';
                 document.getElementById(arrIds[2]).style.display = 'none';
+                document.getElementById(arrIds[3]).style.display = 'none';
                 document.getElementById(arrIds[1]).style.display = 'block';
+                //alert('pre move focus to 1 in toggleVisibilityTo1')
                 $scope.focusOnId(arrIds[1]);
+                //alert('post move focus to 1 in toggleVisibilityTo1')
                 $scope.currentVisibleCounter = $scope.ns.Input.INPUT_1_MEDIUM;
             };
 
             $scope.toggleVisibilityTo2 = function() {
+                // couldn't figure out mce blur so use this
+                if ($scope.whichInputIsInFocus() == $scope.ns.Input.INPUT_3_MCE)
+                {
+                    $scope.prop3mce();
+                }
                 document.getElementById(arrIds[0]).style.display = 'none';
                 document.getElementById(arrIds[1]).style.display = 'none';
+                document.getElementById(arrIds[3]).style.display = 'none';
                 document.getElementById(arrIds[2]).style.display = 'block';
                 $scope.currentVisibleCounter = $scope.ns.Input.INPUT_2_CKE;
                 setTimeout(function(){ $scope.focusOnId(arrIds[2]); }, 300);
                 setTimeout(function(){ $scope.focusOnId(arrIds[2]); }, 600);
+            };
+
+            $scope.toggleVisibilityTo3 = function() {
+                //alert ('in toggleVisibilityTo3');
+                document.getElementById(arrIds[0]).style.display = 'none';
+                document.getElementById(arrIds[1]).style.display = 'none';
+                document.getElementById(arrIds[2]).style.display = 'none';
+                document.getElementById(arrIds[3]).style.display = 'block';
+                $scope.currentVisibleCounter = $scope.ns.Input.INPUT_3_MCE;
+                setTimeout(function(){ $scope.focusOnId(arrIds[3]); }, 300);
+                setTimeout(function(){ $scope.focusOnId(arrIds[3]); }, 600);
             };
 
 
@@ -841,13 +989,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.eventBlur1Medium = function () {
 
+                //alert ('in eventBlur1Medium');
                 $scope.prop1Medium();
             };
 
 
-            $scope.eventBlur2cke = function () {
-
-                $scope.prop2Cke();
+            $scope.eventBlur3mce = function () {
+                alert ('in eventBlur3mce') ;
+                $scope.prop3mce();
             };
 
 
@@ -924,22 +1073,24 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //O.o('in onKeyUp $scope.inputbind:'+$scope.inputbind);
 
                     // 0 input text
-                    if ($scope.currentVisibleCounter % arrIds.length === 0)
-                    {
-                        $scope.prop0Input();
-                    }
-                    // 1 medium mmmm
-                    else if ($scope.currentVisibleCounter % arrIds.length === 1)
-                    {
-                        $scope.prop1Medium();
-                    }
-                    // 2 cke
-                    else if ($scope.currentVisibleCounter % arrIds.length === 2)
-                    {
-                        $scope.prop2Cke();
-                    } else{
-                        alert ('fail!!');
-                    }
+                    //if ($scope.currentVisibleCounter % arrIds.length === 0)
+                    //{
+                    //    $scope.prop0Input();
+                    //}
+                    //// 1 medium mmmm
+                    //else if ($scope.currentVisibleCounter % arrIds.length === 1)
+                    //{
+                    //    $scope.prop1Medium();
+                    //}
+                    //// 2 cke
+                    //else if ($scope.currentVisibleCounter % arrIds.length === 2)
+                    //{
+                    //    $scope.prop2Cke();
+                    //}
+                    //else
+                    //{
+                    //    alert ('fail!!');
+                    //}
                     //alert ('in window.document.title 1 $scope.mmmm.element.innerText:' + $scope.mmmm.element.innerText);
                     //window.document.title = 'jp:'+$scope.mmmm.element.innerText; // not jpro:
 
@@ -996,13 +1147,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // MAJOR COMMON FUNCTION - SET ACTIVE EDITOR CONTENT
             // set text shown for mouseover
 
+            // section_per_editor 3
             $scope.setTextInShowingEditor = function(e)
             {
-                O.o ('+++++++++ in setTextInShowingEditor e:' + e);
                 try {
                     switch($scope.whichInputIsInFocus())
                     {
                         case $scope.ns.Input.INPUT_0_TEXT:
+                            //alert ('+++++++++ in setTextInShowingEditor target INPUT_0_TEXT e:' + e);
                             if (UtilJsTypeDetect.isString(e)) {
                                 //alert('set inp in setTextInShowingEditor for input0text [' + e + ']');
                                 document.getElementById('idInput0TypeText').value = e;
@@ -1011,19 +1163,33 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                                 document.getElementById('idInput0TypeText').value = e.innerText;
                             break;
                         case $scope.ns.Input.INPUT_1_MEDIUM:
+                            //alert ('+++++++++ in setTextInShowingEditor target INPUT_1_MEDIUM e:' + e);
                             //alert ('in setTextInShowingEditor for input1medium');
                             if (UtilJsTypeDetect.isString(e))
-                                alert('logic error - setting Medium rich editor with string [' + e + '] leaving at prior value');
+                            //alert('logic error - setting Medium rich editor with string [' + e + '] leaving at prior value');
+                                $scope.mmmm.element.innerHTML = e;
                             else
                                 $scope.mmmm.element.innerHTML = e.innerHTML;
                             break;
                         case $scope.ns.Input.INPUT_2_CKE:
-                            //alert ('in setTextInShowingEditor for input2cke');
+                            //alert ('in settext 2');
+                            //alert ('+++++++++ in setTextInShowingEditor target INPUT_2_CKE e:' + e);
                             if (UtilJsTypeDetect.isString(e))
-                                alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
+                            //alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
+                                CKEDITOR.instances.idCkeEditorTextarea.setData(e);
                             else
                                 CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
                             break;
+                        case $scope.ns.Input.INPUT_3_MCE:
+                            //alert ('in settext 3');
+                            //alert ('+++++++++ in setTextInShowingEditor target INPUT_3_MCE e:' + e);
+                            if (UtilJsTypeDetect.isString(e))
+                            //alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
+                                tinyMCE.getInstanceById('idTinyMceTextArea').setContent(e);
+                            else
+                                tinyMCE.getInstanceById('idTinyMceTextArea').setContent(e.innerHTML);
+                            break;
+
                         default:
                             alert ('era - bad input resolution');
                     }
@@ -1260,9 +1426,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //
             $scope.eventMouseoverRow2 = function(i) {
                 //console.log('A in eventMouseoverRow2 i:' + i);
+                O.o ('in eventMouseoverRow2:' + i);
+                O.o (i + '. $scope.ustodosFiltered[i].text:' + $scope.ustodosFiltered[i].text);
+                O.o (i + '. $scope.ustodosFiltered[i].html:' + $scope.ustodosFiltered[i].html);
                 if ($scope.state_inSelectedMode === -1) {
                     if ($scope.mouseoverlock !== 'on') {
-                        $scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
+                        //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
+                        $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html);
                     }
                 }
 
@@ -1401,13 +1571,39 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         xText = $scope.mmmm.element.innerText;
                         xHtml = $scope.mmmm.element.innerHTML;
                         xValue = $scope.mmmm.element.innerText;
-                        xHtmlStripped = xHtml.replace('<p>','');
-                        xHtmlStripped = xHtmlStripped.replace('</p>','');
-                        xHtmlStripped = xHtmlStripped.trim();
-                        if (xHtmlStripped.endsWith('&nbsp;')) {
-                            bShouldIcommand = true;
-                            //alert ('yes search');
-                        }
+                        O.o ('xHtml [' + xHtml + ']');
+                        //xHtmlStripped = xHtml.replace('<p>','');
+                        //xHtmlStripped = xHtmlStripped.replace('</p>','');
+                        //xHtmlStripped = xHtmlStripped.trim();
+                        //if (xHtmlStripped.endsWith('&nbsp;')) {
+                            //bShouldIcommand = true;
+                            //O.o ('yes ends with space');
+                        //}
+
+                        //if (xValue.charCodeAt(xValue.length-1) === 32)
+                        //{
+                        //    if (xValue.trim().charCodeAt(xValue.trim().length-1) === 87)
+                        //    {
+                        //        //O.o ('bShouldIcommand based on space and lastchar 87 big w');
+                        //        bShouldIcommand = true;
+                        //    }
+                        //    else if (xValue.trim().charCodeAt(xValue.trim().length-1) === 119)
+                        //    {
+                        //        //O.o ('bShouldIcommand based on space and lastchar 119 little w');
+                        //        bShouldIcommand = true;
+                        //    }
+                        //    else if (document.getElementById('idcheckbox_dynammicSearch').checked)
+                        //    {
+                        //        //O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
+                        //        bShouldIcommand = true;
+                        //    }
+                        //}
+
+
+
+
+
+
                         //else
                         ///alert ('no search');
                         break;
@@ -1421,6 +1617,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         xHtmlStripped = xHtmlStripped.trim();
                         if (xHtmlStripped.endsWith('&nbsp;')) {
                             bShouldIcommand = true;
+                            O.o ('ske editor ends with nbsp');
                             //alert ('yes search');
                         }
                         break;
@@ -1660,7 +1857,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.testButton= function(s)
             {
-                alert ('in keyup $scope.getTextInShowingEditor()'+$scope.getTextInShowingEditor());
+                //alert ('in keyup $scope.getTextInShowingEditor()'+$scope.getTextInShowingEditor());
+                var xText = tinyMCE.getInstanceById('idTinyMceTextArea').getContent({format: 'text'});
+                var xHtml= tinyMCE.getInstanceById('idTinyMceTextArea').getContent();
+                alert ('got mce content xText:' + xText)
+                alert ('got mce content xHtml:' + xHtml)
+                //tinyMCE.getInstanceById('idTinyMceTextArea').setContent('hi mom');
+
 
                 //alert('in testbutton');
                 //document.getElementById('ustodorow0').blur();
@@ -2137,7 +2340,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 $scope.setTextInShowingEditor(xValue);
 
                 //alert (' =========================== in processcommand desc [' +
-                 //desc + '] xValue' + '[' + xValue + ']' );
+                //desc + '] xValue' + '[' + xValue + ']' );
                 try {
 
                     $scope.searchedFor = xValue.trim();
@@ -2235,6 +2438,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //alert ('in write');
                         //alert ('in endsWith w');
                         commandRemoved_toSearchFor_trimmed = commandTrimmed.slice(0, commandTrimmed.length - 1);
+
+                        //alert ('commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
+                        //var target = "";
+                        var x = $filter('linky')(commandRemoved_toSearchFor_trimmed)
+                        //alert ('x:' + x);
 
                         var ustodo = new Ustodos ({
                             html: commandRemoved_toSearchFor_trimmed,// hbkk mystery
@@ -2561,7 +2769,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 $scope.processCommand('CLIENT JS line 2355', '*', '*', '*');
             }
 
-        //alert ('runs on reload?');
+            //alert ('runs on reload?');
 
         } catch (e) {
             alert ('e:' + e);
