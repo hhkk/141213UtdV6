@@ -190,12 +190,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //editor.focusManager.focus( editor.editable() );
 
                 CKEDITOR.instances.idCkeEditorTextarea.on('blur', function() {
-                    alert('cke blur fired');
-                    $scope.prop2Cke();
+                    //alert('cke blur fired');
+                    //$scope.prop2Cke();
                     //$scope.propagateTextChanges();
                 });
 
-                $scope.toggleVisibilityTo1();
+                // section_per_editor -2 - set initial editor
+                $scope.toggleVisibilityTo2();
                 //ng-blur="propagateTextChanges()"
 
             });
@@ -238,6 +239,89 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //tinymce.activeEditor.setContent('<span>some</span> html');
             };
 
+            // section_init_cke
+            $scope.toggleCkeToolebarRich = 3; // will be turned off on first call
+            $scope.toggleCkeToolebar = function()
+            {
+                if ($scope.editor)
+                    $scope.editor.destroy();
+
+                $scope.toggleCkeToolebarRich = ($scope.toggleCkeToolebarRich % 3) + 1 ;
+                if ($scope.toggleCkeToolebarRich === 1)
+                {
+                    //alert ('set cke min');
+                    $scope.editor = CKEDITOR.replace( 'idCkeEditorTextarea', {
+                        //language: 'fr',
+                        customConfig: '/lib/ckeditor/config.js',
+                        startupFocus: false,
+                        uiColor: '#9AB8F3',
+                        //on: {
+                        //    'instanceReady': function (evt) { evt.editor.execCommand('maximize'); }},
+                        toolbar: []
+                    });
+                }
+                else if ($scope.toggleCkeToolebarRich === 2)
+                {
+                    //alert ('set cke rich');
+                    $scope.editor = CKEDITOR.replace( 'idCkeEditorTextarea', {
+                        //language: 'fr',
+                        customConfig: '/lib/ckeditor/config.js',
+                        startupFocus : false,
+                        uiColor: '#9AB8F3'
+                        ,
+                        toolbar: [
+                            { name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                            [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],			// Defines toolbar group without name.
+                            //'/',																					// Line break - next group will be placed in new line.
+                            { name: 'basicstyles', items: [ 'Bold', 'Italic' ] }
+                        ]
+                    });
+                }
+                else if ($scope.toggleCkeToolebarRich === 3)
+                {
+                    //alert ('set cke rich');
+                    $scope.editor = CKEDITOR.replace( 'idCkeEditorTextarea', {
+                        //language: 'fr',
+                        customConfig: '/lib/ckeditor/config.js',
+                        startupFocus : false,
+                        uiColor: '#9AB8F3',
+                        toolbar: [
+                        { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
+                        { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                        { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },
+                        { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
+                        '/',
+                        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+                        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
+                        { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+                        { name: 'insert', items: [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ] },
+                        '/',
+                        { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+                        // http://ckeditor.com/addon/colorbutton
+                        // C:/utd/141213UtdV6/public/lib/ckeditor/plugins/colorbutton
+                        // C:\Users\henryms\Downloads\colorbutton_4.4.7\colorbutton
+                        // see layout.server.view.html <!--<script type="text/javascript" src="/lib/ckeditor/plugins/colorbutton/plugin.js"></script>-->
+                            //C:\utd\141213UtdV6\public\lib\ckeditorNotFull
+                            //http://ckeditor.com/download
+                        { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+                        { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
+                        { name: 'others', items: [ '-' ] },
+                        { name: 'about', items: [ 'About' ] }
+                    ]
+                    });
+                }
+                else
+                {
+                    alert ('logic error2 $scope.toggleCkeToolebarRich :' + $scope.toggleCkeToolebarRich );
+                }
+                //alert ('leaving cke $scope.toggleCkeToolebarRich:' + $scope.toggleCkeToolebarRich);
+                O.o ('$scope.toggleCkeToolebarRich :' + $scope.toggleCkeToolebarRich );
+
+            };
+
+
+
+
             //tinyMCE.init({
             //    ...
             //    oninit : myCustomOnInit
@@ -279,6 +363,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             //tinymce3 works
             //alert ('in tinymce init');
+            // section_editor_init_mce
             tinyMCE.init({
                 mode : 'exact',
                 width: '100%',
@@ -338,15 +423,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // ckeditor test
             //CKEDITOR.replace('idCkeEditorTextarea');
             //alert('setting editor');
+            // section_editor_init_cke
             if (!$scope.alreadyInitializedCKeditor)
             {
                 //alert ('initing CKEDITOR');
-                $scope.editor = CKEDITOR.replace( 'idCkeEditorTextarea', {
-                    //language: 'fr',
-                    customConfig: '/lib/ckeditor/config.js',
-                    startupFocus : false,
-                    uiColor: '#9AB8F3'
-                });
+                $scope.toggleCkeToolebar();
                 $scope.alreadyInitializedCKeditor = true;
             }
 
@@ -397,31 +478,32 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
             $scope.editor = CKEDITOR.instances.idCkeEditorTextarea;
-            $scope.editor.on( 'contentDom', function() {
-                //alert ('in contentDom1');
-                var editable = $scope.editor.editable();
-                editable.attachListener( editable, 'keyup', function(event) {
-                    //var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
-
-                    if ( !event.data.$.ctrlKey && !event.data.$.metaKey )
-                    {
-                        // something changed
-                        O.o ( '1 in contentdom ' + $scope.editor.getData() );
-                        O.o ( '2 in contentdom ' + event.data.$.keyCode);
-                        O.o ( '3 in contentdom ' + !event.data.$.ctrlKey && !event.data.$.metaKey);
-                        $scope.respondToKeyboardEvent('line360', event.data.$.keyCode);
-                    }
-
-
-                    //var keyCode= keyEvent.getKey();
-                    //O.o ( '1 in contentdom ' + $scope.editor.getData() );
-                    //O.o ( '2 in contentdom ' + keyCode);
-                    //O.o ( '2 in contentdom ' + !event.data.$.ctrlKey && !event.data.$.metaKey);
-                    //O.o ( $scope.editor.getData() );
-                    //$scope.respondToKeyboardEvent();
-                } );
-            } );
-
+            //$scope.editor.on( 'contentDom', function() {
+            //    //alert ('in contentDom1');
+            //    var editable = $scope.editor.editable();
+            //    editable.attachListener( editable, 'keyup', function(event) {
+            //        //var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
+            //
+            //        O.o ( '0 in contentdom ' );
+            //        if ( !event.data.$.ctrlKey && !event.data.$.metaKey )
+            //        {
+            //            // something changed
+            //            //O.o ( '1 in contentdom ' + $scope.editor.getData() );
+            //            //O.o ( '2 in contentdom ' + event.data.$.keyCode);
+            //            //O.o ( '3 in contentdom ' + !event.data.$.ctrlKey && !event.data.$.metaKey);
+            //            $scope.respondToKeyboardEvent('line360', event.data.$.keyCode);
+            //        }
+            //
+            //
+            //        //var keyCode= keyEvent.getKey();
+            //        //O.o ( '1 in contentdom ' + $scope.editor.getData() );
+            //        //O.o ( '2 in contentdom ' + keyCode);
+            //        //O.o ( '2 in contentdom ' + !event.data.$.ctrlKey && !event.data.$.metaKey);
+            //        //O.o ( $scope.editor.getData() );
+            //        //$scope.respondToKeyboardEvent();
+            //    } );
+            //} );
+            //
 
             //$scope.editor.on('contentDom', function( event )
             //{
@@ -500,6 +582,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             });
 
 
+            //works cke init to max
+            //CKEDITOR.on('instanceReady',
+            //    function( evt )
+            //    {
+            //        var editor = evt.editor;
+            //        editor.execCommand('maximize');
+            //    });
 
 
             //CKEDITOR.replace( 'editor1' );
@@ -528,10 +617,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             // section_per_editor 0
             $scope.focusOnId = function (id) {
-                //alert ('in setcaret');
+                //alert ('in focusOnId :' + id);
+
                 try {
 
-                    if (id !== 'idDivForCkeEditorTextarea' && id !== 'idDivForTinyMCEditorTextarea')
+                    if (id !== 'idDivForCkeEditorTextarea' && id !== 'idDivForTinyMceEditorTextarea')
                     {
                         //alert ('in focusOnId 1:'+ id);
                         var el = document.getElementById(id);
@@ -543,13 +633,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //sel.addRange(range);
                         el.focus();
                     }
-                    else if (id !== 'idDivForCkeEditorTextarea')
+                    else if (id === 'idDivForCkeEditorTextarea')
                     {
+                        //alert ('in focusOnId 2:'+ id);
                         CKEDITOR.instances.idCkeEditorTextarea.focus();
                     }
-                    else if (id !== 'idDivForTinyMCEditorTextarea')
+                    else if (id === 'idDivForTinyMceEditorTextarea')
                     {
-                        //alert ('in focusOnId 1:'+ id);
+                        //alert ('in focusOnId 3:'+ id);
                         var el = document.getElementById(id);
                         var range = document.createRange();
                         var sel = window.getSelection();
@@ -561,7 +652,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     }
                     else
                     {
-                        alert ('focusManager.focus 2');
+                        alert ('in focusOnId else');
                         //var editor = CKEDITOR.instances.idCkeEditorTextarea;
                         //editor.focusManager.focus( editor.editable() );
 
@@ -793,7 +884,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.prop2Cke = function () {
-                //alert ('in prop2Cke ')
+                alert ('in prop2Cke ')
                 try {
                     //alert ('start case 2')
                     var xText = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
@@ -812,6 +903,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //CKEDITOR.instances.idCkeEditorTextarea.setData($scope.inputbind)
 
                     // 3 mce
+                    //alert ('settr mce [' + xHtml + ']');
                     tinyMCE.getInstanceById('idTinyMceTextArea').setContent(xHtml);
 
 
@@ -841,7 +933,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     $scope.mmmm.element.innerHTML = xHtml;
 
                     // 2 CKE
+                    //var tt = '<u>' + xHtml + '</u>';
+                    //alert ('sett data into 2 cke tt [' + tt + ']');
+                        //CKEDITOR.instances.mail_msg.insertText(obj["template"]);
+                    //CKEDITOR.instances.wysiwyg.insertHtml("[quote={$row['author']}]" + stringContent + "[/quote]");
                     CKEDITOR.instances.idCkeEditorTextarea.setData(xHtml);
+                    //CKEDITOR.instances.idCkeEditorTextarea.insertHtml(tt);
+                    //CKEDITOR.instances.idCkeEditorTextarea.setData(tt);
 
                     // 3 mce
                     //tinyMCE.getInstanceById('idTinyMceTextArea').setContent(xHtml);
@@ -928,13 +1026,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // section_per_editor 2
             $scope.toggleVisibilityTo0 = function() {
                 // couldn't figure out mce blur so use this
+                $scope.focusOnId(arrIds[0]);
                 if ($scope.whichInputIsInFocus == $scope.ns.Input.INPUT_3_MCE)
                     $scope.prop3mce();
                 document.getElementById(arrIds[1]).style.display = 'none';
                 document.getElementById(arrIds[2]).style.display = 'none';
                 document.getElementById(arrIds[3]).style.display = 'none';
                 document.getElementById(arrIds[0]).style.display = 'block';
-                $scope.focusOnId(arrIds[0]);
                 $scope.currentVisibleCounter = $scope.ns.Input.INPUT_0_TEXT;
 
             };
@@ -1138,7 +1236,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //$scope.$apply()
 
                 } catch (e) {
-                    alert ('e:' + e);
+                    alert ('e22:' + e);
                 }
 
             } // structuring block
@@ -1175,8 +1273,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //alert ('in settext 2');
                             //alert ('+++++++++ in setTextInShowingEditor target INPUT_2_CKE e:' + e);
                             if (UtilJsTypeDetect.isString(e))
-                            //alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
+                            {
+                                //alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
                                 CKEDITOR.instances.idCkeEditorTextarea.setData(e);
+                            }
                             else
                                 CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
                             break;
@@ -1199,6 +1299,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 }
             };
 
+            // section_per_editor 5
             $scope.getTextInShowingEditor = function()
             {
                 var xText = null;
@@ -1212,7 +1313,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             xText = document.getElementById('idInput0TypeText').innerText;
                             xHtml = document.getElementById('idInput0TypeText').innerHTML;
                             xValue = document.getElementById('idInput0TypeText').value;
-                            //alert ('in getTextInShowingEditor decided case $scope.ns.Input.INPUT_0_TEXT:'+xValue);
                             break;
                         case $scope.ns.Input.INPUT_1_MEDIUM:
                             xText = $scope.mmmm.element.innerText;
@@ -1223,15 +1323,18 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             xHtmlStripped = xHtmlStripped.trim();
                             break;
                         case $scope.ns.Input.INPUT_2_CKE:
+                            xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
+                            alert ('xHtml from 2 cke [' + xHtml + ']');
+                            break;
+                        case $scope.ns.Input.INPUT_3_MCE:
                             //alert ('in setTextInShowingEditor for input2cke');
-                            if (UtilJsTypeDetect.isString(e))
-                                alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
-                            else
-                                CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
+                            xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
+                            alert ('xHtml from 3 mce [' + xHtml + ']');
                             break;
                         default:
                             alert ('era - bad input resolution');
-                    }
+                    } // switch
+
                 } catch (e) {
                     alert ('era:' + e);
                     throw e;
@@ -1651,7 +1754,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     var skipThisCommandAlreadProcessed = false;
                     var timeLastEncountered = commandLastProcessedHash[xText];
                     if (timeLastEncountered && (UtilDate.getTimeInMillis()-timeLastEncountered) < 200) {
-                        O.o ('############ skipping');
                         skipThisCommandAlreadProcessed = true;
                         //O.o ('skipping command too quick');
                     }
@@ -1659,6 +1761,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                     //alert ('yes need to process command');
                     if (!skipThisCommandAlreadProcessed) {
+                        O.o ('############ not skipping');
                         $scope.processCommand('CLIENT JS line 1383', xText, xHtml, xValue, callbackCommand);
                     }
                 }
@@ -1858,10 +1961,23 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.testButton= function(s)
             {
                 //alert ('in keyup $scope.getTextInShowingEditor()'+$scope.getTextInShowingEditor());
-                var xText = tinyMCE.getInstanceById('idTinyMceTextArea').getContent({format: 'text'});
-                var xHtml= tinyMCE.getInstanceById('idTinyMceTextArea').getContent();
-                alert ('got mce content xText:' + xText)
-                alert ('got mce content xHtml:' + xHtml)
+                //CKEDITOR.instances.editor.destroy();
+
+                document.getElementsByClassName('cke_top')[0].style.display = 'none';
+                document.getElementsByClassName('cke_bottom')[0].style.display = 'none';
+
+                CKEDITOR.instances.idCkeEditorTextarea.execCommand('maximize');
+
+                setTimeout(function(){ CKEDITOR.instances.idCkeEditorTextarea.execCommand('minimize'); }, 2000);
+
+
+                //CKEDITOR.instances.idCkeEditorTextarea.resize('100%',height);
+
+                // WORKS $scope.getTextInShowingEditor();
+                //var xText = tinyMCE.getInstanceById('idTinyMceTextArea').getContent({format: 'text'});
+                //var xHtml= tinyMCE.getInstanceById('idTinyMceTextArea').getContent();
+                //alert ('got mce content xText:' + xText)
+                //alert ('got mce content xHtml:' + xHtml)
                 //tinyMCE.getInstanceById('idTinyMceTextArea').setContent('hi mom');
 
 
@@ -2772,7 +2888,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert ('runs on reload?');
 
         } catch (e) {
-            alert ('e:' + e);
+            alert ('e33:' + e);
             throw e;
         }
     }

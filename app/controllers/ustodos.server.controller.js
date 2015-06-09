@@ -50,8 +50,10 @@ exports.create = function(req, res)
     res2.json = function(s)
     {
         //O.o ('--------> saving content as both text and html [' + s + ']');
-        ustodo.text = 't1.' + s;
-        ustodo.html = 'h1.' + s;
+        //ustodo.text = 't1.' + s;
+        //ustodo.html = 'h1.' + s;
+        ustodo.text = s;
+        ustodo.html = s;
         ustodo.datelastmod = new Date();
         ustodo.datecreated = new Date();
 
@@ -98,9 +100,12 @@ exports.update = function(req, res)
 	var ustodo = req.ustodo ;
 
 	ustodo = _.extend(ustodo , req.body);
-    ustodo.text = 't2.' + ustodo.text;
-    ustodo.html = 'h2.' + ustodo.html;
-    ustodo.jsonx = 'j2.' + ustodo.jsonx;
+    ustodo.text = ustodo.text;
+    ustodo.html = ustodo.html;
+    ustodo.jsonx = ustodo.jsonx;
+    //ustodo.text = 't2.' + ustodo.text;
+    //ustodo.html = 'h2.' + ustodo.html;
+    //ustodo.jsonx = 'j2.' + ustodo.jsonx;
     O.o('in ustodos.server.controller.js: update ' );
     O.o ('ustodo.jsonx pre delete:' + ustodo.jsonx);
 	delete ustodo.jsonx; // remove property

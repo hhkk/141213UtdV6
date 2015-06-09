@@ -181,3 +181,11 @@
 #idFilterCount {
     font-size:16px;
 }
+
+
+#cke_1_top {
+    display: none;
+}
+#cke_1_bottom {
+    display: none;
+}
