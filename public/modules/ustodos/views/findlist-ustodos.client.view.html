@@ -56,8 +56,8 @@
                 />
 
         <input class="hkToolbarElement" type='image'  style='height:25px;'
-               xxng-mouseover='toggleCkeToolebar()'        ng-click='toggleCkeToolebar()'                src='/img/input2.png'
-               title="Rich Editor (CKEditor) add toolbars"
+                   xxng-mouseover='toggleCkeToolebar()'        ng-click='toggleCkeToolebar()'                src='/img/input2.png'
+               title="Rich Editor (CKEditor) click to add toolbars = no mouseover"
                 />
 
         &nbsp;
@@ -66,14 +66,16 @@
                title="Rich Editor (TinyMCE)"
                 />
 
-        &nbsp;<input  id='idcheckbox_dynammicSearch' ng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
+        &nbsp;<input  id='idcheckbox_dynammicSearch' ng-model=lockMouseover xxng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
 
-        xx&nbsp;<span ng-model=$scope.lockMouseover> </span>yy
+        <!--xx&nbsp;<span ng-model=$scope.lockMouseover> </span>yy-->
 
         <!--<span ng-bind-html='$scope.lockMouseover'></span>-->
 
         <span ng-bind="'lock:'+mouseoverlock"></span>
         <span ng-bind="'state_inSelectedMode:'+state_inSelectedMode"></span>
+        dd<span ng-bind='lockMouseover'></span>ff
+        gg<span ng-bind='whichEditorShowing'></span>hh
 
 
         <br>
@@ -101,8 +103,12 @@
                  '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
                 -->
             <!-- ================ INPUT#0 ======================== maps to $scope.onKeyUp -->
-            <input id="idInput0TypeText" type="text" ng-keyup='this.onKeyUp("line 85", $event, this.ENUM_KEYEVENTCALLER_INPUT0)'
-                   class="input-textarea" placeholder="Search / Input / Command" 
+            <input id="idInput0TypeText"
+                   type="text"
+                   xxng-keyup='this.onKeyUp("line 85", $event, this.ENUM_KEYEVENTCALLER_INPUT0)'
+                   ng-keyup='this.onKeyUp("line 102", $event )'
+                   class="input-textarea"
+                   placeholder="Search / Input / Command"
 				   title='Search (case insensitive, order insensitive) / Save / Command '
 				   ng-blur="eventBlur0InputText()" required>
                    <!--ng-model="inputbind"-->
@@ -115,14 +121,21 @@
 
             <!-- ================ INPUT#1 ======================== -->
             <!--section_per_editor 0-->
-            <span id='idMediumEditor' ng-init='focusOnId("idInput0TypeText")' ng-blur="eventBlur1Medium()" ng-keyup='this.onKeyUp("line 98", $event)'
-			title='search (case insensitive, order insensitive)'></span >
+            <span id='idMediumEditor'
+                  ng-init='focusOnId("idInput0TypeText")'
+                  ng-blur="eventBlur1Medium()"
+                  ng-keyup='this.onKeyUp("line 98", $event)'
+			      title='search (case insensitive, order insensitive)'></span >
 
-            <!-- ================ INPUT#2 ======================== -->
-            <span id='idDivForCkeEditorTextarea' ng-keyup='this.onKeyUp("line 102")'  ng-blur="xxpropagateTextChanges()">
+            <!-- ================ INPUT#2 CKE CURRENT DEFAULT ======================== -->
+            <span id='idDivForCkeEditorTextarea'
+                  ng-keyup='this.onKeyUp("line 102")'
+                  ng-blur="xxpropagateTextChanges()">
                 <textarea id="idCkeEditorTextarea"
-                      ng-blur="this.alerthk()"   xxng-keyup='this.onKeyUp("line 104", $event)'
-                      name="idCkeEditorTextarea"
+                  ng-blur="this.alerthk()"
+                  xxng-keyup='this.onKeyUp("line 104", $event)'
+                  ng-keyup='this.onKeyUp("line 135", $event )'
+                  name="idCkeEditorTextarea"
                       idxx="xxeditor1" rows="10" cols="80">
 
                 </textarea>

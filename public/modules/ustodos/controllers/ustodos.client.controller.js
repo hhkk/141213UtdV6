@@ -163,6 +163,21 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.ENUM_KEYEVENTCALLER_KEYUPSPAN = 'ENUM_KEYEVENTCALLER_KEYUPSPAN';
             $scope.ENUM_KEYEVENTCALLER_PERROW_TEXT = 'ENUM_KEYEVENTCALLER_PERROW_TEXT';
 
+            $scope.lockMouseover = false;
+
+            // input ENUM
+            $scope.ns = {};
+            $scope.ns.Input = {
+                INPUT_NONE_IS_IN_FOCUS: -1,
+                INPUT_0_TEXT: 0,
+                INPUT_1_MEDIUM: 1,
+                INPUT_2_CKE:  2,
+                INPUT_3_MCE:  3
+            };
+
+            $scope.whichEditorShowing = $scope.ns.Input.INPUT_NONE_IS_IN_FOCUS;
+
+
 
             //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
             //    'Authentication', 'Ustodos',
@@ -431,16 +446,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 $scope.alreadyInitializedCKeditor = true;
             }
 
-            $scope.ns = {};
-
-            // input ENUM
-            $scope.ns.Input = {
-                INPUT_NONE_IS_IN_FOCUS: -1,
-                INPUT_0_TEXT: 0,
-                INPUT_1_MEDIUM: 1,
-                INPUT_2_CKE:  2,
-                INPUT_3_MCE:  3
-            };
 
             //$scope.whichInputIsInFocus = function() {
             //    if (document.activeElement.id === 'idInput0TypeText')
@@ -475,9 +480,21 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     return $scope.ns.Input.INPUT_NONE_IS_IN_FOCUS;
             };
 
-
-
             $scope.editor = CKEDITOR.instances.idCkeEditorTextarea;
+
+            var e = CKEDITOR.instances['idCkeEditorTextarea'];
+            alert( 'hi hk e:' + e );
+            e.on( 'change', function() {
+                alert( e.getData() );
+            } );
+
+
+            //e.on( 'keyup', function( event ) {
+            //    alert( 'hi hk' );
+            //    //alert( e.getData() );
+            //});
+
+
             //$scope.editor.on( 'contentDom', function() {
             //    //alert ('in contentDom1');
             //    var editable = $scope.editor.editable();
@@ -559,8 +576,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    });
             //
             //    //CKEDITOR.instances.editor1.on('OnBlur', function() {
-            //    //    alert('onblur fired');
-            //    //});
             //
             //});
             //
@@ -568,18 +583,23 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-            $scope.editor.addCommand('mySimpleCommand', { // create named command
-                exec: function(edt) {
-                    alert(edt.getData());
-                }
-            });
+            if ($scope.editor)
+            {
+                $scope.editor.addCommand('mySimpleCommand', { // create named command
+                    exec: function(edt) {
+                        //    //    alert('onblur fired');
+                        //    //});
+                        alert(edt.getData());
+                    }
+                });
 
-            $scope.editor.ui.addButton('SuperButton', { // add new button and bind our command
-                label: 'Click me',
-                command: 'mySimpleCommand',
-                toolbar: 'clipboard, 1',
-                icon: 'https://avatars1.githubusercontent.com/u/5500999?v=2&s=16'
-            });
+                $scope.editor.ui.addButton('SuperButton', { // add new button and bind our command
+                    label: 'Click me',
+                    command: 'mySimpleCommand',
+                    toolbar: 'clipboard, 1',
+                    icon: 'https://avatars1.githubusercontent.com/u/5500999?v=2&s=16'
+                });
+            }
 
 
             //works cke init to max
@@ -779,7 +799,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.onKeyUp = function (desc, keyEvent, ENUM_KEYEVENTcaller) // https://docs.angularjs.org/api/ng/directive/ngKeyup
             {
-                //alert ('in onkeyup');
+                alert ('in onkeyup');
 
                 if ($scope.getTextInShowingEditor().xValue === '')
                     $scope.mouseoverlock = "off";
@@ -1026,6 +1046,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // section_per_editor 2
             $scope.toggleVisibilityTo0 = function() {
                 // couldn't figure out mce blur so use this
+                $scope.whichEditorShowing = $scope.ns.Input.INPUT_0_TEXT;
                 $scope.focusOnId(arrIds[0]);
                 if ($scope.whichInputIsInFocus == $scope.ns.Input.INPUT_3_MCE)
                     $scope.prop3mce();
@@ -1039,6 +1060,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.toggleVisibilityTo1 = function() {
                 // couldn't figure out mce blur so use this
+                $scope.whichEditorShowing = $scope.ns.Input.INPUT_1_MEDIUM;
+                //alert ('in toggleVisibilityTo1 Medium');
                 if ($scope.whichInputIsInFocus == $scope.ns.Input.INPUT_3_MCE)
                     $scope.prop3mce();
                 document.getElementById(arrIds[0]).style.display = 'none';
@@ -1052,7 +1075,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.toggleVisibilityTo2 = function() {
-                // couldn't figure out mce blur so use this
+                $scope.whichEditorShowing = $scope.ns.Input.INPUT_2_CKE;
+                //alert ('in toggleVisibilityTo2 CKE');
                 if ($scope.whichInputIsInFocus() == $scope.ns.Input.INPUT_3_MCE)
                 {
                     $scope.prop3mce();
@@ -1067,7 +1091,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.toggleVisibilityTo3 = function() {
-                //alert ('in toggleVisibilityTo3');
+                $scope.whichEditorShowing = $scope.ns.Input.INPUT_3_MCE;
+                //alert ('in toggleVisibilityTo3 MCE');
                 document.getElementById(arrIds[0]).style.display = 'none';
                 document.getElementById(arrIds[1]).style.display = 'none';
                 document.getElementById(arrIds[2]).style.display = 'none';
@@ -1630,13 +1655,16 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 // decide for each input type whether to search
                 var xHtmlStripped = null;
                 //alert('in switchscope.whichInputIsInFocus');
+                alert('$scope.whichInputIsInFocus()');
+
                 switch($scope.whichInputIsInFocus())
                 {
                     case $scope.ns.Input.INPUT_0_TEXT:
+                        alert ('$scope.ns.Input.INPUT_0_TEXT');
+
                         xText = document.getElementById('idInput0TypeText').innerText;
                         xHtml = document.getElementById('idInput0TypeText').innerHTML;
                         xValue = document.getElementById('idInput0TypeText').value;
-                        //O.o ('keyCode:' + keyCode);
                         O.o ('in 1 respondToKeyboardEventkey 1 xText:' + xText);
                         O.o ('in 2 respondToKeyboardEventkey 2 xHtml:' + xHtml);
                         O.o ('in 3 respondToKeyboardEventkey 3 xValue:' + xValue);
@@ -1650,6 +1678,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         }
                         else if (xValue.charCodeAt(xValue.length-1) === 32)
                         {
+                            alert ('xValue.charCodeAt(xValue.length-1) === 32');
                             if (xValue.trim().charCodeAt(xValue.trim().length-1) === 87)
                             {
                                 //O.o ('bShouldIcommand based on space and lastchar 87 big w');
@@ -1660,7 +1689,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                                 //O.o ('bShouldIcommand based on space and lastchar 119 little w');
                                 bShouldIcommand = true;
                             }
-                            else if (document.getElementById('idcheckbox_dynammicSearch').checked)
+                            //else if (document.getElementById('idcheckbox_dynammicSearch').checked)
+                            else if ($scope.lockMouseover)
                             {
                                 //O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
                                 bShouldIcommand = true;
@@ -1671,6 +1701,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         break;
 
                     case $scope.ns.Input.INPUT_1_MEDIUM:
+                        alert ('Input.INPUT_1_MEDIUM');
                         xText = $scope.mmmm.element.innerText;
                         xHtml = $scope.mmmm.element.innerHTML;
                         xValue = $scope.mmmm.element.innerText;
@@ -1712,6 +1743,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         break;
 
                     case $scope.ns.Input.INPUT_2_CKE:
+                        alert ('$scope.ns.Input.INPUT_2_CKE');
                         xText= CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
                         xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
                         xValue = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
@@ -1963,12 +1995,15 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //alert ('in keyup $scope.getTextInShowingEditor()'+$scope.getTextInShowingEditor());
                 //CKEDITOR.instances.editor.destroy();
 
-                document.getElementsByClassName('cke_top')[0].style.display = 'none';
-                document.getElementsByClassName('cke_bottom')[0].style.display = 'none';
+                alert ('$scope.lockMouseover:' + $scope.lockMouseover);
 
-                CKEDITOR.instances.idCkeEditorTextarea.execCommand('maximize');
-
-                setTimeout(function(){ CKEDITOR.instances.idCkeEditorTextarea.execCommand('minimize'); }, 2000);
+                // TEST WORKED?
+                if (false) {
+                    document.getElementsByClassName('cke_top')[0].style.display = 'none';
+                    document.getElementsByClassName('cke_bottom')[0].style.display = 'none';
+                    CKEDITOR.instances.idCkeEditorTextarea.execCommand('maximize');
+                    setTimeout(function(){ CKEDITOR.instances.idCkeEditorTextarea.execCommand('minimize'); }, 2000);
+                }
 
 
                 //CKEDITOR.instances.idCkeEditorTextarea.resize('100%',height);
