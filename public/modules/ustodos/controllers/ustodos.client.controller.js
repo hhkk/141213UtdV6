@@ -483,9 +483,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.editor = CKEDITOR.instances.idCkeEditorTextarea;
 
             var e = CKEDITOR.instances['idCkeEditorTextarea'];
-            alert( 'hi hk e:' + e );
+            //alert( 'hi hk e:' + e );
             e.on( 'change', function() {
-                alert( e.getData() );
+                //$scope.contentChange();
+                //$scope.contentChange(CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getHtml()+'ggg');
+                //$scope.contentChange(+'hhh');
+                $scope.eventHandlerCKEcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
+
             } );
 
 
@@ -824,7 +828,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 var keyCode= (window.event ? keyEvent.keyCode : keyEvent.which);
                 //O.o('onKeyUp:' + keyCode);
                 //O.o('onKeyUp:' + getKeyboardEventResult($event, 'Key up')); // hbkhbk
-                $scope.respondToKeyboardEvent('line634', keyCode);
+                // $scope.respondToKeyboardEvent('line634', keyCode);
             };
 
             //$scope.onKeyUp = function(ev) {
@@ -1516,26 +1520,41 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             //var o = O.o;
 
+            // Handler 1
+            $scope.eventHandlerCKEcontentChange = function(data, html, text)
+            {
+                alert( 'data [' + data + ']');
+                //alert( 'html [' + html + ']');
+                //alert( 'text [' + text + ']');
+
+            }
+
+
             $scope.keyCount = 0;
 
+            // Handler 2
             $document.bind('keypress', function(event) {
                 //o ('inkey keypress event.keyCode:' + event.keyCode + ', $scope.keyCount:'+$scope.keyCount);
                 $scope.keyCount++;
             });
 
+            // Handler
             $scope.myFnOnKeyUp = function($index, $event) { // onkey
                 //o ('inkey myFnOnKeyUp $index:' + $index + ', $event.keyCode:' + $event.keyCode);
                 //console.log (i + '. aaa event.altKey:'+event.altKey);
             };
 
+            // Handler
             $scope.myFnOnKeyDown = function($index, $event) { // onkey
                 //o ('inkey myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
             };
 
+            // Handler
             $scope.event_click_timeAgo = function (_id) {
                 alert (_id);
             };
 
+            // Handler
             $scope.buttonClickSearchStar = function() {
                 alert ('asdsad');
                 this.commandFromInputBox = '*';
@@ -1552,6 +1571,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    //console.log ('in eventMouseoverRow set this.commandFromInputBox :' + x.innerText);
             //};
             //
+            // Handler
             $scope.eventMouseoverRow2 = function(i) {
                 //console.log('A in eventMouseoverRow2 i:' + i);
                 O.o ('in eventMouseoverRow2:' + i);
@@ -1589,6 +1609,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //}
 
             // selectId
+            // Handler
             $scope.yyutdact = function() {
                 alert ('yyutdact');
                 $scope.mmmm.element.focus();
@@ -1596,6 +1617,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 console.log ('doneit');
             };
 
+            // Handler
             $scope.utdEventSelectedEngine = function() {
                 try
                 {
@@ -1637,173 +1659,173 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
 
-            var commandLastProcessedHash = {};
-            $scope.respondToKeyboardEvent = function(desc, keyCode)
-            {
-                //O.o ('in $scope.respondToKeyboardEvent() desc ['+ desc + ']');
-                // 0 idInput0TypeText
-                // 1 idMediumEditor
-                // 2 parent like CKE
-
-                // 0 text input
-                var xText = null;
-                var xHtml = null;
-                var xValue = null;
-                var bShouldIcommand = false;
-
-
-                // decide for each input type whether to search
-                var xHtmlStripped = null;
-                //alert('in switchscope.whichInputIsInFocus');
-                alert('$scope.whichInputIsInFocus()');
-
-                switch($scope.whichInputIsInFocus())
-                {
-                    case $scope.ns.Input.INPUT_0_TEXT:
-                        alert ('$scope.ns.Input.INPUT_0_TEXT');
-
-                        xText = document.getElementById('idInput0TypeText').innerText;
-                        xHtml = document.getElementById('idInput0TypeText').innerHTML;
-                        xValue = document.getElementById('idInput0TypeText').value;
-                        O.o ('in 1 respondToKeyboardEventkey 1 xText:' + xText);
-                        O.o ('in 2 respondToKeyboardEventkey 2 xHtml:' + xHtml);
-                        O.o ('in 3 respondToKeyboardEventkey 3 xValue:' + xValue);
-                        //O.o ('keyCode:' + keyCode);
-                        //O.o ('keyCode:' + keyCode);
-
-                        if (keyCode === 13)
-                        {
-                            //alert ('bShouldIcommand based on keyCode === 13 enter key ');
-                            bShouldIcommand = true;
-                        }
-                        else if (xValue.charCodeAt(xValue.length-1) === 32)
-                        {
-                            alert ('xValue.charCodeAt(xValue.length-1) === 32');
-                            if (xValue.trim().charCodeAt(xValue.trim().length-1) === 87)
-                            {
-                                //O.o ('bShouldIcommand based on space and lastchar 87 big w');
-                                bShouldIcommand = true;
-                            }
-                            else if (xValue.trim().charCodeAt(xValue.trim().length-1) === 119)
-                            {
-                                //O.o ('bShouldIcommand based on space and lastchar 119 little w');
-                                bShouldIcommand = true;
-                            }
-                            //else if (document.getElementById('idcheckbox_dynammicSearch').checked)
-                            else if ($scope.lockMouseover)
-                            {
-                                //O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
-                                bShouldIcommand = true;
-                            }
-
-
-                        }
-                        break;
-
-                    case $scope.ns.Input.INPUT_1_MEDIUM:
-                        alert ('Input.INPUT_1_MEDIUM');
-                        xText = $scope.mmmm.element.innerText;
-                        xHtml = $scope.mmmm.element.innerHTML;
-                        xValue = $scope.mmmm.element.innerText;
-                        O.o ('xHtml [' + xHtml + ']');
-                        //xHtmlStripped = xHtml.replace('<p>','');
-                        //xHtmlStripped = xHtmlStripped.replace('</p>','');
-                        //xHtmlStripped = xHtmlStripped.trim();
-                        //if (xHtmlStripped.endsWith('&nbsp;')) {
-                            //bShouldIcommand = true;
-                            //O.o ('yes ends with space');
-                        //}
-
-                        //if (xValue.charCodeAt(xValue.length-1) === 32)
-                        //{
-                        //    if (xValue.trim().charCodeAt(xValue.trim().length-1) === 87)
-                        //    {
-                        //        //O.o ('bShouldIcommand based on space and lastchar 87 big w');
-                        //        bShouldIcommand = true;
-                        //    }
-                        //    else if (xValue.trim().charCodeAt(xValue.trim().length-1) === 119)
-                        //    {
-                        //        //O.o ('bShouldIcommand based on space and lastchar 119 little w');
-                        //        bShouldIcommand = true;
-                        //    }
-                        //    else if (document.getElementById('idcheckbox_dynammicSearch').checked)
-                        //    {
-                        //        //O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
-                        //        bShouldIcommand = true;
-                        //    }
-                        //}
-
-
-
-
-
-
-                        //else
-                        ///alert ('no search');
-                        break;
-
-                    case $scope.ns.Input.INPUT_2_CKE:
-                        alert ('$scope.ns.Input.INPUT_2_CKE');
-                        xText= CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
-                        xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
-                        xValue = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
-                        xHtmlStripped = xHtml.replace('<p>','');
-                        xHtmlStripped = xHtmlStripped.replace('</p>','');
-                        xHtmlStripped = xHtmlStripped.trim();
-                        if (xHtmlStripped.endsWith('&nbsp;')) {
-                            bShouldIcommand = true;
-                            O.o ('ske editor ends with nbsp');
-                            //alert ('yes search');
-                        }
-                        break;
-
-                    default:
-                        alert ('era - bad input resolution');
-                }
-                //alert ('xText [' + xText + ']');
-                //alert ('xHtml [' + xHtml + ']');
-                //alert ('xHtmlStripped [' + xHtmlStripped + ']');
-                //alert ('xText [' + xText[xText.length-1] + ']')
-                //alert ('xText -1 [' + xText.charCodeAt(xText.length-1) + ']');
-                //alert ('xText -2 [' + xText.charCodeAt(xText.length-2) + ']');
-                //alert ('xText -3 [' + xText.charCodeAt(xText.length-3) + ']');
-                //window.document.title = 'jp2 - '+xText; // not jpro:
-
-                //xText = xText.trim();
-                //xHtml = xHtml.trim();
-                //xValue = xValue.trim();
-
-                // was this same command last processed within the last 1/x second
-
-                if (bShouldIcommand)
-                {
-                    // if not a sup command
-                    O.o ('1 set search xValue:'+ xValue);
-                    // hbk 1505
-                    $location.search('q', xValue.trim());
-                    O.o ('2 set search xValue:'+ xValue);
-                    O.o ('######## in bShouldIcommand');
-                    var skipThisCommandAlreadProcessed = false;
-                    var timeLastEncountered = commandLastProcessedHash[xText];
-                    if (timeLastEncountered && (UtilDate.getTimeInMillis()-timeLastEncountered) < 200) {
-                        skipThisCommandAlreadProcessed = true;
-                        //O.o ('skipping command too quick');
-                    }
-                    commandLastProcessedHash[xText] = UtilDate.getTimeInMillis();
-
-                    //alert ('yes need to process command');
-                    if (!skipThisCommandAlreadProcessed) {
-                        O.o ('############ not skipping');
-                        $scope.processCommand('CLIENT JS line 1383', xText, xHtml, xValue, callbackCommand);
-                    }
-                }
-                //else {
-                //    //alert ('no need to process command');
-                //}
-
-                //alert ('document.activeElement.id:' + document.activeElement.id + ', parent:' + document.activeElement.parentElement.id);
-                //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.id);
-            };
+            //var commandLastProcessedHash = {};
+            //$scope.respondToKeyboardEvent = function(desc, keyCode)
+            //{
+            //    //O.o ('in $scope.respondToKeyboardEvent() desc ['+ desc + ']');
+            //    // 0 idInput0TypeText
+            //    // 1 idMediumEditor
+            //    // 2 parent like CKE
+            //
+            //    // 0 text input
+            //    var xText = null;
+            //    var xHtml = null;
+            //    var xValue = null;
+            //    var bShouldIcommand = false;
+            //
+            //
+            //    // decide for each input type whether to search
+            //    var xHtmlStripped = null;
+            //    //alert('in switchscope.whichInputIsInFocus');
+            //    alert('$scope.whichInputIsInFocus()');
+            //
+            //    switch($scope.whichInputIsInFocus())
+            //    {
+            //        case $scope.ns.Input.INPUT_0_TEXT:
+            //            alert ('$scope.ns.Input.INPUT_0_TEXT');
+            //
+            //            xText = document.getElementById('idInput0TypeText').innerText;
+            //            xHtml = document.getElementById('idInput0TypeText').innerHTML;
+            //            xValue = document.getElementById('idInput0TypeText').value;
+            //            O.o ('in 1 respondToKeyboardEventkey 1 xText:' + xText);
+            //            O.o ('in 2 respondToKeyboardEventkey 2 xHtml:' + xHtml);
+            //            O.o ('in 3 respondToKeyboardEventkey 3 xValue:' + xValue);
+            //            //O.o ('keyCode:' + keyCode);
+            //            //O.o ('keyCode:' + keyCode);
+            //
+            //            if (keyCode === 13)
+            //            {
+            //                //alert ('bShouldIcommand based on keyCode === 13 enter key ');
+            //                bShouldIcommand = true;
+            //            }
+            //            else if (xValue.charCodeAt(xValue.length-1) === 32)
+            //            {
+            //                alert ('xValue.charCodeAt(xValue.length-1) === 32');
+            //                if (xValue.trim().charCodeAt(xValue.trim().length-1) === 87)
+            //                {
+            //                    //O.o ('bShouldIcommand based on space and lastchar 87 big w');
+            //                    bShouldIcommand = true;
+            //                }
+            //                else if (xValue.trim().charCodeAt(xValue.trim().length-1) === 119)
+            //                {
+            //                    //O.o ('bShouldIcommand based on space and lastchar 119 little w');
+            //                    bShouldIcommand = true;
+            //                }
+            //                //else if (document.getElementById('idcheckbox_dynammicSearch').checked)
+            //                else if ($scope.lockMouseover)
+            //                {
+            //                    //O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
+            //                    bShouldIcommand = true;
+            //                }
+            //
+            //
+            //            }
+            //            break;
+            //
+            //        case $scope.ns.Input.INPUT_1_MEDIUM:
+            //            alert ('Input.INPUT_1_MEDIUM');
+            //            xText = $scope.mmmm.element.innerText;
+            //            xHtml = $scope.mmmm.element.innerHTML;
+            //            xValue = $scope.mmmm.element.innerText;
+            //            O.o ('xHtml [' + xHtml + ']');
+            //            //xHtmlStripped = xHtml.replace('<p>','');
+            //            //xHtmlStripped = xHtmlStripped.replace('</p>','');
+            //            //xHtmlStripped = xHtmlStripped.trim();
+            //            //if (xHtmlStripped.endsWith('&nbsp;')) {
+            //                //bShouldIcommand = true;
+            //                //O.o ('yes ends with space');
+            //            //}
+            //
+            //            //if (xValue.charCodeAt(xValue.length-1) === 32)
+            //            //{
+            //            //    if (xValue.trim().charCodeAt(xValue.trim().length-1) === 87)
+            //            //    {
+            //            //        //O.o ('bShouldIcommand based on space and lastchar 87 big w');
+            //            //        bShouldIcommand = true;
+            //            //    }
+            //            //    else if (xValue.trim().charCodeAt(xValue.trim().length-1) === 119)
+            //            //    {
+            //            //        //O.o ('bShouldIcommand based on space and lastchar 119 little w');
+            //            //        bShouldIcommand = true;
+            //            //    }
+            //            //    else if (document.getElementById('idcheckbox_dynammicSearch').checked)
+            //            //    {
+            //            //        //O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
+            //            //        bShouldIcommand = true;
+            //            //    }
+            //            //}
+            //
+            //
+            //
+            //
+            //
+            //
+            //            //else
+            //            ///alert ('no search');
+            //            break;
+            //
+            //        case $scope.ns.Input.INPUT_2_CKE:
+            //            alert ('$scope.ns.Input.INPUT_2_CKE');
+            //            xText= CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
+            //            xHtml = CKEDITOR.instances.idCkeEditorTextarea.getData();
+            //            xValue = CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getText();
+            //            xHtmlStripped = xHtml.replace('<p>','');
+            //            xHtmlStripped = xHtmlStripped.replace('</p>','');
+            //            xHtmlStripped = xHtmlStripped.trim();
+            //            if (xHtmlStripped.endsWith('&nbsp;')) {
+            //                bShouldIcommand = true;
+            //                O.o ('ske editor ends with nbsp');
+            //                //alert ('yes search');
+            //            }
+            //            break;
+            //
+            //        default:
+            //            alert ('era - bad input resolution');
+            //    }
+            //    //alert ('xText [' + xText + ']');
+            //    //alert ('xHtml [' + xHtml + ']');
+            //    //alert ('xHtmlStripped [' + xHtmlStripped + ']');
+            //    //alert ('xText [' + xText[xText.length-1] + ']')
+            //    //alert ('xText -1 [' + xText.charCodeAt(xText.length-1) + ']');
+            //    //alert ('xText -2 [' + xText.charCodeAt(xText.length-2) + ']');
+            //    //alert ('xText -3 [' + xText.charCodeAt(xText.length-3) + ']');
+            //    //window.document.title = 'jp2 - '+xText; // not jpro:
+            //
+            //    //xText = xText.trim();
+            //    //xHtml = xHtml.trim();
+            //    //xValue = xValue.trim();
+            //
+            //    // was this same command last processed within the last 1/x second
+            //
+            //    if (bShouldIcommand)
+            //    {
+            //        // if not a sup command
+            //        O.o ('1 set search xValue:'+ xValue);
+            //        // hbk 1505
+            //        $location.search('q', xValue.trim());
+            //        O.o ('2 set search xValue:'+ xValue);
+            //        O.o ('######## in bShouldIcommand');
+            //        var skipThisCommandAlreadProcessed = false;
+            //        var timeLastEncountered = commandLastProcessedHash[xText];
+            //        if (timeLastEncountered && (UtilDate.getTimeInMillis()-timeLastEncountered) < 200) {
+            //            skipThisCommandAlreadProcessed = true;
+            //            //O.o ('skipping command too quick');
+            //        }
+            //        commandLastProcessedHash[xText] = UtilDate.getTimeInMillis();
+            //
+            //        //alert ('yes need to process command');
+            //        if (!skipThisCommandAlreadProcessed) {
+            //            O.o ('############ not skipping');
+            //            $scope.processCommand('CLIENT JS line 1383', xText, xHtml, xValue, callbackCommand);
+            //        }
+            //    }
+            //    //else {
+            //    //    //alert ('no need to process command');
+            //    //}
+            //
+            //    //alert ('document.activeElement.id:' + document.activeElement.id + ', parent:' + document.activeElement.parentElement.id);
+            //    //alert ('document.activeElement.parentElement.id:' + document.activeElement.parentElement.id);
+            //}; // respondtokeyboardevent
 
             $scope.name = 'Whirled';
 
