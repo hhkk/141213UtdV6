@@ -11,7 +11,7 @@ UtilExceptionStack = require('C:/utd/141213UtdV6/public/util/UtilExceptionStack.
 UtilJsTypeDetect = require('C:/utd/141213UtdV6/public/util/UtilJsTypeDetect.js');
 UtilHrefThisText = require('C:/utd/141213UtdV6/public/util/UtilHrefThisText.js');
 UtilNLB_bgFade = require('C:/utd/141213UtdV6/public/util/NLB_bgFade.js');
-//UtilErrorEmitter = require('C:/utd/141213UtdV6/public/util/UtilErrorEmitter.js');
+UtilErrorEmitter = require('C:/utd/141213UtdV6/public/util/UtilErrorEmitter.js');
 
 O = require('C:/utd/141213UtdV6/public/util/O.js');
 

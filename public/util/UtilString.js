@@ -16,7 +16,7 @@ var convertNonBreakingSpace = function (s) {
     while (i < rtn.length) {
         if (rtn.charCodeAt(i) === 160)
         {
-            rtn = rtn.substring(0, i) + ' ' + x.substring(i+1);
+            rtn = rtn.substring(0, i) + ' ' + rtn.substring(i+1);
         }
         i++;
     }

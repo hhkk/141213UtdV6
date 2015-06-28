@@ -17,6 +17,7 @@ var Medium = Medium;
 var UtilDate = UtilDate;
 
 var UtilNLB_bgFade = UtilNLB_bgFade;
+var UtilErrorEmitter = UtilErrorEmitter;
 
 //var unirest = require('unirest');
 //var fn = function()
@@ -1567,7 +1568,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             text, html, data);
                     }
                 } catch (e) {
-                    alert ('sdfsdfsdf:' + e);
+                    UtilErrorEmitter.EmitError('in eventHandlerCKEcontentChange', e);
+                    //alert ('sdfsdfsdf:' + e);
                 }
             }
 
