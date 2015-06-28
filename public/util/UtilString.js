@@ -1,4 +1,4 @@
-// var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
+    // var UtilString = require('C:/utd/141213UtdV6/public/util/UtilString.js');
 
 var endsWith = function (str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
@@ -7,6 +7,32 @@ var endsWith = function (str, suffix) {
 
 String.prototype.endsWith = function (s) {
     return this.length >= s.length && this.substr(this.length - s.length) == s;
+}
+
+var convertNonBreakingSpace = function (s) {
+    var i = 0;
+    //alert ('in asciiTable this.length' + this.length)
+    var rtn = s;
+    while (i < rtn.length) {
+        if (rtn.charCodeAt(i) === 160)
+        {
+            rtn = rtn.substring(0, i) + ' ' + x.substring(i+1);
+        }
+        i++;
+    }
+    return rtn;
+};
+
+String.prototype.asciiTable = function () {
+    //alert ('asciiTable this [' + this + ']')
+    var i = 0;
+    var rtn = '';
+    //alert ('in asciiTable this.length' + this.length)
+    while (i < this.length) {
+        rtn = rtn + '\r' + ( i + '.. char [' + this.charAt(i) + '] ascii dec [' + this.charCodeAt(i) + ']' );
+        i++;
+    }
+    return rtn;
 }
 
 
@@ -46,6 +72,7 @@ String.prototype.hasUpperCase = function () {
 
 if (typeof exports !== 'undefined') {
     exports.endsWith = endsWith;
+    exports.convertNonBreakingSpace = convertNonBreakingSpace;
 }
 
 

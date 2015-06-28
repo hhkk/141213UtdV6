@@ -1521,12 +1521,52 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //var o = O.o;
 
             // Handler 1
+            var h = 1;
             $scope.eventHandlerCKEcontentChange = function(data, html, text)
             {
-                alert( 'data [' + data + ']');
+                h++;
+                //alert( 'data [' + data + ']');
                 //alert( 'html [' + html + ']');
                 //alert( 'text [' + text + ']');
+                O.o ( h + '. text [' + text + ']');
+                O.o ( h + '. text.charCodeAt(text.length-1) [' + text.charCodeAt(text.length-1)+ ']');
 
+                var lastCharacter = text.charCodeAt(text.length-1);
+                //alert ('testing if I should be calling processCommand');
+                if (lastCharacter == 160)
+                    text[text.length-1] = ' ';
+                if (text.length > 1)
+                {
+                    var lastCharacter = text.charCodeAt(text.length-2);
+                    //alert ('testing if I should be calling processCommand');
+                    if (lastCharacter == 160)
+                        text[length-1] = ' ';
+                }
+
+
+                //if (UtilString.endsWith(text, ' ') ||
+//                    UtilString.endsWith(text, ' w'))
+                var x = 'abcde'
+                //alert ('x:' + x);
+                //if (x.endsWith('cde'))
+//                    alert ('x.endsWith(cde)');
+//                else
+//                    alert ('not x.endsWith(cde)');
+
+
+  //              alert ('text.asciiTable()1:');
+                alert ('text.asciiTable 1():' + text.asciiTable());
+                //text.convertNonBreakingSpace();
+                alert ('text.asciiTable 2():' + text.asciiTable());
+
+                if (text.endsWith(' ') ||
+                    text.endsWith(' w'))
+                {
+
+                    alert ('calling processCommand');
+                    $scope.processCommand ("caller eventHandlerCKEcontentChange",
+                        text, html, data);
+                }
             }
 
 
@@ -2503,17 +2543,17 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.mouseoverlock = 'off'; // mouselock mouseoverlock
             //alert ('reinit mouseoverlock');
 
-            $scope.processCommand = function(desc, xText, xHtml, xValue)
+            $scope.processCommand = function(callerId, xText, xHtml, xValue)
             {
                 O.o ('1 ===================== in processCommand for 1 xText [' + xText + ']');
                 O.o ('2 ===================== in processCommand for 2 xHtml [' + xHtml + ']');
                 O.o ('3 ===================== in processCommand for 3 xValue [' + xValue + ']');
 
                 $scope.state_inSelectedMode = -1;
-                $scope.setTextInShowingEditor(xValue);
+                //$scope.setTextInShowingEditor(xValue);
 
-                //alert (' =========================== in processcommand desc [' +
-                //desc + '] xValue' + '[' + xValue + ']' );
+                //alert (' =========================== in processcommand callerId [' +
+                //callerId + '] xValue' + '[' + xValue + ']' );
                 try {
 
                     $scope.searchedFor = xValue.trim();
@@ -2555,15 +2595,17 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //$location.search('q', this.commandFromInputBox);       // yoo bar foo bar baz
                     //$scope.ustodos  = Ustodos. query ({q: this.commandFromInputBox});
                     //O.o  ('completed search');
-                    var commandUnTrimmed = xValue;
-                    var commandTrimmed = xValue.trim();
+                    // section_parseThecommand level 1 importance
+                    //alert ('processing xText [' + xText + ']');
+                    var commandUnTrimmed = xText;
+                    var commandTrimmed = xText.trim();
+
                     var commandRemoved_toSearchFor_trimmed = null;
 
                     var callbackFromQuery = function() {
                         //alert ('in post get callback');
 
                         $scope.setUstodosFiltered('caller2', $scope.ustodos);
-
 
                         //alert ('in callback from query')
                         //O.o ('$$$$$$$$$$$$$$$$$$$ done processCommand got callback after query $scope.ustodos.length [' + $scope.ustodos.length + ']');
@@ -2626,11 +2668,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         });
                         //getProperties('props ustodo:', ustodo);
                         // Redirect after save
-                        O.o ('1 $$$$$$$$$$$$$$$$$$ save desc 1 [' + desc + '] ustodo.html [' + ustodo.html+ ']');
-                        O.o ('2 $$$$$$$$$$$$$$$$$$ save desc 2 [' + desc + '] ustodo.text [' + ustodo.text + ']');
-                        O.o ('3 $$$$$$$$$$$$$$$$$$ save desc 3 [' + desc + '] ustodo.value [' + ustodo.value + ']');
-                        O.o ('4 $$$$$$$$$$$$$$$$$$ save desc 4 [' + desc + '] ustodo.jsonx [' + ustodo.jsonx + ']');
-                        O.o ('5 $$$$$$$$$$$$$$$$$$ save desc 5 [' + desc + '] commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
+                        O.o ('1 $$$$$$$$$$$$$$$$$$ save callerId 1 [' + callerId + '] ustodo.html [' + ustodo.html+ ']');
+                        O.o ('2 $$$$$$$$$$$$$$$$$$ save callerId 2 [' + callerId + '] ustodo.text [' + ustodo.text + ']');
+                        O.o ('3 $$$$$$$$$$$$$$$$$$ save callerId 3 [' + callerId + '] ustodo.value [' + ustodo.value + ']');
+                        O.o ('4 $$$$$$$$$$$$$$$$$$ save callerId 4 [' + callerId + '] ustodo.jsonx [' + ustodo.jsonx + ']');
+                        O.o ('5 $$$$$$$$$$$$$$$$$$ save callerId 5 [' + callerId + '] commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
                         //alert('pre save 2');
                         ustodo.$save(function(response) // ustodos.server.controller.js exports.create
                         {
@@ -2700,7 +2742,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
                         //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
-                    }
+                    } // if write else
 
                     //alert ('commandRemoved_toSearchFor_trimmed:'+ commandRemoved_toSearchFor_trimmed);
 
