@@ -1524,48 +1524,50 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             var h = 1;
             $scope.eventHandlerCKEcontentChange = function(data, html, text)
             {
-                h++;
-                //alert( 'data [' + data + ']');
-                //alert( 'html [' + html + ']');
-                //alert( 'text [' + text + ']');
-                O.o ( h + '. text [' + text + ']');
-                O.o ( h + '. text.charCodeAt(text.length-1) [' + text.charCodeAt(text.length-1)+ ']');
+                try {
 
-                var lastCharacter = text.charCodeAt(text.length-1);
-                //alert ('testing if I should be calling processCommand');
-                if (lastCharacter == 160)
-                    text[text.length-1] = ' ';
-                if (text.length > 1)
-                {
-                    var lastCharacter = text.charCodeAt(text.length-2);
+                    //alert( 'data [' + data + ']');
+                    //alert( 'html [' + html + ']');
+                    //alert( 'text [' + text + ']');
+                    O.o(h + '. text [' + text + ']');
+                    O.o(h + '. text.charCodeAt(text.length-1) [' + text.charCodeAt(text.length - 1) + ']');
+
+                    var lastCharacter = text.charCodeAt(text.length - 1);
                     //alert ('testing if I should be calling processCommand');
                     if (lastCharacter == 160)
-                        text[length-1] = ' ';
-                }
+                        text[text.length - 1] = ' ';
+                    if (text.length > 1) {
+                        var lastCharacter = text.charCodeAt(text.length - 2);
+                        //alert ('testing if I should be calling processCommand');
+                        if (lastCharacter == 160)
+                            text[length - 1] = ' ';
+                    }
 
 
-                //if (UtilString.endsWith(text, ' ') ||
-//                    UtilString.endsWith(text, ' w'))
-                var x = 'abcde'
-                //alert ('x:' + x);
-                //if (x.endsWith('cde'))
-//                    alert ('x.endsWith(cde)');
-//                else
-//                    alert ('not x.endsWith(cde)');
+                    //if (UtilString.endsWith(text, ' ') ||
+                    //                    UtilString.endsWith(text, ' w'))
+                    var x = 'abcde'
+                    //alert ('x:' + x);
+                    //if (x.endsWith('cde'))
+                    //                    alert ('x.endsWith(cde)');
+                    //                else
+                    //                    alert ('not x.endsWith(cde)');
 
 
-  //              alert ('text.asciiTable()1:');
-                alert ('text.asciiTable 1():' + text.asciiTable());
-                //text.convertNonBreakingSpace();
-                alert ('text.asciiTable 2():' + text.asciiTable());
+                    //              alert ('text.asciiTable()1:');
+                    alert('text.asciiTable 1():' + text.asciiTable());
+                    text = UtilString.convertNonBreakingSpace(text);
+                    alert('text.asciiTable 2():' + text.asciiTable());
 
-                if (text.endsWith(' ') ||
-                    text.endsWith(' w'))
-                {
+                    if (text.endsWith(' ') ||
+                        text.endsWith(' w')) {
 
-                    alert ('calling processCommand');
-                    $scope.processCommand ("caller eventHandlerCKEcontentChange",
-                        text, html, data);
+                        alert('calling processCommand');
+                        $scope.processCommand("caller eventHandlerCKEcontentChange",
+                            text, html, data);
+                    }
+                } catch (e) {
+                    alert ('sdfsdfsdf:' + e);
                 }
             }
 
