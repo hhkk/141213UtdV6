@@ -36,7 +36,7 @@
                />
         &nbsp;
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
-               ng-click="processCommand('CLIENT HTML findlist-ustodos line 39', '*', '*', '*')"                src='/img/Asterisk.png'
+               ng-click="processCommand(enumCommands.COMMAND_SEARCH, 'CLIENT HTML findlist-ustodos line 39', '*', '*', '*')"                src='/img/Asterisk.png'
                title="Search all"
                 />
         &nbsp;
@@ -66,7 +66,7 @@
                title="Rich Editor (TinyMCE)"
                 />
 
-        &nbsp;<input  id='idcheckbox_dynammicSearch' ng-model=lockMouseover xxng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
+        &nbsp;<input  id='idcheckbox_dynammicSearch' ng-model=dynamicSearch xxng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
 
         <!--xx&nbsp;<span ng-model=$scope.lockMouseover> </span>yy-->
 

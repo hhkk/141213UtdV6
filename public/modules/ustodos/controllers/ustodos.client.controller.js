@@ -164,7 +164,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.ENUM_KEYEVENTCALLER_KEYUPSPAN = 'ENUM_KEYEVENTCALLER_KEYUPSPAN';
             $scope.ENUM_KEYEVENTCALLER_PERROW_TEXT = 'ENUM_KEYEVENTCALLER_PERROW_TEXT';
 
-            $scope.lockMouseover = false;
+            $scope.dynamicSearch = false; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
 
             // input ENUM
             $scope.ns = {};
@@ -177,8 +177,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             };
 
             $scope.whichEditorShowing = $scope.ns.Input.INPUT_NONE_IS_IN_FOCUS;
-
-
 
             //angularModule.controller('UstodosController', ['$scope', '$stateParams', '$locationProvider', '$rootScope', '$sce',
             //    'Authentication', 'Ustodos',
@@ -1560,12 +1558,19 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     text = UtilString.convertNonBreakingSpace(text);
                     //alert('text.asciiTable 2():' + text.asciiTable());
 
-                    if (text.endsWith(' ') ||
-                        text.endsWith(' w')) {
-
+                    //if (text.endsWith(' ') && $scope.dynamicSearch ) {
+                    if (text.endsWith(' ') && $scope.dynamicSearch ) {
+                        alert ('not     skipping')
+                        $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,
+                            "caller eventHandlerCKEcontentChange", text, html, data);
+                    }
+                    else if (text.endsWith(' ') && !$scope.dynamicSearch ) {
+                        alert ('skipping')
+                    }
+                    else if (text.endsWith(' w')) {
+                        $scope.processCommand($scope.enumCommands.COMMAND_WRITE,
+                            "caller eventHandlerCKEcontentChange write", text, html, data);
                         alert('calling processCommand');
-                        $scope.processCommand("caller eventHandlerCKEcontentChange",
-                            text, html, data);
                     }
                 } catch (e) {
                     UtilErrorEmitter.EmitError('in eventHandlerCKEcontentChange', e);
@@ -1573,6 +1578,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 }
             }
 
+
+            // input ENUM
+            // $scope.enumCommands.COMMAND_SEARCH  $scope.enumCommands.COMMAND_WRITE
+            $scope.enumCommands = {
+                COMMAND_SEARCH: 1,
+                COMMAND_WRITE: 2,
+            };
 
             $scope.keyCount = 0;
 
@@ -1602,7 +1614,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.buttonClickSearchStar = function() {
                 alert ('asdsad');
                 this.commandFromInputBox = '*';
-                this.processCommand('SERVER line 1189', this.commandFromInputBox);
+                this.processCommand($scope.enumCommands.COMMAND_SEARCH, 'SERVER line 1189', this.commandFromInputBox);
             };
 
             //$scope.eventMouseoverRow = function(i) {
@@ -1644,8 +1656,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.toggleDynamicSearchCheckbox = function(s) {
                 //alert ('in eventMouseoverRow3 s:' + s);
-                document.getElementById('idcheckbox_dynammicSearch').checked =
-                    !document.getElementById('idcheckbox_dynammicSearch').checked;
+                document.getElementById('idcheckbox_dynamicSearch').checked =
+                    !document.getElementById('idcheckbox_dynamicSearch').checked;
             };
 
             //$scope.buttonClickSearchClear = function() {
@@ -1755,10 +1767,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //                    //O.o ('bShouldIcommand based on space and lastchar 119 little w');
             //                    bShouldIcommand = true;
             //                }
-            //                //else if (document.getElementById('idcheckbox_dynammicSearch').checked)
-            //                else if ($scope.lockMouseover)
+            //                //else if (document.getElementById('idcheckbox_dynamicSearch').checked)
+            //                else if ($scope.dynamicSearch)
             //                {
-            //                    //O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
+            //                    //O.o ('bShouldIcommand based on space and idcheckbox_dynamicSearch checked');
             //                    bShouldIcommand = true;
             //                }
             //
@@ -1792,9 +1804,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //            //        //O.o ('bShouldIcommand based on space and lastchar 119 little w');
             //            //        bShouldIcommand = true;
             //            //    }
-            //            //    else if (document.getElementById('idcheckbox_dynammicSearch').checked)
+            //            //    else if (document.getElementById('idcheckbox_dynamicSearch').checked)
             //            //    {
-            //            //        //O.o ('bShouldIcommand based on space and idcheckbox_dynammicSearch checked');
+            //            //        //O.o ('bShouldIcommand based on space and idcheckbox_dynamicSearch checked');
             //            //        bShouldIcommand = true;
             //            //    }
             //            //}
@@ -2061,7 +2073,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //alert ('in keyup $scope.getTextInShowingEditor()'+$scope.getTextInShowingEditor());
                 //CKEDITOR.instances.editor.destroy();
 
-                alert ('$scope.lockMouseover:' + $scope.lockMouseover);
+                alert ('$scope.dynamicSearch:' + $scope.dynamicSearch);
 
                 // TEST WORKED?
                 if (false) {
@@ -2547,7 +2559,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.mouseoverlock = 'off'; // mouselock mouseoverlock
             //alert ('reinit mouseoverlock');
 
-            $scope.processCommand = function(callerId, xText, xHtml, xValue)
+            $scope.processCommand = function(scopeEnumCommand, callerId, xText, xHtml, xValue)
             {
                 O.o ('1 ===================== in processCommand for 1 xText [' + xText + ']');
                 O.o ('2 ===================== in processCommand for 2 xHtml [' + xHtml + ']');
@@ -2821,7 +2833,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //	$scope.error = errorResponse.data.message;
 
                 } catch (e) {
-                    alert ('errta:' + e);
+                    UtilErrorEmitter.EmitError('processCommand desc [' + callerId + ']', e);
                     throw e;
                 }
                 $scope.mouseoverlock = "off";
@@ -2981,11 +2993,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             var q = $location.$$search.q;
 
             if (q) {
-                $scope.processCommand('CLIENT JS line 2351', q, q, q);
+                $scope.processCommand($scope.enumCommands.COMMAND_SEARCH, 'CLIENT JS line 2351', q, q, q);
                 $scope.setTextInShowingEditor(q);
 
             } else {
-                $scope.processCommand('CLIENT JS line 2355', '*', '*', '*');
+                $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,'CLIENT JS line 2355', '*', '*', '*');
             }
 
             //alert ('runs on reload?');
