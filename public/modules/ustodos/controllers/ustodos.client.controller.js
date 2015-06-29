@@ -483,12 +483,20 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             var e = CKEDITOR.instances['idCkeEditorTextarea'];
             //alert( 'hi hk e:' + e );
-            e.on( 'change', function() {
-                //$scope.contentChange();
-                //$scope.contentChange(CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getHtml()+'ggg');
-                //$scope.contentChange(+'hhh');
-                $scope.eventHandlerCKEcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
-
+            //e.on( 'change', function() {
+            //    //$scope.contentChange();
+            //    //$scope.contentChange(CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getHtml()+'ggg');
+            //    //$scope.contentChange(+'hhh');
+            //    $scope.eventHandlerCKEcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
+            //
+            //} );
+            // http://stackoverflow.com/questions/24375780/ckeditor-keyup-event-and-capturing-data-from-inline-editors
+            e.on( 'contentDom', function() {
+                var editable = e.editable();
+                editable.attachListener( editable, 'keyup', function() {
+                    $scope.eventHandlerCKEcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
+                    //console.log( editor.getData() );
+                } );
             } );
 
 
@@ -1522,9 +1530,29 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // Handler 1
             var callcounteventHandlerCKEcontentChange = 0;
             var priorhtml = null;
+
+            var wasEnterPressed = function (oldhtml, newhtml)
+            {
+                //var rtndiff = '';
+                //if (oldhtml.length > newhtml.length)
+//                    return false;
+////                else
+    //            {
+                    //var j = 0; // new index
+                    //for (var j = 0; j < newhtml.length; j++)
+                    //{
+                    //    if (ol)
+                    //}
+                    if (newhtml.endsWith('<p><br></p>'))
+                        return true;
+      //          }
+
+            };
+
             $scope.eventHandlerCKEcontentChange = function(data, html, text)
             {
                 try {
+
 
                     callcounteventHandlerCKEcontentChange++
                     if (html === priorhtml)
@@ -1575,6 +1603,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     }
                     else if (text.endsWith(' ') && !$scope.dynamicSearch ) {
                         //alert ('skipping')
+                    }
+                    else if (text.endsWith(' w')) {
+                        $scope.processCommand($scope.enumCommands.COMMAND_WRITE,
+                            "caller eventHandlerCKEcontentChange write", text, html, data);
+                        alert('calling processCommand');
                     }
                     else if (text.endsWith(' w')) {
                         $scope.processCommand($scope.enumCommands.COMMAND_WRITE,
