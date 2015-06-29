@@ -1520,16 +1520,25 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //var o = O.o;
 
             // Handler 1
-            var h = 1;
+            var callcounteventHandlerCKEcontentChange = 0;
+            var priorhtml = null;
             $scope.eventHandlerCKEcontentChange = function(data, html, text)
             {
                 try {
 
-                    //alert( 'data [' + data + ']');
+                    callcounteventHandlerCKEcontentChange++
+                    if (html === priorhtml)
+                        alert('same html');
+
+                     priorhtml = html;
+
+                    alert( 'callcnt [' + callcounteventHandlerCKEcontentChange +
+                        '] data [' + data + '] text [' + text + '] html [' + html+ ']');
+                    //alert( 'data  [' + data + ']');
                     //alert( 'html [' + html + ']');
                     //alert( 'text [' + text + ']');
-                    O.o(h + '. text [' + text + ']');
-                    O.o(h + '. text.charCodeAt(text.length-1) [' + text.charCodeAt(text.length - 1) + ']');
+                    O.o('text [' + text + ']');
+                    O.o('text.charCodeAt(text.length-1) [' + text.charCodeAt(text.length - 1) + ']');
 
                             //var lastCharacter = text.charCodeAt(text.length - 1);
                             ////alert ('testing if I should be calling processCommand');
@@ -1565,7 +1574,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             "caller eventHandlerCKEcontentChange", text, html, data);
                     }
                     else if (text.endsWith(' ') && !$scope.dynamicSearch ) {
-                        alert ('skipping')
+                        //alert ('skipping')
                     }
                     else if (text.endsWith(' w')) {
                         $scope.processCommand($scope.enumCommands.COMMAND_WRITE,
@@ -2619,7 +2628,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     var commandRemoved_toSearchFor_trimmed = null;
 
                     var callbackFromQuery = function() {
-                        //alert ('in post get callback');
+                        //alert ('in callbackFromQuery post get callback');
 
                         $scope.setUstodosFiltered('caller2', $scope.ustodos);
 
@@ -2707,7 +2716,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
                             //'----------------' '----------------' '----------------' '----------------' '----------------'
 
-                            //alert ('in callback success after write search for [' + commandRemoved_toSearchFor_trimmed + ']');
+                            alert ('in write query [' + commandRemoved_toSearchFor_trimmed + ']');
                             //O.o ('=============== in section QUERY1');
                             $scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_Write', {q: '*'}, callbackFromQuery);
 
