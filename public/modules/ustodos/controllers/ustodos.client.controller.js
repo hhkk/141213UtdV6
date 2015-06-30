@@ -193,6 +193,20 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 document.getElementById('demo').innerHTML = x;
             };
 
+            //.----------------. .-----------------..----------------. .----------------. .----------------. .----------------.
+            //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+            //| |     ____     | | | ____  _____  | | |   _____      | | |     ____     | | |      __      | | |  ________    | |
+            //| |   .'    `.   | | ||_   \|_   _| | | |  |_   _|     | | |   .'    `.   | | |     /  \     | | | |_   ___ `.  | |
+            //| |  /  .--.  \  | | |  |   \ | |   | | |    | |       | | |  /  .--.  \  | | |    / /\ \    | | |   | |   `. \ | |
+            //| |  | |    | |  | | |  | |\ \| |   | | |    | |   _   | | |  | |    | |  | | |   / ____ \   | | |   | |    | | | |
+            //| |  \  `--'  /  | | | _| |_\   |_  | | |   _| |__/ |  | | |  \  `--'  /  | | | _/ /    \ \_ | | |  _| |___.' / | |
+            //| |   `.____.'   | | ||_____|\____| | | |  |________|  | | |   `.____.'   | | ||____|  |____|| | | |________.'  | |
+            //| |              | | |              | | |              | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
+            // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=ONLOAD%0A
+            // section_onload
+
             $scope.$watch('$viewContentLoaded', function(){ // like onload YES
                 //alert ('in $viewContentLoaded');
                 //var x = document.getElementById('idCkeEditorTextarea').innerHTML;
@@ -209,8 +223,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //$scope.propagateTextChanges();
                 });
 
-                // section_per_editor -2 - set initial editor
-                $scope.toggleVisibilityTo2();
+                // section_per_editor set initial editor
+                //alert ('oin here');
+                $scope.toggleVisibilityTo3();
                 //ng-blur="propagateTextChanges()"
 
             });
@@ -245,12 +260,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //tinymce.activeEditor.setContent('<span>some</span> html');
                 //alert ('in ngInitTinyMce');
                 //alert ('done testTinyMce');
-            };
-
-            $scope.myCustomOnInit = function () {
-                //alert("myCustomOnInit from mce");
-                //tinyMCE.get('idTinyMceTextArea').setContent('<span>some1</span> html');
-                //tinymce.activeEditor.setContent('<span>some</span> html');
             };
 
             // section_init_cke
@@ -335,7 +344,19 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
 
-
+            //.----------------. .----------------. .----------------.   .----------------. .-----------------..----------------. .----------------.
+            //| .--------------. | .--------------. | .--------------. | | .--------------. | .--------------. | .--------------. | .--------------. |
+            //| | ____    ____ | | |     ______   | | |  _________   | | | |     _____    | | | ____  _____  | | |     _____    | | |  _________   | |
+            //| ||_   \  /   _|| | |   .' ___  |  | | | |_   ___  |  | | | |    |_   _|   | | ||_   \|_   _| | | |    |_   _|   | | | |  _   _  |  | |
+            //| |  |   \/   |  | | |  / .'   \_|  | | |   | |_  \_|  | | | |      | |     | | |  |   \ | |   | | |      | |     | | | |_/ | | \_|  | |
+            //| |  | |\  /| |  | | |  | |         | | |   |  _|  _   | | | |      | |     | | |  | |\ \| |   | | |      | |     | | |     | |      | |
+            //| | _| |_\/_| |_ | | |  \ `.___.'\  | | |  _| |___/ |  | | | |     _| |_    | | | _| |_\   |_  | | |     _| |_    | | |    _| |_     | |
+            //| ||_____||_____|| | |   `._____.'  | | | |_________|  | | | |    |_____|   | | ||_____|\____| | | |    |_____|   | | |   |_____|    | |
+            //| |              | | |              | | |              | | | |              | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | | '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------'   '----------------' '----------------' '----------------' '----------------'
+            // section_mceinit
+            // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=MCE%20INIT%0A
             //tinyMCE.init({
             //    ...
             //    oninit : myCustomOnInit
@@ -343,6 +364,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //
 
 
+            $scope.myCustomOnInit = function () {
+                alert("myCustomOnInit from mce");
+                tinyMCE.get('idTinyMceTextArea').setContent('<span>some1</span> html');
+                tinymce.activeEditor.setContent('<span>some</span> html');
+            };
+
+            // 1111111111
             //tinyMCE.init({
             //    selector:'textarea',
             //    //setup : function(ed) {
@@ -352,10 +380,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    oninit : '$scope.myCustomOnInit()'
             //    })
             //;
-            //
 
-
-
+            // 222222222
             // tinymce4 works
             //tinymce.init({
             //    selector: "textarea",
@@ -375,61 +401,70 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    ]
             //});
 
-            //tinymce3 works
-            //alert ('in tinymce init');
-            // section_editor_init_mce
+            //// 333333333333
+            ////tinymce3 works
+            ////alert ('in tinymce init');
+            //// section_editor_init_mce
             tinyMCE.init({
                 mode : 'exact',
                 width: '100%',
-                height: '100%',
+                height: "100%",
                 resize: 'both',
-                elements : 'idTinyMceTextArea'
+                elements : 'idTinyMceTextArea',
+                toolbar: 'false',
+                //menubar : true
 
-                //setup : function(ed) {
-                //    ed.onDeactivate.add(function(ed) {
-                //        alert ('in special function');
-                //        ed.save();  // or whatever you want to do to save the editor content
-                //        ed.remove(); // removes tinymce instance
+                setup : function(ed) {
+                    ed.onDeactivate.add(function(ed) {
+                        alert ('in special function');
+                        ed.save();  // or whatever you want to do to save the editor content
+                        ed.remove(); // removes tinymce instance
+                    });
+
+                    ed.onKeyUp.add(function(ed,l) {
+                        alert ('in onkeyup');
+                        ed.save();  // or whatever you want to do to save the editor content
+                    });
+
+                    //ed.onInit.add(function(ed, evt) {
+                    //
+                    //    var dom = ed.dom;
+                    //    var doc = ed.getDoc();
+                    //
+                    //    tinymce.dom.Event.add(doc, 'blur', function(e) {
+                    //        alert('blur!!!');
+                    //    });
+                    //});
+                }
+                //setup: function(editor) {
+                //    editor.on('blur', function(e) {
+                //        console.log('blur event', e);
                 //    });
-                //    //ed.onInit.add(function(ed, evt) {
-                //    //
-                //    //    var dom = ed.dom;
-                //    //    var doc = ed.getDoc();
-                //    //
-                //    //    tinymce.dom.Event.add(doc, 'blur', function(e) {
-                //    //        alert('blur!!!');
-                //    //    });
-                //    //});
                 //}
-                ////setup: function(editor) {
-                ////    editor.on('blur', function(e) {
-                ////        console.log('blur event', e);
-                ////    });
-                ////}
-                ////setup : function(ed) {
-                ////    ed.on('blur', function(e) {
-                ////        alert('blur');
-                ////    });
-                ////}
-                ////,
-                ////setup : function(ed) {
-                ////    ed.onInit.add(function(ed, evt) {
-                ////
-                ////        var dom = ed.dom;
-                ////        var doc = ed.getDoc();
-                ////
-                ////        tinymce.dom.Event.add(doc, 'blur', function(e) {
-                ////            // Do something when the editor window is blured.
-                ////            alert('blur!!!');
-                ////        });
-                ////    });
-                ////},
+                //setup : function(ed) {
+                //    ed.on('blur', function(e) {
+                //        alert('blur');
+                //    });
+                //}
+                //,
+                //setup : function(ed) {
+                //    ed.onInit.add(function(ed, evt) {
                 //
-                ////setup: function(editor) {
-                ////    editor.on('blur', function(e) {
-                ////        console.log('blur event', e);
-                ////    });
-                ////}
+                //        var dom = ed.dom;
+                //        var doc = ed.getDoc();
+                //
+                //        tinymce.dom.Event.add(doc, 'blur', function(e) {
+                //            // Do something when the editor window is blured.
+                //            alert('blur!!!');
+                //        });
+                //    });
+                //},
+
+                //setup: function(editor) {
+                //    editor.on('blur', function(e) {
+                //        console.log('blur event', e);
+                //    });
+                //}
             });
 
 
@@ -482,22 +517,23 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.editor = CKEDITOR.instances.idCkeEditorTextarea;
 
             var e = CKEDITOR.instances['idCkeEditorTextarea'];
+            var callcountContentDom = 0;
             //alert( 'hi hk e:' + e );
             //e.on( 'change', function() {
+            //    O.o ('callcountContentDom keyup:' + callcountContentDom++);
             //    //$scope.contentChange();
             //    //$scope.contentChange(CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getHtml()+'ggg');
             //    //$scope.contentChange(+'hhh');
             //    $scope.eventHandlerCKEcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
-            //
-            //} );
+            //});
             // http://stackoverflow.com/questions/24375780/ckeditor-keyup-event-and-capturing-data-from-inline-editors
-            e.on( 'contentDom', function() {
-                var editable = e.editable();
-                editable.attachListener( editable, 'keyup', function() {
-                    $scope.eventHandlerCKEcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
-                    //console.log( editor.getData() );
-                } );
-            } );
+            //e.on( 'contentDom', function() {
+            //    var editable = e.editable();
+            //    editable.attachListener( editable, 'keyup', function() {
+            //        O.o ('callcountContentDom keyup:' + callcountContentDom++);
+            //        $scope.eventHandlerCKEcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
+            //    } );
+            //} );
 
 
             //e.on( 'keyup', function( event ) {
@@ -1490,7 +1526,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 return $sce.trustAsHtml(value);
             };
 
-            // section_handlers sectionevents
+            // section_handlers sectionevents mouseover rows etc.
             //.----------------. .----------------. .-----------------..----------------. .----------------. .----------------. .----------------. .----------------.
             //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
             //| |  ____  ____  | | |      __      | | | ____  _____  | | |  ________    | | |   _____      | | |  _________   | | |  _______     | | |    _______   | |
@@ -1554,14 +1590,16 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 try {
 
 
-                    callcounteventHandlerCKEcontentChange++
-                    if (html === priorhtml)
-                        alert('same html');
+                    callcounteventHandlerCKEcontentChange++;
+                    //if (html === priorhtml)
+                    //    alert('same html');
 
-                     priorhtml = html;
+                    priorhtml = html;
 
-                    alert( 'callcnt [' + callcounteventHandlerCKEcontentChange +
-                        '] data [' + data + '] text [' + text + '] html [' + html+ ']');
+                    O.o ( 'callcnt [' + callcounteventHandlerCKEcontentChange +
+                        '] \r\n1 data [' + data + '] ascii [' + data.asciiTable() + ']' +
+                        '] \r\n2 html [' + html + '] ascii [' + html.asciiTable() + ']' +
+                        '] \r\n3 text [' + text + '] ascii [' + text.asciiTable() + ']');
                     //alert( 'data  [' + data + ']');
                     //alert( 'html [' + html + ']');
                     //alert( 'text [' + text + ']');
@@ -1672,9 +1710,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // Handler
             $scope.eventMouseoverRow2 = function(i) {
                 //console.log('A in eventMouseoverRow2 i:' + i);
-                O.o ('in eventMouseoverRow2:' + i);
-                O.o (i + '. $scope.ustodosFiltered[i].text:' + $scope.ustodosFiltered[i].text);
-                O.o (i + '. $scope.ustodosFiltered[i].html:' + $scope.ustodosFiltered[i].html);
+                //O.o ('in eventMouseoverRow2:' + i);
+                //O.o (i + '. $scope.ustodosFiltered[i].text:' + $scope.ustodosFiltered[i].text);
+                //O.o (i + '. $scope.ustodosFiltered[i].html:' + $scope.ustodosFiltered[i].html);
                 if ($scope.state_inSelectedMode === -1) {
                     if ($scope.mouseoverlock !== 'on') {
                         //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
