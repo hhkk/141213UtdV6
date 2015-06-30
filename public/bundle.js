@@ -1025,6 +1025,10 @@ String.prototype.endsWith = function (s) {
     return this.length >= s.length && this.substr(this.length - s.length) == s;
 }
 
+String.prototype.beginsWith = function (s) {
+    return this.indexOf(s) === 0;
+}
+
 var convertNonBreakingSpace = function (s) {
     var i = 0;
     //alert ('in asciiTable this.length' + this.length)

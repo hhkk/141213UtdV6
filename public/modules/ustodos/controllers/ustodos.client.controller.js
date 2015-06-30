@@ -309,28 +309,28 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         startupFocus : false,
                         uiColor: '#9AB8F3',
                         toolbar: [
-                        { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
-                        { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
-                        { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },
-                        { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
-                        '/',
-                        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-                        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
-                        { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
-                        { name: 'insert', items: [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ] },
-                        '/',
-                        { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
-                        // http://ckeditor.com/addon/colorbutton
-                        // C:/utd/141213UtdV6/public/lib/ckeditor/plugins/colorbutton
-                        // C:\Users\henryms\Downloads\colorbutton_4.4.7\colorbutton
-                        // see layout.server.view.html <!--<script type="text/javascript" src="/lib/ckeditor/plugins/colorbutton/plugin.js"></script>-->
+                            { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
+                            { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },
+                            { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
+                            '/',
+                            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+                            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
+                            { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+                            { name: 'insert', items: [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ] },
+                            '/',
+                            { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+                            // http://ckeditor.com/addon/colorbutton
+                            // C:/utd/141213UtdV6/public/lib/ckeditor/plugins/colorbutton
+                            // C:\Users\henryms\Downloads\colorbutton_4.4.7\colorbutton
+                            // see layout.server.view.html <!--<script type="text/javascript" src="/lib/ckeditor/plugins/colorbutton/plugin.js"></script>-->
                             //C:\utd\141213UtdV6\public\lib\ckeditorNotFull
                             //http://ckeditor.com/download
-                        { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-                        { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
-                        { name: 'others', items: [ '-' ] },
-                        { name: 'about', items: [ 'About' ] }
-                    ]
+                            { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+                            { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
+                            { name: 'others', items: [ '-' ] },
+                            { name: 'about', items: [ 'About' ] }
+                        ]
                     });
                 }
                 else
@@ -357,6 +357,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //'----------------' '----------------' '----------------'   '----------------' '----------------' '----------------' '----------------'
             // section_mceinit
             // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=MCE%20INIT%0A
+            // n other project see UtilTinyMCE.js
             //tinyMCE.init({
             //    ...
             //    oninit : myCustomOnInit
@@ -386,19 +387,32 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //tinymce.init({
             //    selector: "textarea",
             //    theme: "modern",
-            //    plugins: [
-            //        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-            //        "searchreplace wordcount visualblocks visualchars code fullscreen",
-            //        "insertdatetime media nonbreaking save table contextmenu directionality",
-            //        "emoticons template paste textcolor colorpicker textpattern"
-            //    ],
+            //    //plugins: [
+            //    //    "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+            //    //    "searchreplace wordcount visualblocks visualchars code fullscreen",
+            //    //    "insertdatetime media nonbreaking save table contextmenu directionality",
+            //    //    "emoticons template paste textcolor colorpicker textpattern"
+            //    //],
             //    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
             //    toolbar2: "print preview media | forecolor backcolor emoticons",
             //    image_advtab: true,
             //    templates: [
             //        {title: 'Test template 1', content: 'Test 1'},
             //        {title: 'Test template 2', content: 'Test 2'}
-            //    ]
+            //    ],
+            //    setup : function(ed) {
+            //        ed.onDeactivate.add(function(ed) {
+            //            alert ('in special function');
+            //            ed.save();  // or whatever you want to do to save the editor content
+            //            ed.remove(); // removes tinymce instance
+            //        });
+            //
+            //        ed.onKeyUp.add(function(ed,l) {
+            //            alert ('in onkeyup');
+            //            ed.save();  // or whatever you want to do to save the editor content
+            //        });
+            //    }
+            //
             //});
 
             //// 333333333333
@@ -466,6 +480,432 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //    });
                 //}
             });
+
+
+
+            //.----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.
+            //| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+            //| | ____    ____ | | |     ______   | | |  _________   | | |              | | |     ____     | | |   _____      | | |  ________    | |
+            //| ||_   \  /   _|| | |   .' ___  |  | | | |_   ___  |  | | |              | | |   .'    `.   | | |  |_   _|     | | | |_   ___ `.  | |
+            //| |  |   \/   |  | | |  / .'   \_|  | | |   | |_  \_|  | | |              | | |  /  .--.  \  | | |    | |       | | |   | |   `. \ | |
+            //| |  | |\  /| |  | | |  | |         | | |   |  _|  _   | | |              | | |  | |    | |  | | |    | |   _   | | |   | |    | | | |
+            //| | _| |_\/_| |_ | | |  \ `.___.'\  | | |  _| |___/ |  | | |              | | |  \  `--'  /  | | |   _| |__/ |  | | |  _| |___.' / | |
+            //| ||_____||_____|| | |   `._____.'  | | | |_________|  | | |   _______    | | |   `.____.'   | | |  |________|  | | | |________.'  | |
+            //| |              | | |              | | |              | | |  |_______|   | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'
+
+
+
+            // from old project tinymce init
+            //            tinyMCE.init
+            //            (
+            //                {
+            ////                paste_auto_cleanup_on_paste : true,
+            ////                paste_preprocess : function(pl, o) {
+            ////                    // Content string containing the HTML from the clipboard
+            ////                    alert("hi mom" + o.content);
+            ////                    o.content = "-: CLEANED :-\n" + o.content;
+            ////                },
+            //
+            //
+            //                    // General options
+            //                    oninit : initMyCustom,
+            //
+            //                    setup : function(ed)
+            //                    {
+            //
+            //                        try
+            //                        {
+            ////                        ed.onActivate.add(function(ed) {
+            ////                            alert('Editor was activated: ' + ed.id);
+            ////                        });
+            //
+            //
+            //                            // 2 Add a custom button
+            //                            ed.addButton('mybutton', {
+            //                                title : 'myTitle',
+            //                                image : 'myImage.png',
+            //                                onclick : function() {ed.selection.setContent('<p>Hello!</p>')}
+            //                            });
+            //
+            //
+            //                            ed.onClick.add
+            //                            (
+            //                                function(ed,e)
+            //                                {
+            //                                    //alert ("onClick:" + e.target.nodeName);
+            //                                    //if (e.target.nodeName == 'A'&&e.altKey) {
+            //                                    if (e.target.nodeName == 'A' && e.altKey) {
+            //                                        window.open(e.target.href,"_blank");
+            //                                    }
+            //                                }
+            //                            );
+            //
+            //                            ed.onKeyUp.add //hbk130616
+            //                            (
+            //                                function(ed,l)
+            //                                {
+            //
+            //                                    // console.log("in keyup add")
+            //
+            //                                    var txtUpperText = tinyMCE.get('txtUpper').getContent({format : 'text'}).trim();
+            //                                    if (document.title.toLowerCase() != txtUpperText.toLowerCase())
+            //                                        document.title = "* "+txtUpperText;
+            //
+            //                                    var txtUpperHtml = tinyMCE.get('txtUpper').getContent({format : 'html'}).trim();
+            //                                    //alert("in ed.onKeyUp.add3 l.keyCode :" + l.keyCode );
+            //                                    //                                if (txtUpperText.endsWith('...'))
+            //                                    //                                {
+            //                                    //                                        //alert ('yes match')
+            //                                    //                                    tinyMCE.activeEditor.setContent(txtUpperText[0])
+            //                                    //                                    //setCaretToPos(getElementByIdHK('txtUpper'), 10000)
+            //                                    //                                    //var rng = tinymce.DOM.createRng();
+            //                                    //                                    //tinyMCE.activeEditor.setSelectionRange(tinyMCE.activeEditor, 0, 1);
+            //                                    //                                    var textareahbk = document.getElementById("txtUpper");
+            //                                    //                                    console.log ("moveCaretToEnd now textareahbk:"+ textareahbk );
+            //                                    //                                    moveCaretToEnd(textareahbk);
+            //                                    //
+            //                                    //
+            //                                    //
+            //                                    //                                    //tinyMCE.activeEditor.selection.select(ed.dom.select('#_mce_temp_rob')[0])
+            //                                    //                                }
+            //                                    //                                else
+            //                                    //                                {
+            //                                    //                                    //alert ('no match')
+            //                                    //                                }
+            //
+            //                                    // Type here
+            //                                    //var txtUpperText = tinyMCE.activeEditor.getContent({format : 'html'}).trim();
+            //                                    //var txtUpperText = tinyMCE.activeEditor.getContent({format : 'text'}).trim();
+            //                                    //console.log ('in initmcehbk.1 in MCE Key up event: ' + l.keyCode + ", txtUpperText [" + txtUpperText + "]");
+            //
+            //                                    if (l.keyCode == 27) // escape
+            //                                    {
+            //                                        //oooo ("console > got an escape")
+            //
+            //                                        // escapehk
+            //                                        if ( rowClickedDbId != "") //if already editing a row then first unedit
+            //                                        {
+            //                                            oooo ("console > got an escape 1")
+            //                                            //alert ("escapehk")
+            //                                            //alert ("txtUpper:"+ document.getElementById("txtUpper").value);
+            //                                            //alert ("unclick id:" + rowClickedIndex)
+            //                                            //console.log ("calling tableChangeUnclickRowTA")
+            //                                            tableChangeUnclickRowTA("console > got an escape", rowClickedIndexCurrent)
+            //                                            // togglezoom
+            //                                            //innerLayout.show('south')
+            //                                            //innerLayout.show('east')
+            //                                            //innerLayout.show('west')
+            //
+            //                                            //        console.log("post unclick rowClickedIndex:" + rowClickedIndex)
+            //                                            //        console.log("post unclick rowClickedDbId:" + rowClickedDbId)
+            //
+            //                                        }
+            //                                        else
+            //                                        {
+            //                                            oooo ("console > got an escape 2")
+            //                                            //document.activeElement.blur()
+            //                                            //oooo("2setting to idTextFieldUtdoptions")
+            ////                                        $('#idTextFieldUtdoptions').focus();
+            ////                                        $('#idTextFieldUtdoptions').blur();
+            //
+            //                                            //id="select_se_command"
+            //
+            //                                            $('#select_se_command').focus();
+            //                                            $('#select_se_command').blur();
+            //                                        }
+            //                                    }
+            //                                    else if (l.keyCode == 13) // ENTER KEY
+            //                                    {
+            //                                        if (true) // make this false to disable enter key from either form of tinymce rich text box
+            //                                        {
+            //                                            //alert ("gg:" + convertStringToAsciiCommaSeparatedString(tinyMCE.activeEditor.getContent({format : 'html'}).trim()))
+            //                                            //tinyMCE.activeEditor.setContent(trimTrailingNbspWithSpace(tinyMCE.activeEditor.getContent({format : 'html'})));
+            //                                            if (txtUpperText == "")
+            //                                            {
+            //                                                txtUpperText = "*"
+            //                                                tinyMCE.get('txtUpper').setContent("*");
+            //                                            }
+            //                                            txtUpperText = tinyMCE.get('txtUpper').getContent({format : 'text'}).trim();
+            //                                            txtUpperHtml = tinyMCE.get('txtUpper').getContent({format : 'html'}).trim();
+            //
+            //
+            //                                            //as compared with var commandText = getElementByIdHK('txtUpper').value.trim()  // real ampersand
+            //                                            //as compared with var commandHTML = getElementByIdHK('txtUpper').innerHTML.trim()   // encoded ampersand
+            //
+            //
+            //                                            //alert ("s1 [" + convertStringToAsciiCommaSeparatedString(txtUpperText) + "]");
+            //                                            //alert ("s2 [" + toHex(txtUpperText) + "]");
+            //
+            //                                            // alert ("got an enter")
+            //                                            while (txtUpperText.trim().endsWith("<br />"))
+            //                                            {
+            //                                                cnt++;if (cnt > 2)
+            //                                                break;
+            //                                                txtUpperText = txtUpperText.substr(0, txtUpperText.length-6).trim()
+            //                                            }
+            //
+            //                                            if (txtUpperText.endsWith("&nbsp;"))
+            //                                            {
+            //                                                alert ("do I ever get here?");
+            //                                            }
+            //                                            else
+            //                                            {
+            //                                                // alert ("3 Key up event1 in enter key [" + txtUpperText  + "]")
+            //
+            //                                                var cnt = 0
+            //                                                while (txtUpperText.trim().endsWith("<br />"))
+            //                                                {
+            //                                                    cnt++;if (cnt > 2)
+            //                                                    break;
+            //                                                    //alert ("3.5 Key up event trimming from:" + txtUpperText)
+            //                                                    txtUpperText = txtUpperText.substr(0, txtUpperText.length-6).trim()
+            //                                                    //alert ("trimming to:" + txtUpperText)
+            //                                                }
+            //                                                //alert ("4 Key up event in enter key pre filter [" + txtUpperText + "]")
+            //                                                while (txtUpperText.trim().endsWith("<br />"))
+            //                                                {
+            //                                                    cnt++;if (cnt > 2)
+            //                                                    break;
+            //                                                    //alert ("trimming from:" + txtUpperText)
+            //                                                    txtUpperText = txtUpperText.substr(0, txtUpperText.length-6).trim()
+            //                                                    //alert ("trimming to:" + txtUpperText)
+            //                                                }
+            //                                                //alert ("5 1.777 Key up event in enter key ready to submit[" + txtUpperText + "] ensdwith ' w' [" + txtUpperText.endsWith(" w") + "]")
+            //                                                //alert ("5 1.777 Key up event in enter key ready to submit [" + txtUpperText + "] getElementByIdHK('idTextFieldUtdoptions').value [" + getElementByIdHK('idTextFieldUtdoptions').value + "]")
+            //                                                //console.log ("calling ajax from mcehandler 1.777")
+            //
+            //                                                // see also in gsp "        function onActionButtonClick_userClickedReset() {"
+            //                                                ajax_FetchJsonTableData("AJAXCALLERID_CALLER_MCEHANDLER", txtUpperHtml.trim(), txtUpperText.trim(), false, getElementByIdHK('idTextFieldUtdoptions').value)
+            //
+            //                                            }
+            //                                            //alert ("in tinymce.dom.Event.cancel(e);")
+            //                                            //tinymce.dom.Event.cancel(evt);  hbk130616
+            //
+            //                                        }
+            //                                    }
+            //                                    else // ELSE A CHARACTER
+            //                                    {
+            //                                        //alert ("in ed.onKeyUp.add");
+            //                                        //alert ("6 Key up event in else remotefunction")
+            //                                        //copyupdown(2);
+            //                                        //                            ${
+            //                                        //                                remoteFunction(action: 'ajax_autocompleteSearchUpper',
+            //                                        //                                    update: [success: 'leftnav', failure: 'not_listoutputxxxxxxxxxxx'],
+            //                                        //                                    //params: '\'autocomp=\' + l.content',
+            //                                        //                                    params: '\'autocomp=\' + tinyMCE.activeEditor.getContent({format : \'text\'})',
+            //                                        //                            onComplete: 'postautocomplete(\'from_tiny_mce\');')
+            //                                        // RESTRICT VIEWED RECORD SET
+            //                                        //alert ("comparing to:" + hksetTermsInTxtupperSpaceDelimited.toString())
+            //                                        //alert ("comparing:" + taclass)
+            //                                        //alert ("to:" + CONST_FIELD_UPPER_CLASS )
+            //
+            //                                        if (taclass == CONST_FIELD_UPPER_CLASS )
+            //                                        {
+            //                                            PageData_state_txtUpperEdited = true;
+            //                                            //alert ("set edted to true");
+            //                                            //alert ("eureka it'txtUpperText true!");
+            //                                            if (document.getElementById('idCheckboxFilter').checked)
+            //                                            {
+            //                                                // is there already a timer? clear if if there is
+            //                                                // var stoppedTyping // outside the function
+            ////                                            if (stoppedTyping)
+            ////                                                clearTimeout(stoppedTyping);
+            ////                                            // set a new timer to execute 3 seconds from last keypress
+            ////                                            stoppedTyping = setTimeout(function(){
+            ////                                                //alert ("you stopped typing seconds are up - filter  !!")
+            //                                                hideRowsNotContainingFullTermSet('character in mce', tinyMCE.get('txtUpper').getContent({format : 'text'}), true, true, true, true, compareModes.contains)
+            //                                                //}, 500); // millisecond timer
+            //
+            //
+            //                                            }
+            //                                        }
+            //
+            //
+            //
+            //
+            //                                    }
+            //                                }
+            //
+            //                            );
+            //
+            //                            ed.onInit.add(function(editor) {
+            //                                tinymce.dom.Event.add(editor.getBody(), "focus", function(e) {
+            //                                    //oooo('focus1 ' +taclass);
+            //                                    if (taclass == CONST_FIELD_UPPER_CLASS )
+            //                                    {
+            //                                        //oooo('focus12 '+rowClickedIndexCurrent)
+            //                                        if (rowClickedIndexCurrent != "")
+            //                                            tableChangeUnclickRowTA("unclick row hk", rowClickedIndexCurrent)
+            //                                    }
+            //
+            //                                });
+            //                            });
+            //
+            //                            ed.onInit.add(function(editor) {
+            //                                tinymce.dom.Event.add(editor.getBody(), "blur", function(e) {
+            //                                    //oooo('blur2 ' +taclass);
+            //                                });
+            //                            });
+            //
+            //                            ed.onInit.add (
+            //                                function(ed)
+            //                                {
+            //                                    //alert ("in mce onInit init . add")
+            //                                    ed.getDoc().body.style.fontSize = inFontSize;
+            //                                    ed.getDoc().body.style.color = "olive";          // tinymce color constrolled here hbk color
+            ////                                ed.getDoc().body.style.padding = "0"; //hbk
+            ////                                ed.getDoc().body.style.margin = "0";  // hbk
+            //                                    //tinyMCE.execCommand('mceFocus', false, 'txtUpper');
+            //                                    var rich = (typeof tinyMCE != "undefined") && tinyMCE.activeEditor != null && !tinyMCE.activeEditor.isHidden();
+            //                                    //alert ("rich2:" + rich);
+            //                                    //var s = tinyMCE.activeEditor.getContent();
+            //                                    //tinyMCE.activeEditor.setContent(s)
+            //
+            //                                    //tinyMCE.activeEditor.focus();
+            //
+            //                                    //tinyMCE.get('txtUpper').focus();
+            //
+            //                                    //window.parent.tinyMCE.get(textareaIdToInit).focus()
+            //
+            //                                    this.focus();
+            //
+            //                                    window.parent.tinyMCE.execCommand('mceFocus', false, textareaIdToInit);
+            //
+            //
+            //
+            //                                }
+            //                            );
+            //
+            //                        }
+            //                        catch(err)
+            //                        {
+            //                            handleErr(err);
+            //                        }
+            //                    },
+            //                    //onchange_callback : "myCustomOnChangeHandler",
+            //                    mode : 'specific_textareas', // see http://www.tinymce.com/wiki.php/Configuration:editor_selector
+            //                    //mode : 'textareas', // see http://www.tinymce.com/wiki.php/Configuration:editor_selector
+            //                    //editor_selector : /(mceEditor|mceRichText)/   not tried - from article
+            //                    editor_selector : taclass, // only textareas with this clas
+            //                    //editor_selector : "classRowTextArea", // only textareas with this clas
+            //                    //elements : "fld2Lower", // only textareas with this clas
+            //
+            //                    //theme : themein, //advanced or simple
+            //                    theme : "simple", //advanced or simple
+            //                    //theme : "advanced", //advanced or simple
+            //
+            //                    // https://groups.google.com/forum/#!msg/jquery-ui-layout/dGIYxZX2JLI/W074IODoGv8J
+            //                    //north__onresize: function () { alert ("resized"); },
+            //                    //south__onresize: alert ("resized") },
+            //                    ////plugins : "autoresize, autolink,lists,spellchecker,pagebreak,style,layer,table," +
+            //                    // "save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media," +
+            //                    // "searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars," +
+            //                    // "nonbreaking,xhtmlxtras,template",
+            //                    //plugins : "autoresize",
+            //
+            ////                //plusin 'autoresize',  // hbk130414
+            //                    width: '100%',
+            //                    height: '100%',
+            ////                autoresize_min_height: 200,
+            ////                autoresize_max_height: 800,
+            //
+            //
+            //
+            //
+            //
+            //                    //width: "100%",
+            //                    //theme_advanced_statusbar_location : "bottom",
+            //                    //theme_advanced_resizing : true,
+            //                    //theme_advanced_toolbar_location : "left",
+            //                    //theme_advanced_toolbar_align : "left",
+            //
+            //                    theme : 'simple',
+            //                    //plugins : 'autoresize',
+            //
+            //// from http://stackoverflow.com/questions/1799123/how-to-automatic-resize-tinymce
+            ////                width: '100%',
+            ////                height: 400,
+            ////                autoresize_min_height: 400,
+            ////                autoresize_max_height: 800,
+            //
+            //
+            //
+            //
+            //                    //height: inheight,
+            //                    // Theme options
+            //                    //theme_advanced_buttons1 : buttons,
+            //
+            //                    //theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+            //                    //theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+            //
+            //                    theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+            //                    // NEAR ORIGINAL        theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+            //                    // NEAR ORIGINAL       //theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+            //                    // NEAR ORIGINAL       //theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+            //                    //init_instance_callback: function (inst) { alert ("in resize"); inst.execCommand('mceAutoResize'); },
+            //                    //init_instance_callback: function (inst) { alert("hi") },
+            //                    // Skin options
+            //                    //skin : "o2k7",
+            //                    //skin_variant : "silver",
+            //                    toolbar_items_size : 'small',
+            //                    // Example content CSS (should be your site CSS)
+            //                    //content_css : "js/tinymce/jscripts/tiny_mce/themes/simple/skins/default/content.css",
+            //
+            //
+            //
+            //
+            //                    // Drop lists for link/image/media/template dialogs
+            //                    template_external_list_url : "js/template_list.js",
+            //                    external_link_list_url : "js/link_list.js",
+            //                    external_image_list_url : "js/image_list.js",
+            //                    media_external_list_url : "js/media_list.js",
+            //                    //js/tinymce/examples/lists/link_list
+            //                    //        template_external_list_url : "../js/tinymce/examples/lists/template_list.js",
+            //                    //        external_link_list_url : "../js/tinymce/examples/lists/link_list.js",
+            //                    //        external_image_list_url : "../js/tinymce/examples/lists/image_list.js",
+            //                    //        media_external_list_url : "../js/tinymce/examples/lists/media_list.js",
+            //
+            //                    // Replace values for the template plugin
+            //                    template_replace_values : {
+            //                        username : "Some User",
+            //                        staffid : "991234"
+            //                    },
+            //
+            //
+            //
+            //                    // new lines only one line
+            //                    force_br_newlines : true,
+            //                    force_p_newlines : false,
+            //                    forced_root_block : ''   // Needed for 3.x
+            //                    ,auto_focus: textareaIdToInit,
+            //
+            //                    apply_source_formatting : true,
+            //                    remove_linebreaks: false
+            //                }
+            //            );
+            //
+            //        }
+            //        catch (err)
+            //        {
+            //            handleErr("in error in mceinit", err);
+            //        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1002,7 +1442,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     // 2 CKE
                     //var tt = '<u>' + xHtml + '</u>';
                     //alert ('sett data into 2 cke tt [' + tt + ']');
-                        //CKEDITOR.instances.mail_msg.insertText(obj["template"]);
+                    //CKEDITOR.instances.mail_msg.insertText(obj["template"]);
                     //CKEDITOR.instances.wysiwyg.insertHtml("[quote={$row['author']}]" + stringContent + "[/quote]");
                     CKEDITOR.instances.idCkeEditorTextarea.setData(xHtml);
                     //CKEDITOR.instances.idCkeEditorTextarea.insertHtml(tt);
@@ -1573,15 +2013,15 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //if (oldhtml.length > newhtml.length)
 //                    return false;
 ////                else
-    //            {
-                    //var j = 0; // new index
-                    //for (var j = 0; j < newhtml.length; j++)
-                    //{
-                    //    if (ol)
-                    //}
-                    if (newhtml.endsWith('<p><br></p>'))
-                        return true;
-      //          }
+                //            {
+                //var j = 0; // new index
+                //for (var j = 0; j < newhtml.length; j++)
+                //{
+                //    if (ol)
+                //}
+                if (newhtml.endsWith('<p><br></p>'))
+                    return true;
+                //          }
 
             };
 
@@ -1597,36 +2037,36 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     priorhtml = html;
 
                     O.o ( 'callcnt [' + callcounteventHandlerCKEcontentChange +
-                        '] \r\n1 data [' + data + '] ascii [' + data.asciiTable() + ']' +
-                        '] \r\n2 html [' + html + '] ascii [' + html.asciiTable() + ']' +
-                        '] \r\n3 text [' + text + '] ascii [' + text.asciiTable() + ']');
+                    '] \r\n1 data [' + data + '] ascii [' + data.asciiTable() + ']' +
+                    '] \r\n2 html [' + html + '] ascii [' + html.asciiTable() + ']' +
+                    '] \r\n3 text [' + text + '] ascii [' + text.asciiTable() + ']');
                     //alert( 'data  [' + data + ']');
                     //alert( 'html [' + html + ']');
                     //alert( 'text [' + text + ']');
                     O.o('text [' + text + ']');
                     O.o('text.charCodeAt(text.length-1) [' + text.charCodeAt(text.length - 1) + ']');
 
-                            //var lastCharacter = text.charCodeAt(text.length - 1);
-                            ////alert ('testing if I should be calling processCommand');
-                            //if (lastCharacter == 160)
-                            //    text[text.length - 1] = ' ';
-                            //if (text.length > 1) {
-                            //    var lastCharacter = text.charCodeAt(text.length - 2);
-                            //    //alert ('testing if I should be calling processCommand');
-                            //    if (lastCharacter == 160)
-                            //        text[length - 1] = ' ';
-                            //}
-                            //
-                            //
-                            ////if (UtilString.endsWith(text, ' ') ||
-                            ////                    UtilString.endsWith(text, ' w'))
-                            //var x = 'abcde'
-                            ////alert ('x:' + x);
-                            ////if (x.endsWith('cde'))
-                            ////                    alert ('x.endsWith(cde)');
-                            ////                else
-                            ////                    alert ('not x.endsWith(cde)');
-                            //
+                    //var lastCharacter = text.charCodeAt(text.length - 1);
+                    ////alert ('testing if I should be calling processCommand');
+                    //if (lastCharacter == 160)
+                    //    text[text.length - 1] = ' ';
+                    //if (text.length > 1) {
+                    //    var lastCharacter = text.charCodeAt(text.length - 2);
+                    //    //alert ('testing if I should be calling processCommand');
+                    //    if (lastCharacter == 160)
+                    //        text[length - 1] = ' ';
+                    //}
+                    //
+                    //
+                    ////if (UtilString.endsWith(text, ' ') ||
+                    ////                    UtilString.endsWith(text, ' w'))
+                    //var x = 'abcde'
+                    ////alert ('x:' + x);
+                    ////if (x.endsWith('cde'))
+                    ////                    alert ('x.endsWith(cde)');
+                    ////                else
+                    ////                    alert ('not x.endsWith(cde)');
+                    //
 
                     //              alert ('text.asciiTable()1:');
                     //alert('text.asciiTable 1():' + text.asciiTable());
