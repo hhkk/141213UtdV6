@@ -160,12 +160,21 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             //alert('initing scope');
 
-            $scope.ENUM_KEYEVENTCALLER_INPUT0 = 'ENUM_KEYEVENTCALLER_INPUT0';
-            $scope.ENUM_KEYEVENTCALLER_KEYUPSPAN = 'ENUM_KEYEVENTCALLER_KEYUPSPAN';
-            $scope.ENUM_KEYEVENTCALLER_PERROW_TEXT = 'ENUM_KEYEVENTCALLER_PERROW_TEXT';
-
             $scope.dynamicSearch = false; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
 
+
+            //.----------------. .-----------------..----------------. .----------------.
+            //| .--------------. | .--------------. | .--------------. | .--------------. |
+            //| |  _________   | | | ____  _____  | | | _____  _____ | | | ____    ____ | |
+            //| | |_   ___  |  | | ||_   \|_   _| | | ||_   _||_   _|| | ||_   \  /   _|| |
+            //| |   | |_  \_|  | | |  |   \ | |   | | |  | |    | |  | | |  |   \/   |  | |
+            //| |   |  _|  _   | | |  | |\ \| |   | | |  | '    ' |  | | |  | |\  /| |  | |
+            //| |  _| |___/ |  | | | _| |_\   |_  | | |   \ `--' /   | | | _| |_\/_| |_ | |
+            //| | |_________|  | | ||_____|\____| | | |    `.__.'    | | ||_____||_____|| |
+            //| |              | | |              | | |              | | |              | |
+            //| '--------------' | '--------------' | '--------------' | '--------------' |
+            //'----------------' '----------------' '----------------' '----------------'
+            // section_enum
             // input ENUM
             $scope.ns = {};
             $scope.ns.Input = {
@@ -175,6 +184,22 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 INPUT_2_CKE:  2,
                 INPUT_3_MCE:  3
             };
+
+            // input ENUM
+            $scope.enumKeyEvent= {
+                ENTER: 1,
+                SPACE: 2
+            };
+
+
+            // input ENUM
+            // $scope.enumCommands.COMMAND_SEARCH  $scope.enumCommands.COMMAND_WRITE
+            $scope.enumCommands = {
+                COMMAND_SEARCH: 1,
+                COMMAND_WRITE: 2,
+            };
+
+
 
             $scope.whichEditorShowing = $scope.ns.Input.INPUT_NONE_IS_IN_FOCUS;
 
@@ -227,6 +252,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //alert ('oin here');
                 $scope.toggleVisibilityTo3();
                 //ng-blur="propagateTextChanges()"
+
+                //tinyMCE.get('idDivForTinyMceEditorTextarea').on('keyup',function(e){
+                //    alert(this.getContent().replace(/(<[a-zA-Z\/][^<>]*>|\[([^\]]+)\])|(\s+)/ig,''));
+                //});
 
             });
 
@@ -417,7 +446,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             //// 333333333333
             ////tinymce3 works
-            ////alert ('in tinymce init');
+            //alert ('in tinymce init');
             //// section_editor_init_mce
             tinyMCE.init({
                 mode : 'exact',
@@ -425,22 +454,62 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 height: "100%",
                 resize: 'both',
                 elements : 'idTinyMceTextArea',
+                //toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                //toolbar2: "print preview media | forecolor backcolor emoticons",
                 toolbar: 'false',
-                //menubar : true
+                menubar : 'false',
 
                 setup : function(ed) {
-                    ed.onDeactivate.add(function(ed) {
-                        alert ('in special function');
-                        ed.save();  // or whatever you want to do to save the editor content
-                        ed.remove(); // removes tinymce instance
+                    //ed.onDeactivate.add(function(ed) {
+                    //    alert ('in special function');
+                    //    ed.save();  // or whatever you want to do to save the editor content
+                    //    ed.remove(); // removes tinymce instance
+                    //});
+
+                    //ed.onKeyUp.add(function(ed,l) {
+                    //    alert ('in onkeyup');
+                    //    ed.save();  // or whatever you want to do to save the editor content
+                    //});
+
+                    ed.on('keyup', function(e) {
+
+                        console.log ('e.keyIdentifier:' + e.keyIdentifier);
+                        console.log ('e.keyCode:' + e.keyCode);
+                        console.log ('e.metaKey:' + e.metaKey);
+                        console.log ('e.shiftKey:' + e.shiftKey);
+                        console.log ('e.altKey:' + e.altKey);
+                        console.log ('e.ctrlKey:' + e.ctrlKey);
+
+
+                        if (e.keyIdentifier === "Enter")
+                        {
+                            $scope.eventHandlerEditorcontentChange (
+                                $scope.enumKeyEvent.ENTER,
+                                ed.getContent({format : 'data'}),
+                                ed.getContent({format : 'html'}),
+                                ed.getContent({format : 'text'})
+                            );
+                        } else if (e.keyCode === 32) {
+                            $scope.eventHandlerEditorcontentChange (
+                                $scope.enumKeyEvent.ENTER,
+                                ed.getContent({format : 'data'}),
+                                ed.getContent({format : 'html'}),
+                                ed.getContent({format : 'text'})
+                            );
+                        }
+                        //console.log ('xx:' + tinyMCE.get('idDivForTinyMceEditorTextarea').getContent({format : 'text'}).trim());
+
+                        //check_submit();
                     });
 
-                    ed.onKeyUp.add(function(ed,l) {
-                        alert ('in onkeyup');
-                        ed.save();  // or whatever you want to do to save the editor content
-                    });
-
-                    //ed.onInit.add(function(ed, evt) {
+                    //ed.onKeyPress.add(
+                    //    function (ed, evt) {
+                    //        alert("Editor-ID: "+ed.id+"\nEvent: "+evt);
+                    //        //....
+                    //    }
+                    //);
+                    //
+                    ////ed.onInit.add(function(ed, evt) {
                     //
                     //    var dom = ed.dom;
                     //    var doc = ed.getDoc();
@@ -964,14 +1033,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //    //$scope.contentChange();
             //    //$scope.contentChange(CKEDITOR.instances.idCkeEditorTextarea.document.getBody().getHtml()+'ggg');
             //    //$scope.contentChange(+'hhh');
-            //    $scope.eventHandlerCKEcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
+            //    $scope.eventHandlerEditorcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
             //});
             // http://stackoverflow.com/questions/24375780/ckeditor-keyup-event-and-capturing-data-from-inline-editors
             //e.on( 'contentDom', function() {
             //    var editable = e.editable();
             //    editable.attachListener( editable, 'keyup', function() {
             //        O.o ('callcountContentDom keyup:' + callcountContentDom++);
-            //        $scope.eventHandlerCKEcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
+            //        $scope.eventHandlerEditorcontentChange(e.getData(), e.document.getBody().getHtml(), e.document.getBody().getText());
             //    } );
             //} );
 
@@ -1169,7 +1238,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
                 } catch (e) {
-                    alert ('era:' + e);
+                    alert ('era1:' + e);
                 }
 
             };
@@ -1352,7 +1421,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     CKEDITOR.instances.idCkeEditorTextarea.setData(x);
 
                     // 3 mce
-                    tinyMCE.getInstanceById('idTinyMceTextArea').setContent(x);
+
+                    //tinyMCE.getInstanceById('idTinyMceTextArea').setContent(x);
+                    tinyMCE.get('idTinyMceTextArea').setContent(x);
 
 
                     //O.o('done case 0')
@@ -1382,7 +1453,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     CKEDITOR.instances.idCkeEditorTextarea.setData(xHtml);
 
                     // 3 mce
-                    tinyMCE.getInstanceById('idTinyMceTextArea').setContent(xHtml);
+                    //tinyMCE.getInstanceById('idTinyMceTextArea').setContent(xHtml);
+                    tinyMCE.get('idTinyMceTextArea').setContent(xHtml);
 
                     O.o('done case 1');
                 }  catch (e) {
@@ -1760,6 +1832,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // section_per_editor 3
             $scope.setTextInShowingEditor = function(e)
             {
+                //alert ('in setTextInShowingEditor');
                 try {
                     switch($scope.whichInputIsInFocus())
                     {
@@ -1797,16 +1870,16 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //alert ('+++++++++ in setTextInShowingEditor target INPUT_3_MCE e:' + e);
                             if (UtilJsTypeDetect.isString(e))
                             //alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
-                                tinyMCE.getInstanceById('idTinyMceTextArea').setContent(e);
+                                tinyMCE.get('idTinyMceTextArea').setContent(e);
                             else
-                                tinyMCE.getInstanceById('idTinyMceTextArea').setContent(e.innerHTML);
+                                tinyMCE.get('idTinyMceTextArea').setContent(e.innerHTML);
                             break;
 
                         default:
                             alert ('era - bad input resolution');
                     }
                 } catch (e) {
-                    alert ('era:' + e);
+                    UtilErrorEmitter.EmitError ('era3', e);
                     throw e;
                 }
             };
@@ -1848,7 +1921,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     } // switch
 
                 } catch (e) {
-                    alert ('era:' + e);
+                    alert ('era2:' + e);
                     throw e;
                 }
 
@@ -2004,7 +2077,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //var o = O.o;
 
             // Handler 1
-            var callcounteventHandlerCKEcontentChange = 0;
+            var callcounteventHandlerEditorcontentChange = 0;
             var priorhtml = null;
 
             var wasEnterPressed = function (oldhtml, newhtml)
@@ -2025,26 +2098,35 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             };
 
-            $scope.eventHandlerCKEcontentChange = function(data, html, text)
+            // eventHandlerEditorcontentChange was eventHandlerCKEcontentChange
+            $scope.eventHandlerEditorcontentChange = function(enumKeyEvent, data, html, text)
             {
                 try {
 
-
-                    callcounteventHandlerCKEcontentChange++;
+                    callcounteventHandlerEditorcontentChange++;
+                    if (enumKeyEvent === $scope.enumKeyEvent.ENTER)
+                    {
+                        O.o ('enter pressed');
+                    }
+                    else if (enumKeyEvent === $scope.enumKeyEvent.SPACE)
+                    {
+                        O.o ('space pressed');
+                    }
                     //if (html === priorhtml)
                     //    alert('same html');
 
                     priorhtml = html;
 
-                    O.o ( 'callcnt [' + callcounteventHandlerCKEcontentChange +
-                    '] \r\n1 data [' + data + '] ascii [' + data.asciiTable() + ']' +
-                    '] \r\n2 html [' + html + '] ascii [' + html.asciiTable() + ']' +
-                    '] \r\n3 text [' + text + '] ascii [' + text.asciiTable() + ']');
+                    O.o ( 'callcnt [' + callcounteventHandlerEditorcontentChange +
+                    '] in eventHandlerEditorcontentChange ' +
+                    '] \r\n1 data [' + data + '] ascii [' + data.asciiTable("data (1/3)") + ']' +
+                    '] \r\n2 html [' + html + '] ascii [' + html.asciiTable("html (2/3)") + ']' +
+                    '] \r\n3 text [' + text + '] ascii [' + text.asciiTable("text (3/3)") + ']');
                     //alert( 'data  [' + data + ']');
                     //alert( 'html [' + html + ']');
                     //alert( 'text [' + text + ']');
-                    O.o('text [' + text + ']');
-                    O.o('text.charCodeAt(text.length-1) [' + text.charCodeAt(text.length - 1) + ']');
+                    //O.o('text [' + text + ']');
+                    //O.o('text.charCodeAt(text.length-1) [' + text.charCodeAt(text.length - 1) + ']');
 
                     //var lastCharacter = text.charCodeAt(text.length - 1);
                     ////alert ('testing if I should be calling processCommand');
@@ -2069,42 +2151,36 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //
 
                     //              alert ('text.asciiTable()1:');
-                    //alert('text.asciiTable 1():' + text.asciiTable());
+                    //alert('text.asciiTable 1():' + text.asciiTable('PRE NBSP AND 10 CONVERT'));
                     text = UtilString.convertNonBreakingSpace(text);
-                    //alert('text.asciiTable 2():' + text.asciiTable());
+                    text = UtilString.convertRemoveTrailing10(text);
+                    //alert('text.asciiTable 2():' + text.asciiTable('POST NBSP AND 10 CONVERT'));
 
                     //if (text.endsWith(' ') && $scope.dynamicSearch ) {
                     if (text.endsWith(' ') && $scope.dynamicSearch ) {
-                        alert ('not     skipping')
+                        //alert ('not     skipping')
                         $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,
-                            "caller eventHandlerCKEcontentChange", text, html, data);
+                            "caller eventHandlerEditorcontentChange", text, html, data);
                     }
                     else if (text.endsWith(' ') && !$scope.dynamicSearch ) {
                         //alert ('skipping')
                     }
                     else if (text.endsWith(' w')) {
                         $scope.processCommand($scope.enumCommands.COMMAND_WRITE,
-                            "caller eventHandlerCKEcontentChange write", text, html, data);
+                            "caller eventHandlerEditorcontentChange write", text, html, data);
                         alert('calling processCommand');
                     }
                     else if (text.endsWith(' w')) {
                         $scope.processCommand($scope.enumCommands.COMMAND_WRITE,
-                            "caller eventHandlerCKEcontentChange write", text, html, data);
+                            "caller eventHandlerEditorcontentChange write", text, html, data);
                         alert('calling processCommand');
                     }
                 } catch (e) {
-                    UtilErrorEmitter.EmitError('in eventHandlerCKEcontentChange', e);
+                    UtilErrorEmitter.EmitError('in eventHandlerEditorcontentChange', e);
                     //alert ('sdfsdfsdf:' + e);
                 }
             }
 
-
-            // input ENUM
-            // $scope.enumCommands.COMMAND_SEARCH  $scope.enumCommands.COMMAND_WRITE
-            $scope.enumCommands = {
-                COMMAND_SEARCH: 1,
-                COMMAND_WRITE: 2,
-            };
 
             $scope.keyCount = 0;
 
@@ -3079,6 +3155,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.mouseoverlock = 'off'; // mouselock mouseoverlock
             //alert ('reinit mouseoverlock');
 
+            /**
+             * this call is the first point after any specific input editor
+             * @param scopeEnumCommand
+             * @param callerId
+             * @param xText
+             * @param xHtml
+             * @param xValue maybe aka data?
+             */
             $scope.processCommand = function(scopeEnumCommand, callerId, xText, xHtml, xValue)
             {
                 O.o ('1 ===================== in processCommand for 1 xText [' + xText + ']');

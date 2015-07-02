@@ -1029,6 +1029,11 @@ String.prototype.beginsWith = function (s) {
     return this.indexOf(s) === 0;
 }
 
+    /**
+     *
+     * @param s
+     * @returns {*}
+     */
 var convertNonBreakingSpace = function (s) {
     var i = 0;
     //alert ('in asciiTable this.length' + this.length)
@@ -1043,16 +1048,31 @@ var convertNonBreakingSpace = function (s) {
     return rtn;
 };
 
-String.prototype.asciiTable = function () {
-    //alert ('asciiTable this [' + this + ']')
-    var i = 0;
-    var rtn = '';
+var convertRemoveTrailing10 = function (s) {
+    var i = s.length;
     //alert ('in asciiTable this.length' + this.length)
-    while (i < this.length) {
-        rtn = rtn + '\r' + ( i + '.. char [' + this.charAt(i) + '] ascii dec [' + this.charCodeAt(i) + ']' );
-        i++;
+    var rtn = s;
+    while (i >= 0) {
+        if (rtn.charCodeAt(i) === 10)
+        {
+            rtn = rtn.substring(0, i) + ' ' + rtn.substring(i+1);
+        }
+        i--;
     }
     return rtn;
+};
+
+
+String.prototype.asciiTable = function (desc) {
+    //alert ('asciiTable this [' + this + ']')
+    var i = 0;
+    var rtn = '\r\nASCII TABLE [' + desc + ' <';
+    //alert ('in asciiTable this.length' + this.length)
+    while (i < this.length) {
+        rtn = rtn + '\r\n   ' + ( i + '.. char [' + this.charAt(i) + '] ascii dec [' + this.charCodeAt(i) + ']' );
+        i++;
+    }
+    return rtn + "\r\n> END ASCII TABLE";
 }
 
 
@@ -1093,6 +1113,7 @@ String.prototype.hasUpperCase = function () {
 if (typeof exports !== 'undefined') {
     exports.endsWith = endsWith;
     exports.convertNonBreakingSpace = convertNonBreakingSpace;
+    exports.convertRemoveTrailing10 = convertRemoveTrailing10;
 }
 
 
