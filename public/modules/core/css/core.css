@@ -73,28 +73,6 @@
     /*xxmargin-top: 100px;*/
 }
 
-.hkcssPosTable {
-    font-size: 16px;
-    /*xx#header {*/
-    /*margin-top: 100px;*/
-    /*xxposition: static;*/
-    /*position: relative;*/
-    /*xxtop: 300;*/
-    z-index:0;
-    /*xxleft: 100;*/
-    color: black;
-}
-.odd {
-    /*http://www.w3schools.com/html/html_colors.asp*/
-    background-color:lightgrey;
-    /*color: black;*/
-}
-.even{
-    background-color:white;
-    /*color: darkblue;*/
-}
-
-
 
 #textaread {
     -moz-appearance: textfield-multiline;
@@ -188,4 +166,41 @@
 }
 #cke_1_bottom {
     display: none;
+}
+
+.hkcssPosTable {
+    font-size: 16px;
+    /*xx#header {*/
+    /*margin-top: 100px;*/
+    /*xxposition: static;*/
+    /*position: relative;*/
+    /*xxtop: 300;*/
+    z-index:0;
+    /*xxleft: 100;*/
+    color: green;
+}
+.odd {
+    /*http://www.w3schools.com/html/html_colors.asp*/
+    background-color:lightgrey;
+    /*color: black;*/
+}
+.even{
+    background-color:white;
+    /*color: darkblue;*/
+}
+
+
+
+#cssClassPerRowContentEditableFinal {
+    font-size:50px;
+}
+
+#idSpanSearchedFor {
+    font-size: 20px;
+    color: green
+}
+
+#idSpanSearchedForSearchText {
+    font-size: 20px;
+    color: blue
 }

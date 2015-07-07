@@ -191,12 +191,19 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 SPACE: 2
             };
 
+            // enumProcessCommandCaller ENUM
+            $scope.enumProcessCommandCaller = {
+                URL: 1,
+                HTMLSTARALLBUTTON: 2,
+                EDITOR: 3
+            };
+
 
             // input ENUM
             // $scope.enumCommands.COMMAND_SEARCH  $scope.enumCommands.COMMAND_WRITE
             $scope.enumCommands = {
                 COMMAND_SEARCH: 1,
-                COMMAND_WRITE: 2,
+                COMMAND_WRITE: 2
             };
 
 
@@ -491,7 +498,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             );
                         } else if (e.keyCode === 32) {
                             $scope.eventHandlerEditorcontentChange (
-                                $scope.enumKeyEvent.ENTER,
+                                $scope.enumKeyEvent.SPACE,
                                 ed.getContent({format : 'data'}),
                                 ed.getContent({format : 'html'}),
                                 ed.getContent({format : 'text'})
@@ -1191,7 +1198,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //tinyMCE.get('idTinyMceTextArea').setContent('<span>some2</span> html');
 
 
-            // section_per_editor 0
             $scope.focusOnId = function (id) {
                 //alert ('in focusOnId :' + id);
 
@@ -1243,6 +1249,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             };
 
+
+
+            // section_per_editor 0
             $scope.inputbind ='search or inputx';
 
             //$scope.onKeyDownInputField = function() {
@@ -1301,7 +1310,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
                 var newHtml = document.getElementById('ustodorow'+index).innerHTML;
-                alert ('newHtml:' + newHtml);
+                //alert ('newHtml:' + newHtml);
 
                 UtilNLB_bgFade.NLBfadeBg('ustodorow'+index,'green', '#FFFFFF','1500');
 
@@ -1355,12 +1364,15 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             $scope.onKeyUp = function (desc, keyEvent, ENUM_KEYEVENTcaller) // https://docs.angularjs.org/api/ng/directive/ngKeyup
             {
+                // currently hits alert only to:
+                // text box and medium
+                // and NOT CK or MCE or perRow editor
                 alert ('in onkeyup');
 
-                if ($scope.getTextInShowingEditor().xValue === '')
-                    $scope.mouseoverlock = "off";
-                else
-                    $scope.mouseoverlock = "on";
+                //if ($scope.getTextInShowingEditor().xValue === '')
+                //    $scope.mouseoverlock = "off";
+                //else
+                //    $scope.mouseoverlock = "on";
                 //O.o ('========== set mouseoverlock:' + $scope.mouseoverlock);
 
 
@@ -1495,8 +1507,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //alert ('start prop3mce ')
                 try {
                     //alert ('start case 2')
-                    var xText = tinyMCE.getInstanceById('idTinyMceTextArea').getContent({format: 'text'});
-                    var xHtml= tinyMCE.getInstanceById('idTinyMceTextArea').getContent();
+                    //var xText = tinyMCE.getInstanceById('idTinyMceTextArea').getContent({format: 'text'});
+                    var xText = tinymce.activeEditor.getContent({format: 'text'});
+                    var xHtml= tinymce.activeEditor.getContent();
                     //alert ('got mce content xText:' + xText)
                     //alert ('got mce content xHtml:' + xHtml)
                     //alert(tinymce.activeEditor.selection.getContent({format: 'text'}));
@@ -1837,7 +1850,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     switch($scope.whichInputIsInFocus())
                     {
                         case $scope.ns.Input.INPUT_0_TEXT:
-                            //alert ('+++++++++ in setTextInShowingEditor target INPUT_0_TEXT e:' + e);
+                            alert ('+++++++++ in setTextInShowingEditor target INPUT_0_TEXT e:' + e);
                             if (UtilJsTypeDetect.isString(e)) {
                                 //alert('set inp in setTextInShowingEditor for input0text [' + e + ']');
                                 document.getElementById('idInput0TypeText').value = e;
@@ -1847,7 +1860,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             break;
                         case $scope.ns.Input.INPUT_1_MEDIUM:
                             //alert ('+++++++++ in setTextInShowingEditor target INPUT_1_MEDIUM e:' + e);
-                            //alert ('in setTextInShowingEditor for input1medium');
+                            alert ('in setTextInShowingEditor for input1medium');
                             if (UtilJsTypeDetect.isString(e))
                             //alert('logic error - setting Medium rich editor with string [' + e + '] leaving at prior value');
                                 $scope.mmmm.element.innerHTML = e;
@@ -1855,7 +1868,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                                 $scope.mmmm.element.innerHTML = e.innerHTML;
                             break;
                         case $scope.ns.Input.INPUT_2_CKE:
-                            //alert ('in settext 2');
+                            alert ('in settext 2');
                             //alert ('+++++++++ in setTextInShowingEditor target INPUT_2_CKE e:' + e);
                             if (UtilJsTypeDetect.isString(e))
                             {
@@ -1866,7 +1879,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                                 CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
                             break;
                         case $scope.ns.Input.INPUT_3_MCE:
-                            //alert ('in settext 3');
+                            alert ('in settext 3');
                             //alert ('+++++++++ in setTextInShowingEditor target INPUT_3_MCE e:' + e);
                             if (UtilJsTypeDetect.isString(e))
                             //alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
@@ -2103,10 +2116,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             {
                 try {
 
+                    document.getElementById('idInputTextFilter').value = text;
+
                     callcounteventHandlerEditorcontentChange++;
                     if (enumKeyEvent === $scope.enumKeyEvent.ENTER)
                     {
-                        O.o ('enter pressed');
+                        //alert ('enter pressed');
                     }
                     else if (enumKeyEvent === $scope.enumKeyEvent.SPACE)
                     {
@@ -2160,10 +2175,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     if (text.endsWith(' ') && $scope.dynamicSearch ) {
                         //alert ('not     skipping')
                         $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,
-                            "caller eventHandlerEditorcontentChange", text, html, data);
+                            "caller eventHandler space and ends w space", text, html, data);
                     }
-                    else if (text.endsWith(' ') && !$scope.dynamicSearch ) {
-                        //alert ('skipping')
+                    else if (enumKeyEvent === $scope.enumKeyEvent.ENTER) {
+                        $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,
+                            "caller eventHandler ENTER key pressed", text, html, data);
                     }
                     else if (text.endsWith(' w')) {
                         $scope.processCommand($scope.enumCommands.COMMAND_WRITE,
@@ -2198,7 +2214,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             // Handler
             $scope.myFnOnKeyDown = function($index, $event) { // onkey
-                //o ('inkey myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
+                O.o ('inkey myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
+                O.o ( ' [ ' + $scope.ustodo.$index + ']');
+
             };
 
             // Handler
@@ -2229,11 +2247,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //O.o ('in eventMouseoverRow2:' + i);
                 //O.o (i + '. $scope.ustodosFiltered[i].text:' + $scope.ustodosFiltered[i].text);
                 //O.o (i + '. $scope.ustodosFiltered[i].html:' + $scope.ustodosFiltered[i].html);
+                //alert (' in here');
                 if ($scope.state_inSelectedMode === -1) {
-                    if ($scope.mouseoverlock !== 'on') {
+                    //if ($scope.mouseoverlock !== 'on') {
                         //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
                         $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html);
-                    }
+                    //}
                 }
 
 
@@ -2243,6 +2262,28 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //tinyMCE.get('idTinyMceTextArea').setContent(x.innerHTML);
 
                 //console.log('C in eventMouseoverRow2 i:' + i);
+            };
+
+            $scope.stateOKtoOverwrite = function() {
+                return ($scope.state_inSelectedMode === -1);
+            }
+
+            $scope.eventMouseoverCurrentSearch = function() {
+                if ($scope.stateOKtoOverwrite()) {
+                    //if ($scope.mouseoverlock !== 'on') {
+                        //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
+                        $scope.setTextInShowingEditor($scope.searchedFor);
+                    //}
+                }
+            };
+
+            $scope.eventMouseoverRow2 = function(i) {
+                if ($scope.stateOKtoOverwrite()) {
+                    //if ($scope.mouseoverlock !== 'on') {
+                        //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
+                        $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html);
+                    //}
+                }
             };
 
             $scope.eventMouseoverRow3 = function(s) {
@@ -2669,7 +2710,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //alert ('in keyup $scope.getTextInShowingEditor()'+$scope.getTextInShowingEditor());
                 //CKEDITOR.instances.editor.destroy();
 
-                alert ('$scope.dynamicSearch:' + $scope.dynamicSearch);
+                if (false)
+                    document.getElementById('idInputTextFilter').value = ' hi mom';
+
+                if (false)
+                    alert ('$scope.dynamicSearch:' + $scope.dynamicSearch);
 
                 // TEST WORKED?
                 if (false) {
@@ -3163,8 +3208,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
              * @param xHtml
              * @param xValue maybe aka data?
              */
-            $scope.processCommand = function(scopeEnumCommand, callerId, xText, xHtml, xValue)
+            $scope.processCommand = function(scopeEnumCommand, enumProcessCommandCaller, xText, xHtml, xValue)
             {
+                alert ('in processCommand caller [' + enumProcessCommandCaller + ']')
                 O.o ('1 ===================== in processCommand for 1 xText [' + xText + ']');
                 O.o ('2 ===================== in processCommand for 2 xHtml [' + xHtml + ']');
                 O.o ('3 ===================== in processCommand for 3 xValue [' + xValue + ']');
@@ -3176,7 +3222,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //callerId + '] xValue' + '[' + xValue + ']' );
                 try {
 
-                    $scope.searchedFor = xValue.trim();
+                    $scope.searchedFor = xText.trim();
+                    if (enumProcessCommandCaller !== $scope.enumProcessCommandCaller.EDITOR)
+                    {
+                        alert ('showing');
+                        $scope.setTextInShowingEditor(xText);
+                    }
                     //alert ('$scope.searchedFor[' + $scope.searchedFor + ']');
 
                     //$scope.searchedForAsLink = '<a ng-href=\'jpro.com\'> search</a>';
@@ -3589,19 +3640,26 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
              | ||_____||_____|| | ||____|  |____|| | |    |_____|   | | ||_____|\____| | |
              | |              | | |              | | |              | | |              | |
              | '--------------' | '--------------' | '--------------' | '--------------' |
-             '----------------' '----------------' '----------------' '----------------'             //section_main - executes on load - not a function ded
+             '----------------' '----------------' '----------------' '----------------'
+             //section_main - executes on load - not a function ded
              */
             // request parameter read
             //alert ('$location.$$search.q:' + $location.$$search.q);
 
             var q = $location.$$search.q;
 
+
+
             if (q) {
-                $scope.processCommand($scope.enumCommands.COMMAND_SEARCH, 'CLIENT JS line 2351', q, q, q);
+                $scope.processCommand($scope.enumCommands.COMMAND_SEARCH, $scope.enumProcessCommandCaller.URL, q, q, q);
                 $scope.setTextInShowingEditor(q);
 
             } else {
                 $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,'CLIENT JS line 2355', '*', '*', '*');
+            }
+
+            window.onbeforeunload = function () {
+                return "Are you sure?";
             }
 
             //alert ('runs on reload?');
@@ -3703,20 +3761,23 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 useCaseSensitiveRestrict = true;
 
             var ustodosFiltered = [];
+            var i = 0;
             angular.forEach(ustodos, function(ustodo)
             {
-
+                i++;
                 //var strOneOfManyIterThru = ustodo.html;
                 //if (!useCaseSensitiveRestrict)
                 //    strOneOfManyIterThru = strOneOfManyIterThru.toLowerCase();
                 //
                 //if(!s || strOneOfManyIterThru.indexOf(s) >= 0) {
                 ////if(true) {
-                //    //O.o ('======  filter do keep');
+                    //O.o ('======  filter do keep');
                 //    ustodosFiltered.push(ustodo);
                 //}
                 //else {
-                //    O.o ('======  filter do not keep');
+
+                if (i % 100 === 0)
+                    O.o ('======  filter do not keep');
                 //}
 
                 ustodosFiltered.push(ustodo);

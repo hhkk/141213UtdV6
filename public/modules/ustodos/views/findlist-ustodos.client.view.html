@@ -36,7 +36,7 @@
                />
         &nbsp;
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
-               ng-click="processCommand(enumCommands.COMMAND_SEARCH, 'CLIENT HTML findlist-ustodos line 39', '*', '*', '*')"                src='/img/Asterisk.png'
+               ng-click="processCommand(enumCommands.COMMAND_SEARCH, $scope.enumProcessCommandCaller.HTMLSTARALLBUTTON, '*', '*', '*')"                src='/img/Asterisk.png'
                title="Search all"
                 />
         &nbsp;
@@ -62,20 +62,19 @@
 
         &nbsp;
         <input class="hkToolbarElement" type='image'  style='height:25px;'
-               ng-mouseover='toggleVisibilityTo3()'        ng-click='toggleVisibilityTo3()'                src='/img/input2.png'
+               ng-click='toggleVisibilityTo3()'                src='/img/input2.png'
                title="Rich Editor (TinyMCE)"
                 />
 
-        &nbsp;<input  id='idcheckbox_dynammicSearch' ng-model=dynamicSearch xxng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
+        &nbsp;LiveFilter <input  id='idcheckbox_dynammicSearch' ng-model=dynamicSearch xxng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
 
         <!--xx&nbsp;<span ng-model=$scope.lockMouseover> </span>yy-->
 
         <!--<span ng-bind-html='$scope.lockMouseover'></span>-->
 
-        <span ng-bind="'lock:'+mouseoverlock"></span>
-        <span ng-bind="'state_inSelectedMode:'+state_inSelectedMode"></span>
-        dd<span ng-bind='dynamicSearch'></span>ff
-        gg<span ng-bind='whichEditorShowing'></span>hh
+        <!--DynamicSearch [<span ng-bind='dynamicSearch'></span>]-->
+        Selected [<span ng-bind="state_inSelectedMode"></span>]
+        WhichEditorShowing[<span ng-bind='whichEditorShowing'></span>]
 
 
         <br>
@@ -163,7 +162,7 @@
                              xxng-click="this.filterToLinksOnly ()"
             >
             &nbsp;
-            <input type="text" title='Restrict within search result' name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
+            <input id="idInputTextFilter"  type="text" title='Restrict within search result' name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
                    ng-pattern="example.word" required ng-trim="false">
 
             <!-- RESEARCH SECTION_FILTER ICON AND TEXTBOX -->
@@ -202,6 +201,13 @@
                 <!--</tr>f-->
 
                 <!--<button ng-click="alert ('ff')" ng-init="count=0">-->
+
+                <span id='idSpanSearchedFor' ng-mouseover='this.eventMouseoverCurrentSearch()'>Current search [<span id='idSpanSearchedForSearchText'
+                                                                   ng-bind='searchedFor'
+
+                        ></span>]</span>
+
+
 
                 <!-- SECTION_ HEADER ROW SELECT ALL CHECKBOX AND TRASH ICON -->
                 &nbsp;<input ng-click='checkBoxClickedToggleAll()' id='checkBoxAll' type="checkbox"/> All
@@ -290,12 +296,12 @@
                         <!--<td>{{ ustodo.text}}</td>f-->
 
                         <!-- PER ROW TEXT CONTENTEDITABLE ROW -->
-                        <td>
+                        <td >
 
 
 
 
-                            <span id="ustodorow{{$index}}" contenteditable="true"
+                            <span class="cssClassPerRowContentEditableFinal" id="ustodorow{{$index}}" contenteditable="true"
                                   ng-focus='hkngfocustest($index)'
                                   ng-keyup="onKeyUp_perrow_text($event, $index, ustodosFiltered[$index]._id)"
 
