@@ -161,7 +161,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert('initing scope');
 
             $scope.dynamicSearch = false; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
-
+            $scope.q = null; // current query
 
             //.----------------. .-----------------..----------------. .----------------.
             //| .--------------. | .--------------. | .--------------. | .--------------. |
@@ -240,7 +240,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // section_onload
 
             $scope.$watch('$viewContentLoaded', function(){ // like onload YES
-                //alert ('in $viewContentLoaded');
+                //alert ('in onload');
                 //var x = document.getElementById('idCkeEditorTextarea').innerHTML;
                 //alert ('in $viewContentLoaded:' + x);
 
@@ -257,7 +257,34 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                 // section_per_editor set initial editor
                 //alert ('oin here');
-                $scope.toggleVisibilityTo3();
+                $scope.toggleVisibilityTo3('line 260 onload');
+
+
+
+
+
+
+
+                var q = $location.$$search.q;
+                //$scope.toggleVisibilityTo3('line 3656 main');
+                if (q) {
+                    $scope.q = q;
+                    $scope.processCommand($scope.enumCommands.COMMAND_SEARCH, $scope.enumProcessCommandCaller.URL, q, q, q);
+                    //$scope.setTextInShowingEditor(q, 'line 275 main');
+
+                } else {
+                    $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,'CLIENT JS line 2355', '*', '*', '*');
+                }
+
+
+
+
+
+
+
+
+
+
                 //ng-blur="propagateTextChanges()"
 
                 //tinyMCE.get('idDivForTinyMceEditorTextarea').on('keyup',function(e){
@@ -465,6 +492,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //toolbar2: "print preview media | forecolor backcolor emoticons",
                 toolbar: 'false',
                 menubar : 'false',
+                init_instance_callback : function() {
+                    if ($scope.q)
+                        tinyMCE.activeEditor.setContent($scope.q);
+                },
 
                 setup : function(ed) {
                     //ed.onDeactivate.add(function(ed) {
@@ -480,12 +511,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                     ed.on('keyup', function(e) {
 
-                        console.log ('e.keyIdentifier:' + e.keyIdentifier);
-                        console.log ('e.keyCode:' + e.keyCode);
-                        console.log ('e.metaKey:' + e.metaKey);
-                        console.log ('e.shiftKey:' + e.shiftKey);
-                        console.log ('e.altKey:' + e.altKey);
-                        console.log ('e.ctrlKey:' + e.ctrlKey);
+                        //console.log ('e.keyIdentifier:' + e.keyIdentifier);
+                        //console.log ('e.keyCode:' + e.keyCode);
+                        //console.log ('e.metaKey:' + e.metaKey);
+                        //console.log ('e.shiftKey:' + e.shiftKey);
+                        //console.log ('e.altKey:' + e.altKey);
+                        //console.log ('e.ctrlKey:' + e.ctrlKey);
 
 
                         if (e.keyIdentifier === "Enter")
@@ -1662,9 +1693,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 setTimeout(function(){ $scope.focusOnId(arrIds[2]); }, 600);
             };
 
-            $scope.toggleVisibilityTo3 = function() {
+            $scope.toggleVisibilityTo3 = function(callerId) {
                 $scope.whichEditorShowing = $scope.ns.Input.INPUT_3_MCE;
-                //alert ('in toggleVisibilityTo3 MCE');
+                //alert ('in toggleVisibilityTo3 MCE callerId [' + callerId + ']');
                 document.getElementById(arrIds[0]).style.display = 'none';
                 document.getElementById(arrIds[1]).style.display = 'none';
                 document.getElementById(arrIds[2]).style.display = 'none';
@@ -1843,14 +1874,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             // set text shown for mouseover
 
             // section_per_editor 3
-            $scope.setTextInShowingEditor = function(e)
+            $scope.setTextInShowingEditor = function(e, callerID, processFailure)
             {
-                //alert ('in setTextInShowingEditor');
+                //alert ('in setTextInShowingEditor e [' + e + '] callerID [' + callerID + ']');
                 try {
                     switch($scope.whichInputIsInFocus())
                     {
                         case $scope.ns.Input.INPUT_0_TEXT:
-                            alert ('+++++++++ in setTextInShowingEditor target INPUT_0_TEXT e:' + e);
+                            //alert ('+++++++++ in setTextInShowingEditor target INPUT_0_TEXT e:' + e);
                             if (UtilJsTypeDetect.isString(e)) {
                                 //alert('set inp in setTextInShowingEditor for input0text [' + e + ']');
                                 document.getElementById('idInput0TypeText').value = e;
@@ -1879,20 +1910,26 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                                 CKEDITOR.instances.idCkeEditorTextarea.setData(e.innerHTML);
                             break;
                         case $scope.ns.Input.INPUT_3_MCE:
-                            alert ('in settext 3');
+                            //alert ('in settext 3 e [' + e + '] callerID [' + callerID + ']');
+                            //alert ('in settext 3');
                             //alert ('+++++++++ in setTextInShowingEditor target INPUT_3_MCE e:' + e);
-                            if (UtilJsTypeDetect.isString(e))
+                            if (UtilJsTypeDetect.isString(e)) {
+                                //tinyMCE.get('idTinyMceTextArea').setContent(e);
+                                tinyMCE.activeEditor.setContent(e);
+                            }
                             //alert('logic error - setting CKE rich editor with string [' + e + '] leaving at prior value');
-                                tinyMCE.get('idTinyMceTextArea').setContent(e);
-                            else
-                                tinyMCE.get('idTinyMceTextArea').setContent(e.innerHTML);
+                            else {
+                                //tinyMCE.get('idTinyMceTextArea').setContent(e.innerHTML);
+                                tinyMCE.activeEditor.setContent(e.innerHTML);
+                            }
                             break;
 
                         default:
                             alert ('era - bad input resolution');
                     }
                 } catch (e) {
-                    UtilErrorEmitter.EmitError ('era3', e);
+                    if (processFailure)
+                        UtilErrorEmitter.EmitError ('era3', e);
                     throw e;
                 }
             };
@@ -2251,7 +2288,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 if ($scope.state_inSelectedMode === -1) {
                     //if ($scope.mouseoverlock !== 'on') {
                         //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
-                        $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html);
+                        $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html, 'line 2254');
                     //}
                 }
 
@@ -2272,7 +2309,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 if ($scope.stateOKtoOverwrite()) {
                     //if ($scope.mouseoverlock !== 'on') {
                         //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
-                        $scope.setTextInShowingEditor($scope.searchedFor);
+                        $scope.setTextInShowingEditor($scope.searchedFor, 'line 2275');
                     //}
                 }
             };
@@ -2281,14 +2318,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 if ($scope.stateOKtoOverwrite()) {
                     //if ($scope.mouseoverlock !== 'on') {
                         //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
-                        $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html);
+                        $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html, 'line 2284');
                     //}
                 }
             };
 
             $scope.eventMouseoverRow3 = function(s) {
                 //alert ('in eventMouseoverRow3 s:' + s);
-                $scope.setTextInShowingEditor(s);
+                $scope.setTextInShowingEditor(s, 'line 2291');
             };
 
             $scope.toggleDynamicSearchCheckbox = function(s) {
@@ -3210,7 +3247,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
              */
             $scope.processCommand = function(scopeEnumCommand, enumProcessCommandCaller, xText, xHtml, xValue)
             {
-                alert ('in processCommand caller [' + enumProcessCommandCaller + ']')
+                //alert ('in processCommand caller [' + enumProcessCommandCaller + ']')
                 O.o ('1 ===================== in processCommand for 1 xText [' + xText + ']');
                 O.o ('2 ===================== in processCommand for 2 xHtml [' + xHtml + ']');
                 O.o ('3 ===================== in processCommand for 3 xValue [' + xValue + ']');
@@ -3225,8 +3262,13 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     $scope.searchedFor = xText.trim();
                     if (enumProcessCommandCaller !== $scope.enumProcessCommandCaller.EDITOR)
                     {
-                        alert ('showing');
-                        $scope.setTextInShowingEditor(xText);
+                        //alert ('showing');
+                        try {
+                            $scope.setTextInShowingEditor(xText, 'line 3262 process command', false);
+                        } catch (e) {
+
+                        }
+
                     }
                     //alert ('$scope.searchedFor[' + $scope.searchedFor + ']');
 
@@ -3368,7 +3410,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                             // hbk 1505
                             //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
-                            $scope.setTextInShowingEditor(commandRemoved_toSearchFor_trimmed);
+                            $scope.setTextInShowingEditor(commandRemoved_toSearchFor_trimmed, 'line 3371');
                             UtilNLB_bgFade.NLBfadeBg('idInput0TypeText','green', '#FFFFFF','1500');
 
 
@@ -3412,7 +3454,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //{ "$regex" : "C#", "$options" : "-i" }
 
 
-                        //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
+                        //alert('setting search commandRemoved_toSearchFor_trimmed [' + commandTrimmed + ']');
+                        $location.search('q', commandTrimmed);       // yoo bar foo bar baz
+                        //$location.path('#/user/' + client.tagid);
+
                     } // if write else
 
                     //alert ('commandRemoved_toSearchFor_trimmed:'+ commandRemoved_toSearchFor_trimmed);
@@ -3488,7 +3533,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //	$scope.error = errorResponse.data.message;
 
                 } catch (e) {
-                    UtilErrorEmitter.EmitError('processCommand desc [' + callerId + ']', e);
+                    UtilErrorEmitter.EmitError('processCommand enumProcessCommandCaller [' + enumProcessCommandCaller + ']', e);
                     throw e;
                 }
                 $scope.mouseoverlock = "off";
@@ -3645,24 +3690,28 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
              */
             // request parameter read
             //alert ('$location.$$search.q:' + $location.$$search.q);
+            //alert ('in main');
 
-            var q = $location.$$search.q;
-
-
-
-            if (q) {
-                $scope.processCommand($scope.enumCommands.COMMAND_SEARCH, $scope.enumProcessCommandCaller.URL, q, q, q);
-                $scope.setTextInShowingEditor(q);
-
-            } else {
-                $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,'CLIENT JS line 2355', '*', '*', '*');
-            }
+            //var q = $location.$$search.q;
+            //
+            //
+            //$scope.toggleVisibilityTo3('line 3656 main');
+            //
+            //if (q) {
+            //    $scope.processCommand($scope.enumCommands.COMMAND_SEARCH, $scope.enumProcessCommandCaller.URL, q, q, q);
+            //    $scope.setTextInShowingEditor(q, 'line 3658 main');
+            //
+            //} else {
+            //    $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,'CLIENT JS line 2355', '*', '*', '*');
+            //}
+            //
+            //window.onbeforeunload = function () {
+            //    return "Are you sure?";
+            //}
 
             window.onbeforeunload = function () {
                 return "Are you sure?";
             }
-
-            //alert ('runs on reload?');
 
         } catch (e) {
             alert ('e33:' + e);
