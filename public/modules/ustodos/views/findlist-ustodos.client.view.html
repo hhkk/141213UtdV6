@@ -66,7 +66,8 @@
                title="Rich Editor (TinyMCE)"
                 />
 
-        &nbsp;LiveFilter <input  id='idcheckbox_dynammicSearch' ng-model=dynamicSearch xxng-mouseover='toggleDynamicSearchCheckbox()'  type="checkbox" title="Dynamic Search (as you type)" />
+        &nbsp;LiveFilter <input  id='idcheckbox_dynammicSearch' ng-model=dynamicSearch type="checkbox" title="Dynamic Search (as you type)" />
+        &nbsp;NoUpdateOnWrite <input  id='idcheckbox_dynammicSearch' ng-model=modelCheckboxNoUpdateOnWrite type="checkbox" title="Leave current search results after a write/save" />
 
         <!--xx&nbsp;<span ng-model=$scope.lockMouseover> </span>yy-->
 
@@ -203,7 +204,8 @@
 
                 <!--<button ng-click="alert ('ff')" ng-init="count=0">-->
 
-                <span id='idSpanSearchedFor' ng-mouseover='this.eventMouseoverCurrentSearch()'>Current search [<span id='idSpanSearchedForSearchText'
+                <span id='idSpanSearchedFor'>Current search [<span id='idSpanSearchedForSearchText'
+                                                                   ng-mouseover='this.eventMouseoverCurrentSearch()'
                                                                    ng-bind='searchedFor'
 
                         ></span>]</span>

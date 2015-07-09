@@ -161,6 +161,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert('initing scope');
 
             $scope.dynamicSearch = false; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
+            $scope.noUpdateOnWrite = false; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
             $scope.q = null; // current query
 
             //.----------------. .-----------------..----------------. .----------------.
@@ -483,14 +484,31 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert ('in tinymce init');
             //// section_editor_init_mce
             tinyMCE.init({
-                mode : 'exact',
+                //mode : 'exact',
+
+
+                mode : "textareas",
+                //  theme : "advanced",
+                //plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+                // Theme options
+                //theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+                //theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+                //theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+                //theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
+                //theme_advanced_toolbar_location : "top",
+                //theme_advanced_toolbar_align : "left",
+                //theme_advanced_statusbar_location : "bottom",
+                //theme_advanced_resizing : true,
+
+
                 width: '100%',
                 height: "100%",
                 resize: 'both',
                 elements : 'idTinyMceTextArea',
-                //toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-                //toolbar2: "print preview media | forecolor backcolor emoticons",
-                toolbar: 'false',
+                toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent link | image",
+                toolbar2: "print preview media | forecolor backcolor emoticons",
+                toolbar: 'true',
                 menubar : 'false',
                 init_instance_callback : function() {
                     if ($scope.q)
@@ -2251,8 +2269,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             // Handler
             $scope.myFnOnKeyDown = function($index, $event) { // onkey
-                O.o ('inkey myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
-                O.o ( ' [ ' + $scope.ustodo.$index + ']');
+                //O.o ('inkey myFnOnKeyDown $index:' + $index + ', $event.keyCode:' + $event.keyCode);
+                //O.o ( ' [ ' + $scope.ustodo.$index + ']');
 
             };
 
@@ -2327,16 +2345,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //alert ('in eventMouseoverRow3 s:' + s);
                 $scope.setTextInShowingEditor(s, 'line 2291');
             };
-
-            $scope.toggleDynamicSearchCheckbox = function(s) {
-                //alert ('in eventMouseoverRow3 s:' + s);
-                document.getElementById('idcheckbox_dynamicSearch').checked =
-                    !document.getElementById('idcheckbox_dynamicSearch').checked;
-            };
-
-            //$scope.buttonClickSearchClear = function() {
-            //    this.commandFromInputBox = '';
-            //}
 
             // selectId
             // Handler
@@ -2943,7 +2951,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
             // Find a list of Ustodos
             $scope.find = function() {
-                //alert ('4 in ustodos.client.controller FIND');
+                alert ('4 in ustodos.client.controller FIND');
                 //getProperties('props Ustodos:', Ustodos);
 
                 //$scope.ustodos = Ustodos. query(); //original
@@ -3259,7 +3267,6 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //callerId + '] xValue' + '[' + xValue + ']' );
                 try {
 
-                    $scope.searchedFor = xText.trim();
                     if (enumProcessCommandCaller !== $scope.enumProcessCommandCaller.EDITOR)
                     {
                         //alert ('showing');
@@ -3361,11 +3368,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
                     //'----------------' '----------------' '----------------' '----------------' '----------------'
                     // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=WRITE
+
                     if (UtilString.endsWith(commandTrimmed, ' w') || UtilString.endsWith(commandTrimmed, ' W'))
                     {
-                        //alert ('in write');
+                        //alert ('in write commandTrimmed.asciiTable():' + commandTrimmed.asciiTable());
                         //alert ('in endsWith w');
-                        commandRemoved_toSearchFor_trimmed = commandTrimmed.slice(0, commandTrimmed.length - 1);
+                        commandRemoved_toSearchFor_trimmed = commandTrimmed.slice(0, commandTrimmed.length - 1).trim();
 
                         //alert ('commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
                         //var target = "";
@@ -3381,11 +3389,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         });
                         //getProperties('props ustodo:', ustodo);
                         // Redirect after save
-                        O.o ('1 $$$$$$$$$$$$$$$$$$ save callerId 1 [' + callerId + '] ustodo.html [' + ustodo.html+ ']');
-                        O.o ('2 $$$$$$$$$$$$$$$$$$ save callerId 2 [' + callerId + '] ustodo.text [' + ustodo.text + ']');
-                        O.o ('3 $$$$$$$$$$$$$$$$$$ save callerId 3 [' + callerId + '] ustodo.value [' + ustodo.value + ']');
-                        O.o ('4 $$$$$$$$$$$$$$$$$$ save callerId 4 [' + callerId + '] ustodo.jsonx [' + ustodo.jsonx + ']');
-                        O.o ('5 $$$$$$$$$$$$$$$$$$ save callerId 5 [' + callerId + '] commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
+                        //O.o ('1 $$$$$$$$$$$$$$$$$$ save callerId 1 [' + callerId + '] ustodo.html [' + ustodo.html+ ']');
+                        //O.o ('2 $$$$$$$$$$$$$$$$$$ save callerId 2 [' + callerId + '] ustodo.text [' + ustodo.text + ']');
+                        //O.o ('3 $$$$$$$$$$$$$$$$$$ save callerId 3 [' + callerId + '] ustodo.value [' + ustodo.value + ']');
+                        //O.o ('4 $$$$$$$$$$$$$$$$$$ save callerId 4 [' + callerId + '] ustodo.jsonx [' + ustodo.jsonx + ']');
+                        //O.o ('5 $$$$$$$$$$$$$$$$$$ save callerId 5 [' + callerId + '] commandRemoved_toSearchFor_trimmed [' + commandRemoved_toSearchFor_trimmed + ']');
                         //alert('pre save 2');
                         ustodo.$save(function(response) // ustodos.server.controller.js exports.create
                         {
@@ -3404,7 +3412,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                             //| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
                             //'----------------' '----------------' '----------------' '----------------' '----------------'
 
-                            alert ('in write query [' + commandRemoved_toSearchFor_trimmed + ']');
+                            //alert ('in write query [' + commandRemoved_toSearchFor_trimmed + ']');
                             //O.o ('=============== in section QUERY1');
                             $scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_Write', {q: '*'}, callbackFromQuery);
 
@@ -3420,6 +3428,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         });
                         //alert  ('will search after write wasAwrite [' + wasAwrite +
                         //'] for commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
+
+                        commandTrimmed = commandRemoved_toSearchFor_trimmed;
                     }
                     else // not a write
                     {
@@ -3429,6 +3439,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
                         var t = commandTrimmed.trim();
+                        $scope.searchedFor = t;
                         //alert ('in not a write commandTrimmed.trim [' + commandTrimmed.trim() + ']');
                         $scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_NotWrite',
                             {q:
@@ -3455,10 +3466,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
                         //alert('setting search commandRemoved_toSearchFor_trimmed [' + commandTrimmed + ']');
-                        $location.search('q', commandTrimmed);       // yoo bar foo bar baz
                         //$location.path('#/user/' + client.tagid);
 
                     } // if write else
+
+                    // section_location_set_url
+                    $location.search('q', commandTrimmed);       // yoo bar foo bar baz not $location.path
 
                     //alert ('commandRemoved_toSearchFor_trimmed:'+ commandRemoved_toSearchFor_trimmed);
 
@@ -3505,7 +3518,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //window.location.href = window.location.href + '/xxx' + this.commandFromInputBox;
                     //window.location.href = window.location.href + '/xxx';
                     //https://docs.angularjs.org/guide/$location
-                    //alert('assigned this.commandFromInputBox:'+ this.commandFromInputBox);
+                    //alert(a'assigned this.commandFromInputBox:'+ this.commandFromInputBox);
 
 
                     //console.log (getClass('ssdfsdfdsf', this.commandFromInputBox));
