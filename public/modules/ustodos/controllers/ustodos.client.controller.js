@@ -161,8 +161,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             //alert('initing scope');
 
             $scope.dynamicSearch = false; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
-            $scope.noUpdateOnWrite = false; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
+            $scope.modelCheckboxUpdateOnWrite = true; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
             $scope.q = null; // current query
+            //$scope.modelDirty = false;
+            //alert ('set $scope.modelDirty = false;')
 
             //.----------------. .-----------------..----------------. .----------------.
             //| .--------------. | .--------------. | .--------------. | .--------------. |
@@ -528,6 +530,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //});
 
                     ed.on('keyup', function(e) {
+
+                        //alert ('in keyup in mce');
+                        $scope.modelDirty = true;
+                        //alert ('set $scope.modelDirty = true');
+
 
                         //console.log ('e.keyIdentifier:' + e.keyIdentifier);
                         //console.log ('e.keyCode:' + e.keyCode);
@@ -3270,11 +3277,11 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     if (enumProcessCommandCaller !== $scope.enumProcessCommandCaller.EDITOR)
                     {
                         //alert ('showing');
-                        try {
-                            $scope.setTextInShowingEditor(xText, 'line 3262 process command', false);
-                        } catch (e) {
-
-                        }
+                        //try {
+                        //    $scope.setTextInShowingEditor(xText, 'line 3262 process command', false);
+                        //} catch (e) {
+                        //
+                        //}
 
                     }
                     //alert ('$scope.searchedFor[' + $scope.searchedFor + ']');
@@ -3326,6 +3333,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //alert ('in callbackFromQuery post get callback');
 
                         $scope.setUstodosFiltered('caller2', $scope.ustodos);
+                        $scope.modelDirty = false;
+                        //alert ('set $scope.modelDirty = false2;')
+                        $scope.setTextInShowingEditor($scope.searchedFor, 'line 3329');
+
 
                         //alert ('in callback from query')
                         //O.o ('$$$$$$$$$$$$$$$$$$$ done processCommand got callback after query $scope.ustodos.length [' + $scope.ustodos.length + ']');
@@ -3369,11 +3380,12 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                     //'----------------' '----------------' '----------------' '----------------' '----------------'
                     // http://patorjk.com/software/taag/#p=display&h=2&v=1&f=Blocks&t=WRITE
 
+                    // section_write
                     if (UtilString.endsWith(commandTrimmed, ' w') || UtilString.endsWith(commandTrimmed, ' W'))
                     {
                         //alert ('in write commandTrimmed.asciiTable():' + commandTrimmed.asciiTable());
                         //alert ('in endsWith w');
-                        commandRemoved_toSearchFor_trimmed = commandTrimmed.slice(0, commandTrimmed.length - 1).trim();
+                        commandTrimmed = commandTrimmed.slice(0, commandTrimmed.length - 1).trim();
 
                         //alert ('commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
                         //var target = "";
@@ -3381,8 +3393,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //alert ('x:' + x);
 
                         var ustodo = new Ustodos ({
-                            html: commandRemoved_toSearchFor_trimmed,// hbkk mystery
-                            text: commandRemoved_toSearchFor_trimmed,// hbkk mystery
+                            html: commandTrimmed,// hbkk mystery
+                            text: commandTrimmed,// hbkk mystery
                             datelastmod: (''+new Date()),
                             datecreated: (''+new Date()),
                             joey: 'and pete'
@@ -3414,11 +3426,10 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
                             //alert ('in write query [' + commandRemoved_toSearchFor_trimmed + ']');
                             //O.o ('=============== in section QUERY1');
-                            $scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_Write', {q: '*'}, callbackFromQuery);
+                            //$scope.ustodos = $scope.ustodosQueryCommon('caller_$scope.processCommand_Write', {q: '*'}, callbackFromQuery);
 
                             // hbk 1505
                             //$location.search('q', commandRemoved_toSearchFor_trimmed);       // yoo bar foo bar baz
-                            $scope.setTextInShowingEditor(commandRemoved_toSearchFor_trimmed, 'line 3371');
                             UtilNLB_bgFade.NLBfadeBg('idInput0TypeText','green', '#FFFFFF','1500');
 
 
@@ -3429,9 +3440,9 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //alert  ('will search after write wasAwrite [' + wasAwrite +
                         //'] for commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
 
-                        commandTrimmed = commandRemoved_toSearchFor_trimmed;
+                        //commandTrimmed = commandRemoved_toSearchFor_trimmed;
                     }
-                    else // not a write
+                    // else // not a write
                     {
                         //alert ('not a write - search for [' + commandTrimmed.trim() + ']');
                         //O.o ('=============== in section QUERY2')

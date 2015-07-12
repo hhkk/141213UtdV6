@@ -66,8 +66,9 @@
                title="Rich Editor (TinyMCE)"
                 />
 
-        &nbsp;LiveFilter <input  id='idcheckbox_dynammicSearch' ng-model=dynamicSearch type="checkbox" title="Dynamic Search (as you type)" />
-        &nbsp;NoUpdateOnWrite <input  id='idcheckbox_dynammicSearch' ng-model=modelCheckboxNoUpdateOnWrite type="checkbox" title="Leave current search results after a write/save" />
+        &nbsp;<input  id='idcheckbox_dynammicSearch' ng-model=dynamicSearch type="checkbox" title="Dynamic Search (as you type)" />LiveFilter
+        &nbsp;<input  id='idcheckbox_modelCheckboxUpdateOnWrite' ng-model=modelCheckboxUpdateOnWrite type="checkbox" title="Update search results display after a write/save" />UpdateOnWrite
+        &nbsp;<span id='idcheckbox_dirty' ng-bind=modelDirty title="Has text been modified" ></span>
 
         <!--xx&nbsp;<span ng-model=$scope.lockMouseover> </span>yy-->
 
@@ -76,6 +77,7 @@
         <!--DynamicSearch [<span ng-bind='dynamicSearch'></span>]-->
         Selected [<span ng-bind="state_inSelectedMode"></span>]
         WhichEditorShowing[<span ng-bind='whichEditorShowing'></span>]
+        Dirty[<span ng-bind='modelDirty' ></span>]
 
 
         <br>
