@@ -12,11 +12,11 @@
         <!--<button xxng-init='xxtoggleReadOnly()' ng-click="toggleReadOnly()">toggleReadOnly CK EDIT()</button>-->
         <!--<input focus-on="focusMe"/>-->
         <!--<input class="hkToolbarElement" type='image' style="height:20px;"-->
-               <!--ng-click='toggleVisibilityToNext()'-->
-               <!--src='modules/ustodos/img/UsToDoanimalsblack.jpg'-->
-               <!--title="Next Editor"-->
-               <!--style='height:32px;'-->
-                <!--/>-->
+        <!--ng-click='toggleVisibilityToNext()'-->
+        <!--src='modules/ustodos/img/UsToDoanimalsblack.jpg'-->
+        <!--title="Next Editor"-->
+        <!--style='height:32px;'-->
+        <!--/>-->
         <!-- section_toolbar
         .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.
         | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
@@ -33,7 +33,7 @@
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
                ng-click="clearText()"                src='/img/ClearText.png'
                title="Clear Text"
-               />
+                />
         &nbsp;
         <input class="hkToolbarElement" type='image' style="border:0px solid gray;height:20px;"
                ng-click="processCommand(enumCommands.COMMAND_SEARCH, $scope.enumProcessCommandCaller.HTMLSTARALLBUTTON, '*', '*', '*')"                src='/img/Asterisk.png'
@@ -111,8 +111,8 @@
                    ng-keyup='this.onKeyUp("line 102", $event )'
                    class="input-textarea"
                    placeholder="Search / Input / Command"
-				   title='Search (case insensitive, order insensitive) / Save / Command '
-				   ng-blur="eventBlur0InputText()" required>
+                   title='Search (case insensitive, order insensitive) / Save / Command '
+                   ng-blur="eventBlur0InputText()" required>
                    <!--ng-model="inputbind"-->
 
             <!--ng-bind='inputbind'-->
@@ -127,17 +127,17 @@
                   ng-init='focusOnId("idInput0TypeText")'
                   ng-blur="eventBlur1Medium()"
                   ng-keyup='this.onKeyUp("line 98", $event)'
-			      title='search (case insensitive, order insensitive)'></span >
+                  title='search (case insensitive, order insensitive)'></span >
 
             <!-- ================ INPUT#2 CKE CURRENT DEFAULT ======================== -->
             <span id='idDivForCkeEditorTextarea'
                   ng-keyup='this.onKeyUp("line 102")'
                   ng-blur="xxpropagateTextChanges()">
                 <textarea id="idCkeEditorTextarea"
-                  ng-blur="this.alerthk()"
-                  ng-keyup='this.onKeyUp("line 135", $event )'
-                  name="idCkeEditorTextarea"
-                      idxx="xxeditor1" rows="10" cols="80">
+                          ng-blur="this.alerthk()"
+                          ng-keyup='this.onKeyUp("line 135", $event )'
+                          name="idCkeEditorTextarea"
+                          idxx="xxeditor1" rows="10" cols="80">
 
                 </textarea>
             </span>
@@ -161,10 +161,10 @@
 
             <!-- ========================= SECTION_FILTER ICON AND TEXTBOX ===================== -->
 			<img ng-src="/img/filterIcon2.jpg" class="per-row-icons-trashimage"
-                             alt="{{image.name}}"  title='Restrict within search result'
-                             xxxxng-mouseover="this.filterToLinksOnly ()"
-                             xxng-click="this.filterToLinksOnly ()"
-            >
+                 alt="{{image.name}}"  title='Restrict within search result'
+                 xxxxng-mouseover="this.filterToLinksOnly ()"
+                 xxng-click="this.filterToLinksOnly ()"
+                    >
             &nbsp;
             <input id="idInputTextFilter"  type="text" title='Restrict within search result' name="input" ng-model="filterText"  ng-keyup='updateUstodosFiltered(filterText)'
                    ng-pattern="example.word" required ng-trim="false">
@@ -173,20 +173,20 @@
             <!--Filter: <span ng-bind=('('+this.searchedFor+'+'+this.filterText+')')  ng-mouseover="this.eventMouseoverRow3(this.searchedFor)"-->
                 <!--></span >-->
 
-            <!--<br><a ng-href="http://google.com/search?q={{this.searchedFor}}">http://google.com/search?q={{this.searchedFor}}</a>-->
-            <!--<br><a ng-href="{{this.searchedForAsLink}}">{{this.searchedForAsLink}}</a>-->
+        <!--<br><a ng-href="http://google.com/search?q={{this.searchedFor}}">http://google.com/search?q={{this.searchedFor}}</a>-->
+        <!--<br><a ng-href="{{this.searchedForAsLink}}">{{this.searchedForAsLink}}</a>-->
 
-            Count <span ng-bind=(this.ustodosFiltered.length)></span >
-            of <span ng-bind=(this.ustodos.length)></span >
-            &nbsp;
-            <!--<button ng-click="this.buttonClickSearchStar()">*</button>-->
-            <!--<button ng-click="this.buttonClickSearchClear()">Clear</button>-->
+        Count <span ng-bind=(this.ustodosFiltered.length)></span >
+        of <span ng-bind=(this.ustodos.length)></span >
+        &nbsp;
+        <!--<button ng-click="this.buttonClickSearchStar()">*</button>-->
+        <!--<button ng-click="this.buttonClickSearchClear()">Clear</button>-->
 
-            <!--<WORKS p ng-repeat="command in commands">{{command}}</p>-->
+        <!--<WORKS p ng-repeat="command in commands">{{command}}</p>-->
 
-            <button ng-click="testButton(-2)" title="testButton">TestButton</button>
-            <!--<button ng-click="testButton(-2)">TestButton</button>-->
-            <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
+        <button ng-click="testButton(-2)" title="testButton">TestButton</button>
+        <!--<button ng-click="testButton(-2)">TestButton</button>-->
+        <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
         </span>
         <br>
         <br>
@@ -218,18 +218,49 @@
                 &nbsp;<input ng-click='checkBoxClickedToggleAll()' id='checkBoxAll' type="checkbox"/> All
 
                 &nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
-                                 alt="{{image.name}}"  title='Delete Selected'
-                                 ng-click="operationOnChecked_Delete()"
-                           >
+                           alt="{{image.name}}"  title='Delete Selected'
+                           ng-click="operationOnChecked_Delete()"
+                    >
                 &nbsp;
 
                 <!-- SECTION_ TEXT FILTER ICON AND DYNAMIC SEARCH BOX -->
                 <p>
                 <p>
 
+
+
+                <!--Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>-->
+                <!--<table>-->
+                    <!--<tr id="bind-html-with-sanitize">-->
+                        <!--<td>ng-bind-html</td>-->
+                        <!--<td>Automatically uses $sanitize</td>-->
+                        <!--<td><pre>&lt;div ng-bind-html="snippet"&gt;<br/>&lt;/div&gt;</pre></td>-->
+                        <!--<td>aa<div ng-bind-html="snippet"></div>bb</td>-->
+                    <!--</tr>-->
+                    <!--<tr id="bind-html-with-trust">-->
+                        <!--<td>ng-bind-html</td>-->
+                        <!--<td>Bypass $sanitize by explicitly trusting the dangerous value</td>-->
+                        <!--<td>-->
+           <!--<pre>&lt;div ng-bind-html="deliberatelyTrustDangerousSnippet()"&gt;-->
+<!--&lt;/div&gt;</pre>-->
+                        <!--</td>-->
+                        <!--<td>aa<div ng-bind-html="deliberatelyTrustDangerousSnippet()"></div>bb</td>-->
+                    <!--</tr>-->
+                    <!--<tr id="bind-default">-->
+                        <!--<td>ng-bind</td>-->
+                        <!--<td>Automatically escapes</td>-->
+                        <!--<td><pre>&lt;div ng-bind="snippet"&gt;<br/>&lt;/div&gt;</pre></td>-->
+                        <!--<td>aa<div ng-bind='snippet'></div>bb</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+
+
+
+
+
                 <span id="hktablespan">
 
-                     <!--  SECTION_PER_ROW PERROW
+                     <!--  SECTION_PER_ROW PERROW section_perrow
                      .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.
                     | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
                     | |   ______     | | |  _________   | | |  _______     | | |              | | |  _______     | | |     ____     | | | _____  _____ | |
@@ -247,11 +278,12 @@
                     <!--<tr  ng-repeat="ustodo in ustodosFiltered"-->
                     <!--<tr  ng-repeat="ustodo in ustodosFiltered"-->
                     <!--<tr  ng-repeat="ustodo in ustodosFiltered | filterUstodos:filterText"-->
-                    <tr  ng-repeat="ustodo in ustodosFiltered | filterUstodos:filterText"
-                        xxxxxng-if='this.filterMatches($index)'
-                        ng-mouseover="this.eventMouseoverRow2($index)"
-                        ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
-                        class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
+                    <!--<tr  ng-repeat="ustodo in ustodosFiltered | filterUstodos:filterText"-->
+                    <tr  ng-repeat="ustodo in ustodosFiltered "
+
+                         ng-mouseover="this.eventMouseoverRow2($index)"
+                         ng-keyup="event=$event; myFnOnKeyUp($index, $event)" ng-keydown="myFnOnKeyDown($index, $event)"
+                         class='hkcssContentedit' ng-class-odd="'odd'" ng-class-even="'even'">
                         <!-- PER ROW CHECK BOX -->
                         <td>
                             {{$index}}
@@ -266,9 +298,9 @@
                         <td>
                             <!-- trash garbage icon -->
                             &nbsp;&nbsp;<img class="per-row-icons-trashimage" ng-src="/img/gnome_edit_delete.png"
-                                 alt="{{image.name}}"  title='Delete immediately'
-                                 ng-click="deleteDbUstotoOneByIndex([$index])"
-                                    >
+                                             alt="{{image.name}}"  title='Delete immediately'
+                                             ng-click="deleteDbUstotoOneByIndex([$index])"
+                                >
                             &nbsp
                             <!--ng-show="nowShowing==$index"-->
                             <!--ng-repeat="image in images"-->
@@ -285,7 +317,7 @@
                             <img class="per-row-icons" ng-src="/img/saveIcon.jpg" title='Save changes (if any)'
                                  alt="{{image.name}}"
                                  ng-click="saveUstodoGiven(ustodo, $index)"
-                            >
+                                    >
                             &nbsp;
                         </td>
 
@@ -303,15 +335,14 @@
                         <!-- PER ROW TEXT CONTENTEDITABLE ROW -->
                         <td >
 
-
-
-
+                            <!--ng-bind-html="ustodosFiltered[$index].html">-->
+                            <!--<td>aa<div ng-bind-html='deliberatelyTrustDangerousSnippet("ccc")'></div>bb</td>-->
+                            <!--ng-bind-html='deliberatelyTrustDangerousSnippet()'>-->
                             <span class="cssClassPerRowContentEditableFinal" id="ustodorow{{$index}}" contenteditable="true"
                                   ng-focus='hkngfocustest($index)'
                                   ng-keyup="onKeyUp_perrow_text($event, $index, ustodosFiltered[$index]._id)"
-
-                                  ng-bind-html="ustodosFiltered[$index].html"
-                            ></span>
+                                  ng-bind-html='deliberatelyTrustDangerousSnippet(ustodosFiltered[$index].html)'>
+                            </span>
 
 
                         </td>
@@ -333,8 +364,12 @@
             <!--ng-bind-html="ustodos[$index].html"></span>f-->
         </div>
     </section>
-</div>
 
+
+
+
+
+</div>
 
 
 

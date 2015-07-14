@@ -138,7 +138,7 @@ var angularModule = null;
 
 //alert ('initing app');
 
-var app = angular.module('ustodos');
+var app = angular.module('ustodos',['ngSanitize']);
 
 
 
@@ -148,11 +148,26 @@ var callbackCommand = function(callbackResult) {
 
 
 //O.a ('oneOfSeveral controller with array - first?');
-app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce', '$http','$filter',
+app.controller('UstodosController',
+
+    ['$scope', '$window', '$stateParams', '$location', '$document', '$rootScope', '$sce', '$http','$filter',
     'Authentication', 'Ustodos', 'Commands',
     //function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, $http, Authentication, Ustodos, Commands)
     function($scope, $window, $stateParams, $location, $document, $rootScope, $sce, $http, $filter, Authentication, Ustodos, Commands)
     {
+
+
+        //$scope.snippet =   'xxxxxxxxxxxx';
+        $scope.snippet =
+            '<p style="color:blue">an html\n' +
+            '<em onmouseover="this.textContent=\'PWN3D!\'">click here</em>\n' +
+            'snippet</p>';
+
+        $scope.deliberatelyTrustDangerousSnippet = function(s) {
+            //alert ('in deliberatelyTrustDangerousSnippet [' + ']');
+            //return null;
+            return $sce.trustAsHtml(s);
+        };
 
         //alert ('reiniting scope');
         try
@@ -2312,8 +2327,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //alert (' in here');
                 if ($scope.state_inSelectedMode === -1) {
                     //if ($scope.mouseoverlock !== 'on') {
-                        //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
-                        $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html, 'line 2254');
+                    //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
+                    $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html, 'line 2254');
                     //}
                 }
 
@@ -2333,8 +2348,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.eventMouseoverCurrentSearch = function() {
                 if ($scope.stateOKtoOverwrite()) {
                     //if ($scope.mouseoverlock !== 'on') {
-                        //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
-                        $scope.setTextInShowingEditor($scope.searchedFor, 'line 2275');
+                    //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
+                    $scope.setTextInShowingEditor($scope.searchedFor, 'line 2275');
                     //}
                 }
             };
@@ -2342,8 +2357,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
             $scope.eventMouseoverRow2 = function(i) {
                 if ($scope.stateOKtoOverwrite()) {
                     //if ($scope.mouseoverlock !== 'on') {
-                        //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
-                        $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html, 'line 2284');
+                    //$scope.setTextInShowingEditor(document.getElementById('ustodorow'+i));
+                    $scope.setTextInShowingEditor($scope.ustodosFiltered[i].html, 'line 2284');
                     //}
                 }
             };
@@ -3393,8 +3408,8 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //alert ('x:' + x);
 
                         var ustodo = new Ustodos ({
-                            html: commandTrimmed,// hbkk mystery
-                            text: commandTrimmed,// hbkk mystery
+                            html: xHtml,// hbkk mystery
+                            text: xHtml,// hbkk mystery
                             datelastmod: (''+new Date()),
                             datecreated: (''+new Date()),
                             joey: 'and pete'
@@ -3467,7 +3482,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                         //{q:{$regex:commandTrimmed.trim()}});      // this is a GET - see RESOURCE
                         //{q:{$regex:commandTrimmed.trim(), $options:'i'}});      // this is a GET - see RESOURCE
                         //{q:commandTrimmed.trim() }, callbackFromQuery);      // this is a GET - see RESOURCE
-                        // {key:{$regex:value, $options:‘i’}}
+                        // {key:{$regex:value, $options:â€˜iâ€™}}
 
                         //{q:new RegExp(commandTrimmed.trim(), 'i') }, callbackFromQuery);      // this is a GET - see RESOURCE
                         // {q:{ "$regex" : commandTrimmed.trim(), "$options" : "-i" }}, callbackFromQuery);      // this is a GET - see RESOURCE
@@ -3597,6 +3612,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
 
 
             $scope.filterDoesThisRowHtmlMatch = function(s, filterText) {
+                alert ('in here hk');
                 var s2 = '';
                 var arrTokens = s.split(/\s/);
                 for (var i = 0; i < arrTokens.length; i++)
@@ -3712,26 +3728,26 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
              '----------------' '----------------' '----------------' '----------------'
              //section_main - executes on load - not a function ded
              */
-            // request parameter read
-            //alert ('$location.$$search.q:' + $location.$$search.q);
-            //alert ('in main');
+                // request parameter read
+                //alert ('$location.$$search.q:' + $location.$$search.q);
+                //alert ('in main');
 
-            //var q = $location.$$search.q;
-            //
-            //
-            //$scope.toggleVisibilityTo3('line 3656 main');
-            //
-            //if (q) {
-            //    $scope.processCommand($scope.enumCommands.COMMAND_SEARCH, $scope.enumProcessCommandCaller.URL, q, q, q);
-            //    $scope.setTextInShowingEditor(q, 'line 3658 main');
-            //
-            //} else {
-            //    $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,'CLIENT JS line 2355', '*', '*', '*');
-            //}
-            //
-            //window.onbeforeunload = function () {
-            //    return "Are you sure?";
-            //}
+                //var q = $location.$$search.q;
+                //
+                //
+                //$scope.toggleVisibilityTo3('line 3656 main');
+                //
+                //if (q) {
+                //    $scope.processCommand($scope.enumCommands.COMMAND_SEARCH, $scope.enumProcessCommandCaller.URL, q, q, q);
+                //    $scope.setTextInShowingEditor(q, 'line 3658 main');
+                //
+                //} else {
+                //    $scope.processCommand($scope.enumCommands.COMMAND_SEARCH,'CLIENT JS line 2355', '*', '*', '*');
+                //}
+                //
+                //window.onbeforeunload = function () {
+                //    return "Are you sure?";
+                //}
 
             window.onbeforeunload = function () {
                 return "Are you sure?";
@@ -3773,14 +3789,14 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
     .filter('filterUstodos', function()
     {
 
-        O.o('runs on reload only ========================= in filter 1');
+        alert('runs on reload only ========================= in filter 1');
         // see also
         return function( ustodos, s)
         {
             //O.o ('========================= in filter 1b');
             if ( document.ustodosFilterCacheDirty !== true )
             {
-                //O.o ('returning cached ustodos filtered s [' + s + '] TimeSynched [' + document.ustodosLastCommitTimeSynched + ']');
+                alert ('returning cached ustodos ['+ustodos+'] filtered s [' + s + '] TimeSynched [' + document.ustodosLastCommitTimeSynched + ']');
                 return document.ustodosFilterCache;
             }
             //else
@@ -3844,7 +3860,7 @@ app.controller('UstodosController', ['$scope', '$window', '$stateParams', '$loca
                 //
                 //if(!s || strOneOfManyIterThru.indexOf(s) >= 0) {
                 ////if(true) {
-                    //O.o ('======  filter do keep');
+                //O.o ('======  filter do keep');
                 //    ustodosFiltered.push(ustodo);
                 //}
                 //else {
@@ -3929,6 +3945,5 @@ angular.module('ustodos')
 //};
 
 //alert ('done onload');
-
 
 
