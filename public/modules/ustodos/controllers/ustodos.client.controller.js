@@ -3342,7 +3342,7 @@ app.controller('UstodosController',
                     var commandUnTrimmed = xText;
                     var commandTrimmed = xText.trim();
 
-                    var commandRemoved_toSearchFor_trimmed = null;
+                    //var commandRemoved_toSearchFor_trimmed = null;
 
                     var callbackFromQuery = function() {
                         //alert ('in callbackFromQuery post get callback');
@@ -3398,23 +3398,25 @@ app.controller('UstodosController',
                     // section_write
                     if (UtilString.endsWith(commandTrimmed, ' w') || UtilString.endsWith(commandTrimmed, ' W'))
                     {
+                        //alert ('in write commandTrimmed [' + commandTrimmed  + ']');
                         //alert ('in write commandTrimmed.asciiTable():' + commandTrimmed.asciiTable());
                         //alert ('in endsWith w');
                         commandTrimmed = commandTrimmed.slice(0, commandTrimmed.length - 1).trim();
 
                         //alert ('commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
                         //var target = "";
-                        var x = $filter('linky')(commandRemoved_toSearchFor_trimmed)
+                        var x = $filter('linky')(commandTrimmed)
                         //alert ('x:' + x);
 
                         var ustodo = new Ustodos ({
-                            html: xHtml,// hbkk mystery
-                            text: xHtml,// hbkk mystery
+                            html: xHtml.replaceLast(" w", ""),// hbkk mystery
+                            text: commandTrimmed,// hbkk mystery
                             datelastmod: (''+new Date()),
                             datecreated: (''+new Date()),
                             joey: 'and pete'
                         });
                         //getProperties('props ustodo:', ustodo);
+                        //alert ('saving ustodo.text:' + ustodo.text);
                         // Redirect after save
                         //O.o ('1 $$$$$$$$$$$$$$$$$$ save callerId 1 [' + callerId + '] ustodo.html [' + ustodo.html+ ']');
                         //O.o ('2 $$$$$$$$$$$$$$$$$$ save callerId 2 [' + callerId + '] ustodo.text [' + ustodo.text + ']');

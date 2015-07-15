@@ -52,8 +52,8 @@ exports.create = function(req, res)
         //O.o ('--------> saving content as both text and html [' + s + ']');
         //ustodo.text = 't1.' + s;
         //ustodo.html = 'h1.' + s;
-        ustodo.text = s;
-        ustodo.html = s;
+        //ustodo.text = s;
+        //ustodo.html = s;
         ustodo.datelastmod = new Date();
         ustodo.datecreated = new Date();
 

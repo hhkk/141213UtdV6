@@ -338,10 +338,11 @@
                             <!--ng-bind-html="ustodosFiltered[$index].html">-->
                             <!--<td>aa<div ng-bind-html='deliberatelyTrustDangerousSnippet("ccc")'></div>bb</td>-->
                             <!--ng-bind-html='deliberatelyTrustDangerousSnippet()'>-->
+                            <!--WORKS!! ng-bind-html='deliberatelyTrustDangerousSnippet(ustodosFiltered[$index].html)'>-->
                             <span class="cssClassPerRowContentEditableFinal" id="ustodorow{{$index}}" contenteditable="true"
                                   ng-focus='hkngfocustest($index)'
                                   ng-keyup="onKeyUp_perrow_text($event, $index, ustodosFiltered[$index]._id)"
-                                  ng-bind-html='deliberatelyTrustDangerousSnippet(ustodosFiltered[$index].html)'>
+                                  ng-bind-html="ustodosFiltered[$index].text">
                             </span>
 
 

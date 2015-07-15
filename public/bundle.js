@@ -1029,6 +1029,14 @@ String.prototype.beginsWith = function (s) {
     return this.indexOf(s) === 0;
 }
 
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+};
+
+String.prototype.replaceLast = function (what, replacement) {
+    return this.reverse().replace(new RegExp(what.reverse()), replacement.reverse()).reverse();
+};
+
     /**
      *
      * @param s
