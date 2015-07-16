@@ -68,6 +68,7 @@
 
         &nbsp;<input  id='idcheckbox_dynammicSearch' ng-model=dynamicSearch type="checkbox" title="Dynamic Search (as you type)" />LiveFilter
         &nbsp;<input  id='idcheckbox_modelCheckboxUpdateOnWrite' ng-model=modelCheckboxUpdateOnWrite type="checkbox" title="Update search results display after a write/save" />UpdateOnWrite
+        &nbsp;<input  id='idcheckbox_modelCheckboxCtrlEnterToSave' ng-model=modelCheckboxCtrlEnterToSave type="checkbox" title="allow enter key in text, use ctrl-enter to issue a command" />CtrlEnterToSave
         &nbsp;<span id='idcheckbox_dirty' ng-bind=modelDirty title="Has text been modified" ></span>
 
         <!--xx&nbsp;<span ng-model=$scope.lockMouseover> </span>yy-->
@@ -185,6 +186,7 @@
         <!--<WORKS p ng-repeat="command in commands">{{command}}</p>-->
 
         <button ng-click="testButton(-2)" title="testButton">TestButton</button>
+
         <!--<button ng-click="testButton(-2)">TestButton</button>-->
         <!--<p ng-repeat="operator in operators">{{operator.commandDescription}}</p>-->
         </span>
@@ -342,7 +344,7 @@
                             <span class="cssClassPerRowContentEditableFinal" id="ustodorow{{$index}}" contenteditable="true"
                                   ng-focus='hkngfocustest($index)'
                                   ng-keyup="onKeyUp_perrow_text($event, $index, ustodosFiltered[$index]._id)"
-                                  ng-bind-html="ustodosFiltered[$index].text">
+                                  ng-bind-html="ustodosFiltered[$index].html">
                             </span>
 
 

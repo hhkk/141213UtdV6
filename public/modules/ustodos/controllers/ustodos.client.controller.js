@@ -177,6 +177,7 @@ app.controller('UstodosController',
 
             $scope.dynamicSearch = false; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
             $scope.modelCheckboxUpdateOnWrite = true; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
+            $scope.modelCheckboxCtrlEnterToSave = true;
             $scope.q = null; // current query
             //$scope.modelDirty = false;
             //alert ('set $scope.modelDirty = false;')
@@ -556,17 +557,21 @@ app.controller('UstodosController',
                         //console.log ('e.metaKey:' + e.metaKey);
                         //console.log ('e.shiftKey:' + e.shiftKey);
                         //console.log ('e.altKey:' + e.altKey);
-                        //console.log ('e.ctrlKey:' + e.ctrlKey);
+                        //alert ('e.ctrlKey:' + e.ctrlKey);
 
 
                         if (e.keyIdentifier === "Enter")
                         {
-                            $scope.eventHandlerEditorcontentChange (
-                                $scope.enumKeyEvent.ENTER,
-                                ed.getContent({format : 'data'}),
-                                ed.getContent({format : 'html'}),
-                                ed.getContent({format : 'text'})
-                            );
+
+                            if (!$scope.modelCheckboxCtrlEnterToSave || e.ctrlKey)
+                            {
+                                $scope.eventHandlerEditorcontentChange (
+                                    $scope.enumKeyEvent.ENTER,
+                                    ed.getContent({format : 'data'}),
+                                    ed.getContent({format : 'html'}),
+                                    ed.getContent({format : 'text'})
+                                );
+                            }
                         } else if (e.keyCode === 32) {
                             $scope.eventHandlerEditorcontentChange (
                                 $scope.enumKeyEvent.SPACE,
@@ -2789,6 +2794,12 @@ app.controller('UstodosController',
                     document.getElementsByClassName('cke_bottom')[0].style.display = 'none';
                     CKEDITOR.instances.idCkeEditorTextarea.execCommand('maximize');
                     setTimeout(function(){ CKEDITOR.instances.idCkeEditorTextarea.execCommand('minimize'); }, 2000);
+                }
+
+                if (true) {
+                    var xText = tinymce.activeEditor.getContent({format: 'text'});
+                    var xHtml= tinymce.activeEditor.getContent();
+                    alert ('xHtml:' + xHtml);
                 }
 
 
