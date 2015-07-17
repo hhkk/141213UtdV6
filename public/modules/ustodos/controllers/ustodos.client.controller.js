@@ -178,6 +178,7 @@ app.controller('UstodosController',
             $scope.dynamicSearch = false; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
             $scope.modelCheckboxUpdateOnWrite = true; // bound via ng-model=lockMouseover to idcheckbox_dynamicSearch
             $scope.modelCheckboxCtrlEnterToSave = true;
+            $scope.reloadWarning = false;
             $scope.q = null; // current query
             //$scope.modelDirty = false;
             //alert ('set $scope.modelDirty = false;')
@@ -3409,10 +3410,23 @@ app.controller('UstodosController',
                     // section_write
                     if (UtilString.endsWith(commandTrimmed, ' w') || UtilString.endsWith(commandTrimmed, ' W'))
                     {
-                        //alert ('in write commandTrimmed [' + commandTrimmed  + ']');
+                        alert ('in write commandTrimmed [' + commandTrimmed  + ']');
+                        alert ('in write xHtml [' + xHtml + ']');
                         //alert ('in write commandTrimmed.asciiTable():' + commandTrimmed.asciiTable());
                         //alert ('in endsWith w');
                         commandTrimmed = commandTrimmed.slice(0, commandTrimmed.length - 1).trim();
+
+                        var xHtmlPre = xHtml;
+                        do {
+                            xHtml = xHtml.trim();
+                            if (xHtml.endsWith("<p>&nbsp;</p>"))
+                                xHtml = xHtml.replaceLast("<p>&nbsp;</p>","");
+                            alert ('in loop xHtml [' + xHtml + ']');
+                            xHtmlPre = xHtml;
+                        }  while (xHtmlPre != xHtml);
+                        xHtml = xHtml.trim();
+
+                        alert ('in write xHtml replaced [' + xHtml + ']');
 
                         //alert ('commandRemoved_toSearchFor_trimmed:' + commandRemoved_toSearchFor_trimmed);
                         //var target = "";
@@ -3762,8 +3776,10 @@ app.controller('UstodosController',
                 //    return "Are you sure?";
                 //}
 
-            window.onbeforeunload = function () {
-                return "Are you sure?";
+            window.onbeforeunload = function () // reload
+            {
+                if ($scope.reloadWarning)
+                    return "Are you sure?";
             }
 
         } catch (e) {
